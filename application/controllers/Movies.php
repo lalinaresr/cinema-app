@@ -1,0 +1,460 @@
+<?php
+	defined('BASEPATH') OR exit('No direct script access allowed');
+
+	class Movies extends CI_Controller {
+
+		/**
+		* [__construct description]
+		*/
+		public function __construct(){
+			parent::__construct(); 
+
+			$this->load->model('Movies_model');
+			$this->load->model('Productors_model');
+			$this->load->model('Genders_model');
+			$this->load->model('Categorys_model');
+			$this->load->model('Qualities_model');
+			$this->load->model('Users_model');
+			$this->load->model('Status_model');
+
+			$this->load->helper('countrys');
+		}
+
+		/**
+		* [index description]
+		* @return [type] [description]
+		*/
+		public function index(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$params = array(
+					'page_title' => SITE_NAME . ' - Movies Management',
+					'css_files' => array(
+						base_url() . 'assets/css/bootstrap.min.css',
+						base_url() . 'assets/css/font-awesome.min.css',
+						base_url() . 'assets/plugins/dataTables/css/dataTables.bootstrap.min.css',
+						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
+						'https://fonts.googleapis.com/css?family=Ubuntu',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
+						base_url() . 'assets/css/snipps/dashboard.css',
+						base_url() . 'assets/css/styles.css'
+					),
+					'js_files' => array(
+						base_url() . 'assets/js/jquery-3.2.1.js',
+						base_url() . 'assets/js/jquery.form.min.js',
+						base_url() . 'assets/js/bootstrap.min.js',
+						base_url() . 'assets/plugins/dataTables/js/jquery.dataTables.min.js',
+						base_url() . 'assets/plugins/dataTables/js/dataTables.bootstrap.min.js',
+						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
+						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
+						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
+						'//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js',
+						'//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js',
+						'//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js',
+						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
+						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
+						base_url() . 'assets/js/executes/dataTables.js',
+						base_url() . 'assets/js/snipps/movies.js',
+						base_url() . 'assets/js/snipps/auth.js',
+						base_url() . 'assets/js/site.js'
+					),
+					'get_all_movies' => $this->Movies_model->get_all_movies(),
+					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				);
+				$this->load->view('header', $params);
+				$this->load->view('partials/movies/navbar');
+				$this->load->view('partials/movies/sidebar');
+				$this->load->view('partials/movies/container');
+				$this->load->view('partials/movies/footer');
+				$this->load->view('footer');
+			}		
+		}
+
+		/**
+		* [add description]
+		*/
+		public function add(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$params = array(
+					'page_title' => SITE_NAME . ' - Movies Management',
+					'css_files' => array(
+						base_url() . 'assets/css/bootstrap.min.css',
+						base_url() . 'assets/css/font-awesome.min.css',
+						base_url() . 'assets/plugins/date-picker/css/bootstrap-datetimepicker.min.css',
+						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css',
+						'https://fonts.googleapis.com/css?family=Ubuntu',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
+						base_url() . 'assets/css/snipps/dashboard.css',
+						base_url() . 'assets/css/styles.css'
+					),
+					'js_files' => array(
+						base_url() . 'assets/js/jquery.min.js',
+						base_url() . 'assets/js/jquery.form.min.js',
+						base_url() . 'assets/js/bootstrap.min.js',
+						base_url() . 'assets/plugins/date-picker/moment.js',
+						base_url() . 'assets/plugins/date-picker/moment-with-locales.js',
+						base_url() . 'assets/plugins/date-picker/bootstrap-datetimepicker.js',
+						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js',
+						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',						  
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',						
+						base_url() . 'assets/js/executes/dateTimePickers.js',
+						base_url() . 'assets/js/executes/multipleSelect.js',
+						base_url() . 'assets/js/snipps/movies.js',
+						base_url() . 'assets/js/snipps/auth.js',
+						base_url() . 'assets/js/site.js'
+					),
+					'get_all_status' => $this->Status_model->get_all_status(),
+					'get_all_qualities_activated' => $this->Qualities_model->get_all_qualities_activated(),
+					'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),
+					'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),
+					'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),
+					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				);
+				$this->load->view('header', $params);
+				$this->load->view('partials/movies/navbar');
+				$this->load->view('partials/movies/sidebar');
+				$this->load->view('partials/movies/add');
+				$this->load->view('partials/movies/footer');
+				$this->load->view('footer');
+			}		
+		}
+
+		/**
+		* [insert description]
+		* @return [type] [description]
+		*/
+		public function insert(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$config['upload_path'] = FOLDER_MOVIES;
+	        	$config['allowed_types'] = 'gif|jpg|png';
+	            $config['max_size'] = 2048;
+
+	            $this->load->library('upload', $config);
+
+				if ( $this->upload->do_upload('movie_cover_insert')){
+					$insert = array(
+						'ids_productors' => $this->input->post('ids_productors_insert'), 
+						'ids_genders' => $this->input->post('ids_genders_insert'), 
+						'ids_categorys' => $this->input->post('ids_categorys_insert'), 
+						'movie_status' => trim($this->input->post('movie_status_insert')), 
+						'movie_quality' => trim($this->input->post('movie_quality_insert')), 
+						'movie_name' => trim($this->input->post('movie_name_insert')), 
+						'movie_slug' => trim($this->input->post('movie_slug_insert')), 
+						'movie_release_date' => trim($this->input->post('movie_release_date_insert')), 
+						'movie_duration' => trim($this->input->post('movie_duration_insert')), 
+						'movie_country_origin' => trim($this->input->post('movie_country_origin_insert')), 
+						'movie_cover' => $this->upload->data()['file_name'],
+						'movie_description' => trim($this->input->post('movie_description_insert')),
+						'movie_play' => trim($this->input->post('movie_play_insert'))
+					);
+					$this->Movies_model->insert_model($insert);
+				} else { 
+					echo "ErrorUP"; 
+				}
+			}					
+		}
+
+		/**
+		* [view description]
+		* @param  [type] $id_movie [description]
+		* @return [type]           [description]
+		*/
+		public function view($id_movie){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$params = array(
+					'page_title' => SITE_NAME . ' - Movies Management',
+					'css_files' => array(
+						base_url() . 'assets/css/bootstrap.min.css',
+						base_url() . 'assets/css/font-awesome.min.css',						
+						'https://fonts.googleapis.com/css?family=Ubuntu',						
+						base_url() . 'assets/css/snipps/dashboard.css',
+						base_url() . 'assets/css/styles.css'
+					),
+					'js_files' => array(
+						base_url() . 'assets/js/jquery.min.js',
+						base_url() . 'assets/js/jquery.form.min.js',
+						base_url() . 'assets/js/bootstrap.min.js',						
+						base_url() . 'assets/js/snipps/movies.js',
+						base_url() . 'assets/js/snipps/auth.js',
+						base_url() . 'assets/js/site.js'
+					),
+					'id_movie_encryp' => $id_movie,
+					'view_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
+					'productors_movie' => $this->Movies_model->get_productors_movie($id_movie),
+					'genders_movie' => $this->Movies_model->get_genders_movie($id_movie),
+					'categorys_movie' => $this->Movies_model->get_categorys_movie($id_movie),
+					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				);
+				$this->load->view('header', $params);
+				$this->load->view('partials/movies/navbar');
+				$this->load->view('partials/movies/sidebar');
+				$this->load->view('partials/movies/view');
+				$this->load->view('partials/movies/footer');
+				$this->load->view('footer');
+			}		
+		}
+
+		/**
+		* [watch description]
+		* @param  [type] $id_movie [description]
+		* @return [type]           [description]
+		*/
+		public function watch($id_movie){
+			$params = array(
+				'page_title' => SITE_NAME,
+				'css_files' => array(
+					base_url() . 'assets/css/bootstrap.min.css',
+					base_url() . 'assets/css/font-awesome.min.css',
+					base_url() . 'assets/plugins/owl-carousel/owl.carousel.css',
+					base_url() . 'assets/plugins/owl-carousel/owl.theme.css',
+					base_url() . 'assets/plugins/owl-carousel/owl.transitions.css',
+					base_url() . 'assets/css/executes/owlCarousels.css',
+					'https://fonts.googleapis.com/css?family=Ubuntu',
+					base_url() . 'assets/css/snipps/welcome.css',
+					base_url() . 'assets/css/executes/owlCarousels.css',
+					base_url() . 'assets/css/styles.css'
+				),
+				'js_files' => array(
+					base_url() . 'assets/js/jquery-3.2.1.js',
+					base_url() . 'assets/js/jquery.form.min.js',
+					base_url() . 'assets/js/bootstrap.min.js',
+					base_url() . 'assets/plugins/owl-carousel/owl.carousel.min.js',
+					base_url() . 'assets/js/executes/owlCarousels.js',
+					base_url() . 'assets/js/snipps/auth.js',
+					base_url() . 'assets/js/site.js'
+				),
+				'watch_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
+				'update_reproductions' => $this->Movies_model->update_reproductions($id_movie),
+				'get_new_movies' => $this->Movies_model->get_new_movies(8),	
+				'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),	
+				'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),	
+				'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),	
+				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+			);
+			$this->load->view('header', $params);				
+			$this->load->view('partials/welcome/navbar');				
+			$this->load->view('partials/welcome/watch');				
+			$this->load->view('partials/welcome/footer');				
+			$this->load->view('footer');
+		}
+
+		/**
+		* [edit description]
+		* @param  [type] $id_movie [description]
+		* @return [type]           [description]
+		*/
+		public function edit($id_movie){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$params = array(
+					'page_title' => SITE_NAME . ' - Movies Management',
+					'css_files' => array(
+						base_url() . 'assets/css/bootstrap.min.css',
+						base_url() . 'assets/css/font-awesome.min.css',
+						base_url() . 'assets/plugins/date-picker/css/bootstrap-datetimepicker.min.css',
+						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css',
+						'https://fonts.googleapis.com/css?family=Ubuntu',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
+						base_url() . 'assets/css/snipps/dashboard.css',
+						base_url() . 'assets/css/styles.css'
+					),
+					'js_files' => array(
+						base_url() . 'assets/js/jquery.min.js',
+						base_url() . 'assets/js/jquery.form.min.js',
+						base_url() . 'assets/js/bootstrap.min.js',
+						base_url() . 'assets/plugins/date-picker/moment.js',
+						base_url() . 'assets/plugins/date-picker/moment-with-locales.js',
+						base_url() . 'assets/plugins/date-picker/bootstrap-datetimepicker.js',
+						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js',
+						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',						  
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',						
+						base_url() . 'assets/js/executes/dateTimePickers.js',
+						base_url() . 'assets/js/executes/multipleSelect.js',
+						base_url() . 'assets/js/snipps/movies.js',
+						base_url() . 'assets/js/snipps/auth.js',
+						base_url() . 'assets/js/site.js'
+					),
+					'id_movie_encryp' => $id_movie,
+					'get_all_status' => $this->Status_model->get_all_status(),
+					'edit_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
+					'productors_movie' => $this->Movies_model->get_productors_movie($id_movie),
+					'genders_movie' => $this->Movies_model->get_genders_movie($id_movie),
+					'categorys_movie' => $this->Movies_model->get_categorys_movie($id_movie),
+					'get_all_qualities_activated' => $this->Qualities_model->get_all_qualities_activated(),
+					'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),
+					'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),
+					'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),
+					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))					
+				);
+				$this->load->view('header', $params);
+				$this->load->view('partials/movies/navbar');
+				$this->load->view('partials/movies/sidebar');
+				$this->load->view('partials/movies/edit');
+				$this->load->view('partials/movies/footer');
+				$this->load->view('footer');
+			}		
+		}
+
+		/**
+		* [update description]
+		* @return [type] [description]
+		*/
+		public function update(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$config['upload_path'] = FOLDER_MOVIES;
+			   	$config['allowed_types'] = 'gif|jpg|png';
+			    $config['max_size'] = 2048;
+
+			    $this->load->library('upload', $config);
+						
+				if (!$this->upload->do_upload('movie_cover_update') ) {
+					/* Update with Old Image */
+					$update = array(
+						'id_movie' => $this->input->post('id_movie_update'),
+						'ids_productors' => $this->input->post('ids_productors_update'),
+						'ids_genders' => $this->input->post('ids_genders_update'),
+						'ids_categorys' => $this->input->post('ids_categorys_update'),
+	 					'movie_status' => $this->input->post('movie_status_update'),
+						'movie_quality' => $this->input->post('movie_quality_update'),
+						'movie_name' => $this->input->post('movie_name_update'),
+						'movie_slug' => $this->input->post('movie_slug_update'),
+						'movie_release_date' => $this->input->post('movie_release_date_update'),
+						'movie_duration' => $this->input->post('movie_duration_update'),
+						'movie_country_origin' => $this->input->post('movie_country_origin_update'),
+						'old_image_cover' => $this->input->post('image_cover_update_route'),
+						'new_image_cover' => NULL,
+						'movie_description' => $this->input->post('movie_description_update'),
+						'movie_play' => $this->input->post('movie_play_update')
+					);
+					$this->Movies_model->update_model($update);
+					/* END Update with Old Image */
+				} else {
+					/* Upload and Update with New Image */            		
+					$update = array(
+						'id_movie' => $this->input->post('id_movie_update'),
+						'ids_productors' => $this->input->post('ids_productors_update'),
+						'ids_genders' => $this->input->post('ids_genders_update'),
+						'ids_categorys' => $this->input->post('ids_categorys_update'),
+						'movie_status' => $this->input->post('movie_status_update'),
+						'movie_quality' => $this->input->post('movie_quality_update'),
+						'movie_name' => $this->input->post('movie_name_update'),
+						'movie_slug' => $this->input->post('movie_slug_update'),
+						'movie_release_date' => $this->input->post('movie_release_date_update'),
+						'movie_duration' => $this->input->post('movie_duration_update'),
+						'movie_country_origin' => $this->input->post('movie_country_origin_update'),
+						'movie_description' => $this->input->post('movie_description_update'),
+						'movie_play' => $this->input->post('movie_play_update'),
+						'new_image_cover' => $this->upload->data()['file_name'],
+						'old_image_cover' => NULL,
+						'old_image_ext' => substr(trim($this->input->post('image_cover_update_route')), -4)
+						/* 'image_logo' => 'assets/images/productors/' . decryp($this->input->post('id_productor_update_productor')) . '_logo' . substr($this->upload->data()['file_name'], -4) */
+					);
+					$this->Movies_model->update_model($update);
+					/* END Upload and Update with New Image */            		
+				}
+			}			    
+		}
+
+		/**
+		* [edit_cover description]
+		* @param  [type] $id_movie [description]
+		* @return [type]           [description]
+		*/
+		public function edit_cover($id_movie){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$params = array(
+					'page_title' => SITE_NAME . ' - Movies Management',
+					'css_files' => array(
+						base_url() . 'assets/css/bootstrap.min.css',
+						base_url() . 'assets/css/font-awesome.min.css',						
+						'https://fonts.googleapis.com/css?family=Ubuntu',	
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css',					
+						base_url() . 'assets/css/snipps/dashboard.css',
+						base_url() . 'assets/css/styles.css'
+					),
+					'js_files' => array(
+						base_url() . 'assets/js/jquery.min.js',
+						base_url() . 'assets/js/jquery.form.min.js',
+						base_url() . 'assets/js/bootstrap.min.js',	
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',					
+						base_url() . 'assets/js/snipps/movies.js',
+						base_url() . 'assets/js/snipps/auth.js',
+						base_url() . 'assets/js/site.js'
+					),
+					'id_movie_encryp' => $id_movie,
+					'view_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
+					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				);
+				$this->load->view('header', $params);
+				$this->load->view('partials/movies/navbar');
+				$this->load->view('partials/movies/sidebar');
+				$this->load->view('partials/movies/cover');
+				$this->load->view('partials/movies/footer');
+				$this->load->view('footer');
+			}
+		}
+
+		/**
+		* [update_cover description]
+		* @return [type] [description]
+		*/
+		public function update_cover(){
+			if (!$this->session->userdata('is_admin_logged_in')  &&
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$config['upload_path'] = FOLDER_MOVIES;
+	        	$config['allowed_types'] = 'gif|jpg|png';
+	            $config['max_size'] = 2048;
+
+	            $this->load->library('upload', $config);
+
+	            if ( $this->upload->do_upload('movie_cover_customize')){ 
+	            	$update = array(
+	            		'id_movie' => $this->input->post('id_movie_customize_cover'), 	            		
+	            		'movie_cover' => $this->upload->data()['file_name'],
+	            		'old_image_ext' => substr(trim($this->input->post('cover_update_route')), -4)
+	            	);
+	            	$this->Movies_model->update_cover($update);
+	            } else { 
+	            	echo "ErrorUP"; 
+	            }				
+			}		
+		}
+
+		/**
+		* [delete description]
+		* @return [type] [description]
+		*/
+		public function delete(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$id_movie = $this->input->post('id_movie_delete');
+
+				$this->Movies_model->delete_model($id_movie);
+			}			
+		}
+	}
+?>

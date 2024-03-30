@@ -1,0 +1,204 @@
+@charset "utf-8";
+
+/*=======================================================
+=            CSS Carousel Movies Most Viewed            =
+=======================================================*/
+
+@media (min-width: 1281px) {
+    #carousel-movies-most-viewed .item {
+        margin: 3px;
+    }
+    #carousel-movies-most-viewed .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 1025px) and (max-width: 1280px) {
+    #carousel-movies-most-viewed .item {
+        margin: 3px;
+    }
+    #carousel-movies-most-viewed .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    #carousel-movies-most-viewed .item {
+        margin: 3px;
+    }
+    #carousel-movies-most-viewed .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    #carousel-movies-most-viewed .item {
+        margin: 3px;
+    }
+    #carousel-movies-most-viewed .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 320px) and (max-width: 767px) {
+    #carousel-movies-most-viewed .item {
+        margin: 3px;
+    }
+    #carousel-movies-most-viewed .item img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
+
+/*=====  End of CSS Carousel Movies Most Viewed  ======*/
+
+
+/*===============================================
+=            CSS Carousel New Movies            =
+===============================================*/
+
+@media (min-width: 1281px) {
+    #carousel-new-movies .item {
+        margin: 3px;
+    }
+    #carousel-new-movies .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 1025px) and (max-width: 1280px) {
+    #carousel-new-movies .item {
+        margin: 3px;
+    }
+    #carousel-new-movies .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    #carousel-new-movies .item {
+        margin: 3px;
+    }
+    #carousel-new-movies .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    #carousel-new-movies .item {
+        margin: 3px;
+    }
+    #carousel-new-movies .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 320px) and (max-width: 767px) {
+    #carousel-new-movies .item {
+        margin: 3px;
+    }
+    #carousel-new-movies .item img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
+
+/*=====  End of CSS Carousel New Movies  ======*/
+
+
+/*===============================================
+=            CSS Carousel All Movies            =
+===============================================*/
+
+@media (min-width: 1281px) {
+    #carousel-all-movies .item {
+        margin: 3px;
+    }
+    #carousel-all-movies .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 1025px) and (max-width: 1280px) {
+    #carousel-all-movies .item {
+        margin: 3px;
+    }
+    #carousel-all-movies .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    #carousel-all-movies .item {
+        margin: 3px;
+    }
+    #carousel-all-movies .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    #carousel-all-movies .item {
+        margin: 3px;
+    }
+    #carousel-all-movies .item img {
+        display: block;
+        width: 100%;
+        height: 250px;
+    }
+}
+@media (min-width: 320px) and (max-width: 767px) {
+    #carousel-all-movies .item {
+        margin: 3px;
+    }
+    #carousel-all-movies .item img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
+
+/*=====  End of CSS Carousel All Movies  ======*/
+
+.mv_movie {
+    padding: 5px;
+    position: relative;
+}
+.mv_movie .mv_movie_title {
+    color: #FFF;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+}
+.nw_movie {
+    padding: 5px;
+    position: relative;
+}
+.nw_movie .nw_movie_title {
+    color: #FFF;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+}
+.bg-m-info {
+    background: #5BC0DE !important;
+}
+
+

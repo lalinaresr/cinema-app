@@ -1,0 +1,340 @@
+<?php
+	defined('BASEPATH') OR exit('No direct script access allowed');
+
+	class Genders extends CI_Controller {
+
+		/**
+		* [__construct description]
+		*/
+		public function __construct(){
+			parent::__construct(); 
+
+			$this->load->model('Movies_model');
+			$this->load->model('Productors_model');
+			$this->load->model('Genders_model');
+			$this->load->model('Categorys_model');
+			$this->load->model('Users_model');
+			$this->load->model('Status_model');
+
+			$this->load->library('pagination');
+		}
+
+		/**
+		* [index description]
+		* @return [type] [description]
+		*/
+		public function index(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$params = array(
+					'page_title' => SITE_NAME . ' - Genders Management',
+					'css_files' => array(
+						base_url() . 'assets/css/bootstrap.min.css',
+						base_url() . 'assets/css/font-awesome.min.css',
+						base_url() . 'assets/plugins/dataTables/css/dataTables.bootstrap.min.css',
+						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
+						'https://fonts.googleapis.com/css?family=Ubuntu',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
+						base_url() . 'assets/css/snipps/dashboard.css',
+						base_url() . 'assets/css/styles.css'
+					),
+					'js_files' => array(
+						base_url() . 'assets/js/jquery-3.2.1.js',
+						base_url() . 'assets/js/jquery.form.min.js',
+						base_url() . 'assets/js/bootstrap.min.js',
+						base_url() . 'assets/plugins/dataTables/js/jquery.dataTables.min.js',
+						base_url() . 'assets/plugins/dataTables/js/dataTables.bootstrap.min.js',
+						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
+						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
+						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
+						'//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js',
+						'//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js',
+						'//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js',
+						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
+						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
+						base_url() . 'assets/js/executes/dataTables.js',
+						base_url() . 'assets/js/snipps/genders.js',
+						base_url() . 'assets/js/snipps/auth.js',
+						base_url() . 'assets/js/site.js'
+					),
+					'get_all_genders' => $this->Genders_model->get_all_genders(),
+					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				);
+				$this->load->view('header', $params);
+				$this->load->view('partials/genders/navbar');
+				$this->load->view('partials/genders/sidebar');
+				$this->load->view('partials/genders/container');
+				$this->load->view('partials/genders/footer');
+				$this->load->view('footer');
+			}		
+		}
+
+		/**
+		* [add description]
+		*/
+		public function add(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$params = array(
+					'page_title' => SITE_NAME . ' - Genders Management',
+					'css_files' => array(
+						base_url() . 'assets/css/bootstrap.min.css',
+						base_url() . 'assets/css/font-awesome.min.css',
+						'https://fonts.googleapis.com/css?family=Ubuntu',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
+						base_url() . 'assets/css/snipps/dashboard.css',
+						base_url() . 'assets/css/styles.css'
+					),
+					'js_files' => array(
+						base_url() . 'assets/js/jquery.min.js',
+						base_url() . 'assets/js/jquery.form.min.js',
+						base_url() . 'assets/js/bootstrap.min.js',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
+						base_url() . 'assets/js/snipps/genders.js',
+						base_url() . 'assets/js/snipps/auth.js',
+						base_url() . 'assets/js/site.js'
+					),
+					'get_all_status' => $this->Status_model->get_all_status(),
+					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				);
+				$this->load->view('header', $params);
+				$this->load->view('partials/genders/navbar');
+				$this->load->view('partials/genders/sidebar');
+				$this->load->view('partials/genders/add');
+				$this->load->view('partials/genders/footer');
+				$this->load->view('footer');
+			}		
+		}
+
+		/**
+		* [insert description]
+		* @return [type] [description]
+		*/
+		public function insert(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$insert = array(
+					'gender_name' => trim($this->input->post('gender_name_insert')), 
+					'gender_slug' => trim($this->input->post('gender_slug_insert')), 
+					'gender_status' => trim($this->input->post('gender_status_insert'))
+				);
+				$this->Genders_model->insert_model($insert);
+			}			
+		}
+
+		/**
+		* [view description]
+		* @param  [type] $id_gender [description]
+		* @return [type]            [description]
+		*/
+		public function view($id_gender){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$params = array(
+					'page_title' => SITE_NAME . ' - Genders Management',
+					'css_files' => array(
+						base_url() . 'assets/css/bootstrap.min.css',
+						base_url() . 'assets/css/font-awesome.min.css',
+						'https://fonts.googleapis.com/css?family=Ubuntu',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
+						base_url() . 'assets/css/snipps/dashboard.css',
+						base_url() . 'assets/css/styles.css'
+					),
+					'js_files' => array(
+						base_url() . 'assets/js/jquery.min.js',
+						base_url() . 'assets/js/jquery.form.min.js',
+						base_url() . 'assets/js/bootstrap.min.js',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
+						base_url() . 'assets/js/snipps/genders.js',
+						base_url() . 'assets/js/snipps/auth.js',
+						base_url() . 'assets/js/site.js'
+					),
+					'view_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
+					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				);
+				$this->load->view('header', $params);
+				$this->load->view('partials/genders/navbar');
+				$this->load->view('partials/genders/sidebar');
+				$this->load->view('partials/genders/view');
+				$this->load->view('partials/genders/footer');
+				$this->load->view('footer');
+			}		
+		}
+
+		/**
+		* [filter_by description]
+		* @param  [type] $id_gender [description]
+		* @return [type]            [description]
+		*/
+		public function filter_by($id_gender){
+			$total_rows = 0;
+			if ($this->Movies_model->get_count_movies_by_gender($id_gender) != FALSE) {
+				$total_rows = $this->Movies_model->get_count_movies_by_gender($id_gender)->num_rows();
+			}else{
+				$total_rows = 0;
+			}
+
+			$config = array();
+	       	$config['base_url'] = base_url() . 'genders/filter_by/' . $id_gender . '/';
+	       	$config['total_rows'] = $total_rows;
+	       	$config['per_page'] = 4; 
+    		$config['uri_segment'] = 4;
+    		/*$config['num_links'] = round(($this->Movies_model->get_all_movies_activated()->num_rows() / 8));
+	       	$config['use_page_numbers'] = TRUE;*/
+
+	       	$config['full_tag_open']  = '<nav aria-label="Page navigation"><ul class="pagination">';
+	       	$config['full_tag_close'] = '</ul></nav><!--pagination-->';
+
+	       	$config['first_link'] = '&laquo; First';
+	       	$config['first_tag_open'] = '<li class="prev page">';
+	       	$config['first_tag_close'] = '</li>';
+
+	       	$config['last_link'] = 'Last &raquo;';
+	       	$config['last_tag_open'] = '<li class="next page">';
+	       	$config['last_tag_close'] = '</li>';
+
+	       	$config['next_link'] = 'Next <span class="glyphicon glyphicon-chevron-right"></span>';
+	       	$config['next_tag_open'] = '<li class="next page">';
+	       	$config['next_tag_close'] = '</li>';
+
+	       	$config['prev_link'] = '<span class="glyphicon glyphicon-chevron-left"></span> Previous';
+	       	$config['prev_tag_open'] = '<li class="prev page">';
+	       	$config['prev_tag_close'] = '</li>';
+
+	       	$config['cur_tag_open'] = '<li class="active"><a href="#">';
+	       	$config['cur_tag_close'] = '</a></li>';
+
+	       	$config['num_tag_open'] = '<li class="page">';
+	       	$config['num_tag_close'] = '</li>';
+
+	       	$this->pagination->initialize($config);
+	       	
+	       	$results_paginated = $this->Genders_model->get_movies_by_gender($config['per_page'], $this->uri->segment(4), 'cm_gen_mov.id_gender', decryp($id_gender));
+	       	$links_created = $this->pagination->create_links();
+
+			$params = array(
+				'page_title' => SITE_NAME,
+				'css_files' => array(
+					base_url() . 'assets/css/bootstrap.min.css',
+					base_url() . 'assets/css/font-awesome.min.css',
+					base_url() . 'assets/plugins/owl-carousel/owl.carousel.css',
+					base_url() . 'assets/plugins/owl-carousel/owl.theme.css',
+					base_url() . 'assets/plugins/owl-carousel/owl.transitions.css',
+					base_url() . 'assets/css/executes/owlCarousels.css',
+					'https://fonts.googleapis.com/css?family=Ubuntu',
+					base_url() . 'assets/css/snipps/welcome.css',
+					base_url() . 'assets/css/styles.css'
+				),
+				'js_files' => array(
+					base_url() . 'assets/js/jquery.min.js',
+					base_url() . 'assets/js/jquery.form.min.js',
+					base_url() . 'assets/js/bootstrap.min.js',
+					base_url() . 'assets/plugins/owl-carousel/owl.carousel.min.js',
+					base_url() . 'assets/js/executes/owlCarousels.js',
+					base_url() . 'assets/js/snipps/auth.js',
+					base_url() . 'assets/js/site.js'
+				),
+				'view_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
+				'get_movies_most_viewed' => $this->Movies_model->get_movies_most_viewed(8),
+				'get_new_movies' => $this->Movies_model->get_new_movies(8),		
+				'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),	
+				'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),	
+				'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),	
+				'results_paginated' => $results_paginated,
+				'links_created'=> $links_created,				
+				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+			);
+			$this->load->view('header', $params);				
+			$this->load->view('partials/welcome/navbar');				
+			$this->load->view('partials/welcome/filter_by_genders');				
+			$this->load->view('partials/welcome/footer');				
+			$this->load->view('footer');
+		}
+
+		/**
+		* [edit description]
+		* @param  [type] $id_gender [description]
+		* @return [type]            [description]
+		*/
+		public function edit($id_gender){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$params = array(
+					'page_title' => SITE_NAME . ' - Genders Management',
+					'css_files' => array(
+						base_url() . 'assets/css/bootstrap.min.css',
+						base_url() . 'assets/css/font-awesome.min.css',
+						'https://fonts.googleapis.com/css?family=Ubuntu',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
+						base_url() . 'assets/css/snipps/dashboard.css',
+						base_url() . 'assets/css/styles.css'
+					),
+					'js_files' => array(
+						base_url() . 'assets/js/jquery.min.js',
+						base_url() . 'assets/js/jquery.form.min.js',
+						base_url() . 'assets/js/bootstrap.min.js',
+						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
+						base_url() . 'assets/js/snipps/genders.js',
+						base_url() . 'assets/js/snipps/auth.js',
+						base_url() . 'assets/js/site.js'
+					),
+					'id_gender_encryp' => $id_gender,
+					'edit_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
+					'get_all_status' => $this->Status_model->get_all_status(),
+					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				);
+				$this->load->view('header', $params);
+				$this->load->view('partials/genders/navbar');
+				$this->load->view('partials/genders/sidebar');
+				$this->load->view('partials/genders/edit');
+				$this->load->view('partials/genders/footer');
+				$this->load->view('footer');
+			}		
+		}
+
+		/**
+		* [update description]
+		* @return [type] [description]
+		*/
+		public function update(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$update = array(
+					'id_gender' => trim($this->input->post('id_gender_update')), 
+					'gender_name' => trim($this->input->post('gender_name_update')), 
+					'gender_slug' => trim($this->input->post('gender_slug_update')), 
+					'gender_status' => trim($this->input->post('gender_status_update'))
+				);
+				$this->Genders_model->update_model($update);
+			}			
+		}
+
+		/**
+		* [delete description]
+		* @return [type] [description]
+		*/
+		public function delete(){
+			if (!$this->session->userdata('is_admin_logged_in') && 
+				!$this->session->userdata('is_guest_logged_in')) {
+				redirect(site_url());
+			} else {
+				$id_gender = trim($this->input->post('id_gender_delete'));
+				
+				$this->Genders_model->delete_model($id_gender);
+			}			
+		}
+	}
+?>
