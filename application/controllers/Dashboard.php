@@ -50,13 +50,13 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/dashboard/navbar');
-				$this->load->view('partials/dashboard/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/dashboard/suggestions');
 				$this->load->view('partials/dashboard/newsletters');
 				$this->load->view('partials/dashboard/last_connections');
 				$this->load->view('partials/dashboard/my_connections');
-				$this->load->view('partials/dashboard/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}

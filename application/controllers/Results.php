@@ -110,9 +110,11 @@
 				
 			);
 			$this->load->view('header', $params);				
-			$this->load->view('partials/welcome/navbar');				
+			$this->load->view('layouts/welcome/navbar');				
+			$this->load->view('layouts/welcome/carousel-news');
+			$this->load->view('layouts/welcome/carousel-views');				
 			$this->load->view('partials/welcome/search_query');				
-			$this->load->view('partials/welcome/footer');				
+			$this->load->view('layouts/welcome/footer');				
 			$this->load->view('footer');		
 		}		
 	}

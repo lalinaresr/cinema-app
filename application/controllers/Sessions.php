@@ -57,10 +57,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/sessions/navbar');
-				$this->load->view('partials/sessions/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/sessions/container');
-				$this->load->view('partials/sessions/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}

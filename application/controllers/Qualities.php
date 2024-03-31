@@ -59,10 +59,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/qualities/navbar');
-				$this->load->view('partials/qualities/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/qualities/container');
-				$this->load->view('partials/qualities/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -98,10 +98,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/qualities/navbar');
-				$this->load->view('partials/qualities/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/qualities/add');
-				$this->load->view('partials/qualities/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -157,10 +157,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/qualities/navbar');
-				$this->load->view('partials/qualities/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/qualities/view');
-				$this->load->view('partials/qualities/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -200,10 +200,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/qualities/navbar');
-				$this->load->view('partials/qualities/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/qualities/edit');
-				$this->load->view('partials/qualities/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}

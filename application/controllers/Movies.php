@@ -65,10 +65,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/movies/navbar');
-				$this->load->view('partials/movies/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/movies/container');
-				$this->load->view('partials/movies/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -117,10 +117,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/movies/navbar');
-				$this->load->view('partials/movies/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/movies/add');
-				$this->load->view('partials/movies/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -198,10 +198,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/movies/navbar');
-				$this->load->view('partials/movies/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/movies/view');
-				$this->load->view('partials/movies/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -244,9 +244,10 @@
 				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 			);
 			$this->load->view('header', $params);				
-			$this->load->view('partials/welcome/navbar');				
+			$this->load->view('layouts/welcome/navbar');				
 			$this->load->view('partials/welcome/watch');				
-			$this->load->view('partials/welcome/footer');				
+			$this->load->view('layouts/welcome/carousel-news');				
+			$this->load->view('layouts/welcome/footer');				
 			$this->load->view('footer');
 		}
 
@@ -301,10 +302,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))					
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/movies/navbar');
-				$this->load->view('partials/movies/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/movies/edit');
-				$this->load->view('partials/movies/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -406,10 +407,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/movies/navbar');
-				$this->load->view('partials/movies/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/movies/cover');
-				$this->load->view('partials/movies/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}
 		}

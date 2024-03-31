@@ -1,24 +1,24 @@
-   <?php if ($this->session->userdata('is_admin_logged_in')): ?>
-      <div class="col-md-6">
-         <!-- This panel content the last connections of everybody users -->
-            <?php if ($get_some_sessions != FALSE): ?>
-               <div class="panel panel-info">
-                  <div class="panel-heading">
-                     <h3 class="panel-title">Last Connections</h3>
-                  </div>
-                  <div class="panel-body">
-                     <table class="table table-striped table-responsive">
-                        <thead>
-                           <tr>
-                              <th>ID</th>
-                              <th>Rol</th>
-                              <th>User</th>
-                              <th></th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <?php foreach ($get_some_sessions->result() as $key => $value): $id_session_fp_encryp = cryp($value->id_session); ?>
-                           <?php if ($value->id_user != $this->session->userdata('id_user')){ ?>
+<?php if ($this->session->userdata('is_admin_logged_in')) : ?>
+   <div class="col-md-6">
+      <!-- This panel content the last connections of everybody users -->
+      <?php if ($get_some_sessions != FALSE) : ?>
+         <div class="panel panel-info">
+            <div class="panel-heading">
+               <h3 class="panel-title">Last Connections</h3>
+            </div>
+            <div class="panel-body">
+               <table class="table table-striped table-responsive">
+                  <thead>
+                     <tr>
+                        <th>ID</th>
+                        <th>Rol</th>
+                        <th>User</th>
+                        <th></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <?php foreach ($get_some_sessions->result() as $key => $value) : $id_session_fp_encryp = cryp($value->id_session); ?>
+                        <?php if ($value->id_user != $this->session->userdata('id_user')) { ?>
                            <tr>
                               <td><a href='#modal-last-connections-<?= $id_session_fp_encryp; ?>' data-toggle="modal"><?= $id_session_fp_encryp; ?></a></td>
                               <td><?= $value->rol_name; ?></td>
@@ -66,7 +66,7 @@
                                              </div>
                                           </div>
                                           <!-- END field IP REGISTERED SESSION -->
-                                          <!-- field DATE REGISTERED SESSION -->                                               
+                                          <!-- field DATE REGISTERED SESSION -->
                                           <div class="col-md-6">
                                              <div class="form-group">
                                                 <label>Date Registered:</label>
@@ -74,14 +74,14 @@
                                              </div>
                                           </div>
                                           <!-- END field DATE REGISTERED SESSION -->
-                                          <!-- field CLIENT REGISTERED SESSION -->                                                   
+                                          <!-- field CLIENT REGISTERED SESSION -->
                                           <div class="col-md-12">
                                              <div class="form-group">
                                                 <label>Client Registered:</label>
                                                 <textarea type="text" class="form-control txa-no-resize" disabled><?= $value->client_registered_ses; ?></textarea>
                                              </div>
                                           </div>
-                                          <!-- END CLIENT REGISTERED SESSION -->                                                   
+                                          <!-- END CLIENT REGISTERED SESSION -->
                                        </div>
                                     </div>
                                     <div class="modal-footer bg-black">
@@ -90,18 +90,18 @@
                                  </div>
                               </div>
                            </div>
-                           <?php } ?>         
-                           <?php endforeach ?>
-                        </tbody>
-                     </table>
-                     <a href="<?= site_url('sessions/'); ?>" class="btn btn-info btn-block"><span class="glyphicon glyphicon-fire"></span> View more</a>
-                  </div>
-               </div>
-            <?php else: ?>
-               <div class="alert alert-danger">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                  <strong>Message!</strong> No users & sessions found on the system.
-               </div>
-            <?php endif ?>
-            <!-- END This panel content the last connections of everybody users -->
-         <?php endif ?>
+                        <?php } ?>
+                     <?php endforeach ?>
+                  </tbody>
+               </table>
+               <a href="<?= site_url('sessions/'); ?>" class="btn btn-info btn-block"><span class="glyphicon glyphicon-fire"></span> View more</a>
+            </div>
+         </div>
+      <?php else : ?>
+         <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Message!</strong> No users & sessions found on the system.
+         </div>
+      <?php endif ?>
+      <!-- END This panel content the last connections of everybody users -->
+<?php endif ?>

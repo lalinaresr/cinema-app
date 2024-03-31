@@ -14,14 +14,14 @@ jQuery(document).ready(function($) {
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function(){
-			$("#icon-user-login").html('<i class="fa fa-spinner fa-spin fa-fw"></i>');
+			$("#icon-user-login").html('<i style="font-size: 10em;" class="fa fa-spinner fa-spin fa-fw"></i>');
 			$("#btn-login").attr('disabled', true);
 			$("#btn-login").html('Loading');
 		},
 		success: function(response){
-			$("#icon-user-login").html('<i class="fa fa-user-circle" aria-hidden="true"></i>');
+			$("#icon-user-login").html('<i style="font-size: 10em;" class="fa fa-user-circle"></i>');
 			$("#btn-login").removeAttr('disabled');
-			$("#btn-login").html('Sign in');
+			$("#btn-login").html('<span class="glyphicon glyphicon-log-in"></span> Sign in');
 
 			if (response == "Missing") {
 				swal(

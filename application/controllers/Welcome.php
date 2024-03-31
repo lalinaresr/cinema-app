@@ -93,11 +93,13 @@
 				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				
 			);
-			$this->load->view('header', $params);				
-			$this->load->view('partials/welcome/navbar');				
-			$this->load->view('partials/welcome/container');				
-			$this->load->view('partials/welcome/footer');				
-			$this->load->view('footer');			
+			$this->load->view('header', $params);
+			$this->load->view('layouts/welcome/navbar');
+			$this->load->view('layouts/welcome/carousel-news');
+			$this->load->view('layouts/welcome/carousel-views');
+			$this->load->view('partials/welcome/container');
+			$this->load->view('layouts/welcome/footer');
+			$this->load->view('footer');
 		}			
 	}
 ?>

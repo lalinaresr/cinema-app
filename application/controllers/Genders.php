@@ -64,10 +64,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/genders/navbar');
-				$this->load->view('partials/genders/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/genders/container');
-				$this->load->view('partials/genders/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -103,10 +103,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/genders/navbar');
-				$this->load->view('partials/genders/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/genders/add');
-				$this->load->view('partials/genders/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -162,10 +162,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/genders/navbar');
-				$this->load->view('partials/genders/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/genders/view');
-				$this->load->view('partials/genders/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
@@ -254,9 +254,11 @@
 				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 			);
 			$this->load->view('header', $params);				
-			$this->load->view('partials/welcome/navbar');				
+			$this->load->view('layouts/welcome/navbar');				
+			$this->load->view('layouts/welcome/carousel-news');				
+			$this->load->view('layouts/welcome/carousel-views');				
 			$this->load->view('partials/welcome/filter_by_genders');				
-			$this->load->view('partials/welcome/footer');				
+			$this->load->view('layouts/welcome/footer');				
 			$this->load->view('footer');
 		}
 
@@ -295,10 +297,10 @@
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
-				$this->load->view('partials/genders/navbar');
-				$this->load->view('partials/genders/sidebar');
+				$this->load->view('layouts/dashboard/navbar');
+				$this->load->view('layouts/dashboard/sidebar');
 				$this->load->view('partials/genders/edit');
-				$this->load->view('partials/genders/footer');
+				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
 		}
