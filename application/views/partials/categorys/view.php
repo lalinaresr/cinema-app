@@ -1,9 +1,9 @@
-<h1 class="page-header">Categorys Management | View.</h1>
+<h1 class="page-header">Catálogo de categorías | ver a detalle.</h1>
 <div class="row">
    <!-- field CATEGORY NAME -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Category Name:</label>
+         <label>Nombre:</label>
          <input type="text" class="form-control" value="<?= $view_category->category_name; ?>" disabled>
       </div>
    </div>
@@ -12,7 +12,7 @@
    <!-- field CATEGORY SLUG -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Category Slug:</label>
+         <label>Alias:</label>
          <input type="text" class="form-control" value="<?= $view_category->category_slug; ?>" disabled>
       </div>
    </div>
@@ -21,7 +21,7 @@
    <!-- field STATUS NAME -->
    <div class="col-md-8">
       <div class="form-group">
-         <label>Status:</label>
+         <label>Estatus:</label>
          <input type="text" class="form-control" value="<?= $view_category->status_name; ?>" disabled>
       </div>
    </div>
@@ -30,7 +30,7 @@
    <!-- field DATE REGISTERED CATEGORY -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Date Registered:</label>
+         <label>Fecha de registro:</label>
          <input type="text" class="form-control" value="<?= $view_category->date_registered_cat; ?>" disabled>
       </div>
    </div>
@@ -39,7 +39,7 @@
    <!-- field IP REGISTERED CATEGORY -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>IP Registered:</label>
+         <label>IP de registro:</label>
          <input type="text" class="form-control" value="<?= $view_category->ip_registered_cat; ?>" disabled>
       </div>
    </div>
@@ -48,7 +48,7 @@
    <!-- field DATE MODIFIED CATEGORY -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Date Modified:</label>
+         <label>Fecha de modificación:</label>
          <input type="text" class="form-control" value="<?= $view_category->date_modified_cat; ?>" disabled>
       </div>
    </div>
@@ -57,7 +57,7 @@
    <!-- field IP MODIFIED CATEGORY -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>IP Modified:</label>
+         <label>IP de modificación:</label>
          <input type="text" class="form-control" value="<?= $view_category->ip_modified_cat; ?>" disabled>
       </div>
    </div>
@@ -66,7 +66,7 @@
    <!-- field CLIENT REGISTERED CATEGORY -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Client Registered:</label>
+         <label>Dispositivo de registro:</label>
          <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_category->client_registered_cat; ?></textarea>
       </div>
    </div>
@@ -75,7 +75,7 @@
    <!-- field CLIENT MODIFIED CATEGORY -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Client Modified:</label>
+         <label>Dispositivo de modificación:</label>
          <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_category->client_modified_cat; ?></textarea>
       </div>
    </div>
@@ -83,7 +83,7 @@
 
    <!-- button RETURN -->
    <div class="col-md-4">
-      <a href="<?= site_url('categorys/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancel</a>
+      <a href="<?= site_url('categorys/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
    </div>
    <!-- END button RETURN -->
 </div>

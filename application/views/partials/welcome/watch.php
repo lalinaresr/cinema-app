@@ -4,7 +4,7 @@
 			<iframe src="<?= $watch_movie->movie_play; ?>" class="video-movie center-block"></iframe>
 		</div>
 		<h3 class="text-info pull-left" style="word-wrap: break-word;"><span class="glyphicon glyphicon-play"></span> <?= $watch_movie->movie_name; ?></h3>
-		<h3 class="text-info pull-right"><span class="glyphicon glyphicon-stats"></span> <?= $watch_movie->movie_reproductions; ?> views</h3>
+		<h3 class="text-info pull-right"><span class="glyphicon glyphicon-stats"></span> <?= $watch_movie->movie_reproductions; ?> vistas</h3>
 	</div>
 
 </div>

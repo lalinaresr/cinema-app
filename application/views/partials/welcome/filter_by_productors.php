@@ -1,6 +1,6 @@
 <div class="row mb-20">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<h2 class="text-info tx"><span class="glyphicon glyphicon-asterisk"></span> Movies of <?= $view_productor->productor_name; ?></h2>
+		<h2 class="text-info tx"><span class="glyphicon glyphicon-film"></span> Películas dirigidas por "<i><?= $view_productor->productor_name; ?></i>"</h2>
 	</div>
 	<?php if ($results_paginated != FALSE) : ?>
 		<?php foreach ($results_paginated as $key => $value) : $id_movie_encryp = cryp($value->id_movie); ?>
@@ -13,7 +13,7 @@
 							<?= generate_extract($value->movie_description, 100); ?>
 						</p>
 						<p>
-							<a href="<?= site_url('movies/watch/') . $id_movie_encryp . '/'; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-film"></span> Watch</a>
+							<a href="<?= site_url('movies/watch/') . $id_movie_encryp . '/'; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-film"></span> Ver</a>
 							<?php if (
 								$this->session->userdata('is_admin_logged_in') ||
 								$this->session->userdata('is_guest_logged_in')
@@ -32,9 +32,8 @@
 		</div>
 	<?php else : ?>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="alert alert-warning">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-				<strong>Advertence Message!</strong> No found data movies about of this productor, try again
+			<div class="alert alert-danger">
+				<strong>¡Aviso!</strong> No se encontraron películas dirigidas por este productor en estos momentos.
 			</div>
 		</div>
 	<?php endif ?>

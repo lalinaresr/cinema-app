@@ -1,4 +1,4 @@
-<h1 class="page-header">Movies Management.</h1>
+<h1 class="page-header">Catálogo de películas.</h1>
 <?php if ($get_all_movies != FALSE) : ?>
    <div id="buttons-exports-movies">
       <div class="row" id="row_buttons_movies"></div>
@@ -6,11 +6,11 @@
          <thead>
             <tr>
                <th>ID</th>
-               <th>Movie</th>
-               <th>Cover</th>
-               <th>Reproductions</th>
-               <th>Status</th>
-               <th>Date Registered</th>
+               <th>Título</th>
+               <th>Portada</th>
+               <th>Reproducciones</th>
+               <th>Estatus</th>
+               <th>Fecha de registro</th>
                <th></th>
             </tr>
          </thead>
@@ -23,9 +23,9 @@
                   <td><?= $value->movie_reproductions; ?></td>
                   <td>
                      <?php if ($value->id_status == 1) : ?>
-                        <span class="label label-success">Active</span>
+                        <span class="label label-success">Activo</span>
                      <?php else : ?>
-                        <span class="label label-danger">Inactive</span>
+                        <span class="label label-danger">Inactivo</span>
                      <?php endif ?>
                   </td>
                   <td><?= get_antiquity($value->date_registered_mov); ?></td>
@@ -43,7 +43,7 @@
                      <div class="modal-content">
                         <div class="modal-header bg-black">
                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                           <h4 class="modal-title text-center tx-white">Movie ID: <?= $id_movie_encryp; ?></h4>
+                           <h4 class="modal-title text-center tx-white">Película #<?= $id_movie_encryp; ?></h4>
                         </div>
                         <div class="modal-body">
                            <?php if (strcmp($value->movie_cover, 'NO-IMAGE') == 0) : ?>
@@ -53,8 +53,8 @@
                            <?php endif ?>
                         </div>
                         <div class="modal-footer bg-black">
-                           <a href="<?= site_url('movies/edit_cover/') . $id_movie_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Edit Cover</a>
-                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+                           <a href="<?= site_url('movies/edit_cover/') . $id_movie_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar portada</a>
+                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
                         </div>
                      </div>
                   </div>
@@ -67,14 +67,14 @@
                      <div class="modal-content">
                         <div class="modal-header bg-black">
                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                           <h4 class="modal-title text-center tx-white">Movie ID: <?= $id_movie_encryp; ?></h4>
+                           <h4 class="modal-title text-center tx-white">Película #<?= $id_movie_encryp; ?></h4>
                         </div>
                         <div class="modal-body">
                            <div class="row">
                               <!-- field MOVIE NAME -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>Movie Name:</label>
+                                    <label>Título:</label>
                                     <input type="text" class="form-control" value="<?= $value->movie_name; ?>" disabled>
                                  </div>
                               </div>
@@ -83,7 +83,7 @@
                               <!-- field MOVIE SLUG -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>Movies Slug:</label>
+                                    <label>Alias:</label>
                                     <input type="text" class="form-control" value="<?= $value->movie_slug; ?>" disabled>
                                  </div>
                               </div>
@@ -92,7 +92,7 @@
                               <!-- field STATUS NAME -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>Status:</label>
+                                    <label>Estatus:</label>
                                     <input type="text" class="form-control" value="<?= $value->status_name; ?>" disabled>
                                  </div>
                               </div>
@@ -101,7 +101,7 @@
                               <!-- field MOVIE RELEASE DATE -->
                               <div class="col-md-8">
                                  <div class="form-group">
-                                    <label>Movie Release Date:</label>
+                                    <label>Fecha de lanzamiento:</label>
                                     <div class="input-group">
                                        <input type="text" class="form-control" value="<?= $value->movie_release_date; ?>" disabled>
                                        <span class="input-group-addon">
@@ -115,7 +115,7 @@
                               <!-- field MOVIE DURATION -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>Movie Duration:</label>
+                                    <label>Duración:</label>
                                     <input type="text" class="form-control" value="<?= $value->movie_duration; ?>" disabled>
                                  </div>
                               </div>
@@ -124,7 +124,7 @@
                               <!-- field MOVIE COUNTRY ORIGIN -->
                               <div class="col-md-8">
                                  <div class="form-group">
-                                    <label>Movie Country Origin:</label>
+                                    <label>País de origen:</label>
                                     <input type="text" class="form-control" value="<?= $value->movie_country_origin; ?>" disabled>
                                  </div>
                               </div>
@@ -133,7 +133,7 @@
                               <!-- field MOVIE REPRODUCTIONS -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>Movie Reproductions:</label>
+                                    <label>Reproducciones:</label>
                                     <input type="text" class="form-control" value="<?= $value->movie_reproductions; ?>" disabled>
                                  </div>
                               </div>
@@ -142,7 +142,7 @@
                               <!-- field MOVIE DESCRIPTION -->
                               <div class="col-md-12">
                                  <div class="form-group">
-                                    <label>Movie Description:</label>
+                                    <label>Descripción:</label>
                                     <textarea type="text" class="form-control txa-no-resize" disabled><?= $value->movie_description; ?></textarea>
                                  </div>
                               </div>
@@ -150,7 +150,7 @@
                            </div>
                         </div>
                         <div class="modal-footer bg-black">
-                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
                         </div>
                      </div>
                   </div>
@@ -161,8 +161,7 @@
    </div>
 <?php else : ?>
    <div class="alert alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <strong>Message!</strong> No movies found on the system.
+      <strong>¡Aviso!</strong> No se encontraron datos de películas para mostrar en estos momentos.
    </div>
 <?php endif ?>
-<a href="<?= site_url('movies/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Add Movie</a>
+<a href="<?= site_url('movies/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>

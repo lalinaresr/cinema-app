@@ -1,9 +1,9 @@
-<h1 class="page-header">Genders Management | View.</h1>
+<h1 class="page-header">Catálogo de géneros | ver a detalle.</h1>
 <div class="row">
    <!-- field GENDER NAME -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Gender Name:</label>
+         <label>Nombre:</label>
          <input type="text" class="form-control" value="<?= $view_gender->gender_name; ?>" disabled>
       </div>
    </div>
@@ -12,7 +12,7 @@
    <!-- field GENDER SLUG -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Gender Slug:</label>
+         <label>Alias:</label>
          <input type="text" class="form-control" value="<?= $view_gender->gender_slug; ?>" disabled>
       </div>
    </div>
@@ -21,7 +21,7 @@
    <!-- field STATUS NAME -->
    <div class="col-md-8">
       <div class="form-group">
-         <label>Status:</label>
+         <label>Estatus:</label>
          <input type="text" class="form-control" value="<?= $view_gender->status_name; ?>" disabled>
       </div>
    </div>
@@ -30,7 +30,7 @@
    <!-- field DATE REGISTERED GENDER -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Date Registered:</label>
+         <label>Fecha de registro:</label>
          <input type="text" class="form-control" value="<?= $view_gender->date_registered_gds; ?>" disabled>
       </div>
    </div>
@@ -39,7 +39,7 @@
    <!-- field IP REGISTERED GENDER -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>IP Registered:</label>
+         <label>IP de registro:</label>
          <input type="text" class="form-control" value="<?= $view_gender->ip_registered_gds; ?>" disabled>
       </div>
    </div>
@@ -48,7 +48,7 @@
    <!-- field DATE MODIFIED GENDER -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Date Modified:</label>
+         <label>Fecha de modificación:</label>
          <input type="text" class="form-control" value="<?= $view_gender->date_modified_gds; ?>" disabled>
       </div>
    </div>
@@ -57,7 +57,7 @@
    <!-- field IP MODIFIED GENDER -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>IP Modified:</label>
+         <label>IP de modificación:</label>
          <input type="text" class="form-control" value="<?= $view_gender->ip_modified_gds; ?>" disabled>
       </div>
    </div>
@@ -66,7 +66,7 @@
    <!-- field CLIENT REGISTERED GENDER -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Client Registered:</label>
+         <label>Dispositivo de registro:</label>
          <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_gender->client_registered_gds; ?></textarea>
       </div>
    </div>
@@ -75,7 +75,7 @@
    <!-- field CLIENT MODIFIED GENDER -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Client Modified:</label>
+         <label>Dispositivo de modificación:</label>
          <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_gender->client_modified_gds; ?></textarea>
       </div>
    </div>
@@ -83,7 +83,7 @@
 
    <!-- button RETURN -->
    <div class="col-md-4">
-      <a href="<?= site_url('genders/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancel</a>
+      <a href="<?= site_url('genders/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
    </div>
    <!-- END button RETURN -->
 </div>

@@ -1,7 +1,7 @@
 <!-- Carousel with the movies most viewed -->
 <div class="row">
     <div class="col-md-12">
-        <h2 class="text-info tx"><span class="glyphicon glyphicon-star-empty"></span> Movies Most Viewed</h2>
+        <h2 class="text-info tx"><span class="glyphicon glyphicon-star-empty"></span> Películas más vistas</h2>
         <div id="carousel-movies-most-viewed">
             <?php foreach ($get_movies_most_viewed->result() as $key => $value) : $id_movie_encryp = cryp($value->id_movie); ?>
                 <div class="item">

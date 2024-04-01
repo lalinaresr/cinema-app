@@ -1,4 +1,4 @@
-<h1 class="page-header">Productors Management.</h1>
+<h1 class="page-header">Catálogo de productores.</h1>
 <?php if ($get_all_productors != FALSE) : ?>
    <div id="buttons-exports-productors">
       <div class="row" id="row_buttons_productors"></div>
@@ -6,10 +6,10 @@
          <thead>
             <tr>
                <th>ID</th>
-               <th>Productor</th>
+               <th>Nombre</th>
                <th>Logo</th>
-               <th>Status</th>
-               <th>Date Registered</th>
+               <th>Estatus</th>
+               <th>Fecha de registro</th>
                <th></th>
             </tr>
          </thead>
@@ -21,9 +21,9 @@
                   <td><a href='#modal-view-logo-productor-<?= $id_productor_encryp; ?>' data-toggle="modal"><?= $value->id_productor . '_logo.jpg'; ?></a></td>
                   <td>
                      <?php if ($value->id_status == 1) : ?>
-                        <span class="label label-success">Active</span>
+                        <span class="label label-success">Activo</span>
                      <?php else : ?>
-                        <span class="label label-danger">Inactive</span>
+                        <span class="label label-danger">Inactivo</span>
                      <?php endif ?>
                   </td>
                   <td><?= get_antiquity($value->date_registered_pro); ?></td>
@@ -40,7 +40,7 @@
                      <div class="modal-content">
                         <div class="modal-header bg-black">
                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                           <h4 class="modal-title text-center tx-white">Productor ID: <?= $id_productor_encryp; ?></h4>
+                           <h4 class="modal-title text-center tx-white">Productor #<?= $id_productor_encryp; ?></h4>
                         </div>
                         <div class="modal-body">
                            <?php if (strcmp($value->productor_image_logo, 'NO-IMAGE') == 0) : ?>
@@ -50,8 +50,8 @@
                            <?php endif ?>
                         </div>
                         <div class="modal-footer bg-black">
-                           <a href="<?= site_url('productors/edit_logo/') . $id_productor_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Edit Logo</a>
-                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+                           <a href="<?= site_url('productors/edit_logo/') . $id_productor_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar logo</a>
+                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
                         </div>
                      </div>
                   </div>
@@ -64,14 +64,14 @@
                      <div class="modal-content">
                         <div class="modal-header bg-black">
                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                           <h4 class="modal-title tx-white text-center">Productor ID: <?= $id_productor_encryp; ?></h4>
+                           <h4 class="modal-title tx-white text-center">Productor #<?= $id_productor_encryp; ?></h4>
                         </div>
                         <div class="modal-body">
                            <div class="row">
                               <!-- field PRODUCTOR NAME -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Productor Name:</label>
+                                    <label>Nombre:</label>
                                     <input type="text" class="form-control" value="<?= $value->productor_name; ?>" disabled>
                                  </div>
                               </div>
@@ -80,7 +80,7 @@
                               <!-- field PRODUCTOR SLUG -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Productor Slug:</label>
+                                    <label>Alias:</label>
                                     <input type="text" class="form-control" value="<?= $value->productor_slug; ?>" disabled>
                                  </div>
                               </div>
@@ -89,7 +89,7 @@
                               <!-- field STATUS NAME -->
                               <div class="col-md-8">
                                  <div class="form-group">
-                                    <label>Status:</label>
+                                    <label>Estatus:</label>
                                     <input type="text" class="form-control" value="<?= $value->status_name; ?>" disabled>
                                  </div>
                               </div>
@@ -98,7 +98,7 @@
                               <!-- field DATE REGISTERED PRODUCTOR -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>Date Registered:</label>
+                                    <label>Fecha de registro:</label>
                                     <input type="text" class="form-control" value="<?= $value->date_registered_pro; ?>" disabled>
                                  </div>
                               </div>
@@ -107,7 +107,7 @@
                               <!-- field IP REGISTERED PRODUCTOR -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>IP Registered:</label>
+                                    <label>IP de registro:</label>
                                     <input type="text" class="form-control" value="<?= $value->ip_registered_pro; ?>" disabled>
                                  </div>
                               </div>
@@ -116,7 +116,7 @@
                               <!-- field DATE MODIFIED PRODUCTOR -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>Date Modified:</label>
+                                    <label>Fecha de modificación:</label>
                                     <input type="text" class="form-control" value="<?= $value->date_modified_pro; ?>" disabled>
                                  </div>
                               </div>
@@ -125,7 +125,7 @@
                               <!-- field IP MODIFIED PRODUCTOR -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>IP Modified:</label>
+                                    <label>IP de modificación:</label>
                                     <input type="text" class="form-control" value="<?= $value->ip_modified_pro; ?>" disabled>
                                  </div>
                               </div>
@@ -134,7 +134,7 @@
                               <!-- field CLIENT REGISTERED PRODUCTOR -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Client Registered:</label>
+                                    <label>Dispositivo de registro:</label>
                                     <textarea type="text" class="form-control txa-no-resize" disabled><?= $value->client_registered_pro; ?></textarea>
                                  </div>
                               </div>
@@ -143,7 +143,7 @@
                               <!-- field CLIENT MODIFIED PRODUCTOR -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Client Modified:</label>
+                                    <label>Dispositivo de modificación:</label>
                                     <textarea type="text" class="form-control txa-no-resize" disabled><?= $value->client_modified_pro; ?></textarea>
                                  </div>
                               </div>
@@ -151,7 +151,7 @@
                            </div>
                         </div>
                         <div class="modal-footer bg-black">
-                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
                         </div>
                      </div>
                   </div>
@@ -163,8 +163,7 @@
    </div>
 <?php else : ?>
    <div class="alert alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <strong>Message!</strong> No productors found on the system.
+      <strong>¡Aviso!</strong> No se encontraron datos de productores para mostrar en estos momentos.
    </div>
 <?php endif ?>
-<a href="<?= site_url('productors/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Add Productor</a>
+<a href="<?= site_url('productors/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>

@@ -1,10 +1,10 @@
-<h1 class="page-header">Categorys Management | Edit.</h1>
+<h1 class="page-header">Catálogo de categorías | editar.</h1>
 <div class="row">
    <form action="<?= site_url('categorys/update/'); ?>" method="post" id="form-update-category">
       <!-- field ID CATEGORY -->
       <div class="col-md-12">
          <div class="form-group">
-            <label>ID Category:</label>
+            <label>ID:</label>
             <input type="text" class="form-control" value="<?= $id_category_encryp; ?>" disabled>
             <input type="hidden" id="id_category_update" name="id_category_update" class="form-control" value="<?= $id_category_encryp; ?>">
          </div>
@@ -14,7 +14,7 @@
       <!-- field CATEGORY NAME -->
       <div class="col-md-6">
          <div class="form-group">
-            <label>Category Name:</label>
+            <label>Nombre:</label>
             <input type="text" id="category_name_update" name="category_name_update" class="form-control" value="<?= $edit_category->category_name; ?>" required minlength="3" maxlength="50" autocomplete="off">
          </div>
       </div>
@@ -23,7 +23,7 @@
       <!-- field CATEGORY SLUG -->
       <div class="col-md-6">
          <div class="form-group">
-            <label>Category Slug:</label>
+            <label>Alias:</label>
             <input type="text" id="category_slug_update" name="category_slug_update" class="form-control" value="<?= $edit_category->category_slug; ?>" required minlength="3" maxlength="50" readonly>
          </div>
       </div>
@@ -32,7 +32,7 @@
       <!-- field STATUS NAME -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Status:</label>
+            <label>Estatus:</label>
             <select id="category_status_update" name="category_status_update" class="form-control" required>
                <option value="<?= $edit_category->id_status; ?>"><?= $edit_category->status_name; ?></option>
                <?php foreach ($get_all_status->result() as $key => $value) : ?>
@@ -48,7 +48,7 @@
       <!-- field DATE MODIFIED CATEGORY -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Date Modified:</label>
+            <label>Fecha de modificación:</label>
             <input type="text" class="form-control" value="<?= get_date_current(); ?>" disabled>
          </div>
       </div>
@@ -57,7 +57,7 @@
       <!-- field IP MODIFIED CATEGORY -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>IP Modified:</label>
+            <label>IP de modificación:</label>
             <input type="text" class="form-control" value="<?= get_ip_current(); ?>" disabled>
          </div>
       </div>
@@ -66,7 +66,7 @@
       <!-- field CLIENT MODIFIED CATEGORY -->
       <div class="col-md-12">
          <div class="form-group">
-            <label>Client Modified:</label>
+            <label>Dispositivo de modificación:</label>
             <textarea type="text" class="form-control txa-no-resize" disabled><?= get_agent_current(); ?></textarea>
          </div>
       </div>
@@ -74,8 +74,8 @@
 
       <!-- buttons ACTIONS -->
       <div class="col-md-4">
-         <button type="submit" class="btn btn-info" id="btn-update-category"><span class="glyphicon glyphicon-refresh"></span> Update Category</button>
-         <a href="<?= site_url('categorys/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancel</a>
+         <button type="submit" class="btn btn-info" id="btn-update-category"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
+         <a href="<?= site_url('categorys/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancelar</a>
       </div>
       <!-- END buttons ACTIONS -->
    </form>

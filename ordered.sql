@@ -56,8 +56,8 @@ ALTER TABLE `cm_status`
 --
 
 INSERT INTO `cm_status` (`id_status`, `status_name`, `status_slug`, `ip_registered_sts`, `date_registered_sts`, `client_registered_sts`, `ip_modified_sts`, `date_modified_sts`, `client_modified_sts`) VALUES
-(1, 'Active', 'active', '::1', '2017-07-28 23:53:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(2, 'Inactive', 'inactive', '::1', '2017-07-28 23:53:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(1, 'Activo', 'activo', '::1', '2017-07-28 23:53:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(2, 'Inactivo', 'inactivo', '::1', '2017-07-28 23:53:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -102,9 +102,9 @@ ALTER TABLE `cm_roles`
 --
 
 INSERT INTO `cm_roles` (`id_rol`, `id_status`, `rol_name`, `rol_slug`, `ip_registered_rol`, `date_registered_rol`, `client_registered_rol`, `ip_modified_rol`, `date_modified_rol`, `client_modified_rol`) VALUES
-(1, 1, 'Administrator', 'administrator', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(2, 1, 'User', 'user', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(3, 1, 'Guest', 'guest', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(1, 1, 'Administrador', 'administrador', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(2, 1, 'Usuario', 'usuario', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(3, 1, 'Capturista', 'capturista', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -151,7 +151,7 @@ ALTER TABLE `cm_contacts`
 --
 
 INSERT INTO `cm_contacts` (`id_contact`, `id_status`, `contact_firstname`, `contact_lastname`, `contact_sex`, `contact_date_birthday`, `ip_registered_cnt`, `date_registered_cnt`, `client_registered_cnt`, `ip_modified_cnt`, `date_modified_cnt`, `client_modified_cnt`) VALUES
-(1, 1, 'Joan', 'Sebastián', 'Male', '1970-06-10', '::1', '2017-07-29 00:26:52', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(1, 1, 'Joan', 'Sebastián', 'Hombre', '1970-06-10', '::1', '2017-07-29 00:26:52', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -421,7 +421,7 @@ ALTER TABLE `cm_categorys`
 --
 
 INSERT INTO `cm_categorys` (`id_category`, `id_status`, `category_name`, `category_slug`, `ip_registered_cat`, `date_registered_cat`, `client_registered_cat`, `ip_modified_cat`, `date_modified_cat`, `client_modified_cat`) VALUES
-(1, 1, 'Movie', 'movie', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(1, 1, 'Películas', 'peliculas', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -466,16 +466,16 @@ ALTER TABLE `cm_genders`
 --
 
 INSERT INTO `cm_genders` (`id_gender`, `id_status`, `gender_name`, `gender_slug`, `ip_registered_gds`, `date_registered_gds`, `client_registered_gds`, `ip_modified_gds`, `date_modified_gds`, `client_modified_gds`) VALUES
-(1, 1, 'Action', 'action', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(2, 1, 'Adventure', 'adventure', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(3, 1, 'Animation', 'animation', '::1', '2017-07-29 00:49:33', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(4, 1, 'Science Fiction', 'science-fiction', '::1', '2017-07-29 01:10:32', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(1, 1, 'Acción', 'accion', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(2, 1, 'Aventura', 'aventura', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(3, 1, 'Animación', 'animacion', '::1', '2017-07-29 00:49:33', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(4, 1, 'Ciencia Ficción', 'science-fiction', '::1', '2017-07-29 01:10:32', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
 (5, 1, 'Drama', 'drama', '::1', '2017-07-31 21:40:14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(6, 1, 'Comedy', 'comedy', '::1', '2017-08-01 00:34:35', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(7, 1, 'Crime', 'crime', '::1', '2017-08-01 00:34:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(8, 1, 'Fantasy', 'fantasy', '::1', '2017-08-01 00:34:58', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(6, 1, 'Comedia', 'comedia', '::1', '2017-08-01 00:34:35', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(7, 1, 'Crimen', 'crimen', '::1', '2017-08-01 00:34:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(8, 1, 'Fantasía', 'fantasia', '::1', '2017-08-01 00:34:58', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
 (9, 1, 'Terror', 'terror', '::1', '2017-08-01 00:35:41', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(10, 1, 'Suspense', 'suspense', '::1', '2017-08-01 00:35:55', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(10, 1, 'Suspenso', 'suspenso', '::1', '2017-08-01 00:35:55', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

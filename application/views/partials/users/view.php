@@ -1,9 +1,9 @@
-<h1 class="page-header">Users Management | View.</h1>
+<h1 class="page-header">Catálogo de usuarios | ver a detalle.</h1>
 <div class="row">
    <!-- field FIRSTNAME -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Firstname:</label>
+         <label>Nombre(s):</label>
          <input type="text" class="form-control" value="<?= $view_user->contact_firstname; ?>" disabled>
       </div>
    </div>
@@ -12,7 +12,7 @@
    <!-- field LASTNAME -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Lastname:</label>
+         <label>Apellido(s):</label>
          <input type="text" class="form-control" value="<?= $view_user->contact_lastname; ?>" disabled>
       </div>
    </div>
@@ -21,7 +21,7 @@
    <!-- field SEX -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Sex:</label>
+         <label>Sexo:</label>
          <input type="text" class="form-control" value="<?= $view_user->contact_sex; ?>" disabled>
       </div>
    </div>
@@ -30,7 +30,7 @@
    <!-- field DATE BIRTHDAY -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Date Birthday:</label>
+         <label>Fecha de nacimiento:</label>
          <div class="input-group date">
             <input type="text" class="form-control" value="<?= $view_user->contact_date_birthday; ?>" disabled>
             <span class="input-group-addon">
@@ -44,7 +44,7 @@
    <!-- field AGE EXACTLY -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Age Exactly:</label>
+         <label>Edad exacta:</label>
          <input type="text" class="form-control" value="<?= get_age_exactly($view_user->contact_date_birthday, 'ALL'); ?>" disabled>
       </div>
    </div>
@@ -62,7 +62,7 @@
    <!-- field STATUS NAME -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Status:</label>
+         <label>Estatus:</label>
          <input type="text" class="form-control" value="<?= $view_user->status_name; ?>" disabled>
       </div>
    </div>
@@ -71,7 +71,7 @@
    <!-- field USERNAME -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Username:</label>
+         <label>Usuario:</label>
          <input type="text" class="form-control" value="<?= $view_user->user_username; ?>" disabled>
       </div>
    </div>
@@ -80,7 +80,7 @@
    <!-- field EMAIL ADDRESS -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Email Address:</label>
+         <label>Correo electrónico:</label>
          <input type="email" class="form-control" value="<?= $view_user->user_email; ?>" disabled>
       </div>
    </div>
@@ -89,7 +89,7 @@
    <!-- field PASSWORD -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Password:</label>
+         <label>Contraseña:</label>
          <input type="password" class="form-control" value="<?= $view_user->user_password; ?>" disabled>
       </div>
    </div>
@@ -98,15 +98,15 @@
    <!-- field USER AVATAR -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>User Avatar:</label>
-         <a href='#modal-view-avatar_user-<?= $id_user_encryp; ?>' class="btn btn-info btn-block" data-toggle="modal"><span class="glyphicon glyphicon-picture"></span> View Image Logo</a>
+         <label>Avatar:</label>
+         <a href='#modal-view-avatar_user-<?= $id_user_encryp; ?>' class="btn btn-info btn-block" data-toggle="modal"><span class="glyphicon glyphicon-picture"></span> Ver imagen</a>
          <!-- This is the modal that shows the image profile of the user. -->
          <div class="modal fade" id="modal-view-avatar_user-<?= $id_user_encryp; ?>">
             <div class="modal-dialog modal-sm">
                <div class="modal-content">
                   <div class="modal-header bg-black">
                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                     <h4 class="modal-title text-center tx-white">User ID: <?= $id_user_encryp; ?></h4>
+                     <h4 class="modal-title text-center tx-white">Usuario #<?= $id_user_encryp; ?></h4>
                   </div>
                   <div class="modal-body">
                      <?php if (strcmp($view_user->user_avatar, 'NO-IMAGE') == 0) : ?>
@@ -117,9 +117,9 @@
                   </div>
                   <div class="modal-footer bg-black">
                      <?php if (decryp($id_user_encryp) == $this->session->userdata('id_user')) : ?>
-                        <a href="<?= site_url('users/edit_avatar/') . $id_user_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Edit Avatar</a>
+                        <a href="<?= site_url('users/edit_avatar/') . $id_user_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar avatar</a>
                      <?php endif ?>
-                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
                   </div>
                </div>
             </div>
@@ -132,7 +132,7 @@
    <!-- field DATE REGISTERED USER -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Date Registered:</label>
+         <label>Fecha de registro:</label>
          <input type="text" class="form-control" value="<?= $view_user->date_registered_usr; ?>" disabled>
       </div>
    </div>
@@ -141,7 +141,7 @@
    <!-- field IP REGISTERED USER -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>IP Registered:</label>
+         <label>IP de registro:</label>
          <input type="text" class="form-control" value="<?= $view_user->ip_registered_usr; ?>" disabled>
       </div>
    </div>
@@ -150,7 +150,7 @@
    <!-- field DATE MODIFIED USER -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Date Modified:</label>
+         <label>Fecha de modificación:</label>
          <input type="text" class="form-control" value="<?= $view_user->date_modified_usr; ?>" disabled>
       </div>
    </div>
@@ -159,7 +159,7 @@
    <!-- field IP MODIFIED USER -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>IP Modified:</label>
+         <label>IP de modificación:</label>
          <input type="text" class="form-control" value="<?= $view_user->ip_modified_usr; ?>" disabled>
       </div>
    </div>
@@ -168,7 +168,7 @@
    <!-- field CLIENT REGISTERED USER -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Client Registered:</label>
+         <label>Dispositivo de registro:</label>
          <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_user->client_registered_usr; ?></textarea>
       </div>
    </div>
@@ -177,7 +177,7 @@
    <!-- field CLIENT MODIFIED USER -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Client Modified:</label>
+         <label>Dispositivo de modificación:</label>
          <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_user->client_modified_usr; ?></textarea>
       </div>
    </div>
@@ -185,7 +185,7 @@
 
    <!-- button RETURN -->
    <div class="col-md-4">
-      <a href="<?= site_url('users/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancel</a>
+      <a href="<?= site_url('users/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
    </div>
    <!-- END button RETURN -->
 </div>

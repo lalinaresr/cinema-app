@@ -1,4 +1,4 @@
-<h1 class="page-header">Users Management | Edit.</h1>
+<h1 class="page-header">Catálogo de usuarios | editar.</h1>
 <div class="row">
    <form action="<?= site_url('users/update/'); ?>" method="post" id="form-update-user">
       <input type="hidden" id="id_contact_update" name="id_contact_update" class="form-control" value="<?= cryp($edit_user->id_contact); ?>">
@@ -6,7 +6,7 @@
       <!-- field ID_USER -->
       <div class="col-md-12">
          <div class="form-group">
-            <label>ID User:</label>
+            <label>ID:</label>
             <input type="text" class="form-control" value="<?= $id_user_encryp; ?>" disabled>
             <input type="hidden" id="id_user_update" name="id_user_update" class="form-control" value="<?= $id_user_encryp; ?>">
          </div>
@@ -16,7 +16,7 @@
       <!-- field FIRSTNAME -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Firstname:</label>
+            <label>Nombre(s):</label>
             <input type="text" id="user_firstname_update" name="user_firstname_update" class="form-control" value="<?= $edit_user->contact_firstname; ?>" required minlength="3" maxlength="20" autocomplete="off">
          </div>
       </div>
@@ -25,7 +25,7 @@
       <!-- field LASTNAME -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Lastname:</label>
+            <label>Apellido(s):</label>
             <input type="text" id="user_lastname_update" name="user_lastname_update" class="form-control" value="<?= $edit_user->contact_lastname; ?>" required minlength="3" maxlength="20" autocomplete="off">
          </div>
       </div>
@@ -34,10 +34,10 @@
       <!-- field SEX -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Sex:</label>
+            <label>Sexo:</label>
             <select id="user_sex_update" name="user_sex_update" class="form-control" required>
                <option value="<?= $edit_user->contact_sex; ?>" selected="true"><?= $edit_user->contact_sex; ?></option>
-               <?php foreach (array('Male', 'Female', 'Unspecified') as $key => $value) : ?>
+               <?php foreach (array('Hombre', 'Mujer', 'Sin especificar') as $key => $value) : ?>
                   <?php if ($value != $edit_user->contact_sex) : ?>
                      <option value="<?= $value; ?>"><?= $value; ?></option>
                   <?php endif ?>
@@ -50,7 +50,7 @@
       <!-- field DATE BIRTHDAY -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Date Birthday:</label>
+            <label>Fecha de nacimiento:</label>
             <div class="input-group">
                <input type="text" id="user_date_birthday_update" name="user_date_birthday_update" class="form-control" value="<?= $edit_user->contact_date_birthday; ?>" required>
                <span class="input-group-addon">
@@ -80,7 +80,7 @@
       <!-- field STATUS NAME -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Status:</label>
+            <label>Estatus:</label>
             <select id="user_status_update" name="user_status_update" class="form-control" required>
                <option value="<?= $edit_user->id_status; ?>"><?= $edit_user->status_name; ?></option>
                <?php foreach ($get_all_status->result() as $key => $value) : ?>
@@ -96,7 +96,7 @@
       <!-- field USERNAME -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Username:</label>
+            <label>Usuario:</label>
             <input type="text" id="user_username_update" name="user_username_update" class="form-control" value="<?= $edit_user->user_username; ?>" readonly>
          </div>
       </div>
@@ -105,7 +105,7 @@
       <!-- field EMAIL ADDRESS -->
       <div class="col-md-8">
          <div class="form-group">
-            <label>Email Address:</label>
+            <label>Correo electrónico:</label>
             <input type="email" id="user_email_update" name="user_email_update" class="form-control" value="<?= $edit_user->user_email; ?>" readonly>
          </div>
       </div>
@@ -114,7 +114,7 @@
       <!-- field PASSWORD -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Password:</label>
+            <label>Contraseña:</label>
             <input type="password" id="user_password_update" name="user_password_update" class="form-control" value="<?= $edit_user->user_password; ?>" readonly>
          </div>
       </div>
@@ -123,7 +123,7 @@
       <!-- field DATE MODIFIED USER -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>Date Modified:</label>
+            <label>Fecha de modificación:</label>
             <input type="text" class="form-control" value="<?= get_date_current(); ?>" disabled>
          </div>
       </div>
@@ -132,7 +132,7 @@
       <!-- field IP MODIFIED USER -->
       <div class="col-md-4">
          <div class="form-group">
-            <label>IP Modified:</label>
+            <label>IP de modificación:</label>
             <input type="text" class="form-control" value="<?= get_ip_current(); ?>" disabled>
          </div>
       </div>
@@ -141,7 +141,7 @@
       <!-- field CLIENT MODIFIED USER -->
       <div class="col-md-12">
          <div class="form-group">
-            <label>Client Modified:</label>
+            <label>Dispositivo de modificación:</label>
             <textarea type="text" class="form-control txa-no-resize" disabled><?= get_agent_current(); ?></textarea>
          </div>
       </div>
@@ -149,8 +149,8 @@
 
       <!-- buttons ACTIONS -->
       <div class="col-md-4">
-         <button type="submit" class="btn btn-info" id="btn-update-user"><span class="glyphicon glyphicon-refresh"></span> Update User</button>
-         <a href="<?= site_url('users/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancel</a>
+         <button type="submit" class="btn btn-info" id="btn-update-user"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
+         <a href="<?= site_url('users/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancelar</a>
       </div>
       <!-- END buttons ACTIONS -->
    </form>

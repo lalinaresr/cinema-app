@@ -1,12 +1,12 @@
-<h1 class="page-header">Movies Management | View.</h1>
+<h1 class="page-header">Catálogo de películas | ver a detalle.</h1>
 <div class="row">
    <!-- field PRODUCTORS MOVIE -->
    <div class="col-md-4">
       <div class="form-group">
          <?php if ($productors_movie != FALSE) : ?>
-            <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-productors-movie'>Productors</a>
+            <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-productors-movie'>Productores</a>
          <?php else : ?>
-            <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No producers found for this movie</a>
+            <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No hay productores asignados a esta película.</a>
          <?php endif ?>
       </div>
    </div>
@@ -15,7 +15,7 @@
          <div class="modal-content">
             <div class="modal-header bg-black">
                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-               <h4 class="modal-title text-center tx-white">Productors of Movie</h4>
+               <h4 class="modal-title text-center tx-white">Productores</h4>
             </div>
             <div class="modal-body">
                <?php foreach ($productors_movie as $key => $value) : ?>
@@ -23,7 +23,7 @@
                <?php endforeach ?>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+               <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
             </div>
          </div>
       </div>
@@ -34,9 +34,9 @@
    <div class="col-md-4">
       <div class="form-group">
          <?php if ($genders_movie != FALSE) : ?>
-            <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-genders-movie'>Genders</a>
+            <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-genders-movie'>Géneros</a>
          <?php else : ?>
-            <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No genders found for this movie</a>
+            <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No hay géneros asignados a esta película.</a>
          <?php endif ?>
       </div>
    </div>
@@ -45,7 +45,7 @@
          <div class="modal-content">
             <div class="modal-header bg-black">
                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-               <h4 class="modal-title text-center tx-white">Genders of Movie</h4>
+               <h4 class="modal-title text-center tx-white">Géneros</h4>
             </div>
             <div class="modal-body">
                <?php foreach ($genders_movie as $key => $value) : ?>
@@ -53,7 +53,7 @@
                <?php endforeach ?>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+               <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
             </div>
          </div>
       </div>
@@ -64,9 +64,9 @@
    <div class="col-md-4">
       <div class="form-group">
          <?php if ($categorys_movie != FALSE) : ?>
-            <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-categorys-movie'>Categorys</a>
+            <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-categorys-movie'>Categorías</a>
          <?php else : ?>
-            <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No categorys found for this movie</a>
+            <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No hay categorías asignadas a esta película.</a>
          <?php endif ?>
       </div>
    </div>
@@ -75,7 +75,7 @@
          <div class="modal-content">
             <div class="modal-header bg-black">
                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-               <h4 class="modal-title text-center tx-white">Categorys of Movie</h4>
+               <h4 class="modal-title text-center tx-white">Categorías</h4>
             </div>
             <div class="modal-body">
                <?php foreach ($categorys_movie as $key => $value) : ?>
@@ -83,7 +83,7 @@
                <?php endforeach ?>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+               <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
             </div>
          </div>
       </div>
@@ -94,7 +94,7 @@
    <!-- field STATUS NAME -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Status:</label>
+         <label>Estatus:</label>
          <input type="text" class="form-control" value="<?= $view_movie->status_name; ?>" disabled>
       </div>
    </div>
@@ -103,7 +103,7 @@
    <!-- field MOVIE NAME -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Movies Name:</label>
+         <label>Título:</label>
          <input type="text" class="form-control" value="<?= $view_movie->movie_name; ?>" disabled>
       </div>
    </div>
@@ -112,7 +112,7 @@
    <!-- field MOVIE SLUG -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Movies Slug:</label>
+         <label>Alias:</label>
          <input type="text" class="form-control" value="<?= $view_movie->movie_slug; ?>" disabled>
       </div>
    </div>
@@ -121,7 +121,7 @@
    <!-- field QUALITY NAME -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Quality:</label>
+         <label>Calidad:</label>
          <input type="text" class="form-control" value="<?= $view_movie->quality_name; ?>" disabled>
       </div>
    </div>
@@ -130,7 +130,7 @@
    <!-- field MOVIE RELEASE DATE -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Movie Release Date:</label>
+         <label>Fecha de lanzamiento:</label>
          <div class="input-group">
             <input type="text" class="form-control" value="<?= $view_movie->movie_release_date; ?>" disabled>
             <span class="input-group-addon">
@@ -144,7 +144,7 @@
    <!-- field MOVIE DURATION -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Movie Duration:</label>
+         <label>Duración:</label>
          <input type="text" class="form-control" value="<?= $view_movie->movie_duration; ?>" disabled>
       </div>
    </div>
@@ -153,7 +153,7 @@
    <!-- field MOVIE COUNTRY ORIGIN -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Movie Country Origin:</label>
+         <label>País de origen:</label>
          <input type="text" class="form-control" value="<?= $view_movie->movie_country_origin; ?>" disabled>
       </div>
    </div>
@@ -162,15 +162,15 @@
    <!-- field MOVIE COVER -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Movie Cover:</label>
-         <a href='#modal-view-image-cover-<?= $id_movie_encryp; ?>' class="btn btn-info btn-block" data-toggle="modal"><span class="glyphicon glyphicon-picture"></span> View Cover</a>
+         <label>Portada:</label>
+         <a href='#modal-view-image-cover-<?= $id_movie_encryp; ?>' class="btn btn-info btn-block" data-toggle="modal"><span class="glyphicon glyphicon-picture"></span> Ver imagen</a>
          <!-- This is the modal that shows the cover of the movies. -->
          <div class="modal fade" id="modal-view-image-cover-<?= $id_movie_encryp; ?>">
             <div class="modal-dialog modal-sm">
                <div class="modal-content">
                   <div class="modal-header bg-black">
                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                     <h4 class="modal-title text-center tx-white">Movie ID: <?= $id_movie_encryp; ?></h4>
+                     <h4 class="modal-title text-center tx-white">Película #<?= $id_movie_encryp; ?></h4>
                   </div>
                   <div class="modal-body">
                      <?php if (strcmp($view_movie->movie_cover, 'NO-IMAGE') == 0) : ?>
@@ -180,8 +180,8 @@
                      <?php endif ?>
                   </div>
                   <div class="modal-footer bg-black">
-                     <a href="<?= site_url('movies/edit_cover/') . $id_movie_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Edit Cover</a>
-                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+                     <a href="<?= site_url('movies/edit_cover/') . $id_movie_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar portada</a>
+                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
                   </div>
                </div>
             </div>
@@ -194,7 +194,7 @@
    <!-- field MOVIE REPRODUCTIONS -->
    <div class="col-md-4">
       <div class="form-group">
-         <label>Movie Reproductions:</label>
+         <label>Reproducciones:</label>
          <input type="text" class="form-control" value="<?= $view_movie->movie_reproductions; ?>" disabled>
       </div>
    </div>
@@ -203,7 +203,7 @@
    <!-- field MOVIE PLAY -->
    <div class="col-md-12">
       <div class="form-group">
-         <label>Movie Play:</label>
+         <label>Enlace:</label>
          <input type="text" class="form-control" value="<?= $view_movie->movie_play; ?>" disabled>
       </div>
    </div>
@@ -212,7 +212,7 @@
    <!-- field MOVIE DESCRIPTION -->
    <div class="col-md-12">
       <div class="form-group">
-         <label>Movie Description:</label>
+         <label>Descripción:</label>
          <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_movie->movie_description; ?></textarea>
       </div>
    </div>
@@ -222,7 +222,7 @@
    <!-- field DATE REGISTERED MOVIE -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Date Registered:</label>
+         <label>Fecha de registro:</label>
          <input type="text" class="form-control" value="<?= $view_movie->date_registered_mov; ?>" disabled>
       </div>
    </div>
@@ -231,7 +231,7 @@
    <!-- field IP REGISTERED MOVIE -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>IP Registered:</label>
+         <label>IP de registro:</label>
          <input type="text" class="form-control" value="<?= $view_movie->ip_registered_mov; ?>" disabled>
       </div>
    </div>
@@ -240,7 +240,7 @@
    <!-- field CLIENT REGISTERED MOVIE -->
    <div class="col-md-12">
       <div class="form-group">
-         <label>Client Registered:</label>
+         <label>Dispositivo de registro:</label>
          <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_movie->client_registered_mov; ?></textarea>
       </div>
    </div>
@@ -249,7 +249,7 @@
    <!-- field DATE MODIFIED MOVIE -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>Date Modified:</label>
+         <label>Fecha de modificación:</label>
          <input type="text" class="form-control" value="<?= $view_movie->date_modified_mov; ?>" disabled>
       </div>
    </div>
@@ -258,7 +258,7 @@
    <!-- field IP MODIFIED MOVIE -->
    <div class="col-md-6">
       <div class="form-group">
-         <label>IP Modified:</label>
+         <label>IP de modificación:</label>
          <input type="text" class="form-control" value="<?= $view_movie->ip_modified_mov; ?>" disabled>
       </div>
    </div>
@@ -267,7 +267,7 @@
    <!-- field CLIENT MODIFIED MOVIE -->
    <div class="col-md-12">
       <div class="form-group">
-         <label>Client Modified:</label>
+         <label>Dispositivo de modificación:</label>
          <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_movie->client_modified_mov; ?></textarea>
       </div>
    </div>
@@ -275,7 +275,7 @@
 
    <!-- button RETURN -->
    <div class="col-md-4">
-      <a href="<?= site_url('movies/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancel</a>
+      <a href="<?= site_url('movies/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
    </div>
    <!-- END button RETURN -->
 </div>

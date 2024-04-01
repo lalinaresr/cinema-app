@@ -37,7 +37,7 @@
 				redirect('dashboard/');
 			} else {
 				$params = array(
-					'page_title' => 'Log In - ' . SITE_NAME,
+					'page_title' => 'Iniciar sesión - ' . SITE_NAME,
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',

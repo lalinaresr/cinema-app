@@ -1,4 +1,4 @@
-<h1 class="page-header">Genders Management.</h1>
+<h1 class="page-header">Catálogo de géneros.</h1>
 <?php if ($get_all_genders != FALSE) : ?>
    <div id="buttons-exports-genders">
       <div class="row" id="row_buttons_genders"></div>
@@ -6,9 +6,9 @@
          <thead>
             <tr>
                <th>ID</th>
-               <th>Gender</th>
-               <th>Status</th>
-               <th>Date Registered</th>
+               <th>Nombre</th>
+               <th>Estatus</th>
+               <th>Fecha de registro</th>
                <th></th>
             </tr>
          </thead>
@@ -19,9 +19,9 @@
                   <td><?= $value->gender_name; ?></td>
                   <td>
                      <?php if ($value->id_status == 1) : ?>
-                        <span class="label label-success">Active</span>
+                        <span class="label label-success">Activo</span>
                      <?php else : ?>
-                        <span class="label label-danger">Inactive</span>
+                        <span class="label label-danger">Inactivo</span>
                      <?php endif ?>
                   </td>
                   <td><?= get_antiquity($value->date_registered_gds); ?></td>
@@ -38,14 +38,14 @@
                      <div class="modal-content">
                         <div class="modal-header bg-black">
                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                           <h4 class="modal-title tx-white text-center">Gender ID: <?= $id_gender_encryp; ?></h4>
+                           <h4 class="modal-title tx-white text-center">Género #<?= $id_gender_encryp; ?></h4>
                         </div>
                         <div class="modal-body">
                            <div class="row">
                               <!-- field GENDER NAME -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Gender Name:</label>
+                                    <label>Nombre:</label>
                                     <input type="text" class="form-control" value="<?= $value->gender_name; ?>" disabled>
                                  </div>
                               </div>
@@ -54,7 +54,7 @@
                               <!-- field GENDER SLUG -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Gender Slug:</label>
+                                    <label>Alias:</label>
                                     <input type="text" class="form-control" value="<?= $value->gender_slug; ?>" disabled>
                                  </div>
                               </div>
@@ -63,7 +63,7 @@
                               <!-- field STATUS NAME -->
                               <div class="col-md-8">
                                  <div class="form-group">
-                                    <label>Status:</label>
+                                    <label>Estatus:</label>
                                     <input type="text" class="form-control" value="<?= $value->status_name; ?>" disabled>
                                  </div>
                               </div>
@@ -72,7 +72,7 @@
                               <!-- field DATE REGISTERED GENDER -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>Date Registered:</label>
+                                    <label>Fecha de registro:</label>
                                     <input type="text" class="form-control" value="<?= $value->date_registered_gds; ?>" disabled>
                                  </div>
                               </div>
@@ -81,7 +81,7 @@
                               <!-- field IP REGISTERED GENDER -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>IP Registered:</label>
+                                    <label>IP de registro:</label>
                                     <input type="text" class="form-control" value="<?= $value->ip_registered_gds; ?>" disabled>
                                  </div>
                               </div>
@@ -90,7 +90,7 @@
                               <!-- field DATE MODIFIED GENDER -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>Date Modified:</label>
+                                    <label>Fecha de modificación:</label>
                                     <input type="text" class="form-control" value="<?= $value->date_modified_gds; ?>" disabled>
                                  </div>
                               </div>
@@ -99,7 +99,7 @@
                               <!-- field IP MODIFIED GENDER -->
                               <div class="col-md-4">
                                  <div class="form-group">
-                                    <label>IP Modified:</label>
+                                    <label>IP de modificación:</label>
                                     <input type="text" class="form-control" value="<?= $value->ip_modified_gds; ?>" disabled>
                                  </div>
                               </div>
@@ -108,7 +108,7 @@
                               <!-- field CLIENT REGISTERED GENDER -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Client Registered:</label>
+                                    <label>Dispositivo de registro:</label>
                                     <textarea type="text" class="form-control txa-no-resize" disabled><?= $value->client_registered_gds; ?></textarea>
                                  </div>
                               </div>
@@ -117,7 +117,7 @@
                               <!-- field CLIENT MODIFIED GENDER -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Client Modified:</label>
+                                    <label>Dispositivo de modificación:</label>
                                     <textarea type="text" class="form-control txa-no-resize" disabled><?= $value->client_modified_gds; ?></textarea>
                                  </div>
                               </div>
@@ -125,7 +125,7 @@
                            </div>
                         </div>
                         <div class="modal-footer bg-black">
-                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
                         </div>
                      </div>
                   </div>
@@ -137,8 +137,7 @@
    </div>
 <?php else : ?>
    <div class="alert alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <strong>Message!</strong> No genders found on the system.
+      <strong>¡Aviso!</strong> No se encontraron datos de géneros para mostrar en estos momentos.
    </div>
 <?php endif ?>
-<a href="<?= site_url('genders/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Add Gender</a>
+<a href="<?= site_url('genders/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>

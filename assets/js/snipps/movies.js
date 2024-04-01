@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
 	/*==========================================
 	=            Functions Specials            =
@@ -9,13 +9,13 @@ jQuery(document).ready(function($) {
 	* @param  {[type]} data [description]
 	* @return {[type]}      [description]
 	*/
-	function create_slug(data){
+	function create_slug(data) {
 		var string = '';
 		for (var i = 0; i < data.length; i++) {
 			if (data.charAt(i) == ' ') {
 				string = string + data.charAt(i).replace(' ', '-');
-			}else{
-				string = string + data.charAt(i);				
+			} else {
+				string = string + data.charAt(i);
 			}
 		}
 		return cleaned_string(string.toLowerCase());
@@ -26,24 +26,24 @@ jQuery(document).ready(function($) {
 	* @param  {[type]} stringEnd [description]
 	* @return {[type]}           [description]
 	*/
-	function cleaned_string(stringEnd){
-	   	/* We define the characters that we want to remove */
-	   	var charsToRemove = "!@#$^&%*()+=[]\/{}|:<>?,.";
+	function cleaned_string(stringEnd) {
+		/* We define the characters that we want to remove */
+		var charsToRemove = "!@#$^&%*()+=[]\/{}|:<>?,.";
 
-	   	/* I'll delete the characters */
-	   	for (var i = 0; i < charsToRemove.length; i++) {
-	    	stringEnd = stringEnd.replace(new RegExp("\\" + charsToRemove[i], 'gi'), '');
-	   	}   
+		/* I'll delete the characters */
+		for (var i = 0; i < charsToRemove.length; i++) {
+			stringEnd = stringEnd.replace(new RegExp("\\" + charsToRemove[i], 'gi'), '');
+		}
 
-	   	/* We removed accents and "ñ". Note that the first parameter is without quotes */
-	   	stringEnd = stringEnd.replace(/á/gi,"a");
-	   	stringEnd = stringEnd.replace(/é/gi,"e");
-	   	stringEnd = stringEnd.replace(/í/gi,"i");
-	   	stringEnd = stringEnd.replace(/ó/gi,"o");
-	   	stringEnd = stringEnd.replace(/ú/gi,"u");
-	   	stringEnd = stringEnd.replace(/ñ/gi,"n");
+		/* We removed accents and "ñ". Note that the first parameter is without quotes */
+		stringEnd = stringEnd.replace(/á/gi, "a");
+		stringEnd = stringEnd.replace(/é/gi, "e");
+		stringEnd = stringEnd.replace(/í/gi, "i");
+		stringEnd = stringEnd.replace(/ó/gi, "o");
+		stringEnd = stringEnd.replace(/ú/gi, "u");
+		stringEnd = stringEnd.replace(/ñ/gi, "n");
 
-	   	return stringEnd;
+		return stringEnd;
 	}
 
 	/*=====  End of Functions Specials  ======*/
@@ -57,7 +57,7 @@ jQuery(document).ready(function($) {
 	* @param  {String} event) {		var       string [description]
 	* @return {[type]}        [description]
 	*/
-	$("#movie_name_insert").keyup(function(event) {
+	$("#movie_name_insert").keyup(function (event) {
 		var string = '';
 		string = string + $("#movie_name_insert").val();
 
@@ -69,40 +69,40 @@ jQuery(document).ready(function($) {
 	* @param  {[type]} ) {	              var fileName [description]
 	* @return {[type]}   [description]
 	*/
-	$('#movie_cover_insert').change(function() {
-	    var fileName = $('#movie_cover_insert').val(); 
-	    var extension = fileName.split('.').pop(); 
-	    var extensionLower = extension.toLowerCase(); 
-	    var sizeKB = (this.files[0].size) / 1024; 
+	$('#movie_cover_insert').change(function () {
+		var fileName = $('#movie_cover_insert').val();
+		var extension = fileName.split('.').pop();
+		var extensionLower = extension.toLowerCase();
+		var sizeKB = (this.files[0].size) / 1024;
 
-	    if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') { 
-	        if (sizeKB < 2048) { 
-	        	$("#modal-movie-cover").modal('show');
-	            $('#preview-img-cover').removeClass("hidden");
-	            var reader = new FileReader();
-	            reader.onload = function(e) {          	
-	                $('#preview-img-cover').attr('src', e.target.result);
-	            }
-	            reader.readAsDataURL(this.files[0]);
-	            console.log(sizeKB);
-	        } else {
-	            $('#preview-img-cover').addClass("hidden");
-	            $('#movie_cover_insert').val('');
-	            swal(
-	            	'Only Images',
-	              	'There has been a problem with the image remember that it must weigh less than 2MB and must have PNG | JPG | JPEG.',
-	              	'error'
-	            );
-	        }
-	    } else {	        
-	        $('#preview-img-cover').addClass("hidden");
-	        $('#movie_cover_insert').val('');
-	        swal(
-	        	'Only Images',
-	          	'There has been a problem with the image remember that it must weigh less than 2MB and must have PNG | JPG | JPEG.',
-	          	'error'
-	        );
-	    }
+		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
+			if (sizeKB < 2048) {
+				$("#modal-movie-cover").modal('show');
+				$('#preview-img-cover').removeClass("hidden");
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#preview-img-cover').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(this.files[0]);
+				console.log(sizeKB);
+			} else {
+				$('#preview-img-cover').addClass("hidden");
+				$('#movie_cover_insert').val('');
+				swal(
+					'Aviso',
+					'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+					'error'
+				);
+			}
+		} else {
+			$('#preview-img-cover').addClass("hidden");
+			$('#movie_cover_insert').val('');
+			swal(
+				'Aviso',
+				'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+				'error'
+			);
+		}
 	});
 
 	/**
@@ -114,35 +114,35 @@ jQuery(document).ready(function($) {
 	$("#form-insert-movie").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
-		beforeSend: function(){
+		beforeSend: function () {
 			$("#btn-insert-movie").attr('disabled', true);
-			$("#btn-insert-movie").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Loading');
+			$("#btn-insert-movie").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
-		success: function(response){
+		success: function (response) {
 			$("#btn-insert-movie").removeAttr('disabled');
-			$("#btn-insert-movie").html('<span class="glyphicon glyphicon-floppy-disk"></span> Save Movie');
+			$("#btn-insert-movie").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
 			if (response == "Already") {
 				swal(
-					'Movie Already',
-				  	'The movie trying to register already exists in our list, try again.',
-				  	'warning'
+					'Duplicado',
+					'Los datos de la película que intenta ingresar ya se encuentran en el sistema',
+					'warning'
 				);
 			} else if (response == "Error") {
 				swal(
 					'Oops',
-				  	'External problem has occurred, try again later.',
-				  	'error'
+					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					'error'
 				);
 			} else if (response == "Success") {
 				swal(
-					'Movie Registered',
-				  	'The movie has been registered successfully.',
-				  	'success'
+					'Éxito',
+					'La película ha sido insertada con éxito',
+					'success'
 				);
 			}
 		}
-	});		
+	});
 
 	/*=====  End of Functions Insert  ======*/
 
@@ -155,7 +155,7 @@ jQuery(document).ready(function($) {
 	* @param  {String} event) {		var       string [description]
 	* @return {[type]}        [description]
 	*/
-	$("#movie_name_update").keyup(function(event) {
+	$("#movie_name_update").keyup(function (event) {
 		var string = '';
 		string = string + $("#movie_name_update").val();
 
@@ -167,41 +167,41 @@ jQuery(document).ready(function($) {
 	* @param  {[type]} ) {	              var fileName [description]
 	* @return {[type]}   [description]
 	*/
-	$('#movie_cover_update').change(function() {
-	    var fileName = $('#movie_cover_update').val(); 
-	    var extension = fileName.split('.').pop(); 
-	    var extensionLower = extension.toLowerCase(); 
-	    var sizeKB = (this.files[0].size) / 1024; 
+	$('#movie_cover_update').change(function () {
+		var fileName = $('#movie_cover_update').val();
+		var extension = fileName.split('.').pop();
+		var extensionLower = extension.toLowerCase();
+		var sizeKB = (this.files[0].size) / 1024;
 
-	    if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') { 
-	        if (sizeKB < 2048) { 
-	        	$("#modal-movie-cover").modal('show');
-	            $('#preview-img-cover').removeClass("hidden");
-	            var reader = new FileReader();
-	            reader.onload = function(e) {          	
-	                $('#preview-img-cover').attr('src', e.target.result);
-	            }
-	            reader.readAsDataURL(this.files[0]);
-	            console.log(sizeKB);
-	        } else {
-	            $('#preview-img-cover').addClass("hidden");
-	            $('#movie_cover_update').val('');
-	            swal(
-	            	'Only Images',
-	              	'There has been a problem with the image remember that it must weigh less than 2MB and must have PNG | JPG | JPEG.',
-	              	'error'
-	            );
-	        }
-	    } else {	        
-	        $('#preview-img-cover').addClass("hidden");
-	        $('#movie_cover_update').val('');
-	        swal(
-	        	'Only Images',
-	          	'There has been a problem with the image remember that it must weigh less than 2MB and must have PNG | JPG | JPEG.',
-	          	'error'
-	        );
-	    }
-	});	
+		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
+			if (sizeKB < 2048) {
+				$("#modal-movie-cover").modal('show');
+				$('#preview-img-cover').removeClass("hidden");
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#preview-img-cover').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(this.files[0]);
+				console.log(sizeKB);
+			} else {
+				$('#preview-img-cover').addClass("hidden");
+				$('#movie_cover_update').val('');
+				swal(
+					'Aviso',
+					'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+					'error'
+				);
+			}
+		} else {
+			$('#preview-img-cover').addClass("hidden");
+			$('#movie_cover_update').val('');
+			swal(
+				'Aviso',
+				'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+				'error'
+			);
+		}
+	});
 
 	/**
 	* [beforeSend description]
@@ -212,35 +212,35 @@ jQuery(document).ready(function($) {
 	$("#form-update-movie").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
-		beforeSend: function(){
+		beforeSend: function () {
 			$("#btn-update-movie").attr('disabled', true);
-			$("#btn-update-movie").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Loading');
+			$("#btn-update-movie").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
-		success: function(response){
+		success: function (response) {
 			$("#btn-update-movie").removeAttr('disabled');
-			$("#btn-update-movie").html('<span class="glyphicon glyphicon-refresh"></span> Update Movie');
+			$("#btn-update-movie").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
 			if (response == "Already") {
 				swal(
-					'Movie Already',
-					"The movie trying to register already exists in our list, try again.",
+					'Duplicado',
+					'Los datos de la película que intenta ingresar ya se encuentran en el sistema',
 					'warning'
 				);
 			} else if (response == "Error") {
 				swal(
 					'Oops',
-				  	'External problem has occurred, try again later.',
-				  	'error'
+					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					'error'
 				);
 			} else if (response == "Success") {
 				swal(
-					'Movie Updated',
-				  	'The movie has been updated successfully.',
-				  	'success'
+					'Éxito',
+					'La película ha sido actualizada con éxito',
+					'success'
 				);
 			}
 		}
-	});		
+	});
 
 	/*=====  End of Functions Update  ======*/
 
@@ -253,54 +253,54 @@ jQuery(document).ready(function($) {
 	* @param  {[type]} ) {	              var fileName [description]
 	* @return {[type]}   [description]
 	*/
-	$('#movie_cover_customize').change(function() {
-	    var fileName = $('#movie_cover_customize').val(); 
-	    var extension = fileName.split('.').pop(); 
-	    var extensionLower = extension.toLowerCase(); 
-	    var sizeKB = (this.files[0].size) / 1024; 
+	$('#movie_cover_customize').change(function () {
+		var fileName = $('#movie_cover_customize').val();
+		var extension = fileName.split('.').pop();
+		var extensionLower = extension.toLowerCase();
+		var sizeKB = (this.files[0].size) / 1024;
 
-	    if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') { 
-	        if (sizeKB < 2048) { 
-	        	$("#file_name_cover_customize").val(fileName);
-	        	$("#file_size_cover_customize").val('KB: ' + sizeKB);
-	        	$("#file_extension_cover_customize").val(extensionLower);
-	        	$("#file_route_cover_customize").val('assets/images/movies/');
-	            $('#image-cover-current').addClass("hidden");
-	            $('#preview-img-cover').removeClass("hidden");
-	            var reader = new FileReader();
-	            reader.onload = function(e) {          	
-	                $('#preview-img-cover').attr('src', e.target.result);
-	            }
-	            reader.readAsDataURL(this.files[0]);
-	            console.log(sizeKB);
-	        } else {
-	        	$("#file_name_cover_customize").val('');
-	        	$("#file_size_cover_customize").val('');
-	        	$("#file_extension_cover_customize").val('');
-	        	$("#file_route_cover_customize").val('');
-	            $('#preview-img-cover').addClass("hidden"); 
-	        	$('#image-cover-current').removeClass("hidden");
-	            $('#movie_cover_customize').val('');
-	            swal(
-	            	'Only Images',
-	              	'There has been a problem with the image remember that it must weigh less than 2MB and must have PNG | JPG | JPEG.',
-	              	'error'
-	            );
-	        }
-	    } else {	   
-	    	$("#file_name_cover_customize").val('');
-	    	$("#file_size_cover_customize").val('');
-	    	$("#file_extension_cover_customize").val('');
-	    	$("#file_route_cover_customize").val('');     
-	    	$('#preview-img-cover').addClass("hidden");
-	        $('#image-cover-current').removeClass("hidden");
-	        $('#movie_cover_customize').val('');
-	        swal(
-	        	'Only Images',
-	          	'There has been a problem with the image remember that it must weigh less than 2MB and must have PNG | JPG | JPEG.',
-	          	'error'
-	        );
-	    }
+		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
+			if (sizeKB < 2048) {
+				$("#file_name_cover_customize").val(fileName);
+				$("#file_size_cover_customize").val('KB: ' + sizeKB);
+				$("#file_extension_cover_customize").val(extensionLower);
+				$("#file_route_cover_customize").val('assets/images/movies/');
+				$('#image-cover-current').addClass("hidden");
+				$('#preview-img-cover').removeClass("hidden");
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#preview-img-cover').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(this.files[0]);
+				console.log(sizeKB);
+			} else {
+				$("#file_name_cover_customize").val('');
+				$("#file_size_cover_customize").val('');
+				$("#file_extension_cover_customize").val('');
+				$("#file_route_cover_customize").val('');
+				$('#preview-img-cover').addClass("hidden");
+				$('#image-cover-current').removeClass("hidden");
+				$('#movie_cover_customize').val('');
+				swal(
+					'Aviso',
+					'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+					'error'
+				);
+			}
+		} else {
+			$("#file_name_cover_customize").val('');
+			$("#file_size_cover_customize").val('');
+			$("#file_extension_cover_customize").val('');
+			$("#file_route_cover_customize").val('');
+			$('#preview-img-cover').addClass("hidden");
+			$('#image-cover-current').removeClass("hidden");
+			$('#movie_cover_customize').val('');
+			swal(
+				'Aviso',
+				'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+				'error'
+			);
+		}
 	});
 
 	/**
@@ -312,29 +312,29 @@ jQuery(document).ready(function($) {
 	$("#form-update-cover").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
-		beforeSend: function(){
+		beforeSend: function () {
 			$("#btn-update-cover").attr('disabled', true);
-			$("#btn-update-cover").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Loading');
+			$("#btn-update-cover").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
-		success: function(response){
+		success: function (response) {
 			$("#btn-update-cover").removeAttr('disabled');
-			$("#btn-update-cover").html('<span class="glyphicon glyphicon-upload"></span> Change Cover');
+			$("#btn-update-cover").html('<span class="glyphicon glyphicon-upload"></span> Cambiar');
 
 			if (response == "Error") {
 				swal(
 					'Oops',
-				  	'External problem has occurred, try again later.',
-				  	'error'
+					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					'error'
 				);
 			} else if (response == "Success") {
 				swal(
-					'Cover Changed',
-				  	'The cover was updated successfully.',
-				  	'success'
+					'Éxito',
+					'La portada fue actualizada con éxito',
+					'success'
 				);
 			}
 		}
-	});	
+	});
 
 	/*=====  End of Functions Update Cover  ======*/
 
@@ -350,55 +350,55 @@ jQuery(document).ready(function($) {
 	* @param  {[type]} success:      function(response){					if (response     [description]
 	* @return {[type]}               [description]
 	*/
-	$(".btn-delete-movie").click(function(event){
+	$(".btn-delete-movie").click(function (event) {
 		var id_movie = $(this).attr('id');
 
 		swal({
-			title: 'Are you sure?',
-			text: "You won't be able to revert this!",
+			title: '¿Estas segur@?',
+			text: '¡No podrás revertir esto!',
 			type: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#5BC0DE',
 			cancelButtonColor: '#D9534F',
-			confirmButtonText: '<span class="glyphicon glyphicon-trash"></span> Delete Movie',
-			cancelButtonText: '<span class="glyphicon glyphicon-remove-circle"></span> Cancel',
+			confirmButtonText: '<span class="glyphicon glyphicon-trash"></span> Si, eliminar',
+			cancelButtonText: '<span class="glyphicon glyphicon-remove-circle"></span> Cancelar',
 			confirmButtonClass: 'btn btn-info',
 			cancelButtonClass: 'btn btn-danger'
 			/* buttonsStyling: false */
 		}).then(function () {
 			$.ajax({
-				data: {id_movie_delete: id_movie },
+				data: { id_movie_delete: id_movie },
 				url: 'delete/',
 				type: 'post',
-				success: function(response){
+				success: function (response) {
 					if (response == "Missing") {
 						swal(
-							'Movie Missing',
-						  	'This movie ID does not exist, please check again.',
-						  	'error'
+							'No encontrado',
+							'La película ha eliminar no coincide con alguno de nuestros registros',
+							'error'
 						);
 					} else if (response == "Error") {
 						swal(
 							'Oops',
-						  	'External problem has occurred, try again later.',
-						  	'error'
+							'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+							'error'
 						);
 					} else if (response == "Success") {
 						swal(
-							'Movie Deleted',
-						  	'The movie has been deleted successfully.',
-						  	'success'
+							'Éxito',
+							'La película fue eliminada con éxito',
+							'success'
 						);
 					}
 				}
 			});
-		}, function (dismiss) {		
+		}, function (dismiss) {
 			swal(
-				'Reminder',
-			  	'Remember that deleting a user can not undo that act.',
-			  	'info'
-			);	
-		});	
+				'Recordatorio',
+				'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
+				'info'
+			);
+		});
 	});
 
 	/*=====  End of Functions Delete  ======*/

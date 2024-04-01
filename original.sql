@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-03-2024 a las 00:24:08
+-- Tiempo de generación: 02-04-2024 a las 01:01:01
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -45,7 +45,7 @@ CREATE TABLE `cm_categorys` (
 --
 
 INSERT INTO `cm_categorys` (`id_category`, `id_status`, `category_name`, `category_slug`, `ip_registered_cat`, `date_registered_cat`, `client_registered_cat`, `ip_modified_cat`, `date_modified_cat`, `client_modified_cat`) VALUES
-(1, 1, 'Movie', 'movie', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(1, 1, 'Películas', 'peliculas', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -72,10 +72,12 @@ INSERT INTO `cm_cat_mov` (`id_category`, `id_movie`) VALUES
 (1, 9),
 (1, 10),
 (1, 11),
+(1, 12),
 (1, 13),
 (1, 14),
 (1, 15),
 (1, 16),
+(1, 17),
 (1, 18),
 (1, 19),
 (1, 20),
@@ -85,10 +87,8 @@ INSERT INTO `cm_cat_mov` (`id_category`, `id_movie`) VALUES
 (1, 22),
 (1, 23),
 (1, 24),
-(1, 26),
-(1, 17),
-(1, 12),
-(1, 25);
+(1, 25),
+(1, 26);
 
 -- --------------------------------------------------------
 
@@ -116,7 +116,7 @@ CREATE TABLE `cm_contacts` (
 --
 
 INSERT INTO `cm_contacts` (`id_contact`, `id_status`, `contact_firstname`, `contact_lastname`, `contact_sex`, `contact_date_birthday`, `ip_registered_cnt`, `date_registered_cnt`, `client_registered_cnt`, `ip_modified_cnt`, `date_modified_cnt`, `client_modified_cnt`) VALUES
-(1, 1, 'Joan', 'Sebastián', 'Male', '1970-06-10', '::1', '2017-07-29 00:26:52', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(1, 1, 'Joan', 'Sebastián', 'Hombre', '1970-06-10', '::1', '2017-07-29 00:26:52', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -142,16 +142,16 @@ CREATE TABLE `cm_genders` (
 --
 
 INSERT INTO `cm_genders` (`id_gender`, `id_status`, `gender_name`, `gender_slug`, `ip_registered_gds`, `date_registered_gds`, `client_registered_gds`, `ip_modified_gds`, `date_modified_gds`, `client_modified_gds`) VALUES
-(1, 1, 'Action', 'action', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(2, 1, 'Adventure', 'adventure', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(3, 1, 'Animation', 'animation', '::1', '2017-07-29 00:49:33', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(4, 1, 'Science Fiction', 'science-fiction', '::1', '2017-07-29 01:10:32', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(1, 1, 'Acción', 'accion', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(2, 1, 'Aventura', 'aventura', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(3, 1, 'Animación', 'animacion', '::1', '2017-07-29 00:49:33', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(4, 1, 'Ciencia Ficción', 'science-fiction', '::1', '2017-07-29 01:10:32', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
 (5, 1, 'Drama', 'drama', '::1', '2017-07-31 21:40:14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(6, 1, 'Comedy', 'comedy', '::1', '2017-08-01 00:34:35', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(7, 1, 'Crime', 'crime', '::1', '2017-08-01 00:34:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(8, 1, 'Fantasy', 'fantasy', '::1', '2017-08-01 00:34:58', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(6, 1, 'Comedia', 'comedia', '::1', '2017-08-01 00:34:35', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(7, 1, 'Crimen', 'crimen', '::1', '2017-08-01 00:34:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(8, 1, 'Fantasía', 'fantasia', '::1', '2017-08-01 00:34:58', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
 (9, 1, 'Terror', 'terror', '::1', '2017-08-01 00:35:41', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(10, 1, 'Suspense', 'suspense', '::1', '2017-08-01 00:35:55', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(10, 1, 'Suspenso', 'suspenso', '::1', '2017-08-01 00:35:55', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -182,6 +182,7 @@ INSERT INTO `cm_gen_mov` (`id_gender`, `id_movie`) VALUES
 (3, 9),
 (3, 10),
 (3, 11),
+(3, 12),
 (3, 13),
 (2, 14),
 (3, 14),
@@ -189,6 +190,8 @@ INSERT INTO `cm_gen_mov` (`id_gender`, `id_movie`) VALUES
 (6, 16),
 (9, 16),
 (10, 16),
+(5, 17),
+(6, 17),
 (5, 18),
 (6, 18),
 (3, 19),
@@ -206,14 +209,10 @@ INSERT INTO `cm_gen_mov` (`id_gender`, `id_movie`) VALUES
 (4, 24),
 (5, 24),
 (1, 24),
-(8, 26),
-(3, 26),
-(5, 17),
-(7, 17),
-(6, 17),
-(3, 12),
 (4, 25),
-(1, 25);
+(1, 25),
+(8, 26),
+(3, 26);
 
 -- --------------------------------------------------------
 
@@ -248,31 +247,31 @@ CREATE TABLE `cm_movies` (
 --
 
 INSERT INTO `cm_movies` (`id_movie`, `id_status`, `id_quality`, `movie_name`, `movie_slug`, `movie_description`, `movie_release_date`, `movie_duration`, `movie_country_origin`, `movie_cover`, `movie_reproductions`, `movie_play`, `is_premiere`, `ip_registered_mov`, `date_registered_mov`, `client_registered_mov`, `ip_modified_mov`, `date_modified_mov`, `client_modified_mov`) VALUES
-(1, 1, 1, 'Cars 3', 'cars-3', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2017', '01:49:00', 'Estados Unidos (United States)', 'assets/images/movies/1_cover.jpg', 1, 'https://hqq.tv/player/embed_player.php?vid=271274207278210243239234206262213233194271217261258&autoplay=no', 0, '::1', '2017-07-29 00:49:33', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-08-01 00:29:12', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
-(2, 1, 3, 'Jurassic World', 'jurassic-world', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2015', '02:04:00', 'Estados Unidos (United States)', 'assets/images/movies/2_cover.jpg', 1, 'http://hqq.tv/player/embed_player.php?vid=224239238239213245206227243210243208&autoplay=no', 0, '::1', '2017-07-29 01:21:18', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-08-03 02:28:06', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
-(3, 1, 1, 'Toy Story 2', 'toy-story-2', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1999', '01:32:00', 'Estados Unidos (United States)', 'assets/images/movies/3_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=221238235208213208207244227227211221&autoplay=no', 0, '::1', '2017-07-29 03:00:04', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-07-31 18:01:52', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
-(4, 1, 3, 'Tarzan', 'tarzan', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1999', '01:28:00', 'Estados Unidos (United States)', 'assets/images/movies/4_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=GH8DADS19KMG&autoplay=no', 0, '::1', '2017-07-31 17:44:21', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-07-31 18:00:46', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
-(5, 1, 4, 'Mi Villano Favorito 2', 'mi-villano-favorito-2', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2013', '01:38:00', 'Estados Unidos (United States)', 'assets/images/movies/5_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=1K6D1W3MKMU8&autoplay=no', 0, '::1', '2017-07-31 17:54:42', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-07-31 17:58:54', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
-(6, 1, 3, 'El Extrano Mundo de Jack', 'el-extrano-mundo-de-jack', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1993', '01:13:00', 'Estados Unidos (United States)', 'assets/images/movies/6_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=209243243222238234234244241211231245&autoplay=no', 0, '::1', '2017-07-31 18:06:06', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-08-03 02:30:24', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
-(7, 1, 3, 'Toy Story 3', 'toy-story-3', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2010', '01:53:00', 'Estados Unidos (United States)', 'assets/images/movies/7_cover.jpg', 4, 'http://hqq.tv/player/embed_player.php?vid=3OS56H1315KY&autoplay=no', 0, '::1', '2017-07-31 18:10:05', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(8, 1, 3, 'La Bella y la Bestia', 'la-bella-y-la-bestia', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1991', '01:29:00', 'Estados Unidos (United States)', 'assets/images/movies/8_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=N917UXKDU123&autoplay=no', 0, '::1', '2017-07-31 18:19:47', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(9, 1, 3, 'Monsters vs Aliens', 'monsters-vs-aliens', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2009', '01:35:00', 'Estados Unidos (United States)', 'assets/images/movies/9_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=235211235231243227213241235244241212&autoplay=no', 0, '::1', '2017-07-31 18:23:23', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(10, 1, 3, 'Up: Una Aventura de Altura', 'up-una-aventura-de-altura', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2009', '01:36:00', 'Estados Unidos (United States)', 'assets/images/movies/10_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=SYAGDY1GOYHR&autoplay=no', 0, '::1', '2017-07-31 18:28:33', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(11, 1, 3, 'Antz', 'antz', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1998', '01:23:00', 'Estados Unidos (United States)', 'assets/images/movies/11_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=RW7AR3GB3S89&autoplay=no', 0, '::1', '2017-07-31 18:33:23', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(12, 1, 3, 'Toy Story', 'toy-story', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2013', '01:35:00', 'Estados Unidos (United States)', 'assets/images/movies/12_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=209211244243221207228239243224207227&autoplay=no', 0, '::1', '2017-07-31 18:42:02', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '127.0.0.1', '2024-03-30 17:19:24', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'),
-(13, 1, 3, 'Coraline', 'coraline', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2009', '01:50:00', 'Estados Unidos (United States)', 'assets/images/movies/13_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=WYR4O17DD1BG&autoplay=no', 0, '::1', '2017-07-31 18:47:32', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-07-31 18:52:30', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
-(14, 1, 3, 'Shrek', 'shrek', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2001', '01:32:00', 'Estados Unidos (United States)', 'assets/images/movies/14_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=ND4A7KS557X8&autoplay=no', 0, '::1', '2017-07-31 18:54:09', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(15, 1, 4, 'Amarte Duele', 'amarte-duele', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2002', '01:44:00', 'México', 'assets/images/movies/15_cover.jpg', 3, 'http://hqq.tv/player/embed_player.php?vid=9RM4M474U4H7', 0, '::1', '2017-07-31 21:45:31', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(16, 1, 4, 'El Demonio 2', 'el-demonio-2', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2003', '01:54:00', 'Estados Unidos (United States)', 'assets/images/movies/16_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=GN8YYHU49SS2&autoplay=no', 0, '::1', '2017-08-01 00:33:41', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-08-01 00:37:36', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
-(17, 1, 2, 'El Lobo de Wall Street', 'el-lobo-de-wall-street', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2013', '03:00:00', 'Estados Unidos (United States)', 'assets/images/movies/17_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=4A5H1B5NOGAS&autoplay=no', 0, '::1', '2017-08-01 01:03:03', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '127.0.0.1', '2024-03-30 17:17:29', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'),
-(18, 1, 4, 'El Diablo Viste a la Moda', 'el-diablo-viste-a-la-moda', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2006', '01:49:00', 'Estados Unidos (United States)', 'assets/images/movies/18_cover.jpg', 2, 'http://hqq.tv/player/embed_player.php?vid=210208224253208227206272231229261254194271217261258&autoplay=no', 0, '::1', '2017-08-01 01:12:43', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(19, 1, 4, 'Los Increibles', 'los-increibles', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2004', '01:50:00', 'Estados Unidos (United States)', 'assets/images/movies/19_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=245206224205228227239244212206207207&autoplay=no', 0, '::1', '2017-08-02 03:14:20', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(20, 1, 4, 'Ratatouille', 'ratatouille', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2007', '01:50:00', 'Estados Unidos (United States)', 'assets/images/movies/20_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=9DSA4SB362O1&autoplay=no', 0, '::1', '2017-08-02 03:23:25', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(21, 1, 4, 'El Despertar del Diablo', 'el-despertar-del-diablo', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2006', '01:45:00', 'Estados Unidos (United States)', 'assets/images/movies/21_cover.jpg', 1, 'http://hqq.tv/player/embed_player.php?vid=231245208235244244244221224213231212&autoplay=no', 0, '::1', '2017-08-02 03:28:17', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(22, 1, 4, 'Pixels', 'pixels', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2015', '01:05:00', 'Estados Unidos (United States)', 'assets/images/movies/22_cover.jpg', 3, 'http://hqq.tv/player/embed_player.php?vid=239221245211235212227243221241206205194271217261258&autoplay=no', 0, '::1', '2017-08-03 18:10:23', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(23, 1, 2, 'Buscando a Dory', 'buscando-a-dory', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2016', '01:37:00', 'Estados Unidos (United States)', 'assets/images/movies/23_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=tez6OsiYh9Ox&autoplay=no', 0, '::1', '2017-08-03 18:31:02', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(24, 1, 6, 'Power Rangers', 'power-rangers', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2017', '02:04:00', 'Estados Unidos (United States)', 'assets/images/movies/24_cover.jpg', 0, 'https://hqq.tv/player/embed_player.php?vid=213206277258224268266270254225237231194271217261258&autoplay=no', 0, '::1', '2017-08-03 19:33:26', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(25, 1, 5, 'Escuadrón Suicida', 'escuadron-suicida', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2017', '01:30:00', 'Estados Unidos (United States)', 'assets/images/movies/25_cover.jpg', 0, 'http://hqq.tv/player/embed_player.php?vid=8rqS78dm49Wm&autoplay=no', 0, '::1', '2017-08-03 19:42:18', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '127.0.0.1', '2024-03-30 17:20:42', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
+(1, 1, 1, 'Cars 3', 'cars-3', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2017', '01:49:00', 'Estados Unidos (United States)', 'assets/images/movies/1_cover.jpg', 1, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-29 00:49:33', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-08-01 00:29:12', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
+(2, 1, 3, 'Jurassic World', 'jurassic-world', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2015', '02:04:00', 'Estados Unidos (United States)', 'assets/images/movies/2_cover.jpg', 1, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-29 01:21:18', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-08-03 02:28:06', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
+(3, 1, 1, 'Toy Story 2', 'toy-story-2', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1999', '01:32:00', 'Estados Unidos (United States)', 'assets/images/movies/3_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-29 03:00:04', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-07-31 18:01:52', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
+(4, 1, 3, 'Tarzan', 'tarzan', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1999', '01:28:00', 'Estados Unidos (United States)', 'assets/images/movies/4_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 17:44:21', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-07-31 18:00:46', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
+(5, 1, 4, 'Mi Villano Favorito 2', 'mi-villano-favorito-2', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2013', '01:38:00', 'Estados Unidos (United States)', 'assets/images/movies/5_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 17:54:42', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-07-31 17:58:54', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
+(6, 1, 3, 'El Extrano Mundo de Jack', 'el-extrano-mundo-de-jack', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1993', '01:13:00', 'Estados Unidos (United States)', 'assets/images/movies/6_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 18:06:06', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-08-03 02:30:24', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
+(7, 1, 3, 'Toy Story 3', 'toy-story-3', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2010', '01:53:00', 'Estados Unidos (United States)', 'assets/images/movies/7_cover.jpg', 4, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 18:10:05', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(8, 1, 3, 'La Bella y la Bestia', 'la-bella-y-la-bestia', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1991', '01:29:00', 'Estados Unidos (United States)', 'assets/images/movies/8_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 18:19:47', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(9, 1, 3, 'Monsters vs Aliens', 'monsters-vs-aliens', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2009', '01:35:00', 'Estados Unidos (United States)', 'assets/images/movies/9_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 18:23:23', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(10, 1, 3, 'Up: Una Aventura de Altura', 'up-una-aventura-de-altura', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2009', '01:36:00', 'Estados Unidos (United States)', 'assets/images/movies/10_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 18:28:33', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(11, 1, 3, 'Antz', 'antz', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '1998', '01:23:00', 'Estados Unidos (United States)', 'assets/images/movies/11_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 18:33:23', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(12, 1, 3, 'Toy Story of Terror', 'toy-story-of-terror', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2013', '00:22:00', 'Estados Unidos (United States)', 'assets/images/movies/12_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 18:42:02', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(13, 1, 3, 'Coraline', 'coraline', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2009', '01:50:00', 'Estados Unidos (United States)', 'assets/images/movies/13_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 18:47:32', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-07-31 18:52:30', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
+(14, 1, 3, 'Shrek', 'shrek', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2001', '01:32:00', 'Estados Unidos (United States)', 'assets/images/movies/14_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 18:54:09', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(15, 1, 4, 'Amarte Duele', 'amarte-duele', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2002', '01:44:00', 'México', 'assets/images/movies/15_cover.jpg', 3, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-07-31 21:45:31', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(16, 1, 4, 'El Demonio 2', 'el-demonio-2', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2003', '01:54:00', 'Estados Unidos (United States)', 'assets/images/movies/16_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-01 00:33:41', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '::1', '2017-08-01 00:37:36', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'),
+(17, 1, 2, 'El Lobo de Wall Street', 'el-lobo-de-wall-street', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2013', '03:00:00', 'Estados Unidos (United States)', 'assets/images/movies/17_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-01 01:03:03', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(18, 1, 4, 'El Diablo Viste a la Moda', 'el-diablo-viste-a-la-moda', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2006', '01:49:00', 'Estados Unidos (United States)', 'assets/images/movies/18_cover.jpg', 2, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-01 01:12:43', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(19, 1, 4, 'Los Increibles', 'los-increibles', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2004', '01:50:00', 'Estados Unidos (United States)', 'assets/images/movies/19_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-02 03:14:20', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(20, 1, 4, 'Ratatouille', 'ratatouille', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2007', '01:50:00', 'Estados Unidos (United States)', 'assets/images/movies/20_cover.jpg', 1, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-02 03:23:25', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(21, 1, 4, 'El Despertar del Diablo', 'el-despertar-del-diablo', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2006', '01:45:00', 'Estados Unidos (United States)', 'assets/images/movies/21_cover.jpg', 1, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-02 03:28:17', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(22, 1, 4, 'Pixels', 'pixels', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2015', '01:05:00', 'Estados Unidos (United States)', 'assets/images/movies/22_cover.jpg', 3, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-03 18:10:23', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(23, 1, 2, 'Buscando a Dory', 'buscando-a-dory', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2016', '01:37:00', 'Estados Unidos (United States)', 'assets/images/movies/23_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-03 18:31:02', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(24, 1, 6, 'Power Rangers', 'power-rangers', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2017', '02:04:00', 'Estados Unidos (United States)', 'assets/images/movies/24_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-03 19:33:26', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(25, 1, 5, 'Escuadrón Suicida', 'escuadron-suicida', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '2017', '01:23:00', 'Estados Unidos (United States)', 'assets/images/movies/25_cover.jpg', 0, 'https://www.youtube.com/embed/yZ9KbIvWjcc', 0, '::1', '2017-08-03 19:42:18', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -405,10 +404,13 @@ INSERT INTO `cm_pro_mov` (`id_productor`, `id_movie`) VALUES
 (4, 10),
 (1, 10),
 (2, 11),
+(4, 12),
+(1, 12),
 (6, 13),
 (2, 14),
 (7, 15),
 (8, 16),
+(9, 17),
 (8, 18),
 (4, 19),
 (1, 19),
@@ -426,11 +428,10 @@ INSERT INTO `cm_pro_mov` (`id_productor`, `id_movie`) VALUES
 (16, 24),
 (18, 24),
 (14, 24),
-(15, 26),
-(9, 17),
-(4, 12),
-(1, 12),
-(19, 25);
+(20, 25),
+(19, 25),
+(21, 25),
+(15, 26);
 
 -- --------------------------------------------------------
 
@@ -488,9 +489,9 @@ CREATE TABLE `cm_roles` (
 --
 
 INSERT INTO `cm_roles` (`id_rol`, `id_status`, `rol_name`, `rol_slug`, `ip_registered_rol`, `date_registered_rol`, `client_registered_rol`, `ip_modified_rol`, `date_modified_rol`, `client_modified_rol`) VALUES
-(1, 1, 'Administrator', 'administrator', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(2, 1, 'User', 'user', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(3, 1, 'Guest', 'guest', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(1, 1, 'Administrador', 'administrador', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(2, 1, 'Usuario', 'usuario', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(3, 1, 'Capturista', 'capturista', '::1', '2017-07-29 00:24:27', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -528,8 +529,7 @@ INSERT INTO `cm_sessions` (`id_session`, `id_user`, `session_browser_used`, `ses
 (9, 1, 'Chrome', 'Win', '59.0.3071.115', '::1', '2017-08-02 13:08:31', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
 (10, 1, 'Chrome', 'Win', '59.0.3071.115', '::1', '2017-08-02 22:30:21', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
 (11, 1, 'Chrome', 'Win', '59.0.3071.115', '::1', '2017-08-03 02:24:57', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(12, 1, 'Chrome', 'Win', '59.0.3071.115', '::1', '2017-08-03 11:28:03', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(13, 1, 'Chrome', 'Win', '123.0.0.0', '127.0.0.1', '2024-03-30 17:15:20', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36', NULL, NULL, NULL);
+(12, 1, 'Chrome', 'Win', '59.0.3071.115', '::1', '2017-08-03 11:28:03', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -554,8 +554,8 @@ CREATE TABLE `cm_status` (
 --
 
 INSERT INTO `cm_status` (`id_status`, `status_name`, `status_slug`, `ip_registered_sts`, `date_registered_sts`, `client_registered_sts`, `ip_modified_sts`, `date_modified_sts`, `client_modified_sts`) VALUES
-(1, 'Active', 'active', '::1', '2017-07-28 23:53:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
-(2, 'Inactive', 'inactive', '::1', '2017-07-28 23:53:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
+(1, 'Activo', 'activo', '::1', '2017-07-28 23:53:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL),
+(2, 'Inactivo', 'inactivo', '::1', '2017-07-28 23:53:50', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -781,7 +781,7 @@ ALTER TABLE `cm_roles`
 -- AUTO_INCREMENT de la tabla `cm_sessions`
 --
 ALTER TABLE `cm_sessions`
-  MODIFY `id_session` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_session` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `cm_status`

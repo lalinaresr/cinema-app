@@ -1,4 +1,4 @@
-<h1 class="page-header">Newsletters Management.</h1>
+<h1 class="page-header">Catálogo de seguidores.</h1>
 <?php if ($get_all_newsletters != FALSE) : ?>
    <div id="buttons-exports-newsletters">
       <div class="row" id="row_buttons_newsletters"></div>
@@ -6,9 +6,9 @@
          <thead>
             <tr>
                <th>ID</th>
-               <th>Name</th>
-               <th>Email</th>
-               <th>Date Registered</th>
+               <th>Nombre</th>
+               <th>Correo electrónico</th>
+               <th>Fecha de registro</th>
             </tr>
          </thead>
          <tbody>
@@ -25,14 +25,14 @@
                      <div class="modal-content">
                         <div class="modal-header bg-black">
                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                           <h4 class="modal-title text-center tx-white">Newsletter ID: <?= $id_newsletter_encryp; ?></h4>
+                           <h4 class="modal-title text-center tx-white">Seguidor #<?= $id_newsletter_encryp; ?></h4>
                         </div>
                         <div class="modal-body">
                            <div class="row">
                               <!-- field NEWSLETTER NAME -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Newsletter Name:</label>
+                                    <label>Nombre:</label>
                                     <input type="text" class="form-control" value="<?= $value->newsletter_name; ?>" disabled>
                                  </div>
                               </div>
@@ -41,7 +41,7 @@
                               <!-- field NEWSLETTER EMAIL -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Newsletter Email:</label>
+                                    <label>Correo electrónico:</label>
                                     <input type="text" class="form-control" value="<?= $value->newsletter_email; ?>" disabled>
                                  </div>
                               </div>
@@ -50,7 +50,7 @@
                               <!-- field IP REGISTERED NEWSLETTER -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>IP Registered:</label>
+                                    <label>IP de registro:</label>
                                     <input type="text" class="form-control" value="<?= $value->ip_registered_nlt; ?>" disabled>
                                  </div>
                               </div>
@@ -59,7 +59,7 @@
                               <!-- field DATE REGISTERED NEWSLETTER -->
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Date Registered:</label>
+                                    <label>Fecha de registro:</label>
                                     <input type="text" class="form-control" value="<?= $value->date_registered_nlt; ?>" disabled>
                                  </div>
                               </div>
@@ -68,7 +68,7 @@
                               <!-- field CLIENT REGISTERED NEWSLETTER -->
                               <div class="col-md-12">
                                  <div class="form-group">
-                                    <label>Client Registered:</label>
+                                    <label>Dispositivo de registro:</label>
                                     <textarea type="text" class="form-control txa-no-resize" disabled><?= $value->client_registered_nlt; ?></textarea>
                                  </div>
                               </div>
@@ -76,7 +76,7 @@
                            </div>
                         </div>
                         <div class="modal-footer bg-black">
-                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Close</button>
+                           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
                         </div>
                      </div>
                   </div>
@@ -87,7 +87,6 @@
    </div>
 <?php else : ?>
    <div class="alert alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <strong>Message!</strong> No newsletters found on the system.
+      <strong>¡Aviso!</strong> No se encontraron datos de seguidores para mostrar en estos momentos.
    </div>
 <?php endif ?>

@@ -47,29 +47,23 @@
     		$config['uri_segment'] = 4;
 
 	       	$config['full_tag_open']  = '<nav aria-label="Page navigation"><ul class="pagination">';
-	       	$config['full_tag_close'] = '</ul></nav><!--pagination-->';
-
-	       	$config['first_link'] = '&laquo; First';
-	       	$config['first_tag_open'] = '<li class="prev page">';
-	       	$config['first_tag_close'] = '</li>';
-
-	       	$config['last_link'] = 'Last &raquo;';
-	       	$config['last_tag_open'] = '<li class="next page">';
-	       	$config['last_tag_close'] = '</li>';
-
-	       	$config['next_link'] = 'Next <span class="glyphicon glyphicon-chevron-right"></span>';
-	       	$config['next_tag_open'] = '<li class="next page">';
-	       	$config['next_tag_close'] = '</li>';
-
-	       	$config['prev_link'] = '<span class="glyphicon glyphicon-chevron-left"></span> Previous';
-	       	$config['prev_tag_open'] = '<li class="prev page">';
-	       	$config['prev_tag_close'] = '</li>';
-
-	       	$config['cur_tag_open'] = '<li class="active"><a href="#">';
-	       	$config['cur_tag_close'] = '</a></li>';
-
-	       	$config['num_tag_open'] = '<li class="page">';
-	       	$config['num_tag_close'] = '</li>';
+			$config['full_tag_close'] = '</ul></nav><!--pagination-->';
+			$config['first_link'] = '&laquo; Primera';
+			$config['first_tag_open'] = '<li class="prev page">';
+			$config['first_tag_close'] = '</li>';
+			$config['last_link'] = 'Última &raquo;';
+			$config['last_tag_open'] = '<li class="next page">';
+			$config['last_tag_close'] = '</li>';
+			$config['next_link'] = 'Siguiente <span class="glyphicon glyphicon-chevron-right"></span>';
+			$config['next_tag_open'] = '<li class="next page">';
+			$config['next_tag_close'] = '</li>';
+			$config['prev_link'] = '<span class="glyphicon glyphicon-chevron-left"></span> Anterior';
+			$config['prev_tag_open'] = '<li class="prev page">';
+			$config['prev_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="active"><a href="#">';
+			$config['cur_tag_close'] = '</a></li>';
+			$config['num_tag_open'] = '<li class="page">';
+			$config['num_tag_close'] = '</li>';
 
 	       	$this->pagination->initialize($config);
 	       	
