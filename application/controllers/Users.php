@@ -25,21 +25,21 @@
 				$params = array(
 					'page_title' => SITE_NAME . ' | Usuarios',
 					'css_files' => array(
-						base_url() . 'assets/css/bootstrap.min.css',
-						base_url() . 'assets/css/font-awesome.min.css',
-						base_url() . 'assets/plugins/dataTables/css/dataTables.bootstrap.min.css',
+						base_url() . 'public/css/bootstrap.min.css',
+						base_url() . 'public/css/font-awesome.min.css',
+						base_url() . 'public/plugins/dataTables/css/dataTables.bootstrap.min.css',
 						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
 						'https://fonts.googleapis.com/css?family=Ubuntu',
 						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'assets/css/snipps/dashboard.css',
-						base_url() . 'assets/css/styles.css'
+						base_url() . 'public/css/snipps/dashboard.css',
+						base_url() . 'public/css/styles.css'
 					),
 					'js_files' => array(
-						base_url() . 'assets/js/jquery-3.2.1.js',
-						base_url() . 'assets/js/jquery.form.min.js',
-						base_url() . 'assets/js/bootstrap.min.js',
-						base_url() . 'assets/plugins/dataTables/js/jquery.dataTables.min.js',
-						base_url() . 'assets/plugins/dataTables/js/dataTables.bootstrap.min.js',
+						base_url() . 'public/js/jquery-3.2.1.js',
+						base_url() . 'public/js/jquery.form.min.js',
+						base_url() . 'public/js/bootstrap.min.js',
+						base_url() . 'public/plugins/dataTables/js/jquery.dataTables.min.js',
+						base_url() . 'public/plugins/dataTables/js/dataTables.bootstrap.min.js',
 						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
 						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
 						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
@@ -49,10 +49,10 @@
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',
 						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
-						base_url() . 'assets/js/executes/dataTables.js',
-						base_url() . 'assets/js/snipps/users.js',
-						base_url() . 'assets/js/snipps/auth.js',
-						base_url() . 'assets/js/site.js'
+						base_url() . 'public/js/executes/dataTables.js',
+						base_url() . 'public/js/snipps/users.js',
+						base_url() . 'public/js/snipps/auth.js',
+						base_url() . 'public/js/site.js'
 					),
 					'get_all_users' => $this->Users_model->get_all_users(),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
@@ -76,26 +76,26 @@
 				$params = array(
 					'page_title' => SITE_NAME . ' | Usuarios',
 					'css_files' => array(
-						base_url() . 'assets/css/bootstrap.min.css',
-						base_url() . 'assets/css/font-awesome.min.css',
-						base_url() . 'assets/plugins/date-picker/css/bootstrap-datetimepicker.min.css',
+						base_url() . 'public/css/bootstrap.min.css',
+						base_url() . 'public/css/font-awesome.min.css',
+						base_url() . 'public/plugins/date-picker/css/bootstrap-datetimepicker.min.css',
 						'https://fonts.googleapis.com/css?family=Ubuntu',
 						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'assets/css/snipps/dashboard.css',
-						base_url() . 'assets/css/styles.css'
+						base_url() . 'public/css/snipps/dashboard.css',
+						base_url() . 'public/css/styles.css'
 					),
 					'js_files' => array(
-						base_url() . 'assets/js/jquery.min.js',
-						base_url() . 'assets/js/jquery.form.min.js',
-						base_url() . 'assets/js/bootstrap.min.js',
-						base_url() . 'assets/plugins/date-picker/moment.js',
-						base_url() . 'assets/plugins/date-picker/moment-with-locales.js',
-						base_url() . 'assets/plugins/date-picker/bootstrap-datetimepicker.js',
+						base_url() . 'public/js/jquery.min.js',
+						base_url() . 'public/js/jquery.form.min.js',
+						base_url() . 'public/js/bootstrap.min.js',
+						base_url() . 'public/plugins/date-picker/moment.js',
+						base_url() . 'public/plugins/date-picker/moment-with-locales.js',
+						base_url() . 'public/plugins/date-picker/bootstrap-datetimepicker.js',
 						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
-						base_url() . 'assets/js/executes/dateTimePickers.js',
-						base_url() . 'assets/js/snipps/users.js',
-						base_url() . 'assets/js/snipps/auth.js',
-						base_url() . 'assets/js/site.js'
+						base_url() . 'public/js/executes/dateTimePickers.js',
+						base_url() . 'public/js/snipps/users.js',
+						base_url() . 'public/js/snipps/auth.js',
+						base_url() . 'public/js/site.js'
 					),
 					'get_all_status' => $this->Status_model->get_all_status(),
 					'get_all_roles_activated' => $this->Roles_model->get_all_roles_activated(),
@@ -144,19 +144,19 @@
 				$params = array(
 					'page_title' => SITE_NAME . ' | Usuarios',
 					'css_files' => array(
-						base_url() . 'assets/css/bootstrap.min.css',
-						base_url() . 'assets/css/font-awesome.min.css',
+						base_url() . 'public/css/bootstrap.min.css',
+						base_url() . 'public/css/font-awesome.min.css',
 						'https://fonts.googleapis.com/css?family=Ubuntu',
-						base_url() . 'assets/css/snipps/dashboard.css',
-						base_url() . 'assets/css/styles.css'
+						base_url() . 'public/css/snipps/dashboard.css',
+						base_url() . 'public/css/styles.css'
 					),
 					'js_files' => array(
-						base_url() . 'assets/js/jquery.min.js',
-						base_url() . 'assets/js/jquery.form.min.js',
-						base_url() . 'assets/js/bootstrap.min.js',						
-						base_url() . 'assets/js/snipps/users.js',
-						base_url() . 'assets/js/snipps/auth.js',
-						base_url() . 'assets/js/site.js'
+						base_url() . 'public/js/jquery.min.js',
+						base_url() . 'public/js/jquery.form.min.js',
+						base_url() . 'public/js/bootstrap.min.js',						
+						base_url() . 'public/js/snipps/users.js',
+						base_url() . 'public/js/snipps/auth.js',
+						base_url() . 'public/js/site.js'
 					),
 					'id_user_encryp' => $id_user,
 					'view_user' => $this->Users_model->get_user_by('id_user', $id_user),
@@ -183,26 +183,26 @@
 				$params = array(
 					'page_title' => SITE_NAME . ' | Usuarios',
 					'css_files' => array(
-						base_url() . 'assets/css/bootstrap.min.css',
-						base_url() . 'assets/css/font-awesome.min.css',
-						base_url() . 'assets/plugins/date-picker/css/bootstrap-datetimepicker.min.css',
+						base_url() . 'public/css/bootstrap.min.css',
+						base_url() . 'public/css/font-awesome.min.css',
+						base_url() . 'public/plugins/date-picker/css/bootstrap-datetimepicker.min.css',
 						'https://fonts.googleapis.com/css?family=Ubuntu',
 						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'assets/css/snipps/dashboard.css',
-						base_url() . 'assets/css/styles.css'
+						base_url() . 'public/css/snipps/dashboard.css',
+						base_url() . 'public/css/styles.css'
 					),
 					'js_files' => array(
-						base_url() . 'assets/js/jquery.min.js',
-						base_url() . 'assets/js/jquery.form.min.js',
-						base_url() . 'assets/js/bootstrap.min.js',
-						base_url() . 'assets/plugins/date-picker/moment.js',
-						base_url() . 'assets/plugins/date-picker/moment-with-locales.js',
-						base_url() . 'assets/plugins/date-picker/bootstrap-datetimepicker.js',
+						base_url() . 'public/js/jquery.min.js',
+						base_url() . 'public/js/jquery.form.min.js',
+						base_url() . 'public/js/bootstrap.min.js',
+						base_url() . 'public/plugins/date-picker/moment.js',
+						base_url() . 'public/plugins/date-picker/moment-with-locales.js',
+						base_url() . 'public/plugins/date-picker/bootstrap-datetimepicker.js',
 						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
-						base_url() . 'assets/js/executes/dateTimePickers.js',
-						base_url() . 'assets/js/snipps/users.js',
-						base_url() . 'assets/js/snipps/auth.js',
-						base_url() . 'assets/js/site.js'
+						base_url() . 'public/js/executes/dateTimePickers.js',
+						base_url() . 'public/js/snipps/users.js',
+						base_url() . 'public/js/snipps/auth.js',
+						base_url() . 'public/js/site.js'
 					),
 					'id_user_encryp' => $id_user,
 					'edit_user' => $this->Users_model->get_user_by('id_user', $id_user),
@@ -257,21 +257,21 @@
 				$params = array(
 					'page_title' => SITE_NAME . ' | Usuarios',
 					'css_files' => array(
-						base_url() . 'assets/css/bootstrap.min.css',
-						base_url() . 'assets/css/font-awesome.min.css',
+						base_url() . 'public/css/bootstrap.min.css',
+						base_url() . 'public/css/font-awesome.min.css',
 						'https://fonts.googleapis.com/css?family=Ubuntu',
 						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css',
-						base_url() . 'assets/css/snipps/dashboard.css',
-						base_url() . 'assets/css/styles.css'
+						base_url() . 'public/css/snipps/dashboard.css',
+						base_url() . 'public/css/styles.css'
 					),
 					'js_files' => array(
-						base_url() . 'assets/js/jquery.min.js',
-						base_url() . 'assets/js/jquery.form.min.js',
-						base_url() . 'assets/js/bootstrap.min.js',	
+						base_url() . 'public/js/jquery.min.js',
+						base_url() . 'public/js/jquery.form.min.js',
+						base_url() . 'public/js/bootstrap.min.js',	
 						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',					
-						base_url() . 'assets/js/snipps/users.js',
-						base_url() . 'assets/js/snipps/auth.js',
-						base_url() . 'assets/js/site.js'
+						base_url() . 'public/js/snipps/users.js',
+						base_url() . 'public/js/snipps/auth.js',
+						base_url() . 'public/js/site.js'
 					),
 					'id_user_encryp' => $id_user,
 					'view_user' => $this->Users_model->get_user_by('id_user', $id_user),

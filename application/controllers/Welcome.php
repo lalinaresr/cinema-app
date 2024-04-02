@@ -59,24 +59,24 @@
 			$params = array(
 				'page_title' => '¡Bienvenido a ' . SITE_NAME . '!',
 				'css_files' => array(
-					base_url() . 'assets/css/bootstrap.min.css',
-					base_url() . 'assets/css/font-awesome.min.css',
-					base_url() . 'assets/plugins/owl-carousel/owl.carousel.css',
-					base_url() . 'assets/plugins/owl-carousel/owl.theme.css',
-					base_url() . 'assets/plugins/owl-carousel/owl.transitions.css',
-					base_url() . 'assets/css/executes/owlCarousels.css',
+					base_url() . 'public/css/bootstrap.min.css',
+					base_url() . 'public/css/font-awesome.min.css',
+					base_url() . 'public/plugins/owl-carousel/owl.carousel.css',
+					base_url() . 'public/plugins/owl-carousel/owl.theme.css',
+					base_url() . 'public/plugins/owl-carousel/owl.transitions.css',
+					base_url() . 'public/css/executes/owlCarousels.css',
 					'https://fonts.googleapis.com/css?family=Ubuntu',
-					base_url() . 'assets/css/snipps/welcome.css',
-					base_url() . 'assets/css/styles.css'
+					base_url() . 'public/css/snipps/welcome.css',
+					base_url() . 'public/css/styles.css'
 				),
 				'js_files' => array(
-					base_url() . 'assets/js/jquery.min.js',
-					base_url() . 'assets/js/jquery.form.min.js',
-					base_url() . 'assets/js/bootstrap.min.js',
-					base_url() . 'assets/plugins/owl-carousel/owl.carousel.min.js',
-					base_url() . 'assets/js/executes/owlCarousels.js',
-					base_url() . 'assets/js/snipps/auth.js',
-					base_url() . 'assets/js/site.js'
+					base_url() . 'public/js/jquery.min.js',
+					base_url() . 'public/js/jquery.form.min.js',
+					base_url() . 'public/js/bootstrap.min.js',
+					base_url() . 'public/plugins/owl-carousel/owl.carousel.min.js',
+					base_url() . 'public/js/executes/owlCarousels.js',
+					base_url() . 'public/js/snipps/auth.js',
+					base_url() . 'public/js/site.js'
 				),
 				'get_movies_most_viewed' => $this->Movies_model->get_movies_most_viewed(8),
 				'get_new_movies' => $this->Movies_model->get_new_movies(8),			
