@@ -30,23 +30,15 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' | Películas',
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',
-						base_url() . 'public/plugins/dataTables/css/dataTables.bootstrap.min.css',
+					'title' => SITE_NAME . ' | Películas',
+					'styles' => array(
+						base_url('public/plugins/dataTables/css/dataTables.bootstrap.min.css'),
 						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
-						'https://fonts.googleapis.com/css?family=Ubuntu',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
+						base_url('public/css/snipps/dashboard.css')
 					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery-3.2.1.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',
-						base_url() . 'public/plugins/dataTables/js/jquery.dataTables.min.js',
-						base_url() . 'public/plugins/dataTables/js/dataTables.bootstrap.min.js',
+					'scripts' => array(
+						base_url('public/plugins/dataTables/js/jquery.dataTables.min.js'),
+						base_url('public/plugins/dataTables/js/dataTables.bootstrap.min.js'),
 						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
 						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
 						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
@@ -55,11 +47,8 @@
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
-						base_url() . 'public/js/executes/dataTables.js',
-						base_url() . 'public/js/snipps/movies.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
+						base_url('public/js/executes/dataTables.js'),
+						base_url('public/js/snipps/movies.js')
 					),
 					'get_all_movies' => $this->Movies_model->get_all_movies(),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
@@ -82,32 +71,21 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' | Películas',
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',
-						base_url() . 'public/plugins/date-picker/css/bootstrap-datetimepicker.min.css',
+					'title' => SITE_NAME . ' | Películas',
+					'styles' => array(
+						base_url('public/plugins/date-picker/css/bootstrap-datetimepicker.min.css'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css',
-						'https://fonts.googleapis.com/css?family=Ubuntu',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
+						base_url('public/css/snipps/dashboard.css')
 					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery.min.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',
-						base_url() . 'public/plugins/date-picker/moment.js',
-						base_url() . 'public/plugins/date-picker/moment-with-locales.js',
-						base_url() . 'public/plugins/date-picker/bootstrap-datetimepicker.js',
+					'scripts' => array(
+						base_url('public/plugins/date-picker/moment.js'),
+						base_url('public/plugins/date-picker/moment-with-locales.js'),
+						base_url('public/plugins/date-picker/bootstrap-datetimepicker.js'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js',
-						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',						  
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',						
-						base_url() . 'public/js/executes/dateTimePickers.js',
-						base_url() . 'public/js/executes/multipleSelect.js',
-						base_url() . 'public/js/snipps/movies.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
+						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',						
+						base_url('public/js/executes/dateTimePickers.js'),
+						base_url('public/js/executes/multipleSelect.js'),
+						base_url('public/js/snipps/movies.js')
 					),
 					'get_all_status' => $this->Status_model->get_all_status(),
 					'get_all_qualities_activated' => $this->Qualities_model->get_all_qualities_activated(),
@@ -174,22 +152,9 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' | Películas',
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',						
-						'https://fonts.googleapis.com/css?family=Ubuntu',						
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
-					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery.min.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',						
-						base_url() . 'public/js/snipps/movies.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
-					),
+					'title' => SITE_NAME . ' | Películas',
+					'styles' => array(base_url('public/css/snipps/dashboard.css')),
+					'scripts' => array(base_url('public/js/snipps/movies.js')),
 					'id_movie_encryp' => $id_movie,
 					'view_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
 					'productors_movie' => $this->Movies_model->get_productors_movie($id_movie),
@@ -215,27 +180,17 @@
 			$fetch_movie = $this->Movies_model->get_movie_by('id_movie', $id_movie);
 
 			$params = array(
-				'page_title' => SITE_NAME . ' - ' . $fetch_movie->movie_name,
-				'css_files' => array(
-					base_url() . 'public/css/bootstrap.min.css',
-					base_url() . 'public/css/font-awesome.min.css',
-					base_url() . 'public/plugins/owl-carousel/owl.carousel.css',
-					base_url() . 'public/plugins/owl-carousel/owl.theme.css',
-					base_url() . 'public/plugins/owl-carousel/owl.transitions.css',
-					base_url() . 'public/css/executes/owlCarousels.css',
-					'https://fonts.googleapis.com/css?family=Ubuntu',
-					base_url() . 'public/css/snipps/welcome.css',
-					base_url() . 'public/css/executes/owlCarousels.css',
-					base_url() . 'public/css/styles.css'
+				'title' => SITE_NAME . ' - ' . $fetch_movie->movie_name,
+				'styles' => array(
+					base_url('public/plugins/owl-carousel/owl.carousel.css'),
+					base_url('public/plugins/owl-carousel/owl.theme.css'),
+					base_url('public/plugins/owl-carousel/owl.transitions.css'),
+					base_url('public/css/executes/owlCarousels.css'),
+					base_url('public/css/snipps/welcome.css')
 				),
-				'js_files' => array(
-					base_url() . 'public/js/jquery-3.2.1.js',
-					base_url() . 'public/js/jquery.form.min.js',
-					base_url() . 'public/js/bootstrap.min.js',
-					base_url() . 'public/plugins/owl-carousel/owl.carousel.min.js',
-					base_url() . 'public/js/executes/owlCarousels.js',
-					base_url() . 'public/js/snipps/auth.js',
-					base_url() . 'public/js/site.js'
+				'scripts' => array(
+					base_url('public/plugins/owl-carousel/owl.carousel.min.js'),
+					base_url('public/js/executes/owlCarousels.js')
 				),
 				'watch_movie' => $fetch_movie,
 				'update_reproductions' => $this->Movies_model->update_reproductions($id_movie),
@@ -264,32 +219,21 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' | Películas',
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',
-						base_url() . 'public/plugins/date-picker/css/bootstrap-datetimepicker.min.css',
+					'title' => SITE_NAME . ' | Películas',
+					'styles' => array(
+						base_url('public/plugins/date-picker/css/bootstrap-datetimepicker.min.css'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css',
-						'https://fonts.googleapis.com/css?family=Ubuntu',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
+						base_url('public/css/snipps/dashboard.css'),
 					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery.min.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',
-						base_url() . 'public/plugins/date-picker/moment.js',
-						base_url() . 'public/plugins/date-picker/moment-with-locales.js',
-						base_url() . 'public/plugins/date-picker/bootstrap-datetimepicker.js',
+					'scripts' => array(
+						base_url('public/plugins/date-picker/moment.js'),
+						base_url('public/plugins/date-picker/moment-with-locales.js'),
+						base_url('public/plugins/date-picker/bootstrap-datetimepicker.js'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js',
-						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',						  
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',						
-						base_url() . 'public/js/executes/dateTimePickers.js',
-						base_url() . 'public/js/executes/multipleSelect.js',
-						base_url() . 'public/js/snipps/movies.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
+						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',
+						base_url('public/js/executes/dateTimePickers.js'),
+						base_url('public/js/executes/multipleSelect.js'),
+						base_url('public/js/snipps/movies.js')
 					),
 					'id_movie_encryp' => $id_movie,
 					'get_all_status' => $this->Status_model->get_all_status(),
@@ -386,24 +330,9 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' | Películas',
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',						
-						'https://fonts.googleapis.com/css?family=Ubuntu',	
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css',					
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
-					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery.min.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',	
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',					
-						base_url() . 'public/js/snipps/movies.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
-					),
+					'title' => SITE_NAME . ' | Películas',
+					'styles' => array(base_url('public/css/snipps/dashboard.css')),
+					'scripts' => array(base_url('public/js/snipps/movies.js')),
 					'id_movie_encryp' => $id_movie,
 					'view_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))

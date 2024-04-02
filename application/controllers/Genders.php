@@ -29,23 +29,15 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' | Géneros',
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',
-						base_url() . 'public/plugins/dataTables/css/dataTables.bootstrap.min.css',
+					'title' => SITE_NAME . ' | Géneros',
+					'styles' => array(
+						base_url('public/plugins/dataTables/css/dataTables.bootstrap.min.css'),
 						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
-						'https://fonts.googleapis.com/css?family=Ubuntu',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
+						base_url('public/css/snipps/dashboard.css')
 					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery-3.2.1.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',
-						base_url() . 'public/plugins/dataTables/js/jquery.dataTables.min.js',
-						base_url() . 'public/plugins/dataTables/js/dataTables.bootstrap.min.js',
+					'scripts' => array(
+						base_url('public/plugins/dataTables/js/jquery.dataTables.min.js'),
+						base_url('public/plugins/dataTables/js/dataTables.bootstrap.min.js'),
 						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
 						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
 						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
@@ -54,11 +46,8 @@
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
-						base_url() . 'public/js/executes/dataTables.js',
-						base_url() . 'public/js/snipps/genders.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
+						base_url('public/js/executes/dataTables.js'),
+						base_url('public/js/snipps/genders.js')
 					),
 					'get_all_genders' => $this->Genders_model->get_all_genders(),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
@@ -81,24 +70,9 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' | Géneros',
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',
-						'https://fonts.googleapis.com/css?family=Ubuntu',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
-					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery.min.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
-						base_url() . 'public/js/snipps/genders.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
-					),
+					'title' => SITE_NAME . ' | Géneros',
+					'styles' => array(base_url('public/css/snipps/dashboard.css')),
+					'scripts' => array(base_url('public/js/snipps/genders.js')),
 					'get_all_status' => $this->Status_model->get_all_status(),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
@@ -140,24 +114,9 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' | Géneros',
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',
-						'https://fonts.googleapis.com/css?family=Ubuntu',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
-					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery.min.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
-						base_url() . 'public/js/snipps/genders.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
-					),
+					'title' => SITE_NAME . ' | Géneros',
+					'styles' => array(base_url('public/css/snipps/dashboard.css')),
+					'scripts' => array(base_url('public/js/snipps/genders.js')),
 					'view_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
@@ -188,8 +147,9 @@
 	       	$config['total_rows'] = $total_rows;
 	       	$config['per_page'] = 4; 
     		$config['uri_segment'] = 4;
-    		// $config['num_links'] = round(($this->Movies_model->get_all_movies_activated()->num_rows() / 8));
-		// $config['use_page_numbers'] = TRUE;
+    		
+			// $config['num_links'] = round(($this->Movies_model->get_all_movies_activated()->num_rows() / 8));
+			// $config['use_page_numbers'] = TRUE;
 
 	       	$config['full_tag_open']  = '<nav aria-label="Page navigation"><ul class="pagination">';
 			$config['full_tag_close'] = '</ul></nav><!--pagination-->';
@@ -216,26 +176,17 @@
 	       	$links_created = $this->pagination->create_links();
 
 			$params = array(
-				'page_title' => SITE_NAME . ' - Búsqueda por género',
-				'css_files' => array(
-					base_url() . 'public/css/bootstrap.min.css',
-					base_url() . 'public/css/font-awesome.min.css',
-					base_url() . 'public/plugins/owl-carousel/owl.carousel.css',
-					base_url() . 'public/plugins/owl-carousel/owl.theme.css',
-					base_url() . 'public/plugins/owl-carousel/owl.transitions.css',
-					base_url() . 'public/css/executes/owlCarousels.css',
-					'https://fonts.googleapis.com/css?family=Ubuntu',
-					base_url() . 'public/css/snipps/welcome.css',
-					base_url() . 'public/css/styles.css'
+				'title' => SITE_NAME . ' - Búsqueda por género',
+				'styles' => array(
+					base_url('public/plugins/owl-carousel/owl.carousel.css'),
+					base_url('public/plugins/owl-carousel/owl.theme.css'),
+					base_url('public/plugins/owl-carousel/owl.transitions.css'),
+					base_url('public/css/executes/owlCarousels.css'),
+					base_url('public/css/snipps/welcome.css')
 				),
-				'js_files' => array(
-					base_url() . 'public/js/jquery.min.js',
-					base_url() . 'public/js/jquery.form.min.js',
-					base_url() . 'public/js/bootstrap.min.js',
-					base_url() . 'public/plugins/owl-carousel/owl.carousel.min.js',
-					base_url() . 'public/js/executes/owlCarousels.js',
-					base_url() . 'public/js/snipps/auth.js',
-					base_url() . 'public/js/site.js'
+				'scripts' => array(
+					base_url('public/plugins/owl-carousel/owl.carousel.min.js'),
+					base_url('public/js/executes/owlCarousels.js')
 				),
 				'view_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
 				'get_movies_most_viewed' => $this->Movies_model->get_movies_most_viewed(8),
@@ -267,24 +218,9 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' | Géneros',
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',
-						'https://fonts.googleapis.com/css?family=Ubuntu',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
-					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery.min.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
-						base_url() . 'public/js/snipps/genders.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
-					),
+					'title' => SITE_NAME . ' | Géneros',
+					'styles' => array(base_url('public/css/snipps/dashboard.css')),
+					'scripts' => array(base_url('public/js/snipps/genders.js')),
 					'id_gender_encryp' => $id_gender,
 					'edit_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
 					'get_all_status' => $this->Status_model->get_all_status(),

@@ -37,7 +37,7 @@
          <div class="form-group">
             <label>Fecha de nacimiento:</label>
             <div class="input-group">
-               <input type="text" id="user_date_birthday_insert" name="user_date_birthday_insert" class="form-control" required>
+               <input type="text" id="user_date_birthday_insert" name="user_date_birthday_insert" class="form-control" required autocomplete="off">
                <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                </span>

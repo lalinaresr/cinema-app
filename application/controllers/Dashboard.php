@@ -28,23 +28,8 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME,
-					'css_files' => array(
-						base_url() . 'public/css/bootstrap.min.css',
-						base_url() . 'public/css/font-awesome.min.css',
-						'https://fonts.googleapis.com/css?family=Ubuntu',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css', 
-						base_url() . 'public/css/snipps/dashboard.css',
-						base_url() . 'public/css/styles.css'
-					),
-					'js_files' => array(
-						base_url() . 'public/js/jquery-3.2.1.js',
-						base_url() . 'public/js/jquery.form.min.js',
-						base_url() . 'public/js/bootstrap.min.js',
-						'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js',
-						base_url() . 'public/js/snipps/auth.js',
-						base_url() . 'public/js/site.js'
-					),
+					'title' => SITE_NAME,
+					'styles' => array(base_url('public/css/snipps/dashboard.css')),
 					'get_some_suggestions' => $this->Suggestions_model->get_some_suggestions(),
 					'get_some_newsletters' => $this->Newsletters_model->get_some_newsletters(),
 					'get_some_sessions' => $this->Sessions_model->get_some_sessions($this->session->userdata('id_user')), 

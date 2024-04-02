@@ -52,7 +52,7 @@
          <div class="form-group">
             <label>Fecha de nacimiento:</label>
             <div class="input-group">
-               <input type="text" id="user_date_birthday_update" name="user_date_birthday_update" class="form-control" value="<?= $edit_user->contact_date_birthday; ?>" required>
+               <input type="text" id="user_date_birthday_update" name="user_date_birthday_update" class="form-control" value="<?= $edit_user->contact_date_birthday; ?>" required autocomplete="off">
                <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                </span>

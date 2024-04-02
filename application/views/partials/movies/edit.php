@@ -156,7 +156,7 @@
          <div class="form-group">
             <label>Fecha de lanzamiento:</label>
             <div class="input-group">
-               <input type="text" id="movie_release_date_update" name="movie_release_date_update" class="form-control" value="<?= $edit_movie->movie_release_date; ?>" required>
+               <input type="text" id="movie_release_date_update" name="movie_release_date_update" class="form-control" value="<?= $edit_movie->movie_release_date; ?>" required autocomplete="off">
                <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                </span>

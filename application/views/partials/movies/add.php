@@ -86,7 +86,7 @@
          <div class="form-group">
             <label>Fecha de lanzamiento:</label>
             <div class="input-group">
-               <input type="text" id="movie_release_date_insert" name="movie_release_date_insert" class="form-control" required>
+               <input type="text" id="movie_release_date_insert" name="movie_release_date_insert" class="form-control" required autocomplete="off">
                <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                </span>
