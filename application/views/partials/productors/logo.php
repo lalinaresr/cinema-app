@@ -12,7 +12,7 @@
          <!-- END field PRODUCTOR IMAGE LOGO -->
          <div class="form-group">
             <?php if (strcmp($view_productor->productor_image_logo, 'NO-IMAGE') == 0) : ?>
-               <img src="<?= encryp_image_base64(base_url() . 'assets/images/productors/default.png'); ?>" class="img-rounded img-responsive" id="image-logo-current" style="width: 100%;">
+               <img src="<?= encryp_image_base64(base_url() . 'storage/images/productors/default.png'); ?>" class="img-rounded img-responsive" id="image-logo-current" style="width: 100%;">
             <?php else : ?>
                <img src="<?= encryp_image_base64(base_url() . $view_productor->productor_image_logo); ?>" class="img-rounded img-responsive" id="image-logo-current" style="width: 100%;">
             <?php endif ?>

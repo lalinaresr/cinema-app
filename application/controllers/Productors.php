@@ -116,7 +116,7 @@
 		* @return [type] [description]
 		*/
 		public function insert(){
-			$config['upload_path'] = 'assets/images/productors/';
+			$config['upload_path'] = 'storage/images/productors/';
         	$config['allowed_types'] = 'gif|jpg|png';
             $config['max_size'] = 2048;
 
@@ -340,7 +340,7 @@
 					'new_image_logo' => $this->upload->data()['file_name'],
 					'old_image_logo' => NULL,
 					'old_image_ext' => substr(trim($this->input->post('image_logo_update_route')), -4)
-					/* 'image_logo' => 'assets/images/productors/' . decryp($this->input->post('id_productor_update_productor')) . '_logo' . substr($this->upload->data()['file_name'], -4) */
+					/* 'image_logo' => 'storage/images/productors/' . decryp($this->input->post('id_productor_update_productor')) . '_logo' . substr($this->upload->data()['file_name'], -4) */
 				);
 				$this->Productors_model->update_model($update);
 				/* END Upload and Update with New Image */            		

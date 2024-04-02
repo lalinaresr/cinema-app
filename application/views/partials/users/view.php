@@ -110,7 +110,7 @@
                   </div>
                   <div class="modal-body">
                      <?php if (strcmp($view_user->user_avatar, 'NO-IMAGE') == 0) : ?>
-                        <img src="<?= encryp_image_base64(base_url() . 'assets/images/users/default.png'); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
+                        <img src="<?= encryp_image_base64(base_url() . 'storage/images/users/default.png'); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
                      <?php else : ?>
                         <img src="<?= encryp_image_base64(base_url() . $view_user->user_avatar); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
                      <?php endif ?>

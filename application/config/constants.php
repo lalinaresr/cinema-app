@@ -96,6 +96,6 @@ define('DATABASE', 'app_cinema');
 define('GMAIL_EMAIL', '#');
 define('GMAIL_PASSWORD', '#');	
 
-define('FOLDER_MOVIES', 'assets/images/movies/');
-define('FOLDER_AVATARS', 'assets/images/users/');
-define('FOLDER_PRODUCTORS', 'assets/images/productors/');
+define('FOLDER_MOVIES', 'storage/images/movies/');
+define('FOLDER_AVATARS', 'storage/images/users/');
+define('FOLDER_PRODUCTORS', 'storage/images/productors/');

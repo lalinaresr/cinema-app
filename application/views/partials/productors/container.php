@@ -44,7 +44,7 @@
                         </div>
                         <div class="modal-body">
                            <?php if (strcmp($value->productor_image_logo, 'NO-IMAGE') == 0) : ?>
-                              <img src="<?= encryp_image_base64(base_url() . 'assets/images/productors/default.png'); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
+                              <img src="<?= encryp_image_base64(base_url() . 'storage/images/productors/default.png'); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
                            <?php else : ?>
                               <img src="<?= encryp_image_base64(base_url() . $value->productor_image_logo); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
                            <?php endif ?>

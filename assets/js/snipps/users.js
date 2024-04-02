@@ -253,7 +253,7 @@ jQuery(document).ready(function ($) {
 				$("#file_name_avatar_customize").val(fileName);
 				$("#file_size_avatar_customize").val('KB: ' + sizeKB);
 				$("#file_extension_avatar_customize").val(extensionLower);
-				$("#file_route_avatar_customize").val('assets/images/users/');
+				$("#file_route_avatar_customize").val('storage/images/users/');
 				$('#image-avatar-current').addClass("hidden");
 				$('#preview-img-avatar').removeClass("hidden");
 				var reader = new FileReader();

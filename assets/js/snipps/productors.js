@@ -264,7 +264,7 @@ jQuery(document).ready(function ($) {
 				$("#file_name_logo_customize").val(fileName);
 				$("#file_size_logo_customize").val('KB: ' + sizeKB);
 				$("#file_extension_logo_customize").val(extensionLower);
-				$("#file_route_logo_customize").val('assets/images/productors/');
+				$("#file_route_logo_customize").val('storage/images/productors/');
 				$('#image-logo-current').addClass("hidden");
 				$('#preview-img-logo').removeClass("hidden");
 				var reader = new FileReader();

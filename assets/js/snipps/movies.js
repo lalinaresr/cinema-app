@@ -264,7 +264,7 @@ jQuery(document).ready(function ($) {
 				$("#file_name_cover_customize").val(fileName);
 				$("#file_size_cover_customize").val('KB: ' + sizeKB);
 				$("#file_extension_cover_customize").val(extensionLower);
-				$("#file_route_cover_customize").val('assets/images/movies/');
+				$("#file_route_cover_customize").val('storage/images/movies/');
 				$('#image-cover-current').addClass("hidden");
 				$('#preview-img-cover').removeClass("hidden");
 				var reader = new FileReader();

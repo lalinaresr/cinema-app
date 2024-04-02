@@ -41,7 +41,7 @@
                         </div>
                         <div class="modal-body">
                            <?php if (strcmp($value->user_avatar, 'NO-IMAGE') == 0) : ?>
-                              <img src="<?= encryp_image_base64(base_url() . 'assets/images/users/default.png'); ?>" class="img-rounded img-responsive center-block">
+                              <img src="<?= encryp_image_base64(base_url() . 'storage/images/users/default.png'); ?>" class="img-rounded img-responsive center-block">
                            <?php else : ?>
                               <img src="<?= encryp_image_base64(base_url() . $value->user_avatar); ?>" class="img-rounded img-responsive center-block">
                            <?php endif ?>

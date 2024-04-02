@@ -47,7 +47,7 @@
                         </div>
                         <div class="modal-body">
                            <?php if (strcmp($value->movie_cover, 'NO-IMAGE') == 0) : ?>
-                              <img src="<?= encryp_image_base64(base_url() . 'assets/images/movies/default.png'); ?>" class="img-rounded img-responsive center-block">
+                              <img src="<?= encryp_image_base64(base_url() . 'storage/images/movies/default.png'); ?>" class="img-rounded img-responsive center-block">
                            <?php else : ?>
                               <img src="<?= encryp_image_base64(base_url() . $value->movie_cover); ?>" class="img-rounded img-responsive center-block">
                            <?php endif ?>

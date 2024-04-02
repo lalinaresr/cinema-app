@@ -12,7 +12,7 @@
          <!-- END field USER AVATAR -->
          <div class="form-group">
             <?php if (strcmp($view_user->user_avatar, 'NO-IMAGE') == 0) : ?>
-               <img src="<?= encryp_image_base64(base_url() . 'assets/images/users/default.png'); ?>" class="img-rounded img-responsive" id="image-avatar-current">
+               <img src="<?= encryp_image_base64(base_url() . 'storage/images/users/default.png'); ?>" class="img-rounded img-responsive" id="image-avatar-current">
             <?php else : ?>
                <img src="<?= encryp_image_base64(base_url() . $view_user->user_avatar); ?>" class="img-rounded img-responsive" id="image-avatar-current">
             <?php endif ?>

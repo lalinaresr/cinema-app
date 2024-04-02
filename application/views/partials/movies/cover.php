@@ -12,7 +12,7 @@
          <!-- END field MOVIE COVER -->
          <div class="form-group">
             <?php if (strcmp($view_movie->movie_cover, 'NO-IMAGE') == 0) : ?>
-               <img src="<?= encryp_image_base64(base_url() . 'assets/images/movies/default.png'); ?>" class="img-rounded img-responsive" id="image-cover-current" style="width: 100%;">
+               <img src="<?= encryp_image_base64(base_url() . 'storage/images/movies/default.png'); ?>" class="img-rounded img-responsive" id="image-cover-current" style="width: 100%;">
             <?php else : ?>
                <img src="<?= encryp_image_base64(base_url() . $view_movie->movie_cover); ?>" class="img-rounded img-responsive" id="image-cover-current" style="width: 100%;">
             <?php endif ?>

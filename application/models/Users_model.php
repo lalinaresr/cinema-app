@@ -173,7 +173,7 @@
                 $user_recovered = $resultSet->row();
 
                 if (strcmp($user_recovered->user_avatar, 'NO-IMAGE') == 0){
-                   $image_avatar = encryp_image_base64(base_url() . 'assets/images/users/default.png');
+                   $image_avatar = encryp_image_base64(base_url() . 'storage/images/users/default.png');
                 } else{
                    $image_avatar = encryp_image_base64(base_url() . $user_recovered->user_avatar);
                 }
