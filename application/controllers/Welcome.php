@@ -59,15 +59,14 @@
 			$params = array(
 				'title' => '¡Bienvenido a ' . SITE_NAME . '!',
 				'styles' => array(
-					base_url('public/plugins/owl-carousel/owl.carousel.css'),
-					base_url('public/plugins/owl-carousel/owl.theme.css'),
-					base_url('public/plugins/owl-carousel/owl.transitions.css'),
-					base_url('public/css/executes/owlCarousels.css'),
-					base_url('public/css/snipps/welcome.css')
+					base_url('public/css/libs/owl.carousel.css'),
+					base_url('public/css/libs/owl.theme.css'),
+					base_url('public/css/libs/owl.transitions.css'),
+					base_url('public/css/welcome.css')
 				),
 				'scripts' => array(
-					base_url('public/plugins/owl-carousel/owl.carousel.min.js'),
-					base_url('public/js/executes/owlCarousels.js')
+					base_url('public/js/libs/owl.carousel.min.js'),
+					base_url('public/js/welcome.js')
 				),
 				'get_movies_most_viewed' => $this->Movies_model->get_movies_most_viewed(8),
 				'get_new_movies' => $this->Movies_model->get_new_movies(8),			

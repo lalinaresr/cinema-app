@@ -48,6 +48,111 @@ jQuery(document).ready(function ($) {
 
 	/*=====  End of Functions Specials  ======*/
 
+	if ($('#table-movies').length > 0) {
+		let table_movies = $('#table-movies').DataTable({
+			language: {
+				"sProcessing": "Procesando...",
+				"sLengthMenu": "Mostrar _MENU_ registros",
+				"sZeroRecords": "No se encontraron resultados",
+				"sEmptyTable": "Ningún dato disponible en esta tabla",
+				"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+				"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix": "",
+				"sSearch": "Buscar:",
+				"sUrl": "",
+				"sInfoThousands": ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst": "Primero",
+					"sLast": "Último",
+					"sNext": "Siguiente",
+					"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				},
+			},
+			lengthChange: false,
+			buttons: [
+				{ "extend": 'excel', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> XLSX', "className": 'btn btn-success' },
+				{ "extend": 'pdf', "text": '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF', "className": 'btn btn-danger' },
+				{ "extend": 'csv', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV', "className": 'btn btn-success' }
+			]
+		});
+		table_movies.buttons().container().appendTo('#buttons-exports-movies .col-sm-6:eq(0)');
+	}
+
+	let productors = {
+		nonSelectedText: 'Seleccione productores',
+		enableFiltering: true,
+		enableCaseInsensitiveFiltering: true,
+		buttonWidth: '100%',
+		filterPlaceholder: 'Buscar...',
+	};
+
+	let genders = {
+		nonSelectedText: 'Seleccione géneros',
+		enableFiltering: true,
+		enableCaseInsensitiveFiltering: true,
+		buttonWidth: '100%',
+		filterPlaceholder: 'Buscar...',
+	};
+
+	let categories = {
+		nonSelectedText: 'Seleccione categorías',
+		enableFiltering: true,
+		enableCaseInsensitiveFiltering: true,
+		buttonWidth: '100%',
+		filterPlaceholder: 'Buscar...',
+	};
+
+	if ($('#ids_productors_insert').length > 0) {
+		$('#ids_productors_insert').multiselect(productors);
+	}
+	if ($('#ids_genders_insert').length > 0) {
+		$('#ids_genders_insert').multiselect(genders);
+	}
+	if ($('#ids_categorys_insert').length > 0) {
+		$('#ids_categorys_insert').multiselect(categories);
+	}
+	if ($('#ids_productors_update').length > 0) {
+		$('#ids_productors_update').multiselect(productors);
+	}
+	if ($('#ids_genders_update').length > 0) {
+		$('#ids_genders_update').multiselect(genders);
+	}
+	if ($('#ids_categorys_update').length > 0) {
+		$('#ids_categorys_update').multiselect(categories);
+	}
+
+	let release = {
+		locale: 'es',
+		viewMode: 'years',
+		format: 'YYYY',
+		maxDate: 'now'
+	};
+
+	let duration = {
+		locale: 'es',
+		format: 'HH:mm'
+	};
+
+	if ($('#movie_release_date_insert').length > 0) {
+		$('#movie_release_date_insert').datetimepicker(release);
+	}
+	if ($('#movie_release_date_update').length > 0) {
+		$('#movie_release_date_update').datetimepicker(release);
+	}
+	if ($('#movie_duration_insert').length > 0) {
+		$('#movie_duration_insert').datetimepicker(duration);
+	}
+	if ($('#movie_duration_update').length > 0) {
+		$('#movie_duration_update').datetimepicker(duration);
+	}
+
+
 	/*========================================
 	=            Functions Insert            =
 	========================================*/

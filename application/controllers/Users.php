@@ -25,13 +25,13 @@
 				$params = array(
 					'title' => SITE_NAME . ' | Usuarios',
 					'styles' => array(
-						base_url('public/plugins/dataTables/css/dataTables.bootstrap.min.css'),
+						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
-						base_url('public/css/snipps/dashboard.css')
+						base_url('public/css/dashboard.css')
 					),
 					'scripts' => array(
-						base_url('public/plugins/dataTables/js/jquery.dataTables.min.js'),
-						base_url('public/plugins/dataTables/js/dataTables.bootstrap.min.js'),
+						base_url('public/js/libs/jquery.dataTables.min.js'),
+						base_url('public/js/libs/dataTables.bootstrap.min.js'),
 						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
 						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
 						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
@@ -40,8 +40,7 @@
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',
-						base_url('public/js/executes/dataTables.js'),
-						base_url('public/js/snipps/users.js')
+						base_url('public/js/users.js')
 					),
 					'get_all_users' => $this->Users_model->get_all_users(),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
@@ -65,15 +64,14 @@
 				$params = array(
 					'title' => SITE_NAME . ' | Usuarios',
 					'styles' => array(
-						base_url('public/plugins/date-picker/css/bootstrap-datetimepicker.min.css'),
-						base_url('public/css/snipps/dashboard.css')
+						base_url('public/css/libs/bootstrap-datetimepicker.min.css'),
+						base_url('public/css/dashboard.css')
 					),
 					'scripts' => array(
-						base_url('public/plugins/date-picker/moment.js'),
-						base_url('public/plugins/date-picker/moment-with-locales.js'),
-						base_url('public/plugins/date-picker/bootstrap-datetimepicker.js'),
-						base_url('public/js/executes/dateTimePickers.js'),
-						base_url('public/js/snipps/users.js')
+						base_url('public/js/libs/moment.js'),
+						base_url('public/js/libs/moment-with-locales.js'),
+						base_url('public/js/libs/bootstrap-datetimepicker.js'),
+						base_url('public/js/users.js')
 					),
 					'get_all_status' => $this->Status_model->get_all_status(),
 					'get_all_roles_activated' => $this->Roles_model->get_all_roles_activated(),
@@ -121,8 +119,8 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME . ' | Usuarios',
-					'styles' => array(base_url('public/css/snipps/dashboard.css')),
-					'scripts' => array(base_url('public/js/snipps/users.js')),
+					'styles' => array(base_url('public/css/dashboard.css')),
+					'scripts' => array(base_url('public/js/users.js')),
 					'id_user_encryp' => $id_user,
 					'view_user' => $this->Users_model->get_user_by('id_user', $id_user),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
@@ -148,15 +146,14 @@
 				$params = array(
 					'title' => SITE_NAME . ' | Usuarios',
 					'styles' => array(
-						base_url('public/plugins/date-picker/css/bootstrap-datetimepicker.min.css'),
-						base_url('public/css/snipps/dashboard.css')
+						base_url('public/css/libs/bootstrap-datetimepicker.min.css'),
+						base_url('public/css/dashboard.css')
 					),
 					'scripts' => array(
-						base_url('public/plugins/date-picker/moment.js'),
-						base_url('public/plugins/date-picker/moment-with-locales.js'),
-						base_url('public/plugins/date-picker/bootstrap-datetimepicker.js'),
-						base_url('public/js/executes/dateTimePickers.js'),
-						base_url('public/js/snipps/users.js')
+						base_url('public/js/libs/moment.js'),
+						base_url('public/js/libs/moment-with-locales.js'),
+						base_url('public/js/libs/bootstrap-datetimepicker.js'),
+						base_url('public/js/users.js')
 					),
 					'id_user_encryp' => $id_user,
 					'edit_user' => $this->Users_model->get_user_by('id_user', $id_user),
@@ -210,8 +207,8 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME . ' | Usuarios',
-					'styles' => array(base_url('public/css/snipps/dashboard.css')),
-					'scripts' => array(base_url('public/js/snipps/users.js')),
+					'styles' => array(base_url('public/css/dashboard.css')),
+					'scripts' => array(base_url('public/js/users.js')),
 					'id_user_encryp' => $id_user,
 					'view_user' => $this->Users_model->get_user_by('id_user', $id_user),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))

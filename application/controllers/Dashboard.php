@@ -29,7 +29,7 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME,
-					'styles' => array(base_url('public/css/snipps/dashboard.css')),
+					'styles' => array(base_url('public/css/dashboard.css')),
 					'get_some_suggestions' => $this->Suggestions_model->get_some_suggestions(),
 					'get_some_newsletters' => $this->Newsletters_model->get_some_newsletters(),
 					'get_some_sessions' => $this->Sessions_model->get_some_sessions($this->session->userdata('id_user')), 

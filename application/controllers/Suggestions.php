@@ -23,7 +23,7 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME . ' | Sugerencias',
-					'styles' => array(base_url('public/css/snipps/dashboard.css')),
+					'styles' => array(base_url('public/css/dashboard.css')),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);

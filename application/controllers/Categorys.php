@@ -31,13 +31,13 @@
 				$params = array(
 					'title' => SITE_NAME . ' | Categorías',
 					'styles' => array(
-						base_url('public/plugins/dataTables/css/dataTables.bootstrap.min.css'),
+						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
-						base_url('public/css/snipps/dashboard.css')
+						base_url('public/css/dashboard.css')
 					),
 					'scripts' => array(
-						base_url('public/plugins/dataTables/js/jquery.dataTables.min.js'),
-						base_url('public/plugins/dataTables/js/dataTables.bootstrap.min.js'),
+						base_url('public/js/libs/jquery.dataTables.min.js'),
+						base_url('public/js/libs/dataTables.bootstrap.min.js'),
 						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
 						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
 						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
@@ -46,8 +46,7 @@
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',
-						base_url('public/js/executes/dataTables.js'),
-						base_url('public/js/snipps/categorys.js')
+						base_url('public/js/categorys.js')
 					),
 					'get_all_categorys' => $this->Categorys_model->get_all_categorys(),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
@@ -71,8 +70,8 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME . ' | Categorías',
-					'styles' => array(base_url('public/css/snipps/dashboard.css')),
-					'scripts' => array(base_url('public/js/snipps/categorys.js')),
+					'styles' => array(base_url('public/css/dashboard.css')),
+					'scripts' => array(base_url('public/js/categorys.js')),
 					'get_all_status' => $this->Status_model->get_all_status(),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
@@ -115,8 +114,8 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME . ' | Categorías',
-					'styles' => array(base_url('public/css/snipps/dashboard.css')),
-					'scripts' => array(base_url('public/js/snipps/categorys.js')),
+					'styles' => array(base_url('public/css/dashboard.css')),
+					'scripts' => array(base_url('public/js/categorys.js')),
 					'view_category' => $this->Categorys_model->get_category_by('id_category', $id_category),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);
@@ -178,15 +177,14 @@
 			$params = array(
 				'title' => SITE_NAME . ' - Búsqueda por categoría',
 				'styles' => array(
-					base_url('public/plugins/owl-carousel/owl.carousel.css'),
-					base_url('public/plugins/owl-carousel/owl.theme.css'),
-					base_url('public/plugins/owl-carousel/owl.transitions.css'),
-					base_url('public/css/executes/owlCarousels.css'),
-					base_url('public/css/snipps/welcome.css')
+					base_url('public/css/libs/owl.carousel.css'),
+					base_url('public/css/libs/owl.theme.css'),
+					base_url('public/css/libs/owl.transitions.css'),
+					base_url('public/css/welcome.css')
 				),
 				'scripts' => array(
-					base_url('public/plugins/owl-carousel/owl.carousel.min.js'),
-					base_url('public/js/executes/owlCarousels.js')
+					base_url('public/js/libs/owl.carousel.min.js'),
+					base_url('public/js/welcome.js')
 				),
 				'view_category' => $this->Categorys_model->get_category_by('id_category', $id_category),
 				'get_movies_most_viewed' => $this->Movies_model->get_movies_most_viewed(8),
@@ -219,8 +217,8 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME . ' | Categorías',
-					'styles' => array(base_url('public/css/snipps/dashboard.css')),
-					'scripts' => array(base_url('public/js/snipps/categorys.js')),
+					'styles' => array(base_url('public/css/dashboard.css')),
+					'scripts' => array(base_url('public/js/categorys.js')),
 					'id_category_encryp' => $id_category,
 					'edit_category' => $this->Categorys_model->get_category_by('id_category', $id_category),
 					'get_all_status' => $this->Status_model->get_all_status(),

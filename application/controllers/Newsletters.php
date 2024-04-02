@@ -25,13 +25,13 @@
 				$params = array(
 					'title' => SITE_NAME . ' | Seguidores',
 					'styles' => array(
-						base_url('public/plugins/dataTables/css/dataTables.bootstrap.min.css'),
+						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
-						base_url('public/css/snipps/dashboard.css')
+						base_url('public/css/dashboard.css')
 					),
 					'scripts' => array(
-						base_url('public/plugins/dataTables/js/jquery.dataTables.min.js'),
-						base_url('public/plugins/dataTables/js/dataTables.bootstrap.min.js'),
+						base_url('public/js/libs/jquery.dataTables.min.js'),
+						base_url('public/js/libs/dataTables.bootstrap.min.js'),
 						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
 						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
 						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
@@ -40,7 +40,7 @@
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',						
-						base_url('public/js/executes/dataTables.js')
+						base_url('public/js/newsletters.js')
 					),
 					'get_all_newsletters' => $this->Newsletters_model->get_all_newsletters(),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))

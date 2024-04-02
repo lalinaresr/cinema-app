@@ -32,13 +32,13 @@
 				$params = array(
 					'title' => SITE_NAME . ' | Películas',
 					'styles' => array(
-						base_url('public/plugins/dataTables/css/dataTables.bootstrap.min.css'),
+						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
-						base_url('public/css/snipps/dashboard.css')
+						base_url('public/css/dashboard.css')
 					),
 					'scripts' => array(
-						base_url('public/plugins/dataTables/js/jquery.dataTables.min.js'),
-						base_url('public/plugins/dataTables/js/dataTables.bootstrap.min.js'),
+						base_url('public/js/libs/jquery.dataTables.min.js'),
+						base_url('public/js/libs/dataTables.bootstrap.min.js'),
 						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
 						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
 						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
@@ -47,8 +47,7 @@
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
 						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',
-						base_url('public/js/executes/dataTables.js'),
-						base_url('public/js/snipps/movies.js')
+						base_url('public/js/movies.js')
 					),
 					'get_all_movies' => $this->Movies_model->get_all_movies(),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
@@ -73,19 +72,17 @@
 				$params = array(
 					'title' => SITE_NAME . ' | Películas',
 					'styles' => array(
-						base_url('public/plugins/date-picker/css/bootstrap-datetimepicker.min.css'),
+						base_url('public/css/libs/bootstrap-datetimepicker.min.css'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css',
-						base_url('public/css/snipps/dashboard.css')
+						base_url('public/css/dashboard.css')
 					),
 					'scripts' => array(
-						base_url('public/plugins/date-picker/moment.js'),
-						base_url('public/plugins/date-picker/moment-with-locales.js'),
-						base_url('public/plugins/date-picker/bootstrap-datetimepicker.js'),
+						base_url('public/js/libs/moment.js'),
+						base_url('public/js/libs/moment-with-locales.js'),
+						base_url('public/js/libs/bootstrap-datetimepicker.js'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js',
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',						
-						base_url('public/js/executes/dateTimePickers.js'),
-						base_url('public/js/executes/multipleSelect.js'),
-						base_url('public/js/snipps/movies.js')
+						base_url('public/js/movies.js')
 					),
 					'get_all_status' => $this->Status_model->get_all_status(),
 					'get_all_qualities_activated' => $this->Qualities_model->get_all_qualities_activated(),
@@ -153,8 +150,8 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME . ' | Películas',
-					'styles' => array(base_url('public/css/snipps/dashboard.css')),
-					'scripts' => array(base_url('public/js/snipps/movies.js')),
+					'styles' => array(base_url('public/css/dashboard.css')),
+					'scripts' => array(base_url('public/js/movies.js')),
 					'id_movie_encryp' => $id_movie,
 					'view_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
 					'productors_movie' => $this->Movies_model->get_productors_movie($id_movie),
@@ -182,15 +179,14 @@
 			$params = array(
 				'title' => SITE_NAME . ' - ' . $fetch_movie->movie_name,
 				'styles' => array(
-					base_url('public/plugins/owl-carousel/owl.carousel.css'),
-					base_url('public/plugins/owl-carousel/owl.theme.css'),
-					base_url('public/plugins/owl-carousel/owl.transitions.css'),
-					base_url('public/css/executes/owlCarousels.css'),
-					base_url('public/css/snipps/welcome.css')
+					base_url('public/css/libs/owl.carousel.css'),
+					base_url('public/css/libs/owl.theme.css'),
+					base_url('public/css/libs/owl.transitions.css'),
+					base_url('public/css/welcome.css')
 				),
 				'scripts' => array(
-					base_url('public/plugins/owl-carousel/owl.carousel.min.js'),
-					base_url('public/js/executes/owlCarousels.js')
+					base_url('public/js/libs/owl.carousel.min.js'),
+					base_url('public/js/welcome.js')
 				),
 				'watch_movie' => $fetch_movie,
 				'update_reproductions' => $this->Movies_model->update_reproductions($id_movie),
@@ -221,19 +217,17 @@
 				$params = array(
 					'title' => SITE_NAME . ' | Películas',
 					'styles' => array(
-						base_url('public/plugins/date-picker/css/bootstrap-datetimepicker.min.css'),
+						base_url('public/css/libs/bootstrap-datetimepicker.min.css'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css',
-						base_url('public/css/snipps/dashboard.css'),
+						base_url('public/css/dashboard.css'),
 					),
 					'scripts' => array(
-						base_url('public/plugins/date-picker/moment.js'),
-						base_url('public/plugins/date-picker/moment-with-locales.js'),
-						base_url('public/plugins/date-picker/bootstrap-datetimepicker.js'),
+						base_url('public/js/libs/moment.js'),
+						base_url('public/js/libs/moment-with-locales.js'),
+						base_url('public/js/libs/bootstrap-datetimepicker.js'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js',
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',
-						base_url('public/js/executes/dateTimePickers.js'),
-						base_url('public/js/executes/multipleSelect.js'),
-						base_url('public/js/snipps/movies.js')
+						base_url('public/js/movies.js')
 					),
 					'id_movie_encryp' => $id_movie,
 					'get_all_status' => $this->Status_model->get_all_status(),
@@ -311,7 +305,7 @@
 						'new_image_cover' => $this->upload->data()['file_name'],
 						'old_image_cover' => NULL,
 						'old_image_ext' => substr(trim($this->input->post('image_cover_update_route')), -4)
-						/* 'image_logo' => 'storage/images/productors/' . decryp($this->input->post('id_productor_update_productor')) . '_logo' . substr($this->upload->data()['file_name'], -4) */
+						// 'image_logo' => FOLDER_MOVIES . decryp($this->input->post('id_productor_update_productor')) . '_logo' . substr($this->upload->data()['file_name'], -4)
 					);
 					$this->Movies_model->update_model($update);
 					/* END Upload and Update with New Image */            		
@@ -331,8 +325,8 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME . ' | Películas',
-					'styles' => array(base_url('public/css/snipps/dashboard.css')),
-					'scripts' => array(base_url('public/js/snipps/movies.js')),
+					'styles' => array(base_url('public/css/dashboard.css')),
+					'scripts' => array(base_url('public/js/movies.js')),
 					'id_movie_encryp' => $id_movie,
 					'view_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))

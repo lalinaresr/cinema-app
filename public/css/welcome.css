@@ -1,5 +1,136 @@
 @charset "utf-8";
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #333333 !important;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #222222 !important;
+}
+
+body>.container-fluid {
+    padding: 60px 15px 0;
+}
+
+.container-fluid .text-muted {
+    margin: 20px 0;
+}
+
+.footer>.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+.bg-black {
+    background-color: #222222 !important;
+    border-color: #222222 !important;
+}
+
+.bg-white {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+.tx-black {
+    color: #222222 !important;
+}
+
+.tx-white {
+    color: #ffffff !important;
+}
+
+
+@media (min-width: 1281px) {
+    .thumbnail>img {
+        display: block !important;
+        width: 100% !important;
+        height: 400px !important;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .thumbnail>img {
+        display: block !important;
+        width: 100% !important;
+        height: 400px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .thumbnail>img {
+        display: block !important;
+        width: 100% !important;
+        height: 400px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .thumbnail>img {
+        display: block !important;
+        width: 100% !important;
+        height: 400px !important;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+    .thumbnail>img {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+}
+
+
+
+@media (min-width: 1281px) {
+    .video-movie {
+        width: 100% !important;
+        height: 590px !important;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .video-movie {
+        width: 100% !important;
+        height: 590px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .video-movie {
+        width: 100% !important;
+        height: 590px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .video-movie {
+        width: 100% !important;
+        height: 590px !important;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+    .video-movie {
+        width: 100% !important;
+        height: 350px !important;
+    }
+}
+
 /*=======================================================
 =            CSS Carousel Movies Most Viewed            =
 =======================================================*/
@@ -8,46 +139,55 @@
     #carousel-movies-most-viewed .item {
         margin: 3px;
     }
+
     #carousel-movies-most-viewed .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 1025px) and (max-width: 1280px) {
     #carousel-movies-most-viewed .item {
         margin: 3px;
     }
+
     #carousel-movies-most-viewed .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 768px) and (max-width: 1024px) {
     #carousel-movies-most-viewed .item {
         margin: 3px;
     }
+
     #carousel-movies-most-viewed .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     #carousel-movies-most-viewed .item {
         margin: 3px;
     }
+
     #carousel-movies-most-viewed .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 320px) and (max-width: 767px) {
     #carousel-movies-most-viewed .item {
         margin: 3px;
     }
+
     #carousel-movies-most-viewed .item img {
         display: block;
         width: 100%;
@@ -66,46 +206,55 @@
     #carousel-new-movies .item {
         margin: 3px;
     }
+
     #carousel-new-movies .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 1025px) and (max-width: 1280px) {
     #carousel-new-movies .item {
         margin: 3px;
     }
+
     #carousel-new-movies .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 768px) and (max-width: 1024px) {
     #carousel-new-movies .item {
         margin: 3px;
     }
+
     #carousel-new-movies .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     #carousel-new-movies .item {
         margin: 3px;
     }
+
     #carousel-new-movies .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 320px) and (max-width: 767px) {
     #carousel-new-movies .item {
         margin: 3px;
     }
+
     #carousel-new-movies .item img {
         display: block;
         width: 100%;
@@ -124,46 +273,55 @@
     #carousel-all-movies .item {
         margin: 3px;
     }
+
     #carousel-all-movies .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 1025px) and (max-width: 1280px) {
     #carousel-all-movies .item {
         margin: 3px;
     }
+
     #carousel-all-movies .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 768px) and (max-width: 1024px) {
     #carousel-all-movies .item {
         margin: 3px;
     }
+
     #carousel-all-movies .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     #carousel-all-movies .item {
         margin: 3px;
     }
+
     #carousel-all-movies .item img {
         display: block;
         width: 100%;
         height: 250px;
     }
 }
+
 @media (min-width: 320px) and (max-width: 767px) {
     #carousel-all-movies .item {
         margin: 3px;
     }
+
     #carousel-all-movies .item img {
         display: block;
         width: 100%;
@@ -177,6 +335,7 @@
     padding: 5px;
     position: relative;
 }
+
 .mv_movie .mv_movie_title {
     color: #FFF;
     font-size: 1.2em;
@@ -185,10 +344,12 @@
     height: 50px;
     padding: 5px;
 }
+
 .nw_movie {
     padding: 5px;
     position: relative;
 }
+
 .nw_movie .nw_movie_title {
     color: #FFF;
     font-size: 1.2em;
@@ -197,8 +358,7 @@
     height: 50px;
     padding: 5px;
 }
+
 .bg-m-info {
     background: #5BC0DE !important;
 }
-
-

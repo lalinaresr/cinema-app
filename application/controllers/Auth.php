@@ -38,7 +38,7 @@
 			} else {
 				$params = array(
 					'title' => SITE_NAME . ' - Iniciar sesión',
-					'styles' => array(base_url('public/css/snipps/login.css'))
+					'styles' => array(base_url('public/css/auth.css'))
 				);
 				$this->load->view('header', $params);								
 				$this->load->view('partials/login/container');
