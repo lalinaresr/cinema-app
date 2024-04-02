@@ -26,6 +26,24 @@
                 return FALSE;
             }            
         }
+        
+        /**
+        * [get_some_newsletters description]
+        * @return [type] [description]
+        */
+        public function get_some_newsletters(){
+            $resultSet = $this->db
+            ->select('*')
+            ->from('cm_newsletters')
+            ->order_by('id_newsletter', 'DESC')
+            ->limit(5)
+            ->get();
+            if ($resultSet->num_rows() > 0) {
+                return $resultSet;
+            } else {
+                return FALSE;
+            }            
+        }
 
         /**
         * [get_my_sessions description]
