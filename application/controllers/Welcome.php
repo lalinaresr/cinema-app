@@ -57,7 +57,7 @@
 	       	$links_created = $this->pagination->create_links();
 			
 			$params = array(
-				'page_title' => 'Bienvenido a ' . SITE_NAME,
+				'page_title' => '¡Bienvenido a ' . SITE_NAME . '!',
 				'css_files' => array(
 					base_url() . 'assets/css/bootstrap.min.css',
 					base_url() . 'assets/css/font-awesome.min.css',

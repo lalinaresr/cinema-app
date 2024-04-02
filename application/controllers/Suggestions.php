@@ -22,7 +22,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de sugerencias',
+					'page_title' => SITE_NAME . ' | Sugerencias',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',

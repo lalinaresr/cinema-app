@@ -29,7 +29,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de géneros',
+					'page_title' => SITE_NAME . ' | Géneros',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -81,7 +81,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de géneros',
+					'page_title' => SITE_NAME . ' | Géneros',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -140,7 +140,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de géneros',
+					'page_title' => SITE_NAME . ' | Géneros',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -192,24 +192,23 @@
 		// $config['use_page_numbers'] = TRUE;
 
 	       	$config['full_tag_open']  = '<nav aria-label="Page navigation"><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></nav><!--pagination-->';
-		$config['first_link'] = '&laquo; Primera';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Última &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Siguiente <span class="glyphicon glyphicon-chevron-right"></span>';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '<span class="glyphicon glyphicon-chevron-left"></span> Anterior';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="#">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-
+			$config['full_tag_close'] = '</ul></nav><!--pagination-->';
+			$config['first_link'] = '&laquo; Primera';
+			$config['first_tag_open'] = '<li class="prev page">';
+			$config['first_tag_close'] = '</li>';
+			$config['last_link'] = 'Última &raquo;';
+			$config['last_tag_open'] = '<li class="next page">';
+			$config['last_tag_close'] = '</li>';
+			$config['next_link'] = 'Siguiente <span class="glyphicon glyphicon-chevron-right"></span>';
+			$config['next_tag_open'] = '<li class="next page">';
+			$config['next_tag_close'] = '</li>';
+			$config['prev_link'] = '<span class="glyphicon glyphicon-chevron-left"></span> Anterior';
+			$config['prev_tag_open'] = '<li class="prev page">';
+			$config['prev_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="active"><a href="#">';
+			$config['cur_tag_close'] = '</a></li>';
+			$config['num_tag_open'] = '<li class="page">';
+			$config['num_tag_close'] = '</li>';
 
 	       	$this->pagination->initialize($config);
 	       	
@@ -217,7 +216,7 @@
 	       	$links_created = $this->pagination->create_links();
 
 			$params = array(
-				'page_title' => SITE_NAME,
+				'page_title' => SITE_NAME . ' - Búsqueda por género',
 				'css_files' => array(
 					base_url() . 'assets/css/bootstrap.min.css',
 					base_url() . 'assets/css/font-awesome.min.css',
@@ -268,7 +267,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de géneros',
+					'page_title' => SITE_NAME . ' | Géneros',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',

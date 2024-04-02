@@ -29,7 +29,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de productores',
+					'page_title' => SITE_NAME . ' | Productores',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -81,7 +81,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de productores',
+					'page_title' => SITE_NAME . ' | Productores',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -146,7 +146,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de productores',
+					'page_title' => SITE_NAME . ' | Productores',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -224,7 +224,7 @@
 	       	$links_created = $this->pagination->create_links();
 
 			$params = array(
-				'page_title' => SITE_NAME,
+				'page_title' => SITE_NAME . ' - Búsqueda por productor',
 				'css_files' => array(
 					base_url() . 'assets/css/bootstrap.min.css',
 					base_url() . 'assets/css/font-awesome.min.css',
@@ -275,7 +275,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de productores',
+					'page_title' => SITE_NAME . ' | Productores',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -358,7 +358,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de productores',
+					'page_title' => SITE_NAME . ' | Productores',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',

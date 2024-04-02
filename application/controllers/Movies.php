@@ -30,7 +30,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de películas',
+					'page_title' => SITE_NAME . ' | Películas',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -82,7 +82,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de películas',
+					'page_title' => SITE_NAME . ' | Películas',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -174,7 +174,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de películas',
+					'page_title' => SITE_NAME . ' | Películas',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',						
@@ -212,8 +212,10 @@
 		* @return [type]           [description]
 		*/
 		public function watch($id_movie){
+			$fetch_movie = $this->Movies_model->get_movie_by('id_movie', $id_movie);
+
 			$params = array(
-				'page_title' => SITE_NAME,
+				'page_title' => SITE_NAME . ' - ' . $fetch_movie->movie_name,
 				'css_files' => array(
 					base_url() . 'assets/css/bootstrap.min.css',
 					base_url() . 'assets/css/font-awesome.min.css',
@@ -235,7 +237,7 @@
 					base_url() . 'assets/js/snipps/auth.js',
 					base_url() . 'assets/js/site.js'
 				),
-				'watch_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
+				'watch_movie' => $fetch_movie,
 				'update_reproductions' => $this->Movies_model->update_reproductions($id_movie),
 				'get_new_movies' => $this->Movies_model->get_new_movies(8),	
 				'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),	
@@ -262,7 +264,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de películas',
+					'page_title' => SITE_NAME . ' | Películas',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',
@@ -384,7 +386,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'page_title' => SITE_NAME . ' - Catálogo de películas',
+					'page_title' => SITE_NAME . ' | Películas',
 					'css_files' => array(
 						base_url() . 'assets/css/bootstrap.min.css',
 						base_url() . 'assets/css/font-awesome.min.css',						
