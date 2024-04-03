@@ -84,17 +84,34 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-define('SITE_NAME', 'Cinema');
-define('SITE_AUTHOR', 'Luis Linares');
-define('SITE_DESCRIPTION', '');
+/*
+|--------------------------------------------------------------------------
+| CUSTOM CONSTANTS FOR THE APPLICATION
+|--------------------------------------------------------------------------
+*/
 
-define('HOSTNAME', 'localhost');
-define('USERNAME', 'root');
-define('PASSWORD', '');
-define('DATABASE', 'app_cinema');
+/* Set the default timezone for dates */
+date_default_timezone_set('America/Mexico_City');
 
-define('GMAIL_EMAIL', '#');
-define('GMAIL_PASSWORD', '#');	
+define('APP_NAME', 'Cinema');
+define('APP_AUTHOR', 'Luis Linarez <dev.lalinaresr@gmail.com>');
+define('APP_URL', 'http://127.0.0.1:8000');
+define('APP_KEY', password_hash(APP_NAME, PASSWORD_DEFAULT));
+
+const CONNECTION = [
+	'TYPE' => 'mysqli',
+	'HOSTNAME' => 'localhost',
+	'USERNAME' => 'root',
+	'PASSWORD' => '',
+	'DATABASE' => 'app_cinema',
+	'CHARSET' => 'utf8',
+	'COLLATION' => 'utf8_general_ci'
+];
+
+const GMAIL = [
+    'EMAIL' => null,
+    'PASSWORD' => null,	
+];
 
 define('FOLDER_MOVIES', 'storage/images/movies/');
 define('FOLDER_AVATARS', 'storage/images/users/');

@@ -64,7 +64,6 @@
 	* @return [type]       [description]
 	*/
 	function get_antiquity($date){
-		date_default_timezone_set('America/Mexico_City');
 		$stamp_date = strtotime($date);
 		$stamp_current = time();
 
@@ -119,7 +118,7 @@
 	/**
 	* 
 	*/
-	function get_date_current(){ date_default_timezone_set('America/Mexico_City'); return date('Y-m-d H:i:s'); }
+	function get_date_current(){ return date('Y-m-d H:i:s'); }
 
 	/**
 	* [get_agent_current description]

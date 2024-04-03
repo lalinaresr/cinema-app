@@ -78,8 +78,8 @@
 				'protocol' => 'smtp',
 				'smtp_host' => 'ssl://smtp.gmail.com',
 				'smtp_port' => 465,
-				'smtp_user' => GMAIL_EMAIL,
-				'smtp_pass' => GMAIL_PASSWORD,
+				'smtp_user' => GMAIL['EMAIL'],
+				'smtp_pass' => GMAIL['PASSWORD'],
 				'mailtype' => 'html',
 				'charset' => 'utf-8',
 				'newline' => "\r\n"
@@ -87,7 +87,7 @@
 			
 			$this->email->initialize($details_mail);
 			
-			$this->email->from(GMAIL_EMAIL);
+			$this->email->from(GMAIL['EMAIL']);
 			$this->email->to($to);
 			$this->email->subject($subject);
 			$this->email->message($message);

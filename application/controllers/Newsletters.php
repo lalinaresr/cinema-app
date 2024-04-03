@@ -23,7 +23,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Seguidores',
+					'title' => constant('APP_NAME') . ' | Seguidores',
 					'styles' => array(
 						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						base_url('public/css/libs/buttons.bootstrap.min.css'),

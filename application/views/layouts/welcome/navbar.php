@@ -7,7 +7,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand tx-20" href="<?= site_url(); ?>"><?= SITE_NAME; ?></a>
+			<a class="navbar-brand tx-20" href="<?= site_url(); ?>"><?= constant('APP_NAME'); ?></a>
 		</div>
 		<div class="collapse navbar-collapse navbar-nv1-collapse">
 			<?php if (

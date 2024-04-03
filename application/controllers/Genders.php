@@ -29,7 +29,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Géneros',
+					'title' => constant('APP_NAME') . ' | Géneros',
 					'styles' => array(
 						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						base_url('public/css/libs/buttons.bootstrap.min.css'),
@@ -67,7 +67,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Géneros',
+					'title' => constant('APP_NAME') . ' | Géneros',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/genders.js')),
 					'get_all_status' => $this->Status_model->get_all_status(),
@@ -111,7 +111,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Géneros',
+					'title' => constant('APP_NAME') . ' | Géneros',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/genders.js')),
 					'view_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
@@ -173,7 +173,7 @@
 	       	$links_created = $this->pagination->create_links();
 
 			$params = array(
-				'title' => SITE_NAME . ' - Búsqueda por género',
+				'title' => constant('APP_NAME') . ' - Búsqueda por género',
 				'styles' => array(
 					base_url('public/css/libs/owl.carousel.css'),
 					base_url('public/css/libs/owl.theme.css'),
@@ -214,7 +214,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Géneros',
+					'title' => constant('APP_NAME') . ' | Géneros',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/genders.js')),
 					'id_gender_encryp' => $id_gender,

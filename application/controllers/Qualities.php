@@ -24,7 +24,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Calidades',
+					'title' => constant('APP_NAME') . ' | Calidades',
 					'styles' => array(
 						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						base_url('public/css/libs/buttons.bootstrap.min.css'),
@@ -62,7 +62,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Calidades',
+					'title' => constant('APP_NAME') . ' | Calidades',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/qualities.js')),
 					'get_all_status' => $this->Status_model->get_all_status(),
@@ -106,7 +106,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Calidades',
+					'title' => constant('APP_NAME') . ' | Calidades',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/qualities.js')),
 					'view_quality' => $this->Qualities_model->get_quality_by('id_quality', $id_quality),
@@ -132,7 +132,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Calidades',
+					'title' => constant('APP_NAME') . ' | Calidades',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/qualities.js')),
 					'id_quality_encryp' => $id_quality,

@@ -71,7 +71,7 @@
 	       	$links_created = $this->pagination->create_links();
 			
 			$params = array(
-				'title' => SITE_NAME . ' - Búsqueda',
+				'title' => constant('APP_NAME') . ' - Búsqueda',
 				'styles' => array(
 					base_url('public/css/libs/owl.carousel.css'),
 					base_url('public/css/libs/owl.theme.css'),

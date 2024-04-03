@@ -57,7 +57,7 @@
 	       	$links_created = $this->pagination->create_links();
 			
 			$params = array(
-				'title' => '¡Bienvenido a ' . SITE_NAME . '!',
+				'title' => '¡Bienvenido a ' . constant('APP_NAME') . '!',
 				'styles' => array(
 					base_url('public/css/libs/owl.carousel.css'),
 					base_url('public/css/libs/owl.theme.css'),

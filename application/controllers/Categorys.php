@@ -29,7 +29,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Categorías',
+					'title' => constant('APP_NAME') . ' | Categorías',
 					'styles' => array(
 						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						base_url('public/css/libs/buttons.bootstrap.min.css'),
@@ -67,7 +67,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Categorías',
+					'title' => constant('APP_NAME') . ' | Categorías',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/categorys.js')),
 					'get_all_status' => $this->Status_model->get_all_status(),
@@ -111,7 +111,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Categorías',
+					'title' => constant('APP_NAME') . ' | Categorías',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/categorys.js')),
 					'view_category' => $this->Categorys_model->get_category_by('id_category', $id_category),
@@ -173,7 +173,7 @@
 	       	$links_created = $this->pagination->create_links();
 
 			$params = array(
-				'title' => SITE_NAME . ' - Búsqueda por categoría',
+				'title' => constant('APP_NAME') . ' - Búsqueda por categoría',
 				'styles' => array(
 					base_url('public/css/libs/owl.carousel.css'),
 					base_url('public/css/libs/owl.theme.css'),
@@ -214,7 +214,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Categorías',
+					'title' => constant('APP_NAME') . ' | Categorías',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/categorys.js')),
 					'id_category_encryp' => $id_category,

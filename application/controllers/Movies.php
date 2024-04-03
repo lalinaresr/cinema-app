@@ -30,7 +30,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Películas',
+					'title' => constant('APP_NAME') . ' | Películas',
 					'styles' => array(
 						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						base_url('public/css/libs/buttons.bootstrap.min.css'),
@@ -68,7 +68,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Películas',
+					'title' => constant('APP_NAME') . ' | Películas',
 					'styles' => array(
 						base_url('public/css/libs/bootstrap-datetimepicker.min.css'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css',
@@ -147,7 +147,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Películas',
+					'title' => constant('APP_NAME') . ' | Películas',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/movies.js')),
 					'id_movie_encryp' => $id_movie,
@@ -175,7 +175,7 @@
 			$fetch_movie = $this->Movies_model->get_movie_by('id_movie', $id_movie);
 
 			$params = array(
-				'title' => SITE_NAME . ' - ' . $fetch_movie->movie_name,
+				'title' => constant('APP_NAME') . ' - ' . $fetch_movie->movie_name,
 				'styles' => array(
 					base_url('public/css/libs/owl.carousel.css'),
 					base_url('public/css/libs/owl.theme.css'),
@@ -213,7 +213,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Películas',
+					'title' => constant('APP_NAME') . ' | Películas',
 					'styles' => array(
 						base_url('public/css/libs/bootstrap-datetimepicker.min.css'),
 						'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css',
@@ -322,7 +322,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Películas',
+					'title' => constant('APP_NAME') . ' | Películas',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/movies.js')),
 					'id_movie_encryp' => $id_movie,

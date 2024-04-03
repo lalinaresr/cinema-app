@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
          </button>
-         <a class="navbar-brand navbar-title" href="<?= site_url('dashboard/'); ?>"><?= SITE_NAME; ?></a>
+         <a class="navbar-brand navbar-title" href="<?= site_url('dashboard/'); ?>"><?= constant('APP_NAME'); ?></a>
       </div>
       <div class="collapse navbar-collapse navbar-ex1-collapse">
          <ul class="nav navbar-nav visible-xs">

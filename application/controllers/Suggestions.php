@@ -22,7 +22,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Sugerencias',
+					'title' => constant('APP_NAME') . ' | Sugerencias',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
 				);

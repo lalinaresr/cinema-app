@@ -7,8 +7,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="<?= SITE_AUTHOR; ?>">
-	<title><?= $title ?? SITE_NAME; ?></title>
+	<meta name="author" content="<?= constant('APP_AUTHOR'); ?>">
+	<title><?= $title ?? constant('APP_NAME'); ?></title>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('public/css/libs/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('public/css/libs/font-awesome.min.css'); ?>">

@@ -23,7 +23,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Usuarios',
+					'title' => constant('APP_NAME') . ' | Usuarios',
 					'styles' => array(
 						base_url('public/css/libs/dataTables.bootstrap.min.css'),
 						base_url('public/css/libs/buttons.bootstrap.min.css'),
@@ -60,7 +60,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Usuarios',
+					'title' => constant('APP_NAME') . ' | Usuarios',
 					'styles' => array(
 						base_url('public/css/libs/bootstrap-datetimepicker.min.css'),
 						base_url('public/css/dashboard.css')
@@ -116,7 +116,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Usuarios',
+					'title' => constant('APP_NAME') . ' | Usuarios',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/users.js')),
 					'id_user_encryp' => $id_user,
@@ -142,7 +142,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Usuarios',
+					'title' => constant('APP_NAME') . ' | Usuarios',
 					'styles' => array(
 						base_url('public/css/libs/bootstrap-datetimepicker.min.css'),
 						base_url('public/css/dashboard.css')
@@ -204,7 +204,7 @@
 				redirect(site_url());
 			} else {
 				$params = array(
-					'title' => SITE_NAME . ' | Usuarios',
+					'title' => constant('APP_NAME') . ' | Usuarios',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/users.js')),
 					'id_user_encryp' => $id_user,
