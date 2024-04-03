@@ -9,6 +9,6 @@ jQuery(document).ready(function ($) {
 	};
 
 	$("#carousel-new-movies").owlCarousel(config);
-	$("#carousel-movies-most-viewed").owlCarousel(config);
+	$("#carousel-most-viewed-movies").owlCarousel(config);
 	$("#carousel-all-movies").owlCarousel(config);
 });

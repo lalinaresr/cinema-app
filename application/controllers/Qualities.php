@@ -27,20 +27,18 @@
 					'title' => SITE_NAME . ' | Calidades',
 					'styles' => array(
 						base_url('public/css/libs/dataTables.bootstrap.min.css'),
-						'https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css',
+						base_url('public/css/libs/buttons.bootstrap.min.css'),
 						base_url('public/css/dashboard.css')
 					),
 					'scripts' => array(
-						base_url('public/js/libs/jquery.dataTables.min.js'),
+						base_url('public/js/libs/jszip.min.js'),
+						base_url('public/js/libs/pdfmake.min.js'),
+						base_url('public/js/libs/vfs_fonts.js'),
+						base_url('public/js/libs/dataTables.min.js'),
 						base_url('public/js/libs/dataTables.bootstrap.min.js'),
-						'https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js',
-						'https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js',
-						'//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
-						'//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js',
-						'//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js',
-						'//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js',
-						'//cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js',
-						'//cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js',
+						base_url('public/js/libs/dataTables.buttons.min.js'),
+						base_url('public/js/libs/buttons.bootstrap.min.js'),
+						base_url('public/js/libs/buttons.html5.min.js'),
 						base_url('public/js/qualities.js')
 					),
 					'get_all_qualities' => $this->Qualities_model->get_all_qualities(),

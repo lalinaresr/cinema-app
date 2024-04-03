@@ -1,5 +1,13 @@
 jQuery(document).ready(function ($) {
 
+	const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+			confirmButton: "btn btn-info",
+			cancelButton: "btn btn-default"
+		},
+		buttonsStyling: false
+	});
+
 	/*=======================================
 	=            Functions Login            =
 	=======================================*/
@@ -24,17 +32,17 @@ jQuery(document).ready(function ($) {
 			$("#btn-login").html('<span class="glyphicon glyphicon-log-in"></span> Entrar');
 
 			if (response == "Missing") {
-				swal(
-					'No encontrado',
-					'Las credenciales que ha ingresado no coinciden con alguno de nuestros registros.',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'No encontrado',
+					text: 'Las credenciales que ha ingresado no coinciden con alguno de nuestros registros.',
+					icon: 'warning'
+				});
 			} else if (response == "Error") {
-				swal(
-					'No encontrado',
-					'Las credenciales que ha ingresado no coinciden con alguno de nuestros registros.',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'No encontrado',
+					text: 'Las credenciales que ha ingresado no coinciden con alguno de nuestros registros.',
+					icon: 'warning'
+				});
 			} else if (response == "Success") {
 				location.href = "/dashboard/";
 			}

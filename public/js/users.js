@@ -71,8 +71,8 @@ jQuery(document).ready(function ($) {
 
 	/*=====  End of Functions Specials  ======*/
 
-	if ($('#table-users').length > 0) {
-		let table_users = $('#table-users').DataTable({
+	if ($('#users-table').length > 0) {
+		let users_table = $('#users-table').DataTable({
 			language: {
 				"sProcessing": "Procesando...",
 				"sLengthMenu": "Mostrar _MENU_ registros",
@@ -104,7 +104,7 @@ jQuery(document).ready(function ($) {
 				{ "extend": 'csv', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV', "className": 'btn btn-success' }
 			]
 		});
-		table_users.buttons().container().appendTo('#buttons-exports-users .col-sm-6:eq(0)');
+		users_table.buttons().container().appendTo('.col-sm-6:eq(0)');
 	}
 
 	let birthday = {
@@ -120,6 +120,14 @@ jQuery(document).ready(function ($) {
 	if ($('#user_date_birthday_update').length > 0) {
 		$('#user_date_birthday_update').datetimepicker(birthday);
 	}
+
+	const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+			confirmButton: "btn btn-info",
+			cancelButton: "btn btn-default"
+		},
+		buttonsStyling: false
+	});
 
 	/*========================================
 	=            Functions Insert            =
@@ -179,23 +187,23 @@ jQuery(document).ready(function ($) {
 			$("#btn-insert-user").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
 			if (response == "Already") {
-				swal(
-					'Duplicado',
-					'Los datos del usuario que intenta ingresar ya se encuentran en el sistema',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Duplicado',
+					text: 'Los datos del usuario que intenta ingresar ya se encuentran en el sistema',
+					icon: 'warning'
+				});
 			} else if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'El usuario ha sido insertado con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'El usuario ha sido insertado con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -260,23 +268,23 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-user").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
 			if (response == "Already") {
-				swal(
-					'Duplicado',
-					'Los datos del usuario que intenta ingresar ya se encuentran en el sistema',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Duplicado',
+					text: 'Los datos del usuario que intenta ingresar ya se encuentran en el sistema',
+					icon: 'warning'
+				});
 			} else if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'El usuario ha sido actualizado con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'El usuario ha sido actualizado con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -311,7 +319,6 @@ jQuery(document).ready(function ($) {
 					$('#preview-img-avatar').attr('src', e.target.result);
 				}
 				reader.readAsDataURL(this.files[0]);
-				console.log(sizeKB);
 			} else {
 				$('#preview-img-avatar').addClass("hidden");
 				$('#image-avatar-current').removeClass("hidden");
@@ -320,11 +327,12 @@ jQuery(document).ready(function ($) {
 				$("#file_size_avatar_customize").val('');
 				$("#file_extension_avatar_customize").val('');
 				$("#file_route_avatar_customize").val('');
-				swal(
-					'Aviso',
-					'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-					'error'
-				);
+
+				swalWithBootstrapButtons.fire({
+					title: 'Aviso',
+					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+					icon: 'error'
+				});
 			}
 		} else {
 			$('#preview-img-avatar').addClass("hidden");
@@ -334,11 +342,12 @@ jQuery(document).ready(function ($) {
 			$("#file_size_avatar_customize").val('');
 			$("#file_extension_avatar_customize").val('');
 			$("#file_route_avatar_customize").val('');
-			swal(
-				'Aviso',
-				'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-				'error'
-			);
+
+			swalWithBootstrapButtons.fire({
+				title: 'Aviso',
+				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+				icon: 'error'
+			});
 		}
 	});
 
@@ -360,17 +369,17 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-avatar").html('<span class="glyphicon glyphicon-upload"></span> Cambiar');
 
 			if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'Su avatar fue actualizado con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'Su avatar ha sido actualizado con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -392,51 +401,52 @@ jQuery(document).ready(function ($) {
 	$(".btn-delete-user").click(function (event) {
 		var id_user = $(this).attr('id');
 
-		swal({
+		swalWithBootstrapButtons.fire({
 			title: '¿Estas segur@?',
 			text: '¡No podrás revertir esto!',
-			type: 'warning',
+			icon: 'question',
 			showCancelButton: true,
-			confirmButtonColor: '#5BC0DE',
-			cancelButtonColor: '#D9534F',
 			confirmButtonText: '<span class="glyphicon glyphicon-trash"></span> Si, eliminar',
 			cancelButtonText: '<span class="glyphicon glyphicon-remove-circle"></span> Cancelar',
-			confirmButtonClass: 'btn btn-info',
-			cancelButtonClass: 'btn btn-danger'
-			/* buttonsStyling: false */
-		}).then(function () {
-			$.ajax({
-				data: { id_user_delete: id_user },
-				url: 'delete/',
-				type: 'post',
-				success: function (response) {
-					if (response == "Missing") {
-						swal(
-							'No encontrado',
-							'El usuario ha eliminar no coincide con alguno de nuestros registros',
-							'error'
-						);
-					} else if (response == "Error") {
-						swal(
-							'Oops',
-							'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-							'error'
-						);
-					} else if (response == "Success") {
-						swal(
-							'Éxito',
-							'El usuario fue eliminado con éxito',
-							'success'
-						);
+			reverseButtons: true
+		}).then(result => {
+			if (result.isConfirmed) {
+				$.ajax({
+					data: { id_user_delete: id_user },
+					url: 'delete/',
+					type: 'post',
+					success: function (response) {
+						if (response == "Missing") {
+							swalWithBootstrapButtons.fire({
+								title: 'No encontrado',
+								text: 'El usuario ha eliminar no coincide con alguno de nuestros registros',
+								icon: 'warning'
+							});
+						} else if (response == "Error") {
+							swalWithBootstrapButtons.fire({
+								title: 'Oops',
+								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+								icon: 'error'
+							});
+						} else if (response == "Success") {
+							swalWithBootstrapButtons.fire({
+								title: 'Éxito',
+								text: 'El usuario fue eliminado con éxito',
+								icon: 'success'
+							});
+						}
 					}
-				}
-			});
-		}, function (dismiss) {
-			swal(
-				'Recordatorio',
-				'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
-				'info'
-			);
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire({
+					title: 'Recordatorio',
+					text: 'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
+					icon: 'info'
+				});
+			}
 		});
 	});
 

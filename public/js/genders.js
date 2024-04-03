@@ -48,8 +48,8 @@ jQuery(document).ready(function ($) {
 
 	/*=====  End of Functions Specials  ======*/
 
-	if ($('#table-genders').length > 0) {
-		let table_genders = $('#table-genders').DataTable({
+	if ($('#genders-table').length > 0) {
+		let genders_table = $('#genders-table').DataTable({
 			language: {
 				"sProcessing": "Procesando...",
 				"sLengthMenu": "Mostrar _MENU_ registros",
@@ -81,8 +81,16 @@ jQuery(document).ready(function ($) {
 				{ "extend": 'csv', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV', "className": 'btn btn-success' }
 			]
 		});
-		table_genders.buttons().container().appendTo('#buttons-exports-genders .col-sm-6:eq(0)');
+		genders_table.buttons().container().appendTo('.col-sm-6:eq(0)');
 	}
+
+	const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+			confirmButton: "btn btn-info",
+			cancelButton: "btn btn-default"
+		},
+		buttonsStyling: false
+	});
 
 	/*========================================
 	=            Functions Insert            =
@@ -118,23 +126,23 @@ jQuery(document).ready(function ($) {
 			$("#btn-insert-gender").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
 			if (response == "Already") {
-				swal(
-					'Duplicado',
-					'Los datos del género que intenta ingresar ya se encuentran en el sistema',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Duplicado',
+					text: 'Los datos del género que intenta ingresar ya se encuentran en el sistema',
+					icon: 'warning'
+				});
 			} else if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'El género ha sido insertado con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'El género ha sido insertado con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -175,23 +183,23 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-gender").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
 			if (response == "Already") {
-				swal(
-					'Duplicado',
-					'Los datos del género que intenta ingresar ya se encuentran en el sistema',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Duplicado',
+					text: 'Los datos del género que intenta ingresar ya se encuentran en el sistema',
+					icon: 'warning'
+				});
 			} else if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'El género ha sido actualizado con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'El género ha sido actualizado con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -213,51 +221,52 @@ jQuery(document).ready(function ($) {
 	$(".btn-delete-gender").click(function (event) {
 		var id_gender = $(this).attr('id');
 
-		swal({
+		swalWithBootstrapButtons.fire({
 			title: '¿Estas segur@?',
 			text: '¡No podrás revertir esto!',
-			type: 'warning',
+			icon: 'question',
 			showCancelButton: true,
-			confirmButtonColor: '#5BC0DE',
-			cancelButtonColor: '#D9534F',
 			confirmButtonText: '<span class="glyphicon glyphicon-trash"></span> Si, eliminar',
 			cancelButtonText: '<span class="glyphicon glyphicon-remove-circle"></span> Cancelar',
-			confirmButtonClass: 'btn btn-info',
-			cancelButtonClass: 'btn btn-danger'
-			/* buttonsStyling: false */
-		}).then(function () {
-			$.ajax({
-				data: { id_gender_delete: id_gender },
-				url: 'delete/',
-				type: 'post',
-				success: function (response) {
-					if (response == "Missing") {
-						swal(
-							'No encontrado',
-							'El genero ha eliminar no coincide con alguno de nuestros registros',
-							'error'
-						);
-					} else if (response == "Error") {
-						swal(
-							'Oops',
-							'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-							'error'
-						);
-					} else if (response == "Success") {
-						swal(
-							'Éxito',
-							'El género fue eliminado con éxito',
-							'success'
-						);
+			reverseButtons: true
+		}).then(result => {
+			if (result.isConfirmed) {
+				$.ajax({
+					data: { id_gender_delete: id_gender },
+					url: 'delete/',
+					type: 'post',
+					success: function (response) {
+						if (response == "Missing") {
+							swalWithBootstrapButtons.fire({
+								title: 'No encontrado',
+								text: 'El género ha eliminar no coincide con alguno de nuestros registros',
+								icon: 'warning'
+							});
+						} else if (response == "Error") {
+							swalWithBootstrapButtons.fire({
+								title: 'Oops',
+								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+								icon: 'error'
+							});
+						} else if (response == "Success") {
+							swalWithBootstrapButtons.fire({
+								title: 'Éxito',
+								text: 'El género fue eliminado con éxito',
+								icon: 'success'
+							});
+						}
 					}
-				}
-			});
-		}, function (dismiss) {
-			swal(
-				'Recordatorio',
-				'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
-				'info'
-			);
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire({
+					title: 'Recordatorio',
+					text: 'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
+					icon: 'info'
+				});
+			}
 		});
 	});
 

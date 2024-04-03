@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
 
-	if ($('#table-sessions').length > 0) {
-		let table_sessions = $('#table-sessions').DataTable({
+	if ($('#sessions-table').length > 0) {
+		let sessions_table = $('#sessions-table').DataTable({
 			language: {
 				"sProcessing": "Procesando...",
 				"sLengthMenu": "Mostrar _MENU_ registros",
@@ -33,6 +33,6 @@ jQuery(document).ready(function ($) {
 				{ "extend": 'csv', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV', "className": 'btn btn-success' }
 			]
 		});
-		table_sessions.buttons().container().appendTo('#buttons-exports-sessions .col-sm-6:eq(0)');
+		sessions_table.buttons().container().appendTo('.col-sm-6:eq(0)');
 	}
 });

@@ -48,8 +48,8 @@ jQuery(document).ready(function ($) {
 
 	/*=====  End of Functions Specials  ======*/
 
-	if ($('#table-categorys').length > 0) {
-		let table_categorys = $('#table-categorys').DataTable({
+	if ($('#categorys-table').length > 0) {
+		let categorys_table = $('#categorys-table').DataTable({
 			language: {
 				"sProcessing": "Procesando...",
 				"sLengthMenu": "Mostrar _MENU_ registros",
@@ -81,8 +81,16 @@ jQuery(document).ready(function ($) {
 				{ "extend": 'csv', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV', "className": 'btn btn-success' }
 			]
 		});
-		table_categorys.buttons().container().appendTo('#buttons-exports-categorys .col-sm-6:eq(0)');
+		categorys_table.buttons().container().appendTo('.col-sm-6:eq(0)');
 	}
+
+	const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+			confirmButton: "btn btn-info",
+			cancelButton: "btn btn-default"
+		},
+		buttonsStyling: false
+	});
 
 	/*========================================
 	=            Functions Insert            =
@@ -118,23 +126,23 @@ jQuery(document).ready(function ($) {
 			$("#btn-insert-category").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
 			if (response == "Already") {
-				swal(
-					'Duplicado',
-					'Los datos de la categoría que intenta ingresar ya se encuentran en el sistema',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Duplicado',
+					text: 'Los datos de la categoría que intenta ingresar ya se encuentran en el sistema',
+					icon: 'warning'
+				});
 			} else if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'La categoría ha sido insertada con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'La categoría ha sido insertada con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -175,23 +183,23 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-category").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
 			if (response == "Already") {
-				swal(
-					'Duplicado',
-					'Los datos de la categoría que intenta ingresar ya se encuentran en el sistema',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Duplicado',
+					text: 'Los datos de la categoría que intenta ingresar ya se encuentran en el sistema',
+					icon: 'warning'
+				});
 			} else if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'La categoría ha sido actualizada con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'La categoría ha sido actualizada con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -213,51 +221,52 @@ jQuery(document).ready(function ($) {
 	$(".btn-delete-category").click(function (event) {
 		var id_category = $(this).attr('id');
 
-		swal({
+		swalWithBootstrapButtons.fire({
 			title: '¿Estas segur@?',
 			text: '¡No podrás revertir esto!',
-			type: 'warning',
+			icon: 'question',
 			showCancelButton: true,
-			confirmButtonColor: '#5BC0DE',
-			cancelButtonColor: '#D9534F',
 			confirmButtonText: '<span class="glyphicon glyphicon-trash"></span> Si, eliminar',
 			cancelButtonText: '<span class="glyphicon glyphicon-remove-circle"></span> Cancelar',
-			confirmButtonClass: 'btn btn-info',
-			cancelButtonClass: 'btn btn-danger'
-			/* buttonsStyling: false */
-		}).then(function () {
-			$.ajax({
-				data: { id_category_delete: id_category },
-				url: 'delete/',
-				type: 'post',
-				success: function (response) {
-					if (response == "Missing") {
-						swal(
-							'No encontrado',
-							'La categoría ha eliminar no coincide con alguno de nuestros registros',
-							'error'
-						);
-					} else if (response == "Error") {
-						swal(
-							'Oops',
-							'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-							'error'
-						);
-					} else if (response == "Success") {
-						swal(
-							'Éxito',
-							'La categoría fue eliminada con éxito',
-							'success'
-						);
+			reverseButtons: true
+		}).then(result => {
+			if (result.isConfirmed) {
+				$.ajax({
+					data: { id_category_delete: id_category },
+					url: 'delete/',
+					type: 'post',
+					success: function (response) {
+						if (response == "Missing") {
+							swalWithBootstrapButtons.fire({
+								title: 'No encontrado',
+								text: 'La categoría ha eliminar no coincide con alguno de nuestros registros',
+								icon: 'warning'
+							});
+						} else if (response == "Error") {
+							swalWithBootstrapButtons.fire({
+								title: 'Oops',
+								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+								icon: 'error'
+							});
+						} else if (response == "Success") {
+							swalWithBootstrapButtons.fire({
+								title: 'Éxito',
+								text: 'La categoría fue eliminada con éxito',
+								icon: 'success'
+							});
+						}
 					}
-				}
-			});
-		}, function (dismiss) {
-			swal(
-				'Recordatorio',
-				'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
-				'info'
-			);
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire({
+					title: 'Recordatorio',
+					text: 'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
+					icon: 'info'
+				});
+			}
 		});
 	});
 

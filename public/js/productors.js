@@ -48,8 +48,8 @@ jQuery(document).ready(function ($) {
 
 	/*=====  End of Functions Specials  ======*/
 
-	if ($('#table-productors').length > 0) {
-		let table_productors = $('#table-productors').DataTable({
+	if ($('#productors-table').length > 0) {
+		let productors_table = $('#productors-table').DataTable({
 			language: {
 				"sProcessing": "Procesando...",
 				"sLengthMenu": "Mostrar _MENU_ registros",
@@ -81,8 +81,16 @@ jQuery(document).ready(function ($) {
 				{ "extend": 'csv', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV', "className": 'btn btn-success' }
 			]
 		});
-		table_productors.buttons().container().appendTo('#buttons-exports-productors .col-sm-6:eq(0)');
+		productors_table.buttons().container().appendTo('.col-sm-6:eq(0)');
 	}
+
+	const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+			confirmButton: "btn btn-info",
+			cancelButton: "btn btn-default"
+		},
+		buttonsStyling: false
+	});
 
 	/*========================================
 	=            Functions Insert            =
@@ -120,24 +128,23 @@ jQuery(document).ready(function ($) {
 					$('#preview-img-logo').attr('src', e.target.result);
 				}
 				reader.readAsDataURL(this.files[0]);
-				console.log(sizeKB);
 			} else {
 				$('#preview-img-logo').addClass("hidden");
 				$('#productor_image_logo_insert').val('');
-				swal(
-					'Aviso',
-					'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Aviso',
+					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+					icon: 'error'
+				});
 			}
 		} else {
 			$('#preview-img-logo').addClass("hidden");
 			$('#productor_image_logo_insert').val('');
-			swal(
-				'Aviso',
-				'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-				'error'
-			);
+			swalWithBootstrapButtons.fire({
+				title: 'Aviso',
+				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+				icon: 'error'
+			});
 		}
 	});
 
@@ -159,23 +166,23 @@ jQuery(document).ready(function ($) {
 			$("#btn-insert-productor").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
 			if (response == "Already") {
-				swal(
-					'Duplicado',
-					'Los datos del productor que intenta ingresar ya se encuentran en el sistema',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Duplicado',
+					text: 'Los datos del productor que intenta ingresar ya se encuentran en el sistema',
+					icon: 'warning'
+				});
 			} else if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'El productor ha sido insertado con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'El productor ha sido insertado con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -218,24 +225,23 @@ jQuery(document).ready(function ($) {
 					$('#preview-img-logo').attr('src', e.target.result);
 				}
 				reader.readAsDataURL(this.files[0]);
-				console.log(sizeKB);
 			} else {
 				$('#preview-img-logo').addClass("hidden");
 				$('#productor_image_logo_update').val('');
-				swal(
-					'Aviso',
-					'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Aviso',
+					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+					icon: 'error'
+				});
 			}
 		} else {
 			$('#preview-img-logo').addClass("hidden");
 			$('#productor_image_logo_update').val('');
-			swal(
-				'Aviso',
-				'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-				'error'
-			);
+			swalWithBootstrapButtons.fire({
+				title: 'Aviso',
+				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+				icon: 'error'
+			});
 		}
 	});
 
@@ -257,23 +263,23 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-productor").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
 			if (response == "Already") {
-				swal(
-					'Duplicado',
-					'Los datos del productor que intenta ingresar ya se encuentran en el sistema',
-					'warning'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Duplicado',
+					text: 'Los datos del productor que intenta ingresar ya se encuentran en el sistema',
+					icon: 'warning'
+				});
 			} else if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'El productor ha sido actualizado con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'El productor ha sido actualizado con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -308,7 +314,6 @@ jQuery(document).ready(function ($) {
 					$('#preview-img-logo').attr('src', e.target.result);
 				}
 				reader.readAsDataURL(this.files[0]);
-				console.log(sizeKB);
 			} else {
 				$('#preview-img-logo').addClass("hidden");
 				$('#image-logo-current').removeClass("hidden");
@@ -317,11 +322,11 @@ jQuery(document).ready(function ($) {
 				$("#file_size_logo_customize").val('');
 				$("#file_extension_logo_customize").val('');
 				$("#file_route_logo_customize").val('');
-				swal(
-					'Aviso',
-					'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Aviso',
+					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+					icon: 'error'
+				});
 			}
 		} else {
 			$('#preview-img-logo').addClass("hidden");
@@ -331,11 +336,11 @@ jQuery(document).ready(function ($) {
 			$("#file_size_logo_customize").val('');
 			$("#file_extension_logo_customize").val('');
 			$("#file_route_logo_customize").val('');
-			swal(
-				'Aviso',
-				'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-				'error'
-			);
+			swalWithBootstrapButtons.fire({
+				title: 'Aviso',
+				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
+				icon: 'error'
+			});
 		}
 	});
 
@@ -357,17 +362,17 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-logo").html('<span class="glyphicon glyphicon-upload"></span> Cambiar');
 
 			if (response == "Error") {
-				swal(
-					'Oops',
-					'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					'error'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Oops',
+					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+					icon: 'error'
+				});
 			} else if (response == "Success") {
-				swal(
-					'Éxito',
-					'El logo fue actualizado con éxito',
-					'success'
-				);
+				swalWithBootstrapButtons.fire({
+					title: 'Éxito',
+					text: 'El logo fue actualizado con éxito',
+					icon: 'success'
+				});
 			}
 		}
 	});
@@ -389,51 +394,52 @@ jQuery(document).ready(function ($) {
 	$(".btn-delete-productor").click(function (event) {
 		var id_productor = $(this).attr('id');
 
-		swal({
+		swalWithBootstrapButtons.fire({
 			title: '¿Estas segur@?',
 			text: '¡No podrás revertir esto!',
-			type: 'warning',
+			icon: 'question',
 			showCancelButton: true,
-			confirmButtonColor: '#5BC0DE',
-			cancelButtonColor: '#D9534F',
 			confirmButtonText: '<span class="glyphicon glyphicon-trash"></span> Si, eliminar',
 			cancelButtonText: '<span class="glyphicon glyphicon-remove-circle"></span> Cancelar',
-			confirmButtonClass: 'btn btn-info',
-			cancelButtonClass: 'btn btn-danger'
-			/* buttonsStyling: false */
-		}).then(function () {
-			$.ajax({
-				data: { id_productor_delete: id_productor },
-				url: 'delete/',
-				type: 'post',
-				success: function (response) {
-					if (response == "Missing") {
-						swal(
-							'No encontrado',
-							'El productor ha eliminar no coincide con alguno de nuestros registros',
-							'error'
-						);
-					} else if (response == "Error") {
-						swal(
-							'Oops',
-							'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-							'error'
-						);
-					} else if (response == "Success") {
-						swal(
-							'Éxito',
-							'El productor fue eliminado con éxito',
-							'success'
-						);
+			reverseButtons: true
+		}).then(result => {
+			if (result.isConfirmed) {
+				$.ajax({
+					data: { id_productor_delete: id_productor },
+					url: 'delete/',
+					type: 'post',
+					success: function (response) {
+						if (response == "Missing") {
+							swalWithBootstrapButtons.fire({
+								title: 'No encontrado',
+								text: 'El productor ha eliminar no coincide con alguno de nuestros registros',
+								icon: 'warning'
+							});
+						} else if (response == "Error") {
+							swalWithBootstrapButtons.fire({
+								title: 'Oops',
+								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
+								icon: 'error'
+							});
+						} else if (response == "Success") {
+							swalWithBootstrapButtons.fire({
+								title: 'Éxito',
+								text: 'El productor fue eliminado con éxito',
+								icon: 'success'
+							});
+						}
 					}
-				}
-			});
-		}, function (dismiss) {
-			swal(
-				'Recordatorio',
-				'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
-				'info'
-			);
+				});
+			} else if (
+				/* Read more about handling dismissals below */
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire({
+					title: 'Recordatorio',
+					text: 'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
+					icon: 'info'
+				});
+			}
 		});
 	});
 

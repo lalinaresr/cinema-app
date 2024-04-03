@@ -12,11 +12,11 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('public/css/libs/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('public/css/libs/font-awesome.min.css'); ?>">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('public/css/libs/sweetalert2.min.css'); ?>">
 	<?php if (isset($styles)) : ?>
 		<?php foreach ($styles as $style) : ?>
 			<?php if (is_array($style)) : ?>
-				<link rel="stylesheet" type="<?= $style['type']; ?>" href="<?= $style['file']; ?>">
+				<link rel="stylesheet" type="<?= $style['type']; ?>" href="<?= $style['href']; ?>">
 			<?php else : ?>
 				<link rel="stylesheet" type="text/css" href="<?= $style; ?>">
 			<?php endif ?>

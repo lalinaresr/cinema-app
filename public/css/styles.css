@@ -2,6 +2,12 @@
 
 body{ font-family: 'Ubuntu', sans-serif !important; }
 
+/* .swal2-popup {
+    font-size: 1.6rem !important;
+} */
+.swal2-container {
+    zoom: 1.5;
+}
 .swal2-modal{
     font-family: 'Ubuntu', sans-serif !important;
 }
