@@ -43,8 +43,8 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tags"></span> Categorías <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<?php foreach ($get_all_categorys_activated->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
-								<li><a href="<?= site_url('categorys/filter_by/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
+							<?php foreach ($get_all_categories_activated->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
+								<li><a href="<?= site_url('categories/filter_by/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
@@ -91,8 +91,8 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tags"></span> Categorías <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<?php foreach ($get_all_categorys_activated->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
-								<li><a href="<?= site_url('categorys/filter_by/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
+							<?php foreach ($get_all_categories_activated->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
+								<li><a href="<?= site_url('categories/filter_by/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>

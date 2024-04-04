@@ -9,11 +9,11 @@
 		public function __construct(){
 			parent::__construct(); 
 
-			$this->load->model('Movies_model');
-			$this->load->model('Productors_model');
-			$this->load->model('Genders_model');
-			$this->load->model('Categorys_model');
-			$this->load->model('Users_model');
+			$this->load->model('Movie_model');
+			$this->load->model('Productor_model');
+			$this->load->model('Gender_model');
+			$this->load->model('Category_model');
+			$this->load->model('User_model');
 			$this->load->model('Status_model');
 
 			$this->load->library('pagination');
@@ -46,8 +46,8 @@
 						base_url('public/js/libs/buttons.html5.min.js'),
 						base_url('public/js/genders.js')
 					),
-					'get_all_genders' => $this->Genders_model->get_all_genders(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_genders' => $this->Gender_model->get_all_genders(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -71,7 +71,7 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/genders.js')),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -96,7 +96,7 @@
 					'gender_slug' => trim($this->input->post('gender_slug_insert')), 
 					'gender_status' => trim($this->input->post('gender_status_insert'))
 				);
-				$this->Genders_model->insert_model($insert);
+				$this->Gender_model->insert_model($insert);
 			}			
 		}
 
@@ -114,8 +114,8 @@
 					'title' => constant('APP_NAME') . ' | Géneros',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/genders.js')),
-					'view_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'view_gender' => $this->Gender_model->get_gender_by('id_gender', $id_gender),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -133,8 +133,8 @@
 		*/
 		public function filter_by($id_gender){
 			$total_rows = 0;
-			if ($this->Movies_model->get_count_movies_by_gender($id_gender) != FALSE) {
-				$total_rows = $this->Movies_model->get_count_movies_by_gender($id_gender)->num_rows();
+			if ($this->Movie_model->get_count_movies_by_gender($id_gender) != FALSE) {
+				$total_rows = $this->Movie_model->get_count_movies_by_gender($id_gender)->num_rows();
 			}else{
 				$total_rows = 0;
 			}
@@ -145,7 +145,7 @@
 	       	$config['per_page'] = 4; 
     		$config['uri_segment'] = 4;
     		
-			// $config['num_links'] = round(($this->Movies_model->get_all_movies_activated()->num_rows() / 8));
+			// $config['num_links'] = round(($this->Movie_model->get_all_movies_activated()->num_rows() / 8));
 			// $config['use_page_numbers'] = TRUE;
 
 	       	$config['full_tag_open']  = '<nav aria-label="Page navigation"><ul class="pagination">';
@@ -169,7 +169,7 @@
 
 	       	$this->pagination->initialize($config);
 	       	
-	       	$results_paginated = $this->Genders_model->get_movies_by_gender($config['per_page'], $this->uri->segment(4), 'cm_gen_mov.id_gender', decryp($id_gender));
+	       	$results_paginated = $this->Gender_model->get_movies_by_gender($config['per_page'], $this->uri->segment(4), 'cm_gen_mov.id_gender', decryp($id_gender));
 	       	$links_created = $this->pagination->create_links();
 
 			$params = array(
@@ -184,15 +184,15 @@
 					base_url('public/js/libs/owl.carousel.min.js'),
 					base_url('public/js/welcome.js')
 				),
-				'view_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
-				'get_movies_most_viewed' => $this->Movies_model->get_movies_most_viewed(8),
-				'get_new_movies' => $this->Movies_model->get_new_movies(8),		
-				'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),	
-				'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),	
-				'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),	
+				'view_gender' => $this->Gender_model->get_gender_by('id_gender', $id_gender),
+				'get_movies_most_viewed' => $this->Movie_model->get_movies_most_viewed(8),
+				'get_new_movies' => $this->Movie_model->get_new_movies(8),		
+				'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),	
+				'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),	
+				'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),	
 				'results_paginated' => $results_paginated,
 				'links_created'=> $links_created,				
-				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 			);
 			$this->load->view('header', $params);				
 			$this->load->view('layouts/welcome/navbar');				
@@ -218,9 +218,9 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/genders.js')),
 					'id_gender_encryp' => $id_gender,
-					'edit_gender' => $this->Genders_model->get_gender_by('id_gender', $id_gender),
+					'edit_gender' => $this->Gender_model->get_gender_by('id_gender', $id_gender),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -246,7 +246,7 @@
 					'gender_slug' => trim($this->input->post('gender_slug_update')), 
 					'gender_status' => trim($this->input->post('gender_status_update'))
 				);
-				$this->Genders_model->update_model($update);
+				$this->Gender_model->update_model($update);
 			}			
 		}
 
@@ -261,7 +261,7 @@
 			} else {
 				$id_gender = trim($this->input->post('id_gender_delete'));
 				
-				$this->Genders_model->delete_model($id_gender);
+				$this->Gender_model->delete_model($id_gender);
 			}			
 		}
 	}

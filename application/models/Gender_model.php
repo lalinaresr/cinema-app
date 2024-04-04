@@ -1,7 +1,7 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	class Genders_model extends CI_Model {
+	class Gender_model extends CI_Model {
 
         /**
         * [__construct description]

@@ -12,10 +12,10 @@
 		public function __construct(){
 			parent::__construct(); 
 
-			$this->load->model('Users_model');
-			$this->load->model('Suggestions_model');
-			$this->load->model('Newsletters_model');
-			$this->load->model('Sessions_model');
+			$this->load->model('User_model');
+			$this->load->model('Suggestion_model');
+			$this->load->model('Newsletter_model');
+			$this->load->model('Session_model');
 		}
 
 		/**
@@ -30,11 +30,11 @@
 				$params = array(
 					'title' => constant('APP_NAME'),
 					'styles' => array(base_url('public/css/dashboard.css')),
-					'get_some_suggestions' => $this->Suggestions_model->get_some_suggestions(),
-					'get_some_newsletters' => $this->Newsletters_model->get_some_newsletters(),
-					'get_some_sessions' => $this->Sessions_model->get_some_sessions($this->session->userdata('id_user')), 
-					'get_my_sessions' => $this->Sessions_model->get_my_sessions($this->session->userdata('id_user')),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_some_suggestions' => $this->Suggestion_model->get_some_suggestions(),
+					'get_some_newsletters' => $this->Newsletter_model->get_some_newsletters(),
+					'get_some_sessions' => $this->Session_model->get_some_sessions($this->session->userdata('id_user')), 
+					'get_my_sessions' => $this->Session_model->get_my_sessions($this->session->userdata('id_user')),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');

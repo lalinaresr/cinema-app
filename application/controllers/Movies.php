@@ -9,12 +9,12 @@
 		public function __construct(){
 			parent::__construct(); 
 
-			$this->load->model('Movies_model');
-			$this->load->model('Productors_model');
-			$this->load->model('Genders_model');
-			$this->load->model('Categorys_model');
-			$this->load->model('Qualities_model');
-			$this->load->model('Users_model');
+			$this->load->model('Movie_model');
+			$this->load->model('Productor_model');
+			$this->load->model('Gender_model');
+			$this->load->model('Category_model');
+			$this->load->model('Quality_model');
+			$this->load->model('User_model');
 			$this->load->model('Status_model');
 
 			$this->load->helper('countrys');
@@ -47,8 +47,8 @@
 						base_url('public/js/libs/buttons.html5.min.js'),
 						base_url('public/js/movies.js')
 					),
-					'get_all_movies' => $this->Movies_model->get_all_movies(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_movies' => $this->Movie_model->get_all_movies(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -83,11 +83,11 @@
 						base_url('public/js/movies.js')
 					),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'get_all_qualities_activated' => $this->Qualities_model->get_all_qualities_activated(),
-					'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),
-					'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),
-					'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_qualities_activated' => $this->Quality_model->get_all_qualities_activated(),
+					'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
+					'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
+					'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -117,7 +117,7 @@
 					$insert = array(
 						'ids_productors' => $this->input->post('ids_productors_insert'), 
 						'ids_genders' => $this->input->post('ids_genders_insert'), 
-						'ids_categorys' => $this->input->post('ids_categorys_insert'), 
+						'ids_categories' => $this->input->post('ids_categories_insert'), 
 						'movie_status' => trim($this->input->post('movie_status_insert')), 
 						'movie_quality' => trim($this->input->post('movie_quality_insert')), 
 						'movie_name' => trim($this->input->post('movie_name_insert')), 
@@ -129,7 +129,7 @@
 						'movie_description' => trim($this->input->post('movie_description_insert')),
 						'movie_play' => trim($this->input->post('movie_play_insert'))
 					);
-					$this->Movies_model->insert_model($insert);
+					$this->Movie_model->insert_model($insert);
 				} else { 
 					echo "ErrorUP"; 
 				}
@@ -151,11 +151,11 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/movies.js')),
 					'id_movie_encryp' => $id_movie,
-					'view_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
-					'productors_movie' => $this->Movies_model->get_productors_movie($id_movie),
-					'genders_movie' => $this->Movies_model->get_genders_movie($id_movie),
-					'categorys_movie' => $this->Movies_model->get_categorys_movie($id_movie),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'view_movie' => $this->Movie_model->get_movie_by('id_movie', $id_movie),
+					'productors_movie' => $this->Movie_model->get_productors_movie($id_movie),
+					'genders_movie' => $this->Movie_model->get_genders_movie($id_movie),
+					'categories_movie' => $this->Movie_model->get_categories_movie($id_movie),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -172,7 +172,7 @@
 		* @return [type]           [description]
 		*/
 		public function watch($id_movie){
-			$fetch_movie = $this->Movies_model->get_movie_by('id_movie', $id_movie);
+			$fetch_movie = $this->Movie_model->get_movie_by('id_movie', $id_movie);
 
 			$params = array(
 				'title' => constant('APP_NAME') . ' - ' . $fetch_movie->movie_name,
@@ -187,12 +187,12 @@
 					base_url('public/js/welcome.js')
 				),
 				'watch_movie' => $fetch_movie,
-				'update_reproductions' => $this->Movies_model->update_reproductions($id_movie),
-				'get_new_movies' => $this->Movies_model->get_new_movies(8),	
-				'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),	
-				'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),	
-				'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),	
-				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				'update_reproductions' => $this->Movie_model->update_reproductions($id_movie),
+				'get_new_movies' => $this->Movie_model->get_new_movies(8),	
+				'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),	
+				'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),	
+				'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),	
+				'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 			);
 			$this->load->view('header', $params);				
 			$this->load->view('layouts/welcome/navbar');				
@@ -229,15 +229,15 @@
 					),
 					'id_movie_encryp' => $id_movie,
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'edit_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
-					'productors_movie' => $this->Movies_model->get_productors_movie($id_movie),
-					'genders_movie' => $this->Movies_model->get_genders_movie($id_movie),
-					'categorys_movie' => $this->Movies_model->get_categorys_movie($id_movie),
-					'get_all_qualities_activated' => $this->Qualities_model->get_all_qualities_activated(),
-					'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),
-					'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),
-					'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))					
+					'edit_movie' => $this->Movie_model->get_movie_by('id_movie', $id_movie),
+					'productors_movie' => $this->Movie_model->get_productors_movie($id_movie),
+					'genders_movie' => $this->Movie_model->get_genders_movie($id_movie),
+					'categories_movie' => $this->Movie_model->get_categories_movie($id_movie),
+					'get_all_qualities_activated' => $this->Quality_model->get_all_qualities_activated(),
+					'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
+					'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
+					'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))					
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -269,7 +269,7 @@
 						'id_movie' => $this->input->post('id_movie_update'),
 						'ids_productors' => $this->input->post('ids_productors_update'),
 						'ids_genders' => $this->input->post('ids_genders_update'),
-						'ids_categorys' => $this->input->post('ids_categorys_update'),
+						'ids_categories' => $this->input->post('ids_categories_update'),
 	 					'movie_status' => $this->input->post('movie_status_update'),
 						'movie_quality' => $this->input->post('movie_quality_update'),
 						'movie_name' => $this->input->post('movie_name_update'),
@@ -282,7 +282,7 @@
 						'movie_description' => $this->input->post('movie_description_update'),
 						'movie_play' => $this->input->post('movie_play_update')
 					);
-					$this->Movies_model->update_model($update);
+					$this->Movie_model->update_model($update);
 					/* END Update with Old Image */
 				} else {
 					/* Upload and Update with New Image */            		
@@ -290,7 +290,7 @@
 						'id_movie' => $this->input->post('id_movie_update'),
 						'ids_productors' => $this->input->post('ids_productors_update'),
 						'ids_genders' => $this->input->post('ids_genders_update'),
-						'ids_categorys' => $this->input->post('ids_categorys_update'),
+						'ids_categories' => $this->input->post('ids_categories_update'),
 						'movie_status' => $this->input->post('movie_status_update'),
 						'movie_quality' => $this->input->post('movie_quality_update'),
 						'movie_name' => $this->input->post('movie_name_update'),
@@ -305,7 +305,7 @@
 						'old_image_ext' => substr(trim($this->input->post('image_cover_update_route')), -4)
 						// 'image_logo' => FOLDER_MOVIES . decryp($this->input->post('id_productor_update_productor')) . '_logo' . substr($this->upload->data()['file_name'], -4)
 					);
-					$this->Movies_model->update_model($update);
+					$this->Movie_model->update_model($update);
 					/* END Upload and Update with New Image */            		
 				}
 			}			    
@@ -326,8 +326,8 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/movies.js')),
 					'id_movie_encryp' => $id_movie,
-					'view_movie' => $this->Movies_model->get_movie_by('id_movie', $id_movie),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'view_movie' => $this->Movie_model->get_movie_by('id_movie', $id_movie),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -359,7 +359,7 @@
 	            		'movie_cover' => $this->upload->data()['file_name'],
 	            		'old_image_ext' => substr(trim($this->input->post('cover_update_route')), -4)
 	            	);
-	            	$this->Movies_model->update_cover($update);
+	            	$this->Movie_model->update_cover($update);
 	            } else { 
 	            	echo "ErrorUP"; 
 	            }				
@@ -377,7 +377,7 @@
 			} else {
 				$id_movie = $this->input->post('id_movie_delete');
 
-				$this->Movies_model->delete_model($id_movie);
+				$this->Movie_model->delete_model($id_movie);
 			}			
 		}
 	}

@@ -28,8 +28,8 @@
       <!-- field CATEGORYS MOVIE -->
       <div class="col-md-4">
          <div class="form-group">
-            <select id="ids_categorys_insert" name="ids_categorys_insert[]" multiple class="form-control" required>
-               <?php foreach ($get_all_categorys_activated->result() as $key => $value) : ?>
+            <select id="ids_categories_insert" name="ids_categories_insert[]" multiple class="form-control" required>
+               <?php foreach ($get_all_categories_activated->result() as $key => $value) : ?>
                   <option value="<?= $value->id_category; ?>"><?= $value->category_name; ?></option>
                <?php endforeach ?>
             </select>

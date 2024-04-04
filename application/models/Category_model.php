@@ -1,7 +1,7 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	class Categorys_model extends CI_Model {
+	class Category_model extends CI_Model {
 
         /**
         * [__construct description]
@@ -11,14 +11,14 @@
 		}
 
 		/**
-		* [get_all_categorys description]
+		* [get_all_categories description]
 		* @return [type] [description]
 		*/
-		public function get_all_categorys(){
+		public function get_all_categories(){
 			$resultSet = $this->db
 			->select('*')
-			->from('cm_categorys')
-			->join('cm_status', 'cm_status.id_status = cm_categorys.id_status')
+			->from('cm_categories')
+			->join('cm_status', 'cm_status.id_status = cm_categories.id_status')
 			->order_by('category_name', 'DESC')
 			->get();
 
@@ -30,15 +30,15 @@
 		}    
 
 		/**
-		* [get_categorys_activated description]
+		* [get_categories_activated description]
 		* @return [type] [description]
 		*/
-		public function get_all_categorys_activated(){
+		public function get_all_categories_activated(){
 			$resultSet = $this->db
 			->select('*')
-			->from('cm_categorys')
-			->join('cm_status', 'cm_status.id_status = cm_categorys.id_status')
-			->where('cm_categorys.id_status', 1)
+			->from('cm_categories')
+			->join('cm_status', 'cm_status.id_status = cm_categories.id_status')
+			->where('cm_categories.id_status', 1)
 			->order_by('category_name', 'DESC')
 			->get();
 
@@ -50,15 +50,15 @@
 		}
 
 		/**
-		* [get_categorys_inactivated description]
+		* [get_categories_inactivated description]
 		* @return [type] [description]
 		*/
-		public function get_all_categorys_inactivated(){
+		public function get_all_categories_inactivated(){
 			$resultSet = $this->db
 			->select('*')
-			->from('cm_categorys')
-			->join('cm_status', 'cm_status.id_status = cm_categorys.id_status')
-			->where('cm_categorys.id_status', 2)
+			->from('cm_categories')
+			->join('cm_status', 'cm_status.id_status = cm_categories.id_status')
+			->where('cm_categories.id_status', 2)
 			->order_by('category_name', 'DESC')
 			->get();
 
@@ -93,13 +93,13 @@
 				cm_movies.movie_reproductions,
 				cm_movies.movie_play,
 				cm_movies.is_premiere,				
-				cm_categorys.category_name,
-				cm_categorys.category_slug
+				cm_categories.category_name,
+				cm_categories.category_slug
 			')
 			->from('cm_cat_mov')
-			->join('cm_categorys', 'cm_categorys.id_category = cm_cat_mov.id_category')
+			->join('cm_categories', 'cm_categories.id_category = cm_cat_mov.id_category')
 			->join('cm_movies', 'cm_movies.id_movie = cm_cat_mov.id_movie')
-			->where('cm_categorys.id_status', 1)
+			->where('cm_categories.id_status', 1)
 			->where('cm_movies.id_status', 1)
 			->where($data, $value)
 			->order_by('cm_movies.movie_name', 'DESC')
@@ -123,7 +123,7 @@
 		*/
 		public function insert_model($insert){
 			$this->db->where('category_name', $insert['category_name']);
-			$resultSet = $this->db->get('cm_categorys');
+			$resultSet = $this->db->get('cm_categories');
 
 			if ($resultSet->num_rows() > 0) { 
 				echo "Already"; 
@@ -136,7 +136,7 @@
 					'date_registered_cat' => get_date_current(),
 					'client_registered_cat' => get_agent_current()
 				);
-			    $insert_category = $this->db->insert('cm_categorys', $data_insert_category);
+			    $insert_category = $this->db->insert('cm_categories', $data_insert_category);
 
 			    if ($insert_category != FALSE) { 
 			    	echo "Success";			                          
@@ -155,8 +155,8 @@
 		public function get_category_by($data, $value){
 			$resultSet = $this->db
 			->select('*')
-			->from('cm_categorys')
-			->join('cm_status', 'cm_status.id_status = cm_categorys.id_status')
+			->from('cm_categories')
+			->join('cm_status', 'cm_status.id_status = cm_categories.id_status')
 			->where($data, decryp($value))
 			->get('');
 
@@ -174,7 +174,7 @@
 		*/
 		public function update_model($update){
 			$this->db->where('category_name', $update['category_name']);
-			$resultSet = $this->db->get('cm_categorys');
+			$resultSet = $this->db->get('cm_categories');
 
 			if ($resultSet->num_rows() > 0) { 
 				echo "Already"; 
@@ -188,7 +188,7 @@
 					'client_modified_cat' => get_agent_current()
 				);
 				$this->db->where('id_category', decryp($update['id_category']));
-			    $update_category = $this->db->update('cm_categorys', $data_update_category);
+			    $update_category = $this->db->update('cm_categories', $data_update_category);
 
 			    if ($update_category != FALSE) { 
 			    	echo "Success";			                          
@@ -205,18 +205,18 @@
 		*/
 		public function delete_model($id_category){
 			$this->db->where('id_category', decryp($id_category));
-		   	$resultSet = $this->db->get('cm_categorys');
+		   	$resultSet = $this->db->get('cm_categories');
 
 		   	if ($resultSet->num_rows() > 0) {
 		   		$category_recovered = $resultSet->row();
 
 		   		$this->db->where('id_category', $category_recovered->id_category);
-		   		$category_deleted = $this->db->delete('cm_categorys');		
+		   		$category_deleted = $this->db->delete('cm_categories');		
 
 		   		$this->db->where('id_category', $category_recovered->id_category);
-		   		$categorys_deleted = $this->db->delete('cm_cat_mov');
+		   		$categories_deleted = $this->db->delete('cm_cat_mov');
 
-		   		if ($category_deleted != FALSE && $categorys_deleted != FALSE) { 
+		   		if ($category_deleted != FALSE && $categories_deleted != FALSE) { 
 		   			echo "Success";			                          		   			 
 		   		} else { 
 		   			echo "Error"; 

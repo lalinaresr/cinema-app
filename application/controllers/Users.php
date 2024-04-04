@@ -9,8 +9,8 @@
 		public function __construct(){
 			parent::__construct(); 
 
-			$this->load->model('Users_model');
-			$this->load->model('Roles_model');
+			$this->load->model('User_model');
+			$this->load->model('Role_model');
 			$this->load->model('Status_model');
 		}
 
@@ -40,8 +40,8 @@
 						base_url('public/js/libs/buttons.html5.min.js'),
 						base_url('public/js/users.js')
 					),
-					'get_all_users' => $this->Users_model->get_all_users(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_users' => $this->User_model->get_all_users(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -72,8 +72,8 @@
 						base_url('public/js/users.js')
 					),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'get_all_roles_activated' => $this->Roles_model->get_all_roles_activated(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_roles_activated' => $this->Role_model->get_all_roles_activated(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -103,7 +103,7 @@
 					'user_email' => trim($this->input->post('user_email_insert')), 
 					'user_password' => generate_password(trim($this->input->post('user_date_birthday_insert')), trim($this->input->post('user_firstname_insert')), trim($this->input->post('user_lastname_insert'))) 
 				);
-				$this->Users_model->insert_model($insert);
+				$this->User_model->insert_model($insert);
 			}			
 		}
 
@@ -120,8 +120,8 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/users.js')),
 					'id_user_encryp' => $id_user,
-					'view_user' => $this->Users_model->get_user_by('id_user', $id_user),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'view_user' => $this->User_model->get_user_by('id_user', $id_user),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -154,10 +154,10 @@
 						base_url('public/js/users.js')
 					),
 					'id_user_encryp' => $id_user,
-					'edit_user' => $this->Users_model->get_user_by('id_user', $id_user),
+					'edit_user' => $this->User_model->get_user_by('id_user', $id_user),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'get_all_roles_activated' => $this->Roles_model->get_all_roles_activated(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_roles_activated' => $this->Role_model->get_all_roles_activated(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -189,7 +189,7 @@
 					'user_email' => trim($this->input->post('user_email_update')), 
 					'user_password' => generate_password(trim($this->input->post('user_date_birthday_update')), trim($this->input->post('user_firstname_update')), trim($this->input->post('user_lastname_update'))) 
 				);
-				$this->Users_model->update_model($update);
+				$this->User_model->update_model($update);
 			}			
 		}
 
@@ -208,8 +208,8 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/users.js')),
 					'id_user_encryp' => $id_user,
-					'view_user' => $this->Users_model->get_user_by('id_user', $id_user),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'view_user' => $this->User_model->get_user_by('id_user', $id_user),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -241,7 +241,7 @@
 	            		'user_avatar' => $this->upload->data()['file_name'],
 	            		'old_image_ext' => substr(trim($this->input->post('image_avatar_update_route')), -4)
 	            	);
-	            	$this->Users_model->update_avatar($update);
+	            	$this->User_model->update_avatar($update);
 	            } else { 
 	            	echo "ErrorUP"; 
 	            }				
@@ -258,7 +258,7 @@
 			} else {
 				$id_user = $this->input->post('id_user_delete');
 
-				$this->Users_model->delete_model($id_user);
+				$this->User_model->delete_model($id_user);
 			}			
 		}
 	}

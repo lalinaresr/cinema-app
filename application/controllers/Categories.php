@@ -1,7 +1,7 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	class Categorys extends CI_Controller {
+	class Categories extends CI_Controller {
 
 		/**
 		* [__construct description]
@@ -9,11 +9,11 @@
 		public function __construct(){
 			parent::__construct(); 
 
-			$this->load->model('Movies_model');
-			$this->load->model('Productors_model');
-			$this->load->model('Genders_model');
-			$this->load->model('Categorys_model');
-			$this->load->model('Users_model');
+			$this->load->model('Movie_model');
+			$this->load->model('Productor_model');
+			$this->load->model('Gender_model');
+			$this->load->model('Category_model');
+			$this->load->model('User_model');
 			$this->load->model('Status_model');
 
 			$this->load->library('pagination');
@@ -44,15 +44,15 @@
 						base_url('public/js/libs/dataTables.buttons.min.js'),
 						base_url('public/js/libs/buttons.bootstrap.min.js'),
 						base_url('public/js/libs/buttons.html5.min.js'),
-						base_url('public/js/categorys.js')
+						base_url('public/js/categories.js')
 					),
-					'get_all_categorys' => $this->Categorys_model->get_all_categorys(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_categories' => $this->Category_model->get_all_categories(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
 				$this->load->view('layouts/dashboard/sidebar');
-				$this->load->view('partials/categorys/container');
+				$this->load->view('partials/categories/container');
 				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
@@ -69,14 +69,14 @@
 				$params = array(
 					'title' => constant('APP_NAME') . ' | Categorías',
 					'styles' => array(base_url('public/css/dashboard.css')),
-					'scripts' => array(base_url('public/js/categorys.js')),
+					'scripts' => array(base_url('public/js/categories.js')),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
 				$this->load->view('layouts/dashboard/sidebar');
-				$this->load->view('partials/categorys/add');
+				$this->load->view('partials/categories/add');
 				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
@@ -96,7 +96,7 @@
 					'category_slug' => trim($this->input->post('category_slug_insert')), 
 					'category_status' => trim($this->input->post('category_status_insert'))
 				);
-				$this->Categorys_model->insert_model($insert);
+				$this->Category_model->insert_model($insert);
 			}
 		}
 
@@ -113,14 +113,14 @@
 				$params = array(
 					'title' => constant('APP_NAME') . ' | Categorías',
 					'styles' => array(base_url('public/css/dashboard.css')),
-					'scripts' => array(base_url('public/js/categorys.js')),
-					'view_category' => $this->Categorys_model->get_category_by('id_category', $id_category),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'scripts' => array(base_url('public/js/categories.js')),
+					'view_category' => $this->Category_model->get_category_by('id_category', $id_category),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
 				$this->load->view('layouts/dashboard/sidebar');
-				$this->load->view('partials/categorys/view');
+				$this->load->view('partials/categories/view');
 				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
@@ -133,19 +133,19 @@
 		*/
 		public function filter_by($id_category){
 			$total_rows = 0;
-			if ($this->Movies_model->get_count_movies_by_category($id_category) != FALSE) {
-				$total_rows = $this->Movies_model->get_count_movies_by_category($id_category)->num_rows();
+			if ($this->Movie_model->get_count_movies_by_category($id_category) != FALSE) {
+				$total_rows = $this->Movie_model->get_count_movies_by_category($id_category)->num_rows();
 			}else{
 				$total_rows = 0;
 			}
 
 			$config = array();
-	       	$config['base_url'] = base_url() . 'categorys/filter_by/' . $id_category . '/';
+	       	$config['base_url'] = base_url() . 'categories/filter_by/' . $id_category . '/';
 	       	$config['total_rows'] = $total_rows;
 	       	$config['per_page'] = 4; 
     		$config['uri_segment'] = 4;
     		
-			// $config['num_links'] = round(($this->Movies_model->get_all_movies_activated()->num_rows() / 8));
+			// $config['num_links'] = round(($this->Movie_model->get_all_movies_activated()->num_rows() / 8));
 			// $config['use_page_numbers'] = TRUE;
 
 	       	$config['full_tag_open']  = '<nav aria-label="Page navigation"><ul class="pagination">';
@@ -169,7 +169,7 @@
 
 	       	$this->pagination->initialize($config);
 	       	
-	       	$results_paginated = $this->Categorys_model->get_movies_by_category($config['per_page'], $this->uri->segment(4), 'cm_cat_mov.id_category', decryp($id_category));
+	       	$results_paginated = $this->Category_model->get_movies_by_category($config['per_page'], $this->uri->segment(4), 'cm_cat_mov.id_category', decryp($id_category));
 	       	$links_created = $this->pagination->create_links();
 
 			$params = array(
@@ -184,21 +184,21 @@
 					base_url('public/js/libs/owl.carousel.min.js'),
 					base_url('public/js/welcome.js')
 				),
-				'view_category' => $this->Categorys_model->get_category_by('id_category', $id_category),
-				'get_movies_most_viewed' => $this->Movies_model->get_movies_most_viewed(8),
-				'get_new_movies' => $this->Movies_model->get_new_movies(8),		
-				'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),	
-				'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),	
-				'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),	
+				'view_category' => $this->Category_model->get_category_by('id_category', $id_category),
+				'get_movies_most_viewed' => $this->Movie_model->get_movies_most_viewed(8),
+				'get_new_movies' => $this->Movie_model->get_new_movies(8),		
+				'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),	
+				'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),	
+				'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),	
 				'results_paginated' => $results_paginated,
 				'links_created'=> $links_created,				
-				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 			);
 			$this->load->view('header', $params);				
 			$this->load->view('layouts/welcome/navbar');				
 			$this->load->view('layouts/welcome/carousel-news');				
 			$this->load->view('layouts/welcome/carousel-views');				
-			$this->load->view('partials/welcome/filter_by_categorys');				
+			$this->load->view('partials/welcome/filter_by_categories');				
 			$this->load->view('layouts/welcome/footer');				
 			$this->load->view('footer');
 		}
@@ -216,16 +216,16 @@
 				$params = array(
 					'title' => constant('APP_NAME') . ' | Categorías',
 					'styles' => array(base_url('public/css/dashboard.css')),
-					'scripts' => array(base_url('public/js/categorys.js')),
+					'scripts' => array(base_url('public/js/categories.js')),
 					'id_category_encryp' => $id_category,
-					'edit_category' => $this->Categorys_model->get_category_by('id_category', $id_category),
+					'edit_category' => $this->Category_model->get_category_by('id_category', $id_category),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
 				$this->load->view('layouts/dashboard/sidebar');
-				$this->load->view('partials/categorys/edit');
+				$this->load->view('partials/categories/edit');
 				$this->load->view('layouts/dashboard/footer');
 				$this->load->view('footer');
 			}		
@@ -246,7 +246,7 @@
 					'category_slug' => trim($this->input->post('category_slug_update')), 
 					'category_status' => trim($this->input->post('category_status_update'))
 				);
-				$this->Categorys_model->update_model($update);
+				$this->Category_model->update_model($update);
 			}			
 		}
 
@@ -261,7 +261,7 @@
 			} else {
 				$id_category = trim($this->input->post('id_category_delete'));
 				
-				$this->Categorys_model->delete_model($id_category);
+				$this->Category_model->delete_model($id_category);
 			}			
 		}
 	}

@@ -1,7 +1,7 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	class Newsletters_model extends CI_Model {
+	class Newsletter_model extends CI_Model {
 
         /**
         * [__construct description]

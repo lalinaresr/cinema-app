@@ -9,7 +9,7 @@
 		public function __construct(){
 			parent::__construct();
 
-            $this->load->model('Sessions_model');
+            $this->load->model('Session_model');
 		}
 		
         /**
@@ -57,7 +57,7 @@
 
                     $this->session->set_userdata($user_current); 
 
-                    $insert_session = $this->Sessions_model->insert_model($this->session->userdata('id_user'));
+                    $insert_session = $this->Session_model->insert_model($this->session->userdata('id_user'));
 
                     echo "Success";
                 }else{ echo "Error"; }

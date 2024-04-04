@@ -1,7 +1,7 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	class Qualities_model extends CI_Model {
+	class Quality_model extends CI_Model {
 
         /**
         * [__construct description]

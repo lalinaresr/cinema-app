@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de categorías | editar.</h1>
 <div class="row">
-   <form action="<?= site_url('categorys/update/'); ?>" method="post" id="form-update-category">
+   <form action="<?= site_url('categories/update/'); ?>" method="post" id="form-update-category">
       <!-- field ID CATEGORY -->
       <div class="col-md-12">
          <div class="form-group">
@@ -75,7 +75,7 @@
       <!-- buttons ACTIONS -->
       <div class="col-md-4">
          <button type="submit" class="btn btn-info" id="btn-update-category"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
-         <a href="<?= site_url('categorys/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancelar</a>
+         <a href="<?= site_url('categories/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancelar</a>
       </div>
       <!-- END buttons ACTIONS -->
    </form>

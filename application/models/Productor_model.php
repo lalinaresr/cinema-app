@@ -1,7 +1,7 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	class Productors_model extends CI_Model {
+	class Productor_model extends CI_Model {
 
         /**
         * [__construct description]

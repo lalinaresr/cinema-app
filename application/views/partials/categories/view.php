@@ -83,7 +83,7 @@
 
    <!-- button RETURN -->
    <div class="col-md-4">
-      <a href="<?= site_url('categorys/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
+      <a href="<?= site_url('categories/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
    </div>
    <!-- END button RETURN -->
 </div>

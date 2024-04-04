@@ -114,8 +114,8 @@ jQuery(document).ready(function ($) {
 	if ($('#ids_genders_insert').length > 0) {
 		$('#ids_genders_insert').multiselect(genders);
 	}
-	if ($('#ids_categorys_insert').length > 0) {
-		$('#ids_categorys_insert').multiselect(categories);
+	if ($('#ids_categories_insert').length > 0) {
+		$('#ids_categories_insert').multiselect(categories);
 	}
 	if ($('#ids_productors_update').length > 0) {
 		$('#ids_productors_update').multiselect(productors);
@@ -123,8 +123,8 @@ jQuery(document).ready(function ($) {
 	if ($('#ids_genders_update').length > 0) {
 		$('#ids_genders_update').multiselect(genders);
 	}
-	if ($('#ids_categorys_update').length > 0) {
-		$('#ids_categorys_update').multiselect(categories);
+	if ($('#ids_categories_update').length > 0) {
+		$('#ids_categories_update').multiselect(categories);
 	}
 
 	let release = {

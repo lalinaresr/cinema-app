@@ -1,7 +1,7 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	class Suggestions_model extends CI_Model {
+	class Suggestion_model extends CI_Model {
 
         /**
         * [__construct description]

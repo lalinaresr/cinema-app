@@ -74,16 +74,16 @@
       <!-- field CATEGORYS MOVIE -->
       <div class="col-md-4">
          <div class="form-group">
-            <?php if ($categorys_movie != FALSE) : ?>
+            <?php if ($categories_movie != FALSE) : ?>
                <?php
-               $categorys_selected = array();
-               foreach ($categorys_movie as $key => $data_element) {
-                  $categorys_selected[] = $data_element->id_category;
+               $categories_selected = array();
+               foreach ($categories_movie as $key => $data_element) {
+                  $categories_selected[] = $data_element->id_category;
                }
                ?>
-               <select id="ids_categorys_update" name="ids_categorys_update[]" multiple class="form-control" required>
-                  <?php foreach ($get_all_categorys_activated->result() as $key => $category_select) : ?>
-                     <?php if (in_array($category_select->id_category, $categorys_selected)) : ?>
+               <select id="ids_categories_update" name="ids_categories_update[]" multiple class="form-control" required>
+                  <?php foreach ($get_all_categories_activated->result() as $key => $category_select) : ?>
+                     <?php if (in_array($category_select->id_category, $categories_selected)) : ?>
                         <option value="<?= $category_select->id_category; ?>" selected="selected"><?= $category_select->category_name; ?></option>
                      <?php else : ?>
                         <option value="<?= $category_select->id_category; ?>"><?= $category_select->category_name; ?></option>
@@ -91,8 +91,8 @@
                   <?php endforeach ?>
                </select>
             <?php else : ?>
-               <select id="ids_categorys_update" name="ids_categorys_update[]" multiple class="form-control" required>
-                  <?php foreach ($get_all_categorys_activated->result() as $key => $category) : ?>
+               <select id="ids_categories_update" name="ids_categories_update[]" multiple class="form-control" required>
+                  <?php foreach ($get_all_categories_activated->result() as $key => $category) : ?>
                      <option value="<?= $category->id_category; ?>"><?= $category->category_name; ?></option>
                   <?php endforeach ?>
                </select>

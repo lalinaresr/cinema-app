@@ -9,7 +9,7 @@
 		public function __construct(){
 			parent::__construct(); 
 
-			$this->load->model('Users_model');
+			$this->load->model('User_model');
 		}
 
 		/**
@@ -24,7 +24,7 @@
 				$params = array(
 					'title' => constant('APP_NAME') . ' | Sugerencias',
 					'styles' => array(base_url('public/css/dashboard.css')),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');

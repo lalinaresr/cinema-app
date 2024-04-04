@@ -48,8 +48,8 @@ jQuery(document).ready(function ($) {
 
 	/*=====  End of Functions Specials  ======*/
 
-	if ($('#categorys-table').length > 0) {
-		let categorys_table = $('#categorys-table').DataTable({
+	if ($('#categories-table').length > 0) {
+		let categories_table = $('#categories-table').DataTable({
 			language: {
 				"sProcessing": "Procesando...",
 				"sLengthMenu": "Mostrar _MENU_ registros",
@@ -81,7 +81,7 @@ jQuery(document).ready(function ($) {
 				{ "extend": 'csv', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV', "className": 'btn btn-success' }
 			]
 		});
-		categorys_table.buttons().container().appendTo('.col-sm-6:eq(0)');
+		categories_table.buttons().container().appendTo('.col-sm-6:eq(0)');
 	}
 
 	const swalWithBootstrapButtons = Swal.mixin({

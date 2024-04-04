@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de categorías.</h1>
-<?php if ($get_all_categorys != FALSE) : ?>
-   <table class="table table-striped table-hover table-responsive table-bordered table-condensed" id="categorys-table">
+<?php if ($get_all_categories != FALSE) : ?>
+   <table class="table table-striped table-hover table-responsive table-bordered table-condensed" id="categories-table">
       <thead>
          <tr>
             <th>ID</th>
@@ -11,7 +11,7 @@
          </tr>
       </thead>
       <tbody>
-         <?php foreach ($get_all_categorys->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
+         <?php foreach ($get_all_categories->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
             <tr class="<?php echo $value->id_status == 1 ? 'success' : 'danger';  ?>">
                <td><a href='#modal-view-category-<?= $id_category_encryp; ?>' data-toggle="modal"><?= $id_category_encryp; ?></a></td>
                <td><?= $value->category_name; ?></td>
@@ -24,8 +24,8 @@
                </td>
                <td><?= get_antiquity($value->date_registered_cat); ?></td>
                <td>
-                  <a href="<?= site_url('categorys/view/') . $id_category_encryp . '/'; ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
-                  <a href="<?= site_url('categorys/edit/') . $id_category_encryp . '/'; ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+                  <a href="<?= site_url('categories/view/') . $id_category_encryp . '/'; ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
+                  <a href="<?= site_url('categories/edit/') . $id_category_encryp . '/'; ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
                   <button class="btn btn-danger btn-sm btn-delete-category" id="<?= $id_category_encryp; ?>"><span class="glyphicon glyphicon-trash"></span></button>
                </td>
             </tr>
@@ -137,4 +137,4 @@
       <strong>¡Aviso!</strong> No se encontraron datos de categorías para mostrar en estos momentos.
    </div>
 <?php endif ?>
-<a href="<?= site_url('categorys/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>
+<a href="<?= site_url('categories/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>

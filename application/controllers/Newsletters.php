@@ -9,8 +9,8 @@
 		public function __construct(){
 			parent::__construct(); 
 
-			$this->load->model('Newsletters_model');
-			$this->load->model('Users_model');
+			$this->load->model('Newsletter_model');
+			$this->load->model('User_model');
 		}
 
 		/**
@@ -40,8 +40,8 @@
 						base_url('public/js/libs/buttons.html5.min.js'),						
 						base_url('public/js/newsletters.js')
 					),
-					'get_all_newsletters' => $this->Newsletters_model->get_all_newsletters(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_newsletters' => $this->Newsletter_model->get_all_newsletters(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');

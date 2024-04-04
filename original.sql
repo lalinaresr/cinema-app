@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cm_categorys`
+-- Estructura de tabla para la tabla `cm_categories`
 --
 
-CREATE TABLE `cm_categorys` (
+CREATE TABLE `cm_categories` (
   `id_category` int(11) NOT NULL,
   `id_status` int(11) NOT NULL,
   `category_name` varchar(50) NOT NULL,
@@ -41,10 +41,10 @@ CREATE TABLE `cm_categorys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `cm_categorys`
+-- Volcado de datos para la tabla `cm_categories`
 --
 
-INSERT INTO `cm_categorys` (`id_category`, `id_status`, `category_name`, `category_slug`, `ip_registered_cat`, `date_registered_cat`, `client_registered_cat`, `ip_modified_cat`, `date_modified_cat`, `client_modified_cat`) VALUES
+INSERT INTO `cm_categories` (`id_category`, `id_status`, `category_name`, `category_slug`, `ip_registered_cat`, `date_registered_cat`, `client_registered_cat`, `ip_modified_cat`, `date_modified_cat`, `client_modified_cat`) VALUES
 (1, 1, 'Películas', 'peliculas', '::1', '2017-07-29 00:29:38', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -620,9 +620,9 @@ INSERT INTO `cm_users` (`id_user`, `id_contact`, `id_rol`, `id_status`, `user_us
 --
 
 --
--- Indices de la tabla `cm_categorys`
+-- Indices de la tabla `cm_categories`
 --
-ALTER TABLE `cm_categorys`
+ALTER TABLE `cm_categories`
   ADD PRIMARY KEY (`id_category`),
   ADD KEY `id_status` (`id_status`);
 
@@ -730,9 +730,9 @@ ALTER TABLE `cm_users`
 --
 
 --
--- AUTO_INCREMENT de la tabla `cm_categorys`
+-- AUTO_INCREMENT de la tabla `cm_categories`
 --
-ALTER TABLE `cm_categorys`
+ALTER TABLE `cm_categories`
   MODIFY `id_category` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -806,16 +806,16 @@ ALTER TABLE `cm_users`
 --
 
 --
--- Filtros para la tabla `cm_categorys`
+-- Filtros para la tabla `cm_categories`
 --
-ALTER TABLE `cm_categorys`
+ALTER TABLE `cm_categories`
   ADD CONSTRAINT `clv_sta_cat_fk` FOREIGN KEY (`id_status`) REFERENCES `cm_status` (`id_status`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cm_cat_mov`
 --
 ALTER TABLE `cm_cat_mov`
-  ADD CONSTRAINT `clv_cat_mov_fk` FOREIGN KEY (`id_category`) REFERENCES `cm_categorys` (`id_category`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `clv_cat_mov_fk` FOREIGN KEY (`id_category`) REFERENCES `cm_categories` (`id_category`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `clv_mov_cat_fk` FOREIGN KEY (`id_movie`) REFERENCES `cm_movies` (`id_movie`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

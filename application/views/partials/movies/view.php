@@ -63,14 +63,14 @@
    <!-- field CATEGORYS MOVIE -->
    <div class="col-md-4">
       <div class="form-group">
-         <?php if ($categorys_movie != FALSE) : ?>
-            <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-categorys-movie'>Categorías</a>
+         <?php if ($categories_movie != FALSE) : ?>
+            <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-categories-movie'>Categorías</a>
          <?php else : ?>
             <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No hay categorías asignadas a esta película.</a>
          <?php endif ?>
       </div>
    </div>
-   <div class="modal fade" id="modal-categorys-movie">
+   <div class="modal fade" id="modal-categories-movie">
       <div class="modal-dialog">
          <div class="modal-content">
             <div class="modal-header bg-black">
@@ -78,8 +78,8 @@
                <h4 class="modal-title text-center tx-white">Categorías</h4>
             </div>
             <div class="modal-body">
-               <?php foreach ($categorys_movie as $key => $value) : ?>
-                  <a href="<?= site_url('categorys/view/') . cryp($value->id_category) . '/'; ?>" class="btn btn-info mb-5"><?= $value->category_name; ?></a>
+               <?php foreach ($categories_movie as $key => $value) : ?>
+                  <a href="<?= site_url('categories/view/') . cryp($value->id_category) . '/'; ?>" class="btn btn-info mb-5"><?= $value->category_name; ?></a>
                <?php endforeach ?>
             </div>
             <div class="modal-footer">

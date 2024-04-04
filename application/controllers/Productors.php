@@ -9,11 +9,11 @@
 		public function __construct(){
 			parent::__construct(); 
 
-			$this->load->model('Movies_model');
-			$this->load->model('Productors_model');
-			$this->load->model('Genders_model');
-			$this->load->model('Categorys_model');
-			$this->load->model('Users_model');
+			$this->load->model('Movie_model');
+			$this->load->model('Productor_model');
+			$this->load->model('Gender_model');
+			$this->load->model('Category_model');
+			$this->load->model('User_model');
 			$this->load->model('Status_model');
 
 			$this->load->library('pagination');
@@ -46,8 +46,8 @@
 						base_url('public/js/libs/buttons.html5.min.js'),
 						base_url('public/js/productors.js')
 					),
-					'get_all_productors' => $this->Productors_model->get_all_productors(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_productors' => $this->Productor_model->get_all_productors(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -71,7 +71,7 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/productors.js')),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -100,7 +100,7 @@
                 	'productor_status' => trim($this->input->post('productor_status_insert')),
                 	'productor_image_logo' => $this->upload->data()['file_name']
                 );
-                $this->Productors_model->insert_model($insert);
+                $this->Productor_model->insert_model($insert);
             } else { 
             	echo "ErrorUP"; 
             }		        
@@ -121,8 +121,8 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/productors.js')),
 					'id_productor_encryp' => $id_productor,
-					'view_productor' => $this->Productors_model->get_productor_by('id_productor', $id_productor),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'view_productor' => $this->Productor_model->get_productor_by('id_productor', $id_productor),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -140,8 +140,8 @@
 		*/
 		public function filter_by($id_productor){
 			$total_rows = 0;
-			if ($this->Movies_model->get_count_movies_by_productor($id_productor) != FALSE) {
-				$total_rows = $this->Movies_model->get_count_movies_by_productor($id_productor)->num_rows();
+			if ($this->Movie_model->get_count_movies_by_productor($id_productor) != FALSE) {
+				$total_rows = $this->Movie_model->get_count_movies_by_productor($id_productor)->num_rows();
 			}else{
 				$total_rows = 0;
 			}
@@ -152,7 +152,7 @@
 	       	$config['per_page'] = 4; 
     		$config['uri_segment'] = 4;
     		
-			// $config['num_links'] = round(($this->Movies_model->get_all_movies_activated()->num_rows() / 8));
+			// $config['num_links'] = round(($this->Movie_model->get_all_movies_activated()->num_rows() / 8));
 			// $config['use_page_numbers'] = TRUE;
 
 	       	$config['full_tag_open']  = '<nav aria-label="Page navigation"><ul class="pagination">';
@@ -176,7 +176,7 @@
 
 	       	$this->pagination->initialize($config);
 	       	
-	       	$results_paginated = $this->Productors_model->get_movies_by_productor($config['per_page'], $this->uri->segment(4), 'cm_pro_mov.id_productor', decryp($id_productor));
+	       	$results_paginated = $this->Productor_model->get_movies_by_productor($config['per_page'], $this->uri->segment(4), 'cm_pro_mov.id_productor', decryp($id_productor));
 	       	$links_created = $this->pagination->create_links();
 
 			$params = array(
@@ -191,15 +191,15 @@
 					base_url('public/js/libs/owl.carousel.min.js'),
 					base_url('public/js/welcome.js')
 				),
-				'view_productor' => $this->Productors_model->get_productor_by('id_productor', $id_productor),
-				'get_movies_most_viewed' => $this->Movies_model->get_movies_most_viewed(8),
-				'get_new_movies' => $this->Movies_model->get_new_movies(8),		
-				'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),	
-				'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),	
-				'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),	
+				'view_productor' => $this->Productor_model->get_productor_by('id_productor', $id_productor),
+				'get_movies_most_viewed' => $this->Movie_model->get_movies_most_viewed(8),
+				'get_new_movies' => $this->Movie_model->get_new_movies(8),		
+				'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),	
+				'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),	
+				'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),	
 				'results_paginated' => $results_paginated,
 				'links_created'=> $links_created,				
-				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 			);
 			$this->load->view('header', $params);				
 			$this->load->view('layouts/welcome/navbar');				
@@ -225,9 +225,9 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/productors.js')),
 					'id_productor_encryp' => $id_productor,
-					'edit_productor' => $this->Productors_model->get_productor_by('id_productor', $id_productor),
+					'edit_productor' => $this->Productor_model->get_productor_by('id_productor', $id_productor),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -259,7 +259,7 @@
 					'old_image_logo' => trim($this->input->post('image_logo_update_route')),
 					'new_image_logo' => NULL
 				);
-				$this->Productors_model->update_model($update);
+				$this->Productor_model->update_model($update);
 				/* END Update with Old Image */
 			} else {
 				/* Upload and Update with New Image */            		
@@ -273,7 +273,7 @@
 					'old_image_ext' => substr(trim($this->input->post('image_logo_update_route')), -4)
 					/* 'image_logo' => FOLDER_PRODUCTORS . decryp($this->input->post('id_productor_update_productor')) . '_logo' . substr($this->upload->data()['file_name'], -4) */
 				);
-				$this->Productors_model->update_model($update);
+				$this->Productor_model->update_model($update);
 				/* END Upload and Update with New Image */            		
 			}            
 		}
@@ -293,8 +293,8 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/productors.js')),
 					'id_productor_encryp' => $id_productor,
-					'view_productor' => $this->Productors_model->get_productor_by('id_productor', $id_productor),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'view_productor' => $this->Productor_model->get_productor_by('id_productor', $id_productor),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -326,7 +326,7 @@
 	            		'productor_image_logo' => $this->upload->data()['file_name'],
 	            		'old_image_ext' => substr(trim($this->input->post('image_logo_update_route')), -4)
 	            	);
-	            	$this->Productors_model->update_logo($update);
+	            	$this->Productor_model->update_logo($update);
 	            } else { 
 	            	echo "ErrorUP"; 
 	            }				
@@ -344,7 +344,7 @@
 			} else {
 				$id_productor = $this->input->post('id_productor_delete');
 
-				$this->Productors_model->delete_model($id_productor);
+				$this->Productor_model->delete_model($id_productor);
 			}			
 		}
 	}

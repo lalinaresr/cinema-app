@@ -1,7 +1,7 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	class Movies_model extends CI_Model {
+	class Movie_model extends CI_Model {
 
         /**
         * [__construct description]
@@ -11,7 +11,7 @@
 		}
 
 		/**
-		* [get_all_categorys description]
+		* [get_all_categories description]
 		* @return [type] [description]
 		*/
 		public function get_all_movies(){
@@ -379,13 +379,13 @@
 				cm_movies.movie_reproductions,
 				cm_movies.movie_play,
 				cm_movies.is_premiere,				
-				cm_categorys.category_name,
-				cm_categorys.category_slug
+				cm_categories.category_name,
+				cm_categories.category_slug
 			')
 			->from('cm_cat_mov')
-			->join('cm_categorys', 'cm_categorys.id_category = cm_cat_mov.id_category')
+			->join('cm_categories', 'cm_categories.id_category = cm_cat_mov.id_category')
 			->join('cm_movies', 'cm_movies.id_movie = cm_cat_mov.id_movie')
-			->where('cm_categorys.id_status', 1)
+			->where('cm_categories.id_status', 1)
 			->where('cm_movies.id_status', 1)
 			->where('cm_cat_mov.id_category', decryp($id_category))
 			->order_by('cm_movies.movie_name', 'DESC')
@@ -553,7 +553,7 @@
 						]);
 					}
 
-					foreach ($insert['ids_categorys'] as $key => $value) {
+					foreach ($insert['ids_categories'] as $key => $value) {
 						$this->db->insert('cm_cat_mov', [
 							'id_category' => $value,
 							'id_movie' => $movie_inserted_current 
@@ -683,15 +683,15 @@
 		}
 
 		/**
-		* [get_categorys_movie description]
+		* [get_categories_movie description]
 		* @param  [type] $value [description]
 		* @return [type]        [description]
 		*/
-		public function get_categorys_movie($value){
+		public function get_categories_movie($value){
 			$resultSet = $this->db
 			->select('*')
 			->from('cm_cat_mov')
-			->join('cm_categorys', 'cm_categorys.id_category = cm_cat_mov.id_category')
+			->join('cm_categories', 'cm_categories.id_category = cm_cat_mov.id_category')
 			->join('cm_movies', 'cm_movies.id_movie = cm_cat_mov.id_movie')
 			->where('cm_cat_mov.id_movie', decryp($value))
 			->get();
@@ -699,11 +699,11 @@
 			/* Generate Code 
 			* SELECT 
 			* `cm_cat_mov`.`id_category`, 
-			* `cm_categorys`.`category_name`, 
+			* `cm_categories`.`category_name`, 
 			* `cm_movies`.`movie_name`,
 			* `cm_movies`.`id_movie`
 			* FROM `cm_cat_mov` 
-			* JOIN `cm_categorys` ON `cm_cat_mov`.`id_category` = `cm_categorys`.`id_category` 
+			* JOIN `cm_categories` ON `cm_cat_mov`.`id_category` = `cm_categories`.`id_category` 
 			* JOIN `cm_movies` ON `cm_cat_mov`.`id_movie` = `cm_movies`.`id_movie`  
 			* WHERE `cm_cat_mov`. `id_movie` = 2
 			*/
@@ -784,7 +784,7 @@
 		    	]);
 		    }
 
-		    foreach ($update['ids_categorys'] as $key => $value) {
+		    foreach ($update['ids_categories'] as $key => $value) {
 		    	$this->db->insert('cm_cat_mov', [
 		    		'id_category' => $value,
 		    		'id_movie' => decryp($update['id_movie'])
@@ -881,9 +881,9 @@
 		   		$genders_deleted = $this->db->delete('cm_gen_mov');
 
 		   		$this->db->where('id_movie', $movie_recovered->id_movie);
-		   		$categorys_deleted = $this->db->delete('cm_cat_mov');
+		   		$categories_deleted = $this->db->delete('cm_cat_mov');
 
-		   		if ($movie_deleted != FALSE && $productors_deleted != FALSE && $genders_deleted != FALSE && $categorys_deleted != FALSE) { 	
+		   		if ($movie_deleted != FALSE && $productors_deleted != FALSE && $genders_deleted != FALSE && $categories_deleted != FALSE) { 	
 		   			if (strcmp($movie_recovered->movie_cover, 'NO-IMAGE') != 0) {
 		   				unlink($movie_recovered->movie_cover);
 		   			}	   			

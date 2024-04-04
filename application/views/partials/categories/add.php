@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de categorías | agregar.</h1>
 <div class="row">
-   <form action="<?= site_url('categorys/insert/'); ?>" method="post" id="form-insert-category">
+   <form action="<?= site_url('categories/insert/'); ?>" method="post" id="form-insert-category">
       <!-- field CATEGORY NAME -->
       <div class="col-md-6">
          <div class="form-group">
@@ -62,7 +62,7 @@
       <!-- buttons ACTIONS -->
       <div class="col-md-4">
          <button type="submit" class="btn btn-info" id="btn-insert-category"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
-         <a href="<?= site_url('categorys/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancelar</a>
+         <a href="<?= site_url('categories/'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Cancelar</a>
       </div>
       <!-- END buttons ACTIONS -->
    </form>

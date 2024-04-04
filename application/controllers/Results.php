@@ -9,11 +9,11 @@
 		public function __construct(){
 			parent::__construct();
 
-			$this->load->model('Movies_model');
-			$this->load->model('Productors_model');
-			$this->load->model('Genders_model');
-			$this->load->model('Categorys_model');
-			$this->load->model('Users_model');
+			$this->load->model('Movie_model');
+			$this->load->model('Productor_model');
+			$this->load->model('Gender_model');
+			$this->load->model('Category_model');
+			$this->load->model('User_model');
 
 			$this->load->library('pagination');
 		}
@@ -34,8 +34,8 @@
 			$movie_name_search = urldecode($movie_name_search);
 
 			$total_rows = 0;
-			if ($this->Movies_model->get_count_movies_by_search($movie_name_search) != FALSE) {
-				$total_rows = $this->Movies_model->get_count_movies_by_search($movie_name_search)->num_rows();
+			if ($this->Movie_model->get_count_movies_by_search($movie_name_search) != FALSE) {
+				$total_rows = $this->Movie_model->get_count_movies_by_search($movie_name_search)->num_rows();
 			}else{
 				$total_rows = 0;
 			}
@@ -67,7 +67,7 @@
 
 	       	$this->pagination->initialize($config);
 	       	
-	       	$results_paginated = $this->Movies_model->get_movies_by_search($config['per_page'], $this->uri->segment(4), $movie_name_search);
+	       	$results_paginated = $this->Movie_model->get_movies_by_search($config['per_page'], $this->uri->segment(4), $movie_name_search);
 	       	$links_created = $this->pagination->create_links();
 			
 			$params = array(
@@ -82,15 +82,15 @@
 					base_url('public/js/libs/owl.carousel.min.js'),
 					base_url('public/js/welcome.js')
 				),
-				'get_movies_most_viewed' => $this->Movies_model->get_movies_most_viewed(8),
-				'get_new_movies' => $this->Movies_model->get_new_movies(8),			
-				'get_all_productors_activated' => $this->Productors_model->get_all_productors_activated(),	
-				'get_all_genders_activated' => $this->Genders_model->get_all_genders_activated(),	
-				'get_all_categorys_activated' => $this->Categorys_model->get_all_categorys_activated(),	
+				'get_movies_most_viewed' => $this->Movie_model->get_movies_most_viewed(8),
+				'get_new_movies' => $this->Movie_model->get_new_movies(8),			
+				'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),	
+				'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),	
+				'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),	
 				'results_paginated' => $results_paginated,
 				'links_created'=> $links_created,
 				'param_search' => $movie_name_search,
-				'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+				'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				
 			);
 			$this->load->view('header', $params);				

@@ -9,8 +9,8 @@
 		public function __construct(){
 			parent::__construct(); 
 
-			$this->load->model('Qualities_model');
-			$this->load->model('Users_model');
+			$this->load->model('Quality_model');
+			$this->load->model('User_model');
 			$this->load->model('Status_model');
 		}
 
@@ -41,8 +41,8 @@
 						base_url('public/js/libs/buttons.html5.min.js'),
 						base_url('public/js/qualities.js')
 					),
-					'get_all_qualities' => $this->Qualities_model->get_all_qualities(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'get_all_qualities' => $this->Quality_model->get_all_qualities(),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -66,7 +66,7 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/qualities.js')),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -91,7 +91,7 @@
 					'quality_slug' => trim($this->input->post('quality_slug_insert')), 
 					'quality_status' => trim($this->input->post('quality_status_insert'))
 				);
-				$this->Qualities_model->insert_model($insert);
+				$this->Quality_model->insert_model($insert);
 			}			
 		}
 
@@ -109,8 +109,8 @@
 					'title' => constant('APP_NAME') . ' | Calidades',
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/qualities.js')),
-					'view_quality' => $this->Qualities_model->get_quality_by('id_quality', $id_quality),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'view_quality' => $this->Quality_model->get_quality_by('id_quality', $id_quality),
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -136,9 +136,9 @@
 					'styles' => array(base_url('public/css/dashboard.css')),
 					'scripts' => array(base_url('public/js/qualities.js')),
 					'id_quality_encryp' => $id_quality,
-					'edit_quality' => $this->Qualities_model->get_quality_by('id_quality', $id_quality),
+					'edit_quality' => $this->Quality_model->get_quality_by('id_quality', $id_quality),
 					'get_all_status' => $this->Status_model->get_all_status(),
-					'user_avatar' => $this->Users_model->has_user_avatar($this->session->userdata('id_user'))
+					'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
 				);
 				$this->load->view('header', $params);
 				$this->load->view('layouts/dashboard/navbar');
@@ -164,7 +164,7 @@
 					'quality_slug' => trim($this->input->post('quality_slug_update')), 
 					'quality_status' => trim($this->input->post('quality_status_update'))
 				);
-				$this->Qualities_model->update_model($update);
+				$this->Quality_model->update_model($update);
 			}			
 		}
 
@@ -179,7 +179,7 @@
 			} else {
 				$id_quality = trim($this->input->post('id_quality_delete'));
 				
-				$this->Qualities_model->delete_model($id_quality);
+				$this->Quality_model->delete_model($id_quality);
 			}			
 		}
 	}
