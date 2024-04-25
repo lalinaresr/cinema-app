@@ -122,7 +122,7 @@
 		* @param  [type] $insert [description]
 		* @return [type]         [description]
 		*/
-		public function insert_model($insert){       
+		public function store($insert){       
 		   	$this->db->where('productor_name', $insert['productor_name']);
 		   	$resultSet = $this->db->get('cm_productors');
 
@@ -191,7 +191,7 @@
 		* @param  [type] $update [description]
 		* @return [type]         [description]
 		*/
-		public function update_model($update){
+		public function update($update){
 		   	$this->db->where('productor_name', $update['productor_name']);
 		   	$resultSet = $this->db->get('cm_productors');
 
@@ -278,7 +278,7 @@
 		* @param  [type] $id_productor [description]
 		* @return [type]               [description]
 		*/
-		public function delete_model($id_productor){
+		public function delete($id_productor){
 			$this->db->where('id_productor', decryp($id_productor));
 		   	$resultSet = $this->db->get('cm_productors');
 

@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de películas | agregar.</h1>
 <div class="row">
-   <form action="<?= site_url('movies/insert/'); ?>" method="post" id="form-insert-movie">
+   <form action="<?= site_url('movies/store'); ?>" method="post" id="form-insert-movie">
       <!-- field PRODUCTORS MOVIE -->
       <div class="col-md-4">
          <div class="form-group">

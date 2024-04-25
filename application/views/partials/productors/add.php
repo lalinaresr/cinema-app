@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de productores | agregar.</h1>
 <div class="row">
-   <form action="<?= site_url('productors/insert/'); ?>" method="post" id="form-insert-productor" enctype="multipart/form-data">
+   <form action="<?= site_url('productors/store'); ?>" method="post" id="form-insert-productor" enctype="multipart/form-data">
       <!-- field PRODUCTOR NAME -->
       <div class="col-md-4">
          <div class="form-group">

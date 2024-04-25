@@ -163,4 +163,4 @@
       <strong>¡Aviso!</strong> No se encontraron datos de productores para mostrar en estos momentos.
    </div>
 <?php endif ?>
-<a href="<?= site_url('productors/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>
+<a href="<?= site_url('productors/create'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>

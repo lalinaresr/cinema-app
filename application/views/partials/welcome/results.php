@@ -13,7 +13,7 @@
 							<?= generate_extract($value->movie_description, 100); ?>
 						</p>
 						<p>
-							<a href="<?= site_url('movies/watch/') . $id_movie_encryp . '/'; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-film"></span> Ver</a>
+							<a href="<?= site_url('welcome/watch/') . $id_movie_encryp . '/'; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-film"></span> Ver</a>
 							<?php if (
 								$this->session->userdata('is_admin_logged_in') ||
 								$this->session->userdata('is_guest_logged_in')
@@ -28,7 +28,7 @@
 			</div>
 		<?php endforeach ?>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<?= $links_created; ?>
+			<?= $paginator; ?>
 		</div>
 	<?php else : ?>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

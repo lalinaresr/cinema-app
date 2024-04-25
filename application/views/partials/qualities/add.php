@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de calidades | agregar.</h1>
 <div class="row">
-   <form action="<?= site_url('qualities/insert/'); ?>" method="post" id="form-insert-quality">
+   <form action="<?= site_url('qualities/store'); ?>" method="post" id="form-insert-quality">
       <!-- field QUALITY NAME -->
       <div class="col-md-6">
          <div class="form-group">

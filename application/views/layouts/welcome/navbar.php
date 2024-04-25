@@ -15,7 +15,7 @@
 				$this->session->userdata('is_user_logged_in') ||
 				$this->session->userdata('is_guest_logged_in')
 			) : ?>
-				<form action="<?= site_url('results/pre_search_query/'); ?>" method="post" class="navbar-form navbar-left" role="search">
+				<form action="<?= site_url('welcome/search'); ?>" method="post" class="navbar-form navbar-left" role="search">
 					<div class="input-group">
 						<input type="text" class="form-control" name="movie_name_search" id="movie_name_search" value="<?= $param_search ?? ''; ?>" placeholder="Buscar..." required autocomplete="off" style="width: 100%;">
 						<span class="input-group-btn">
@@ -28,7 +28,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span> Productores <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<?php foreach ($get_all_productors_activated->result() as $key => $value) : $id_productor_encryp = cryp($value->id_productor); ?>
-								<li><a href="<?= site_url('productors/filter_by/') . $id_productor_encryp . '/'; ?>"><?= $value->productor_name; ?></a></li>
+								<li><a href="<?= site_url('welcome/filter_by_productor/') . $id_productor_encryp . '/'; ?>"><?= $value->productor_name; ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
@@ -36,7 +36,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span> Géneros <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<?php foreach ($get_all_genders_activated->result() as $key => $value) : $id_gender_encryp = cryp($value->id_gender); ?>
-								<li><a href="<?= site_url('genders/filter_by/') . $id_gender_encryp . '/'; ?>"><?= $value->gender_name; ?></a></li>
+								<li><a href="<?= site_url('welcome/filter_by_gender/') . $id_gender_encryp . '/'; ?>"><?= $value->gender_name; ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
@@ -44,7 +44,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tags"></span> Categorías <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<?php foreach ($get_all_categories_activated->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
-								<li><a href="<?= site_url('categories/filter_by/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
+								<li><a href="<?= site_url('welcome/filter_by_category/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
@@ -62,7 +62,7 @@
 					</li>
 				</ul>
 			<?php else : ?>
-				<form action="<?= site_url('results/pre_search_query/'); ?>" method="post" class="navbar-form navbar-right" role="search">
+				<form action="<?= site_url('welcome/search'); ?>" method="post" class="navbar-form navbar-right" role="search">
 					<div class="input-group">
 						<input type="text" class="form-control" name="movie_name_search" id="movie_name_search" value="<?= $param_search ?? ''; ?>" placeholder="Buscar..." required autocomplete="off" style="width: 100%;">
 						<span class="input-group-btn">
@@ -76,7 +76,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span> Productores <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<?php foreach ($get_all_productors_activated->result() as $key => $value) : $id_productor_encryp = cryp($value->id_productor); ?>
-								<li><a href="<?= site_url('productors/filter_by/') . $id_productor_encryp . '/'; ?>"><?= $value->productor_name; ?></a></li>
+								<li><a href="<?= site_url('welcome/filter_by_productor/') . $id_productor_encryp . '/'; ?>"><?= $value->productor_name; ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
@@ -84,7 +84,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span> Géneros <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<?php foreach ($get_all_genders_activated->result() as $key => $value) : $id_gender_encryp = cryp($value->id_gender); ?>
-								<li><a href="<?= site_url('genders/filter_by/') . $id_gender_encryp . '/'; ?>"><?= $value->gender_name; ?></a></li>
+								<li><a href="<?= site_url('welcome/filter_by_gender/') . $id_gender_encryp . '/'; ?>"><?= $value->gender_name; ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
@@ -92,7 +92,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tags"></span> Categorías <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<?php foreach ($get_all_categories_activated->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
-								<li><a href="<?= site_url('categories/filter_by/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
+								<li><a href="<?= site_url('welcome/filter_by_category/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>

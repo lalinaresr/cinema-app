@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de usuarios | agregar.</h1>
 <div class="row">
-   <form action="<?= site_url('users/insert/'); ?>" method="post" id="form-insert-user">
+   <form action="<?= site_url('users/store'); ?>" method="post" id="form-insert-user">
       <!-- field FIRSTNAME -->
       <div class="col-md-4">
          <div class="form-group">

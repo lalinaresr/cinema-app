@@ -75,7 +75,7 @@
         * @param  [type] $id_user [description]
         * @return [type]          [description]
         */
-        public function insert_model($id_user){
+        public function insert($id_user){
             $insert_session = $this->db->insert('cm_sessions', [
                 'id_user' => $id_user,
                 'session_browser_used' => ucfirst(strtolower(detect_client()['browsers'])),

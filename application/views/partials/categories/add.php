@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de categorías | agregar.</h1>
 <div class="row">
-   <form action="<?= site_url('categories/insert/'); ?>" method="post" id="form-insert-category">
+   <form action="<?= site_url('categories/store'); ?>" method="post" id="form-insert-category">
       <!-- field CATEGORY NAME -->
       <div class="col-md-6">
          <div class="form-group">

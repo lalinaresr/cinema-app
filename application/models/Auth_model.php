@@ -17,7 +17,7 @@
         * @param  [type] $login [description]
         * @return [type]        [description]
         */
-		public function login_model($login){
+		public function login($login){
 			$user_recovered = $this->db
             ->select('*')
             ->from('cm_users')
@@ -58,7 +58,7 @@
 
                     $this->session->set_userdata($user_current); 
 
-                    $insert_session = $this->Session_model->insert_model($this->session->userdata('id_user'));
+                    $insert_session = $this->Session_model->insert($this->session->userdata('id_user'));
 
                     echo "Success";
                 }else{ echo "Error"; }

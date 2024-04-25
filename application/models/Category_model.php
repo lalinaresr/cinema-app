@@ -121,7 +121,7 @@
 		* @param  [type] $insert [description]
 		* @return [type]         [description]
 		*/
-		public function insert_model($insert){
+		public function store($insert){
 			$this->db->where('category_name', $insert['category_name']);
 			$resultSet = $this->db->get('cm_categories');
 
@@ -172,7 +172,7 @@
 		* @param  [type] $update [description]
 		* @return [type]         [description]
 		*/
-		public function update_model($update){
+		public function update($update){
 			$this->db->where('category_name', $update['category_name']);
 			$resultSet = $this->db->get('cm_categories');
 
@@ -203,7 +203,7 @@
 		* @param  [type] $id_category [description]
 		* @return [type]              [description]
 		*/
-		public function delete_model($id_category){
+		public function delete($id_category){
 			$this->db->where('id_category', decryp($id_category));
 		   	$resultSet = $this->db->get('cm_categories');
 

@@ -501,7 +501,7 @@
 		* @param  [type] $insert [description]
 		* @return [type]         [description]
 		*/
-		public function insert_model($insert){		
+		public function store($insert){		
 			$this->db->where('movie_name', $insert['movie_name']);
 			$resultSet = $this->db->get('cm_movies');
 
@@ -720,7 +720,7 @@
 		* @param  [type] $update [description]
 		* @return [type]         [description]
 		*/
-		public function update_model($update){		
+		public function update($update){		
 			$movie_cover_end = '';
 
 			/*$this->db->where('movie_name', $update['movie_name']);
@@ -864,7 +864,7 @@
 		* @param  [type] $id_movie [description]
 		* @return [type]           [description]
 		*/
-		public function delete_model($id_movie){
+		public function delete($id_movie){
 			$this->db->where('id_movie', decryp($id_movie));
 		   	$resultSet = $this->db->get('cm_movies');
 

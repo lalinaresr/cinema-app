@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de géneros | agregar.</h1>
 <div class="row">
-   <form action="<?= site_url('genders/insert/'); ?>" method="post" id="form-insert-gender">
+   <form action="<?= site_url('genders/store'); ?>" method="post" id="form-insert-gender">
       <!-- field GENDER NAME -->
       <div class="col-md-6">
          <div class="form-group">

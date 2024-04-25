@@ -137,4 +137,4 @@
       <strong>¡Aviso!</strong> No se encontraron datos de géneros para mostrar en estos momentos.
    </div>
 <?php endif ?>
-<a href="<?= site_url('genders/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>
+<a href="<?= site_url('genders/create'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>

@@ -137,4 +137,4 @@
       <strong>¡Aviso!</strong> No se encontraron datos de calidades para mostrar en estos momentos.
    </div>
 <?php endif ?>
-<a href="<?= site_url('qualities/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>
+<a href="<?= site_url('qualities/create'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>

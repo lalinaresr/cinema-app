@@ -28,7 +28,7 @@
                </td>
                <td><?= get_antiquity($value->date_registered_mov); ?></td>
                <td>
-                  <a href="<?= site_url('movies/watch/') . $id_movie_encryp . '/'; ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-play"></span></a>
+                  <a href="<?= site_url('welcome/watch/') . $id_movie_encryp . '/'; ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-play"></span></a>
                   <a href="<?= site_url('movies/view/') . $id_movie_encryp . '/'; ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
                   <a href="<?= site_url('movies/edit/') . $id_movie_encryp . '/'; ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
                   <button class="btn btn-danger btn-sm btn-delete-movie" id="<?= $id_movie_encryp; ?>"><span class="glyphicon glyphicon-trash"></span></button>
@@ -161,4 +161,4 @@
       <strong>¡Aviso!</strong> No se encontraron datos de películas para mostrar en estos momentos.
    </div>
 <?php endif ?>
-<a href="<?= site_url('movies/add/'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>
+<a href="<?= site_url('movies/create'); ?>" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> Agregar</a>

@@ -34,7 +34,7 @@
         * @param  [type] $insert [description]
         * @return [type]         [description]
         */
-        public function insert_model($insert){
+        public function store($insert){
             $this->db->where('user_username', $insert['user_username']);
             $this->db->where('user_email', $insert['user_email']);
             $resultSet = $this->db->get('cm_users');
@@ -110,7 +110,7 @@
         * @param  [type] $update [description]
         * @return [type]         [description]
         */
-        public function update_model($update){
+        public function update($update){
             $this->db->where('user_username', $update['user_username']);
             $this->db->where('user_email', $update['user_email']);
             $resultSet = $this->db->get('cm_users');
@@ -229,7 +229,7 @@
         * @param  [type] $id_user [description]
         * @return [type]          [description]
         */
-        public function delete_model($id_user){
+        public function delete($id_user){
             $this->db->where('id_user', decryp($id_user));
             $resultSet = $this->db->get('cm_users');  
 
