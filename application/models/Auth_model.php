@@ -44,6 +44,7 @@
                     }
 
                     $user_current = array(
+                        'is_authorized' => true,
                         $type_logged => true,
                         'id_user' => $user_actived->id_user, 
                         'id_contact' => $user_actived->id_contact, 

@@ -63,13 +63,25 @@ jQuery(document).ready(function ($) {
 	$(".btn-logout").on('click', function (event) {
 		event.preventDefault();
 
-		$.ajax({
-			url: $(this).attr('href'),
-			type: 'post',
-			success: function (response) {
-				location.href = response;
+		swalWithBootstrapButtons.fire({
+			title: '¿Desea salir?',
+			text: 'Para poder salir de la aplicación es necesario confirmar esta acción',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonText: '<span class="glyphicon glyphicon-log-out"></span> Si, salir',
+			cancelButtonText: '<span class="glyphicon glyphicon-remove-circle"></span> Cancelar',
+			reverseButtons: true
+		}).then(result => {
+			if (result.isConfirmed) {
+				$.ajax({
+					url: $(this).attr('href'),
+					type: 'post',
+					success: function (response) {
+						location.href = response;
+					}
+				});
 			}
-		});
+		});		
 	});
 
 	/*=====  End of Functions Logout  ======*/
