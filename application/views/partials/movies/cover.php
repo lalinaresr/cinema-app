@@ -59,7 +59,7 @@
       <div class="col-md-12">
          <div class="form-group">
             <label>Dispositivo de la subida:</label>
-            <textarea id="file_client_upload_cover_customize" name="file_client_upload_cover_customize" class="form-control txa-no-resize" disabled><?= get_agent_current(); ?></textarea>
+            <textarea id="file_client_upload_cover_customize" name="file_client_upload_cover_customize" class="form-control " disabled><?= get_agent_current(); ?></textarea>
          </div>
       </div>
 

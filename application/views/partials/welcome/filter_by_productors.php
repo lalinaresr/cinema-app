@@ -1,6 +1,6 @@
-<div class="row mb-20">
+<div class="row mb-3">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<h2 class="text-info tx"><span class="glyphicon glyphicon-film"></span> Películas dirigidas por "<i><?= $view_productor->productor_name; ?></i>"</h2>
+		<h2 class="text-info"><span class="glyphicon glyphicon-film"></span> Películas dirigidas por "<i><?= $view_productor->productor_name; ?></i>"</h2>
 	</div>
 	<?php if ($results_paginated != FALSE) : ?>
 		<?php foreach ($results_paginated as $key => $value) : $id_movie_encryp = cryp($value->id_movie); ?>
@@ -8,8 +8,8 @@
 				<div class="thumbnail bg-black">
 					<img src="<?= encryp_image_base64(base_url() . $value->movie_cover); ?>" class="img-responsive img-rounded">
 					<div class="caption">
-						<h4 class="tx-white"><?= $value->movie_name; ?></h4>
-						<p class="text-justify tx-white">
+						<h4 class="text-white"><?= $value->movie_name; ?></h4>
+						<p class="text-justify text-white">
 							<?= generate_extract($value->movie_description, 100); ?>
 						</p>
 						<p>

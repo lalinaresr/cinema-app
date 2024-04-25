@@ -25,7 +25,7 @@
                         <div class="modal-content">
                            <div class="modal-header bg-black">
                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                              <h4 class="modal-title text-center tx-white">Seguidor #<?= $id_newsletter_encryp; ?></h4>
+                              <h4 class="modal-title text-center text-white">Seguidor #<?= $id_newsletter_encryp; ?></h4>
                            </div>
                            <div class="modal-body">
                               <div class="row">
@@ -69,7 +69,7 @@
                                  <div class="col-md-12">
                                     <div class="form-group">
                                        <label>Dispositivo de registro:</label>
-                                       <textarea type="text" class="form-control txa-no-resize" disabled><?= $value->client_registered_nlt; ?></textarea>
+                                       <textarea type="text" class="form-control " disabled><?= $value->client_registered_nlt; ?></textarea>
                                     </div>
                                  </div>
                                  <!-- END CLIENT REGISTERED NEWSLETTER -->

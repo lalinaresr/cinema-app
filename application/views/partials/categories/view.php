@@ -67,7 +67,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de registro:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_category->client_registered_cat; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_category->client_registered_cat; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT REGISTERED CATEGORY -->
@@ -76,7 +76,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de modificación:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_category->client_modified_cat; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_category->client_modified_cat; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT MODIFIED CATEGORY -->

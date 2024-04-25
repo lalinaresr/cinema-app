@@ -106,7 +106,7 @@
                <div class="modal-content">
                   <div class="modal-header bg-black">
                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                     <h4 class="modal-title text-center tx-white">Usuario #<?= $id_user_encryp; ?></h4>
+                     <h4 class="modal-title text-center text-white">Usuario #<?= $id_user_encryp; ?></h4>
                   </div>
                   <div class="modal-body">
                      <?php if (strcmp($view_user->user_avatar, 'NO-IMAGE') == 0) : ?>
@@ -169,7 +169,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de registro:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_user->client_registered_usr; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_user->client_registered_usr; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT REGISTERED USER -->
@@ -178,7 +178,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de modificación:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_user->client_modified_usr; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_user->client_modified_usr; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT MODIFIED USER -->

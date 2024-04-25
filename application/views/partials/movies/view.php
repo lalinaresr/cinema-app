@@ -15,11 +15,11 @@
          <div class="modal-content">
             <div class="modal-header bg-black">
                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-               <h4 class="modal-title text-center tx-white">Productores</h4>
+               <h4 class="modal-title text-center text-white">Productores</h4>
             </div>
             <div class="modal-body">
                <?php foreach ($productors_movie as $key => $value) : ?>
-                  <a href="<?= site_url('productors/view/') . cryp($value->id_productor) . '/'; ?>" class="btn btn-info mb-5"><?= $value->productor_name; ?></a>
+                  <a href="<?= site_url('productors/view/') . cryp($value->id_productor) . '/'; ?>" class="btn btn-info mb-1"><?= $value->productor_name; ?></a>
                <?php endforeach ?>
             </div>
             <div class="modal-footer">
@@ -45,11 +45,11 @@
          <div class="modal-content">
             <div class="modal-header bg-black">
                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-               <h4 class="modal-title text-center tx-white">Géneros</h4>
+               <h4 class="modal-title text-center text-white">Géneros</h4>
             </div>
             <div class="modal-body">
                <?php foreach ($genders_movie as $key => $value) : ?>
-                  <a href="<?= site_url('genders/view/') . cryp($value->id_gender) . '/'; ?>" class="btn btn-info mb-5"><?= $value->gender_name; ?></a>
+                  <a href="<?= site_url('genders/view/') . cryp($value->id_gender) . '/'; ?>" class="btn btn-info mb-1"><?= $value->gender_name; ?></a>
                <?php endforeach ?>
             </div>
             <div class="modal-footer">
@@ -75,11 +75,11 @@
          <div class="modal-content">
             <div class="modal-header bg-black">
                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-               <h4 class="modal-title text-center tx-white">Categorías</h4>
+               <h4 class="modal-title text-center text-white">Categorías</h4>
             </div>
             <div class="modal-body">
                <?php foreach ($categories_movie as $key => $value) : ?>
-                  <a href="<?= site_url('categories/view/') . cryp($value->id_category) . '/'; ?>" class="btn btn-info mb-5"><?= $value->category_name; ?></a>
+                  <a href="<?= site_url('categories/view/') . cryp($value->id_category) . '/'; ?>" class="btn btn-info mb-1"><?= $value->category_name; ?></a>
                <?php endforeach ?>
             </div>
             <div class="modal-footer">
@@ -170,7 +170,7 @@
                <div class="modal-content">
                   <div class="modal-header bg-black">
                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                     <h4 class="modal-title text-center tx-white">Película #<?= $id_movie_encryp; ?></h4>
+                     <h4 class="modal-title text-center text-white">Película #<?= $id_movie_encryp; ?></h4>
                   </div>
                   <div class="modal-body">
                      <?php if (strcmp($view_movie->movie_cover, 'NO-IMAGE') == 0) : ?>
@@ -213,7 +213,7 @@
    <div class="col-md-12">
       <div class="form-group">
          <label>Descripción:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_movie->movie_description; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_movie->movie_description; ?></textarea>
       </div>
    </div>
    <!-- END field MOVIE DESCRIPTION -->
@@ -241,7 +241,7 @@
    <div class="col-md-12">
       <div class="form-group">
          <label>Dispositivo de registro:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_movie->client_registered_mov; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_movie->client_registered_mov; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT REGISTERED MOVIE -->
@@ -268,7 +268,7 @@
    <div class="col-md-12">
       <div class="form-group">
          <label>Dispositivo de modificación:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_movie->client_modified_mov; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_movie->client_modified_mov; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT MODIFIED MOVIE -->

@@ -67,7 +67,7 @@
       <div class="col-md-12">
          <div class="form-group">
             <label>Dispositivo de modificación:</label>
-            <textarea type="text" class="form-control txa-no-resize" disabled><?= get_agent_current(); ?></textarea>
+            <textarea type="text" class="form-control " disabled><?= get_agent_current(); ?></textarea>
          </div>
       </div>
       <!-- END field CLIENT MODIFIED GENDER -->

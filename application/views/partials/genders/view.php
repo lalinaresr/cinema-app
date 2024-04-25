@@ -67,7 +67,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de registro:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_gender->client_registered_gds; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_gender->client_registered_gds; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT REGISTERED GENDER -->
@@ -76,7 +76,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de modificación:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_gender->client_modified_gds; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_gender->client_modified_gds; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT MODIFIED GENDER -->

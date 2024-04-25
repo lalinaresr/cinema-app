@@ -43,7 +43,7 @@
             <div class="modal-content">
                <div class="modal-header bg-black">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title tx-white text-center">Preview New Image Logo</h4>
+                  <h4 class="modal-title text-white text-center">Preview New Image Logo</h4>
                </div>
                <div class="modal-body">
                   <img id="preview-img-logo" class="img-responsive img-rounded" style="width: 100%; height: 350px;">
@@ -95,7 +95,7 @@
       <div class="col-md-12">
          <div class="form-group">
             <label>Dispositivo de modificación:</label>
-            <textarea type="text" class="form-control txa-no-resize" disabled><?= get_agent_current(); ?></textarea>
+            <textarea type="text" class="form-control " disabled><?= get_agent_current(); ?></textarea>
          </div>
       </div>
       <!-- END field CLIENT MODIFIED PRODUCTOR -->

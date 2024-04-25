@@ -67,7 +67,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de registro:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_quality->client_registered_qlt; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_quality->client_registered_qlt; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT REGISTERED QUALITY -->
@@ -76,7 +76,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de modificación:</label>
-         <textarea type="text" class="form-control txa-no-resize" disabled><?= $view_quality->client_modified_qlt; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $view_quality->client_modified_qlt; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT MODIFIED QUALITY -->

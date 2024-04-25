@@ -57,8 +57,8 @@
 				redirect('dashboard/');
 			} else {
 				$login = array(
-					'email' => trim($this->input->post('email_login')), 
-					'password' => trim($this->input->post('password_login'))
+					'email' => trim($this->input->post('email')), 
+					'password' => trim($this->input->post('password'))
 				);
 				$this->Auth_model->login_model($login);
 			}

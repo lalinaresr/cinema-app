@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
 
-	let config = {
+	const CONFIG = {
 		autoPlay: 3000,
 		items: 7,
 		itemsDesktop: [1199, 3],
@@ -8,7 +8,7 @@ jQuery(document).ready(function ($) {
 		pagination: false
 	};
 
-	$("#carousel-new-movies").owlCarousel(config);
-	$("#carousel-most-viewed-movies").owlCarousel(config);
-	$("#carousel-all-movies").owlCarousel(config);
+	$("#newest-carousel").owlCarousel(CONFIG);
+	$("#most-viewed-carousel").owlCarousel(CONFIG);
+	$("#main-carousel").owlCarousel(CONFIG);
 });
