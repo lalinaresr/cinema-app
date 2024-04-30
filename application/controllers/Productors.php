@@ -12,11 +12,11 @@ class Productors extends CI_Controller
 		}
 
 		$this->load->model([
+			'User_model',
 			'Movie_model',
 			'Productor_model',
 			'Gender_model',
 			'Category_model',
-			'User_model',
 			'Status_model'
 		]);
 	}
@@ -41,8 +41,8 @@ class Productors extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				base_url('public/js/productors.js')
 			],
-			'get_all_productors' => $this->Productor_model->get_all_productors(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'productors' => $this->Productor_model->index(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -63,8 +63,8 @@ class Productors extends CI_Controller
 			'scripts' => [
 				base_url('public/js/productors.js')
 			],
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -84,7 +84,7 @@ class Productors extends CI_Controller
 		$this->load->library('upload', $config);
 
 		if ($this->upload->do_upload('productor_image_logo_insert')) {
-			$this->Productor_model->store([
+			echo $this->Productor_model->store([
 				'productor_name' => $this->input->post('productor_name_insert'),
 				'productor_slug' => $this->input->post('productor_slug_insert'),
 				'productor_status' => $this->input->post('productor_status_insert'),
@@ -97,6 +97,8 @@ class Productors extends CI_Controller
 
 	public function view($id)
 	{
+		$productor = $this->Productor_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Productores',
 			'styles' => [
@@ -105,9 +107,9 @@ class Productors extends CI_Controller
 			'scripts' => [
 				base_url('public/js/productors.js')
 			],
-			'id_productor_encryp' => $id,
-			'view_productor' => $this->Productor_model->get_productor_by('id_productor', $id),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'productor_id_encrypt' => $id,
+			'productor' => $productor->row_array(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -120,6 +122,8 @@ class Productors extends CI_Controller
 
 	public function edit($id)
 	{
+		$productor = $this->Productor_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Productores',
 			'styles' => [
@@ -128,10 +132,10 @@ class Productors extends CI_Controller
 			'scripts' => [
 				base_url('public/js/productors.js')
 			],
-			'id_productor_encryp' => $id,
-			'edit_productor' => $this->Productor_model->get_productor_by('id_productor', $id),
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'productor_id_encrypt' => $id,
+			'productor' => $productor->row_array(),
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -157,23 +161,25 @@ class Productors extends CI_Controller
 
 		$this->load->library('upload', $config);
 
-		if (!$this->upload->do_upload('productor_image_logo_update')) {
+		if ($this->upload->do_upload('productor_image_logo_update')) {
+			$logo = [
+				'old_image_logo' => NULL,
+				'old_image_ext' => substr($this->input->post('image_logo_update_route'), -4),
+				'new_image_logo' => $this->upload->data()['file_name']
+			];
+		} else {
 			$logo = [
 				'old_image_logo' => $this->input->post('image_logo_update_route'),
 				'new_image_logo' => NULL
 			];
-		} else {
-			$logo = [
-				'new_image_logo' => $this->upload->data()['file_name'],
-				'old_image_logo' => NULL,
-				'old_image_ext' => substr($this->input->post('image_logo_update_route'), -4)
-			];
 		}
-		$this->Productor_model->update([...$data, ...$logo]);
+		echo $this->Productor_model->update([...$data, ...$logo]);
 	}
 
 	public function edit_logo($id)
 	{
+		$productor = $this->Productor_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Productores',
 			'styles' => [
@@ -182,9 +188,9 @@ class Productors extends CI_Controller
 			'scripts' => [
 				base_url('public/js/productors.js')
 			],
-			'id_productor_encryp' => $id,
-			'view_productor' => $this->Productor_model->get_productor_by('id_productor', $id),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'productor_id_encrypt' => $id,
+			'productor' => $productor->row_array(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -204,7 +210,7 @@ class Productors extends CI_Controller
 		$this->load->library('upload', $config);
 
 		if ($this->upload->do_upload('productor_image_logo_customize')) {
-			$this->Productor_model->update_logo([
+			echo $this->Productor_model->update_logo([
 				'id_productor' => $this->input->post('id_productor_customize_logo'),
 				'productor_image_logo' => $this->upload->data()['file_name'],
 				'old_image_ext' => substr($this->input->post('image_logo_update_route'), -4)
@@ -216,8 +222,6 @@ class Productors extends CI_Controller
 
 	public function delete()
 	{
-		$id = $this->input->post('id_productor_delete');
-
-		$this->Productor_model->delete($id);
+		echo $this->Productor_model->delete(['id' => $this->input->post('id_productor_delete')]);
 	}
 }

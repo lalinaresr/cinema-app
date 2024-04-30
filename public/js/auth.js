@@ -20,7 +20,7 @@ jQuery(document).ready(function ($) {
 	*/
 	$("#form-login").ajaxForm({
 		url: $(this).attr('action'),
-		type: 'post',
+		type: 'POST',
 		beforeSend: function () {
 			$("#icon-user-login").html('<i style="font-size: 10em;" class="fa fa-spinner fa-spin fa-fw"></i>');
 			$("#btn-login").attr('disabled', true);
@@ -31,20 +31,14 @@ jQuery(document).ready(function ($) {
 			$("#btn-login").removeAttr('disabled');
 			$("#btn-login").html('<span class="glyphicon glyphicon-log-in"></span> Entrar');
 
-			if (response == "Missing") {
+			if (response == 'not-found' || response == 'not-match') {
 				swalWithBootstrapButtons.fire({
 					title: 'No encontrado',
-					text: 'Las credenciales que ha ingresado no coinciden con alguno de nuestros registros.',
+					text: 'Las credenciales que ingresó no coinciden con alguno de nuestros registros.',
 					icon: 'warning'
 				});
-			} else if (response == "Error") {
-				swalWithBootstrapButtons.fire({
-					title: 'No encontrado',
-					text: 'Las credenciales que ha ingresado no coinciden con alguno de nuestros registros.',
-					icon: 'warning'
-				});
-			} else if (response == "Success") {
-				location.href = "/dashboard/";
+			} else {
+				location.href = "/dashboard";
 			}
 		}
 	});
@@ -75,14 +69,13 @@ jQuery(document).ready(function ($) {
 			if (result.isConfirmed) {
 				$.ajax({
 					url: $(this).attr('href'),
-					type: 'post',
+					type: 'POST',
 					success: function (response) {
 						location.href = response;
 					}
 				});
 			}
-		});		
+		});
 	});
-
 	/*=====  End of Functions Logout  ======*/
 });

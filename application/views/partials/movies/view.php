@@ -3,7 +3,7 @@
    <!-- field PRODUCTORS MOVIE -->
    <div class="col-md-4">
       <div class="form-group">
-         <?php if ($productors_movie != FALSE) : ?>
+         <?php if ($productors_by_movie->num_rows()) : ?>
             <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-productors-movie'>Productores</a>
          <?php else : ?>
             <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No hay productores asignados a esta película.</a>
@@ -18,8 +18,8 @@
                <h4 class="modal-title text-center text-white">Productores</h4>
             </div>
             <div class="modal-body">
-               <?php foreach ($productors_movie as $key => $value) : ?>
-                  <a href="<?= site_url('productors/view/') . cryp($value->id_productor) . '/'; ?>" class="btn btn-info mb-1"><?= $value->productor_name; ?></a>
+               <?php foreach ($productors_by_movie->result_array() as $key => $value) : ?>
+            <a href="<?= site_url('productors/view/') . cryp($value['id_productor']) . '/'; ?>" class="btn btn-info mb-1"><?= $value['productor_name']; ?></a>
                <?php endforeach ?>
             </div>
             <div class="modal-footer">
@@ -33,7 +33,7 @@
    <!-- field GENDERS MOVIE -->
    <div class="col-md-4">
       <div class="form-group">
-         <?php if ($genders_movie != FALSE) : ?>
+         <?php if ($genders_by_movie->num_rows() > 0) : ?>
             <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-genders-movie'>Géneros</a>
          <?php else : ?>
             <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No hay géneros asignados a esta película.</a>
@@ -48,8 +48,8 @@
                <h4 class="modal-title text-center text-white">Géneros</h4>
             </div>
             <div class="modal-body">
-               <?php foreach ($genders_movie as $key => $value) : ?>
-                  <a href="<?= site_url('genders/view/') . cryp($value->id_gender) . '/'; ?>" class="btn btn-info mb-1"><?= $value->gender_name; ?></a>
+               <?php foreach ($genders_by_movie->result_array() as $key => $value) : ?>
+                  <a href="<?= site_url('genders/view/') . cryp($value['id_gender']) . '/'; ?>" class="btn btn-info mb-1"><?= $value['gender_name']; ?></a>
                <?php endforeach ?>
             </div>
             <div class="modal-footer">
@@ -63,7 +63,7 @@
    <!-- field CATEGORYS MOVIE -->
    <div class="col-md-4">
       <div class="form-group">
-         <?php if ($categories_movie != FALSE) : ?>
+         <?php if ($categories_by_movie->num_rows() > 0) : ?>
             <a class="btn btn-info btn-block" data-toggle="modal" href='#modal-categories-movie'>Categorías</a>
          <?php else : ?>
             <a class="btn btn-danger btn-block not-active"><span class="glyphicon glyphicon-remove-sign"></span> No hay categorías asignadas a esta película.</a>
@@ -78,8 +78,8 @@
                <h4 class="modal-title text-center text-white">Categorías</h4>
             </div>
             <div class="modal-body">
-               <?php foreach ($categories_movie as $key => $value) : ?>
-                  <a href="<?= site_url('categories/view/') . cryp($value->id_category) . '/'; ?>" class="btn btn-info mb-1"><?= $value->category_name; ?></a>
+               <?php foreach ($categories_by_movie->result_array() as $key => $value) : ?>
+                  <a href="<?= site_url('categories/view/') . cryp($value['id_category']) . '/'; ?>" class="btn btn-info mb-1"><?= $value['category_name']; ?></a>
                <?php endforeach ?>
             </div>
             <div class="modal-footer">
@@ -95,7 +95,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>Estatus:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->status_name; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['status_name']; ?>" disabled>
       </div>
    </div>
    <!-- END field STATUS NAME -->
@@ -104,7 +104,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>Título:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->movie_name; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['movie_name']; ?>" disabled>
       </div>
    </div>
    <!-- END field MOVIE NAME -->
@@ -113,7 +113,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>Alias:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->movie_slug; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['movie_slug']; ?>" disabled>
       </div>
    </div>
    <!-- END field MOVIE SLUG -->
@@ -122,7 +122,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>Calidad:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->quality_name; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['quality_name']; ?>" disabled>
       </div>
    </div>
    <!-- END field QUALITY NAME -->
@@ -132,7 +132,7 @@
       <div class="form-group">
          <label>Fecha de lanzamiento:</label>
          <div class="input-group">
-            <input type="text" class="form-control" value="<?= $view_movie->movie_release_date; ?>" disabled>
+            <input type="text" class="form-control" value="<?= $movie['movie_release_date']; ?>" disabled>
             <span class="input-group-addon">
                <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -145,7 +145,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>Duración:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->movie_duration; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['movie_duration']; ?>" disabled>
       </div>
    </div>
    <!-- END field MOVIE DURATION -->
@@ -154,7 +154,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>País de origen:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->movie_country_origin; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['movie_country_origin']; ?>" disabled>
       </div>
    </div>
    <!-- END field MOVIE COUNTRY ORIGIN -->
@@ -163,24 +163,24 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>Portada:</label>
-         <a href='#modal-view-image-cover-<?= $id_movie_encryp; ?>' class="btn btn-info btn-block" data-toggle="modal"><span class="glyphicon glyphicon-picture"></span> Ver imagen</a>
+         <a href='#modal-view-image-cover-<?= $movie_id_encrypt; ?>' class="btn btn-info btn-block" data-toggle="modal"><span class="glyphicon glyphicon-picture"></span> Ver imagen</a>
          <!-- This is the modal that shows the cover of the movies. -->
-         <div class="modal fade" id="modal-view-image-cover-<?= $id_movie_encryp; ?>">
+         <div class="modal fade" id="modal-view-image-cover-<?= $movie_id_encrypt; ?>">
             <div class="modal-dialog modal-sm">
                <div class="modal-content">
                   <div class="modal-header bg-black">
                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                     <h4 class="modal-title text-center text-white">Película #<?= $id_movie_encryp; ?></h4>
+                     <h4 class="modal-title text-center text-white">Película #<?= $movie_id_encrypt; ?></h4>
                   </div>
                   <div class="modal-body">
-                     <?php if (strcmp($view_movie->movie_cover, 'NO-IMAGE') == 0) : ?>
-                        <img src="<?= encryp_image_base64(base_url() . 'storage/images/productors/default.png'); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
+                     <?php if (strcmp($movie['movie_cover'], 'NO-IMAGE') == 0) : ?>
+                        <img src="<?= base_url(FOLDER_MOVIES . '/default.png'); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
                      <?php else : ?>
-                        <img src="<?= encryp_image_base64(base_url() . $view_movie->movie_cover); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
+                        <img src="<?= base_url($movie['movie_cover']); ?>" class="img-rounded img-responsive" style="width: 100%; height: 100%;">
                      <?php endif ?>
                   </div>
                   <div class="modal-footer bg-black">
-                     <a href="<?= site_url('movies/edit_cover/') . $id_movie_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar portada</a>
+                     <a href="<?= site_url('movies/edit_cover/') . $movie_id_encrypt . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar portada</a>
                      <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
                   </div>
                </div>
@@ -195,7 +195,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>Reproducciones:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->movie_reproductions; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['movie_reproductions']; ?>" disabled>
       </div>
    </div>
    <!-- END field MOVIE REPRODUCTIONS -->
@@ -204,7 +204,7 @@
    <div class="col-md-12">
       <div class="form-group">
          <label>Enlace:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->movie_play; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['movie_play']; ?>" disabled>
       </div>
    </div>
    <!-- END field MOVIE PLAY -->
@@ -213,7 +213,7 @@
    <div class="col-md-12">
       <div class="form-group">
          <label>Descripción:</label>
-         <textarea type="text" class="form-control " disabled><?= $view_movie->movie_description; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $movie['movie_description']; ?></textarea>
       </div>
    </div>
    <!-- END field MOVIE DESCRIPTION -->
@@ -223,7 +223,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Fecha de registro:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->date_registered_mov; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['date_registered_mov']; ?>" disabled>
       </div>
    </div>
    <!-- END field DATE REGISTERED MOVIE -->
@@ -232,7 +232,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>IP de registro:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->ip_registered_mov; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['ip_registered_mov']; ?>" disabled>
       </div>
    </div>
    <!-- END field IP REGISTERED MOVIE -->
@@ -241,7 +241,7 @@
    <div class="col-md-12">
       <div class="form-group">
          <label>Dispositivo de registro:</label>
-         <textarea type="text" class="form-control " disabled><?= $view_movie->client_registered_mov; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $movie['client_registered_mov']; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT REGISTERED MOVIE -->
@@ -250,7 +250,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Fecha de modificación:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->date_modified_mov; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['date_modified_mov']; ?>" disabled>
       </div>
    </div>
    <!-- END field DATE MODIFIED MOVIE -->
@@ -259,7 +259,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>IP de modificación:</label>
-         <input type="text" class="form-control" value="<?= $view_movie->ip_modified_mov; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $movie['ip_modified_mov']; ?>" disabled>
       </div>
    </div>
    <!-- END field IP MODIFIED MOVIE -->
@@ -268,7 +268,7 @@
    <div class="col-md-12">
       <div class="form-group">
          <label>Dispositivo de modificación:</label>
-         <textarea type="text" class="form-control " disabled><?= $view_movie->client_modified_mov; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $movie['client_modified_mov']; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT MODIFIED MOVIE -->

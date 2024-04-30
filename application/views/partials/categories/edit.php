@@ -1,12 +1,12 @@
 <h1 class="page-header">Catálogo de categorías | editar.</h1>
 <div class="row">
-   <form action="<?= site_url('categories/update/'); ?>" method="post" id="form-update-category">
+   <form action="<?= site_url('categories/update'); ?>" method="post" id="form-update-category">
       <!-- field ID CATEGORY -->
       <div class="col-md-12">
          <div class="form-group">
             <label>ID:</label>
-            <input type="text" class="form-control" value="<?= $id_category_encryp; ?>" disabled>
-            <input type="hidden" id="id_category_update" name="id_category_update" class="form-control" value="<?= $id_category_encryp; ?>">
+            <input type="text" class="form-control" value="<?= $category_id_encrypt; ?>" disabled>
+            <input type="hidden" id="id_category_update" name="id_category_update" class="form-control" value="<?= $category_id_encrypt; ?>">
          </div>
       </div>
       <!-- field ID CATEGORY -->
@@ -15,7 +15,7 @@
       <div class="col-md-6">
          <div class="form-group">
             <label>Nombre:</label>
-            <input type="text" id="category_name_update" name="category_name_update" class="form-control" value="<?= $edit_category->category_name; ?>" required minlength="3" maxlength="50" autocomplete="off">
+            <input type="text" id="category_name_update" name="category_name_update" class="form-control" value="<?= $category['category_name']; ?>" required minlength="3" maxlength="50" autocomplete="off">
          </div>
       </div>
       <!-- END field CATEGORY NAME -->
@@ -24,7 +24,7 @@
       <div class="col-md-6">
          <div class="form-group">
             <label>Alias:</label>
-            <input type="text" id="category_slug_update" name="category_slug_update" class="form-control" value="<?= $edit_category->category_slug; ?>" required minlength="3" maxlength="50" readonly>
+            <input type="text" id="category_slug_update" name="category_slug_update" class="form-control" value="<?= $category['category_slug']; ?>" required minlength="3" maxlength="50" readonly>
          </div>
       </div>
       <!-- END field CATEGORY SLUG -->
@@ -34,10 +34,10 @@
          <div class="form-group">
             <label>Estatus:</label>
             <select id="category_status_update" name="category_status_update" class="form-control" required>
-               <option value="<?= $edit_category->id_status; ?>"><?= $edit_category->status_name; ?></option>
-               <?php foreach ($get_all_status->result() as $key => $value) : ?>
-                  <?php if ($value->id_status != $edit_category->id_status) : ?>
-                     <option value="<?= $value->id_status; ?>"><?= $value->status_name; ?></option>
+               <option value="<?= $category['id_status']; ?>"><?= $category['status_name']; ?></option>
+               <?php foreach ($status->result_array() as $key => $value) : ?>
+                  <?php if ($value['id_status'] != $category['id_status']) : ?>
+                     <option value="<?= $value['id_status']; ?>"><?= $value['status_name']; ?></option>
                   <?php endif ?>
                <?php endforeach ?>
             </select>

@@ -235,19 +235,19 @@ jQuery(document).ready(function ($) {
 			$("#btn-insert-movie").removeAttr('disabled');
 			$("#btn-insert-movie").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
-			if (response == "Already") {
+			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
 					title: 'Duplicado',
 					text: 'Los datos de la película que intenta ingresar ya se encuentran en el sistema',
 					icon: 'warning'
 				});
-			} else if (response == "Error") {
+			} else if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'La película ha sido insertada con éxito',
@@ -334,19 +334,19 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-movie").removeAttr('disabled');
 			$("#btn-update-movie").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
-			if (response == "Already") {
+			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
 					title: 'Duplicado',
 					text: 'Los datos de la película que intenta ingresar ya se encuentran en el sistema',
 					icon: 'warning'
 				});
-			} else if (response == "Error") {
+			} else if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'La película ha sido actualizada con éxito',
@@ -435,13 +435,13 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-cover").removeAttr('disabled');
 			$("#btn-update-cover").html('<span class="glyphicon glyphicon-upload"></span> Cambiar');
 
-			if (response == "Error") {
+			if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'La portada fue actualizada con éxito',
@@ -483,19 +483,19 @@ jQuery(document).ready(function ($) {
 					url: 'delete/',
 					type: 'post',
 					success: function (response) {
-						if (response == "Missing") {
+						if (response == 'not-found') {
 							swalWithBootstrapButtons.fire({
 								title: 'No encontrado',
 								text: 'La película ha eliminar no coincide con alguno de nuestros registros',
 								icon: 'warning'
 							});
-						} else if (response == "Error") {
+						} else if (response == 'error') {
 							swalWithBootstrapButtons.fire({
 								title: 'Oops',
 								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 								icon: 'error'
 							});
-						} else if (response == "Success") {
+						} else if (response == 'success') {
 							swalWithBootstrapButtons.fire({
 								title: 'Éxito',
 								text: 'La película fue eliminada con éxito',

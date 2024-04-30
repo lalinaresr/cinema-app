@@ -1,899 +1,392 @@
 <?php
-	defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-	class Movie_model extends CI_Model {
+class Movie_model extends CI_Model
+{
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-        /**
-        * [__construct description]
-        */
-		public function __construct(){
-			parent::__construct();
+	public function index(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'id_movie, cm_movies.id_status, cm_status.status_name, cm_movies.id_quality, cm_qualities.quality_name, cm_movies.movie_name, cm_movies.movie_slug, cm_movies.movie_description, cm_movies.movie_release_date, cm_movies.movie_duration, cm_movies.movie_country_origin, cm_movies.movie_cover, cm_movies.movie_reproductions, cm_movies.movie_play, cm_movies.is_premiere, cm_movies.ip_registered_mov, cm_movies.date_registered_mov, cm_movies.client_registered_mov, cm_movies.ip_modified_mov, cm_movies.date_modified_mov, cm_movies.client_modified_mov';
+		$builder['order_column'] = $builder['order_column'] ?? 'id_movie';
+		$builder['order_filter'] = $builder['order_filter'] ?? 'DESC';
+		$builder['start'] = $builder['start'] ?? 0;
+
+		$response = $this->db
+			->select($builder['columns'])
+			->from('cm_movies')
+			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
+			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality');
+
+		if (isset($builder['status'])) {
+			$response = $response->where('cm_movies.id_status', $builder['status']);
 		}
 
-		/**
-		* [get_all_categories description]
-		* @return [type] [description]
-		*/
-		public function get_all_movies(){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,
-				cm_movies.ip_registered_mov,
-				cm_movies.date_registered_mov,
-				cm_movies.client_registered_mov,
-				cm_movies.ip_modified_mov,
-				cm_movies.date_modified_mov,
-				cm_movies.client_modified_mov,
-				cm_status.id_status,
-				cm_status.status_name,
-				cm_qualities.id_quality,
-				cm_qualities.quality_name')
+		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
+
+		if (isset($builder['limit'])) {
+			$response = $response->limit($builder['limit'], $builder['start']);
+		}
+
+		$response = $response->get();
+
+		return $response;
+	}
+
+	public function store($data)
+	{
+		$response = $this->db
+			->select('id_movie')
+			->where('id_status', $data['movie_status'])
+			->where('id_quality', $data['movie_quality'])
+			->where('movie_name', $data['movie_name'])
+			->where('movie_description', $data['movie_description'])
+			->where('movie_release_date', $data['movie_release_date'])
+			->where('movie_play', $data['movie_play'])
+			->limit(1)
+			->get('cm_movies');
+
+		$new_cover = FOLDER_MOVIES . "/{$data['movie_cover']}";
+
+		if ($response->num_rows() > 0) {
+			unlink($new_cover);
+			return 'existing';
+		}
+
+		$store = $this->db->insert('cm_movies', [
+			'id_status' => $data['movie_status'],
+			'id_quality' => $data['movie_quality'],
+			'movie_name' => $data['movie_name'],
+			'movie_slug' => url_title($data['movie_name'], '-', true),
+			'movie_description' => $data['movie_description'],
+			'movie_release_date' => $data['movie_release_date'],
+			'movie_duration' => $data['movie_duration'],
+			'movie_country_origin' => $data['movie_country_origin'],
+			'movie_cover' => $new_cover,
+			'movie_reproductions' => 0,
+			'movie_play' => $data['movie_play'],
+			'is_premiere' => 0,
+			'ip_registered_mov' => get_ip_current(),
+			'date_registered_mov' => get_date_current(),
+			'client_registered_mov' => get_agent_current()
+		]);
+
+		$last_id = $this->db->insert_id();
+
+		$end_cover = FOLDER_MOVIES . "/{$last_id}_cover" . substr($data['movie_cover'], -4);
+
+		rename($new_cover, $end_cover);
+
+		$update = $this->db
+			->where('id_movie', $last_id)
+			->update('cm_movies', [
+				'movie_cover' => $end_cover
+			]);
+
+		foreach ($data['ids_productors'] as $productor) {
+			$this->db->insert('cm_pro_mov', ['id_productor' => $productor, 'id_movie' => $last_id]);
+		}
+
+		foreach ($data['ids_genders'] as $gender) {
+			$this->db->insert('cm_gen_mov', ['id_gender' => $gender, 'id_movie' => $last_id]);
+		}
+
+		foreach ($data['ids_categories'] as $category) {
+			$this->db->insert('cm_cat_mov', ['id_category' => $category, 'id_movie' => $last_id]);
+		}
+
+		return (($store && $update) ? 'success' : 'error');
+	}
+
+	public function fetch(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'id_movie, cm_movies.id_status, cm_status.status_name, cm_movies.id_quality, cm_qualities.quality_name, cm_movies.movie_name, cm_movies.movie_slug, cm_movies.movie_description, cm_movies.movie_release_date, cm_movies.movie_duration, cm_movies.movie_country_origin, cm_movies.movie_cover, cm_movies.movie_reproductions, cm_movies.movie_play, cm_movies.is_premiere, cm_movies.ip_registered_mov, cm_movies.date_registered_mov, cm_movies.client_registered_mov, cm_movies.ip_modified_mov, cm_movies.date_modified_mov, cm_movies.client_modified_mov';
+		$builder['search'] = $builder['search'] ?? 'id_movie';
+
+		$response = $this->db
+			->select($builder['columns'])
 			->from('cm_movies')
 			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
 			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality')
-			->order_by('movie_name', 'ASC')
+			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+			->limit(1)
 			->get();
 
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}			
-		}    		
+		return $response;
+	}
 
-		/**
-		* [get_movies_activated description]
-		* @return [type] [description]
-		*/
-		public function get_all_movies_activated(){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,
-				cm_movies.ip_registered_mov,
-				cm_movies.date_registered_mov,
-				cm_movies.client_registered_mov,
-				cm_movies.ip_modified_mov,
-				cm_movies.date_modified_mov,
-				cm_movies.client_modified_mov,
-				cm_status.id_status,
-				cm_status.status_name,
-				cm_qualities.id_quality,
-				cm_qualities.quality_name')
-			->from('cm_movies')
-			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
-			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality')
-			->where('cm_movies.id_status', 1)
-			->order_by('cm_movies.id_movie', 'ASC')
-			->get();
+	public function productors_by_movie(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'cm_pro_mov.id_productor, cm_productors.id_status, productor_name, productor_slug, productor_image_logo, cm_pro_mov.id_movie, cm_movies.id_status, id_quality, movie_name, movie_slug, movie_description, movie_release_date, movie_duration, movie_country_origin, movie_cover, movie_reproductions, movie_play, is_premiere';
+		$builder['order_column'] = $builder['order_column'] ?? 'cm_pro_mov.id_productor';
+		$builder['order_filter'] = $builder['order_filter'] ?? 'DESC';
+		$builder['search'] = $builder['search'] ?? 'cm_pro_mov.id_movie';
+		$builder['start'] = $builder['start'] ?? 0;
 
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
-		}
-
-		/**
-		* [get_all_movies_inactivated description]
-		* @return [type] [description]
-		*/
-		public function get_all_movies_inactivated(){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,
-				cm_movies.ip_registered_mov,
-				cm_movies.date_registered_mov,
-				cm_movies.client_registered_mov,
-				cm_movies.ip_modified_mov,
-				cm_movies.date_modified_mov,
-				cm_movies.client_modified_mov,
-				cm_status.id_status,
-				cm_status.status_name,
-				cm_qualities.id_quality,
-				cm_qualities.quality_name')
-			->from('cm_movies')
-			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
-			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality')
-			->where('cm_movies.id_status', 2)
-			->order_by('cm_movies.id_movie', 'ASC')
-			->get();
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
-		}		
-
-		/**
-		* [get_movies_most_viewed description]
-		* @param  [type] $total_movies [description]
-		* @return [type]               [description]
-		*/
-		public function get_movies_most_viewed($total_movies){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,
-				cm_movies.ip_registered_mov,
-				cm_movies.date_registered_mov,
-				cm_movies.client_registered_mov,
-				cm_movies.ip_modified_mov,
-				cm_movies.date_modified_mov,
-				cm_movies.client_modified_mov,
-				cm_status.id_status,
-				cm_status.status_name,
-				cm_qualities.id_quality,
-				cm_qualities.quality_name')
-			->from('cm_movies')
-			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
-			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality')
-			->where('cm_movies.id_status', 1)
-			->order_by('cm_movies.movie_reproductions', 'DESC')
-			->limit(intval($total_movies))
-			->get();
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
-		}
-
-		/**
-		* [get_new_movies description]
-		* @param  [type] $total_movies [description]
-		* @return [type]               [description]
-		*/
-		public function get_new_movies($total_movies){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,
-				cm_movies.ip_registered_mov,
-				cm_movies.date_registered_mov,
-				cm_movies.client_registered_mov,
-				cm_movies.ip_modified_mov,
-				cm_movies.date_modified_mov,
-				cm_movies.client_modified_mov,
-				cm_status.id_status,
-				cm_status.status_name,
-				cm_qualities.id_quality,
-				cm_qualities.quality_name')
-			->from('cm_movies')
-			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
-			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality')
-			->where('cm_movies.id_status', 1)
-			->order_by('cm_movies.id_movie', 'DESC')
-			->limit(intval($total_movies))
-			->get();
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
-		}
-
-		/**
-		* [fetch_movies description]
-		* @param  [type] $limit [description]
-		* @param  [type] $start [description]
-		* @return [type]        [description]
-		*/
-		public function fetch_movies($limit, $start = 0) {
-	        $resultSet = $this->db
-	        ->select('
-	        	cm_movies.id_movie,
-	        	cm_movies.id_status,
-	        	cm_movies.id_quality,
-	        	cm_movies.movie_name,
-	        	cm_movies.movie_slug,
-	        	cm_movies.movie_description,
-	        	cm_movies.movie_release_date,
-	        	cm_movies.movie_duration,
-	        	cm_movies.movie_country_origin,
-	        	cm_movies.movie_cover,
-	        	cm_movies.movie_reproductions,
-	        	cm_movies.movie_play,
-	        	cm_movies.is_premiere,
-	        	cm_movies.ip_registered_mov,
-	        	cm_movies.date_registered_mov,
-	        	cm_movies.client_registered_mov,
-	        	cm_movies.ip_modified_mov,
-	        	cm_movies.date_modified_mov,
-	        	cm_movies.client_modified_mov
-	        ')
-	        ->from('cm_movies')
-	        ->where('cm_movies.id_status', 1)
-	        ->order_by('cm_movies.id_movie', 'ASC')
-	        ->limit($limit, $start)
-	        ->get();
-
-	        $data = array();
-	        if ($resultSet->num_rows() > 0) {
-	            foreach ($resultSet->result() as $row) {
-	                $data[] = $row;
-	            }
-	            return $data;
-	        }
-		    return FALSE;
-		}
-
-		/**
-		* [get_some_movies_activated description]
-		* @return [type] [description]
-		*/
-		public function get_count_movies_by_productor($id_productor){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,				
-				cm_productors.productor_name,
-				cm_productors.productor_slug,
-				cm_productors.productor_image_logo
-			')
+		$response = $this->db
+			->select($builder['columns'])
 			->from('cm_pro_mov')
 			->join('cm_productors', 'cm_productors.id_productor = cm_pro_mov.id_productor')
-			->join('cm_movies', 'cm_movies.id_movie = cm_pro_mov.id_movie')
-			->where('cm_productors.id_status', 1)
-			->where('cm_movies.id_status', 1)
-			->where('cm_pro_mov.id_productor', decryp($id_productor))
-			->order_by('cm_movies.movie_name', 'DESC')
-			->get();
+			->join('cm_movies', 'cm_movies.id_movie = cm_pro_mov.id_movie');
 
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
+		if (isset($builder['search']) && isset($builder['value'])) {
+			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
 		}
 
-		/**
-		* [get_count_movies_by_gender description]
-		* @param  [type] $id_gender [description]
-		* @return [type]            [description]
-		*/
-		public function get_count_movies_by_gender($id_gender){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,				
-				cm_genders.gender_name,
-				cm_genders.gender_slug
-			')
+		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
+
+		if (isset($builder['limit'])) {
+			$response = $response->limit($builder['limit'], $builder['start']);
+		}
+
+		$response = $response->get();
+
+		return $response;
+	}
+
+	public function genders_by_movie(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'cm_gen_mov.id_gender, cm_genders.id_status, gender_name, gender_slug, cm_gen_mov.id_movie, cm_movies.id_status, id_quality	, movie_name, movie_slug, movie_description, movie_release_date, movie_duration, movie_country_origin, movie_cover, movie_reproductions, movie_play, is_premiere';
+		$builder['order_column'] = $builder['order_column'] ?? 'cm_gen_mov.id_gender';
+		$builder['order_filter'] = $builder['order_filter'] ?? 'DESC';
+		$builder['search'] = $builder['search'] ?? 'cm_gen_mov.id_movie';
+		$builder['start'] = $builder['start'] ?? 0;
+
+		$response = $this->db
+			->select($builder['columns'])
 			->from('cm_gen_mov')
 			->join('cm_genders', 'cm_genders.id_gender = cm_gen_mov.id_gender')
-			->join('cm_movies', 'cm_movies.id_movie = cm_gen_mov.id_movie')
-			->where('cm_genders.id_status', 1)
-			->where('cm_movies.id_status', 1)
-			->where('cm_gen_mov.id_gender', decryp($id_gender))
-			->order_by('cm_movies.movie_name', 'DESC')
-			->get();
+			->join('cm_movies', 'cm_movies.id_movie = cm_gen_mov.id_movie');
 
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
+		if (isset($builder['search']) && isset($builder['value'])) {
+			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
 		}
 
-		/**
-		* [get_count_movies_by_category description]
-		* @param  [type] $id_category [description]
-		* @return [type]              [description]
-		*/
-		public function get_count_movies_by_category($id_category){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,				
-				cm_categories.category_name,
-				cm_categories.category_slug
-			')
+		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
+
+		if (isset($builder['limit'])) {
+			$response = $response->limit($builder['limit'], $builder['start']);
+		}
+
+		$response = $response->get();
+
+		return $response;
+	}
+
+	public function categories_by_movie(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'cm_cat_mov.id_category, cm_categories.id_status, category_name, category_slug, cm_cat_mov.id_movie, cm_movies.id_status, id_quality, movie_name, movie_slug, movie_description, movie_release_date, movie_duration, movie_country_origin, movie_cover, movie_reproductions, movie_play, is_premiere';
+		$builder['order_column'] = $builder['order_column'] ?? 'cm_cat_mov.id_category';
+		$builder['order_filter'] = $builder['order_filter'] ?? 'DESC';
+		$builder['search'] = $builder['search'] ?? 'cm_cat_mov.id_movie';
+		$builder['start'] = $builder['start'] ?? 0;
+
+		$response = $this->db
+			->select($builder['columns'])
 			->from('cm_cat_mov')
 			->join('cm_categories', 'cm_categories.id_category = cm_cat_mov.id_category')
-			->join('cm_movies', 'cm_movies.id_movie = cm_cat_mov.id_movie')
-			->where('cm_categories.id_status', 1)
-			->where('cm_movies.id_status', 1)
-			->where('cm_cat_mov.id_category', decryp($id_category))
-			->order_by('cm_movies.movie_name', 'DESC')
-			->get();
+			->join('cm_movies', 'cm_movies.id_movie = cm_cat_mov.id_movie');
 
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
+		if (isset($builder['search']) && isset($builder['value'])) {
+			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
+		}
+
+		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
+
+		if (isset($builder['limit'])) {
+			$response = $response->limit($builder['limit'], $builder['start']);
+		}
+
+		$response = $response->get();
+
+		return $response;
+	}
+
+	public function update($data)
+	{
+		$id = decryp($data['id_movie']);
+
+		$response = $this->db
+			->select('id_movie')
+			->where('id_status', $data['movie_status'])
+			->where('id_quality', $data['movie_quality'])
+			->where('movie_name', $data['movie_name'])
+			->where('movie_slug', $data['movie_slug'])
+			->where('movie_description', $data['movie_description'])
+			->where('movie_release_date', $data['movie_release_date'])
+			->limit(1)
+			->get('cm_movies');
+
+		$new_cover = FOLDER_MOVIES . "/{$data['new_image_cover']}";
+		$end_cover = '';
+
+		if ($response->num_rows() > 0) {
+			if ($data['new_image_cover'] != NULL && $data['old_image_cover'] == NULL) {
+				unlink($new_cover);
 			}
+			return 'existing';
 		}
 
-		/**
-		* [get_count_movies_by_search description]
-		* @param  [type] $movie_name_search [description]
-		* @return [type]                    [description]
-		*/
-		public function get_count_movies_by_search($movie_name_search){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,
-				cm_movies.ip_registered_mov,
-				cm_movies.date_registered_mov,
-				cm_movies.client_registered_mov,
-				cm_movies.ip_modified_mov,
-				cm_movies.date_modified_mov,
-				cm_movies.client_modified_mov,
-				cm_status.id_status,
-				cm_status.status_name,
-				cm_qualities.id_quality,
-				cm_qualities.quality_name')
-			->from('cm_movies')
-			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
-			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality')
-			->where('cm_movies.id_status', 1)
-			->like('cm_movies.movie_name', $movie_name_search)
-			->order_by('cm_movies.id_movie', 'ASC')
-			->get();
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
+		if ($data['new_image_cover'] != NULL && $data['old_image_cover'] == NULL) {
+			$end_cover = FOLDER_MOVIES . "/{$id}_cover" . substr(strtolower($data['new_image_cover']), -4);
+			unlink(FOLDER_MOVIES . "/{$id}_cover" . substr(strtolower($data['old_image_ext']), -4));
+			rename($new_cover, $end_cover);
+		} else {
+			$end_cover = $data['old_image_cover'];
 		}
 
-		/**
-		* [get_movies_by_search description]
-		* @param  [type]  $limit             [description]
-		* @param  integer $start             [description]
-		* @param  [type]  $movie_name_search [description]
-		* @return [type]                     [description]
-		*/
-		public function get_movies_by_search($limit = 0, $start = 0, $movie_name_search = ''){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,
-				cm_movies.ip_registered_mov,
-				cm_movies.date_registered_mov,
-				cm_movies.client_registered_mov,
-				cm_movies.ip_modified_mov,
-				cm_movies.date_modified_mov,
-				cm_movies.client_modified_mov,
-				cm_status.id_status,
-				cm_status.status_name,
-				cm_qualities.id_quality,
-				cm_qualities.quality_name')
-			->from('cm_movies')
-			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
-			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality')
-			->where('cm_movies.id_status', 1)
-			->like('LOWER( cm_movies.movie_name )', $movie_name_search)
-			->order_by('cm_movies.id_movie', 'ASC')
-			->limit($limit, $start)
-			->get();
-
-			$data = array();
-	        if ($resultSet->num_rows() > 0) {
-	            foreach ($resultSet->result() as $row) {
-	                $data[] = $row;
-	            }
-	            return $data;
-	        }
-		    return FALSE;
-		}
-
-		/**
-		* [insert_model description]
-		* @param  [type] $insert [description]
-		* @return [type]         [description]
-		*/
-		public function store($insert){		
-			$this->db->where('movie_name', $insert['movie_name']);
-			$resultSet = $this->db->get('cm_movies');
-
-			if ($resultSet->num_rows() > 0) { 
-				unlink(FOLDER_MOVIES . $insert['movie_cover']);
-				echo "Already"; 
-			} else {
-				$data_insert_movie = array( 
-					'id_status' => $insert['movie_status'],
-					'id_quality' => $insert['movie_quality'],
-				    'movie_name' => $insert['movie_name'],
-				    'movie_slug' => $insert['movie_slug'],
-				    'movie_description' => $insert['movie_description'],
-				    'movie_release_date' => $insert['movie_release_date'],
-				    'movie_duration' => $insert['movie_duration'],
-				    'movie_country_origin' => $insert['movie_country_origin'],
-				    'movie_cover' => FOLDER_MOVIES . $insert['movie_cover'],
-				    'movie_reproductions' => 0,
-				    'movie_play' => $insert['movie_play'],
-				    'is_premiere' => 0,
-				    'ip_registered_mov' => get_ip_current(),
-				    'date_registered_mov' => get_date_current(),
-				    'client_registered_mov' => get_agent_current()
-				);
-				$insert_movie = $this->db->insert('cm_movies', $data_insert_movie);
-
-				if ($insert_movie != FALSE) { 
-					$movie_inserted_current = $this->db->insert_id();
-
-					rename(
-						FOLDER_MOVIES . $insert['movie_cover'], 
-						FOLDER_MOVIES . $movie_inserted_current . '_cover' . substr($insert['movie_cover'], -4) 
-					);
-
-					$this->db->where('id_movie', $movie_inserted_current);
-					$update_movie_cover = $this->db->update('cm_movies', [ 'movie_cover' => FOLDER_MOVIES . $movie_inserted_current . '_cover' . substr($insert['movie_cover'], -4) ]);
-
-					foreach ($insert['ids_productors'] as $key => $value) {
-						$this->db->insert('cm_pro_mov', [
-							'id_productor' => $value,
-							'id_movie' => $movie_inserted_current 
-						]);
-					}
-
-					foreach ($insert['ids_genders'] as $key => $value) {
-						$this->db->insert('cm_gen_mov', [
-							'id_gender' => $value,
-							'id_movie' => $movie_inserted_current 
-						]);
-					}
-
-					foreach ($insert['ids_categories'] as $key => $value) {
-						$this->db->insert('cm_cat_mov', [
-							'id_category' => $value,
-							'id_movie' => $movie_inserted_current 
-						]);
-					}
-
-					if ($update_movie_cover != FALSE) {						
-						echo "Success";		
-					} else {
-						echo "Error";
-					}			    		                          	                          
-				} else { 
-					echo "Error"; 
-				} 
-			} 
-		}
-
-		/**
-		* [get_movie_by description]
-		* @param  [type] $field [description]
-		* @param  [type] $value [description]
-		* @return [type]        [description]
-		*/
-		public function get_movie_by( $field, $value ) {
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,
-				cm_movies.ip_registered_mov,
-				cm_movies.date_registered_mov,
-				cm_movies.client_registered_mov,
-				cm_movies.ip_modified_mov,
-				cm_movies.date_modified_mov,
-				cm_movies.client_modified_mov,
-				cm_status.id_status,
-				cm_status.status_name,
-				cm_qualities.id_quality,
-				cm_qualities.quality_name')
-			->from('cm_movies')
-			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
-			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality')
-			->where($field, decryp($value))
-			->get();
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet->row();
-			} else {
-				return FALSE;
-			}
-		}
-
-		/**
-		* [get_productors_movie description]
-		* @param  [type] $value [description]
-		* @return [type]        [description]
-		*/
-		public function get_productors_movie($value){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_pro_mov')
-			->join('cm_productors', 'cm_productors.id_productor = cm_pro_mov.id_productor')
-			->join('cm_movies', 'cm_movies.id_movie = cm_pro_mov.id_movie')
-			->where('cm_pro_mov.id_movie', decryp($value))
-			->get();
-
-			/* Generate Code 
-			* SELECT 
-			* `cm_pro_mov`.`id_productor`, 
-			* `cm_productors`.`productor_name`, 
-			* `cm_movies`.`movie_name`,
-			* `cm_movies`.`id_movie`
-			* FROM `cm_pro_mov` 
-			* JOIN `cm_productors` ON `cm_pro_mov`.`id_productor` = `cm_productors`.`id_productor` 
-			* JOIN `cm_movies` ON `cm_pro_mov`.`id_movie` = `cm_movies`.`id_movie`  
-			* WHERE `cm_pro_mov`. `id_movie` = 2
-			*/
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet->result();
-			} else {
-				return FALSE;
-			}
-		}
-
-		/**
-		* [get_genders_movie description]
-		* @param  [type] $value [description]
-		* @return [type]        [description]
-		*/
-		public function get_genders_movie($value){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_gen_mov')
-			->join('cm_genders', 'cm_genders.id_gender = cm_gen_mov.id_gender')
-			->join('cm_movies', 'cm_movies.id_movie = cm_gen_mov.id_movie')
-			->where('cm_gen_mov.id_movie', decryp($value))
-			->get();
-
-			/* Generate Code 
-			* SELECT 
-			* `cm_gen_mov`.`id_gender`, 
-			* `cm_genders`.`gender_name`, 
-			* `cm_movies`.`movie_name`,
-			* `cm_movies`.`id_movie`
-			* FROM `cm_gen_mov` 
-			* JOIN `cm_genders` ON `cm_gen_mov`.`id_gender` = `cm_productors`.`id_gender` 
-			* JOIN `cm_movies` ON `cm_gen_mov`.`id_movie` = `cm_movies`.`id_movie`  
-			* WHERE `cm_gen_mov`. `id_movie` = 2
-			*/
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet->result();
-			} else {
-				return FALSE;
-			}
-		}
-
-		/**
-		* [get_categories_movie description]
-		* @param  [type] $value [description]
-		* @return [type]        [description]
-		*/
-		public function get_categories_movie($value){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_cat_mov')
-			->join('cm_categories', 'cm_categories.id_category = cm_cat_mov.id_category')
-			->join('cm_movies', 'cm_movies.id_movie = cm_cat_mov.id_movie')
-			->where('cm_cat_mov.id_movie', decryp($value))
-			->get();
-
-			/* Generate Code 
-			* SELECT 
-			* `cm_cat_mov`.`id_category`, 
-			* `cm_categories`.`category_name`, 
-			* `cm_movies`.`movie_name`,
-			* `cm_movies`.`id_movie`
-			* FROM `cm_cat_mov` 
-			* JOIN `cm_categories` ON `cm_cat_mov`.`id_category` = `cm_categories`.`id_category` 
-			* JOIN `cm_movies` ON `cm_cat_mov`.`id_movie` = `cm_movies`.`id_movie`  
-			* WHERE `cm_cat_mov`. `id_movie` = 2
-			*/
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet->result();
-			} else {
-				return FALSE;
-			}
-		}
-
-		/**
-		* [update_model description]
-		* @param  [type] $update [description]
-		* @return [type]         [description]
-		*/
-		public function update($update){		
-			$movie_cover_end = '';
-
-			/*$this->db->where('movie_name', $update['movie_name']);
-			$resultSet = $this->db->get('cm_movies');
-
-			if ($resultSet->num_rows() > 0) { 
-				if ($update['new_image_cover'] != NULL && $update['old_image_cover'] == NULL){
-					unlink(FOLDER_MOVIES . $update['new_image_cover']);					
-				} 
-				echo "Already";
-			} else {
-				## AQUI VA EL CODIGO DE ACTUALIZACION Y MODIFICACION DE LA IMAGEN
-			}*/
-
-			if ($update['old_image_cover'] != NULL && $update['new_image_cover'] == NULL) {
-				$movie_cover_end = $update['old_image_cover'];
-			} else if ($update['new_image_cover'] != NULL && $update['old_image_cover'] == NULL) {
-		    	unlink(FOLDER_MOVIES . decryp($update['id_movie']) . '_cover' . substr(strtolower($update['old_image_ext']), -4));
-				rename(
-					FOLDER_MOVIES . $update['new_image_cover'], 
-					FOLDER_MOVIES . decryp($update['id_movie']) . '_cover' . substr(strtolower($update['new_image_cover']), -4) 
-				);
-				$movie_cover_end = FOLDER_MOVIES . decryp($update['id_movie']) . '_cover' . substr(strtolower($update['new_image_cover']), -4); 
-			}
-			$this->db->where('id_movie', decryp($update['id_movie']));
-			$data_update_movie = array(
-				'id_status' => $update['movie_status'],
-				'id_quality' => $update['movie_quality'],
-				'movie_name' => $update['movie_name'],
-				'movie_slug' => $update['movie_slug'],
-				'movie_release_date' => $update['movie_release_date'],
-				'movie_duration' => $update['movie_duration'],
-				'movie_country_origin' => $update['movie_country_origin'],
-				'movie_cover' => $movie_cover_end,			        
-				'movie_description' => $update['movie_description'],
-				'movie_play' => $update['movie_play'],
+		$update = $this->db
+			->where('id_movie', $id)
+			->update('cm_movies', [
+				'id_status' => $data['movie_status'],
+				'id_quality' => $data['movie_quality'],
+				'movie_name' => $data['movie_name'],
+				'movie_slug' => url_title($data['movie_name'], '-', true),
+				'movie_release_date' => $data['movie_release_date'],
+				'movie_duration' => $data['movie_duration'],
+				'movie_country_origin' => $data['movie_country_origin'],
+				'movie_cover' => $end_cover,
+				'movie_description' => $data['movie_description'],
+				'movie_play' => $data['movie_play'],
 				'ip_modified_mov' => get_ip_current(),
 				'date_modified_mov' => get_date_current(),
 				'client_modified_mov' => get_agent_current()
-			);
-		    $update_movie = $this->db->update('cm_movies', $data_update_movie);
+			]);
 
-		    $this->db->where('id_movie', decryp($update['id_movie']));
-		    $this->db->delete('cm_gen_mov');
-		    $this->db->where('id_movie', decryp($update['id_movie']));
-		    $this->db->delete('cm_pro_mov');
-		    $this->db->where('id_movie', decryp($update['id_movie']));
-		    $this->db->delete('cm_cat_mov');
+		$this->db->where('id_movie', $id)->delete('cm_gen_mov');
+		$this->db->where('id_movie', $id)->delete('cm_pro_mov');
+		$this->db->where('id_movie', $id)->delete('cm_cat_mov');
 
-		    foreach ($update['ids_productors'] as $key => $value) {
-		    	$this->db->insert('cm_pro_mov', [
-		    		'id_productor' => $value,
-		    		'id_movie' => decryp($update['id_movie'])
-		    	]);
-		    }
-
-		    foreach ($update['ids_genders'] as $key => $value) {
-		    	$this->db->insert('cm_gen_mov', [
-		    		'id_gender' => $value,
-		    		'id_movie' => decryp($update['id_movie'])
-		    	]);
-		    }
-
-		    foreach ($update['ids_categories'] as $key => $value) {
-		    	$this->db->insert('cm_cat_mov', [
-		    		'id_category' => $value,
-		    		'id_movie' => decryp($update['id_movie'])
-		    	]);
-		    }
-
-		    if ($update_movie != FALSE) {			    			    		    	
-		    	echo "Success";			                          
-		    } else { 
-		    	echo "Error"; 
-		    }  
+		foreach ($data['ids_productors'] as $productor) {
+			$this->db->insert('cm_pro_mov', ['id_productor' => $productor, 'id_movie' => $id]);
 		}
 
-		/**
-		* [update_reproductions description]
-		* @param  [type] $id_movie [description]
-		* @return [type]           [description]
-		*/
-		public function update_reproductions($id_movie){
-			$this->db->where('id_movie', decryp($id_movie));
-			$resultSet = $this->db->get('cm_movies');
-
-			if ($resultSet->num_rows() > 0) {
-				$movie_recovered = $resultSet->row();
-
-				$data_update_reproductions = array(
-					'movie_reproductions' => ($movie_recovered->movie_reproductions + 1)
-				);
-				$this->db->where('id_movie', decryp($id_movie));
-				$update_reproductions = $this->db->update('cm_movies', $data_update_reproductions);
-			}
+		foreach ($data['ids_genders'] as $gender) {
+			$this->db->insert('cm_gen_mov', ['id_gender' => $gender, 'id_movie' => $id]);
 		}
 
-		/**
-		* [update_cover description]
-		* @param  [type] $update [description]
-		* @return [type]         [description]
-		*/
-		public function update_cover($update){
-		    $this->db->where('id_movie', decryp($update['id_movie']));
-		    $resultSet = $this->db->get('cm_movies');  
-
-		    if ($resultSet->num_rows() > 0) {
-		        $movie_recovered = $resultSet->row();
-		        
-		        if (strcmp($movie_recovered->movie_cover, 'NO-IMAGE') == 0) {
-		            rename(
-		                FOLDER_MOVIES . $update['movie_cover'], 
-		                FOLDER_MOVIES . decryp($update['id_movie']) . '_cover' . substr(strtolower($update['movie_cover']), -4) 
-		            );
-		        } else { 
-		            unlink($movie_recovered->movie_cover);
-		            rename(
-		                FOLDER_MOVIES . $update['movie_cover'], 
-		                FOLDER_MOVIES . decryp($update['id_movie']) . '_cover' . substr(strtolower($update['movie_cover']), -4) 
-		            );                    
-		        }
-
-		        $data_upload_cover = array(
-		            'movie_cover' => FOLDER_MOVIES . decryp($update['id_movie']) . '_cover' . substr(strtolower($update['movie_cover']), -4) 
-		        );
-		        $this->db->where('id_movie', decryp($update['id_movie']));
-		        $update_cover = $this->db->update('cm_movies', $data_upload_cover);
-
-		        if ($update_cover != FALSE) {
-		            echo "Success";
-		        } else {
-		            echo "Error";
-		        }
-		    } else {
-		        echo "Missing";
-		    }
+		foreach ($data['ids_categories'] as $category) {
+			$this->db->insert('cm_cat_mov', ['id_category' => $category, 'id_movie' => $id]);
 		}
 
-		/**
-		* [delete_model description]
-		* @param  [type] $id_movie [description]
-		* @return [type]           [description]
-		*/
-		public function delete($id_movie){
-			$this->db->where('id_movie', decryp($id_movie));
-		   	$resultSet = $this->db->get('cm_movies');
+		return ($update ? 'success' : 'error');
+	}
 
-		   	if ($resultSet->num_rows() > 0) {
-		   		$movie_recovered = $resultSet->row();
+	public function increase_views($id_movie)
+	{
+		$id = decryp($id_movie);
 
-		   		$this->db->where('id_movie', $movie_recovered->id_movie);
-		   		$movie_deleted = $this->db->delete('cm_movies');				   		  		
+		$response = $this->db
+			->select('movie_reproductions')
+			->where('id_movie', $id)
+			->limit(1)
+			->get('cm_movies');
 
-		   		$this->db->where('id_movie', $movie_recovered->id_movie);
-		   		$productors_deleted = $this->db->delete('cm_pro_mov');
+		if ($response->num_rows() > 0) {
+			$movie = $response->row_array();
 
-		   		$this->db->where('id_movie', $movie_recovered->id_movie);
-		   		$genders_deleted = $this->db->delete('cm_gen_mov');
-
-		   		$this->db->where('id_movie', $movie_recovered->id_movie);
-		   		$categories_deleted = $this->db->delete('cm_cat_mov');
-
-		   		if ($movie_deleted != FALSE && $productors_deleted != FALSE && $genders_deleted != FALSE && $categories_deleted != FALSE) { 	
-		   			if (strcmp($movie_recovered->movie_cover, 'NO-IMAGE') != 0) {
-		   				unlink($movie_recovered->movie_cover);
-		   			}	   			
-		   			echo "Success";		                         
-		   		} else { 
-		   			echo "Error"; 
-		   		} 
-		   	} else {
-		   		echo "Missing";		   			   		
-		   	}
+			$this->db->where('id_movie', $id)->update('cm_movies', [
+				'movie_reproductions' => ($movie['movie_reproductions'] + 1)
+			]);
 		}
 	}
-?>
+
+	public function update_cover($data)
+	{
+		$id = decryp($data['id_movie']);
+
+		$response = $this->db
+			->select('movie_cover')
+			->where('id_movie', $id)
+			->limit(1)
+			->get('cm_movies');
+
+		if ($response->num_rows() == 0) {
+			return 'not-found';
+		}
+
+		$movie = $response->row_array();
+
+		$new_cover = FOLDER_MOVIES . "/{$data['movie_cover']}";
+		$end_cover = FOLDER_MOVIES . "/{$id}_cover" . substr(strtolower($data['movie_cover']), -4);
+
+		if (strcmp($movie['movie_cover'], 'NO-IMAGE') != 0) {
+			unlink($movie['movie_cover']);
+		}
+
+		rename($new_cover, $end_cover);
+
+		$update = $this->db
+			->where('id_movie', $id)
+			->update('cm_movies', [
+				'movie_cover' => $end_cover
+			]);
+
+		return ($update ? 'success' : 'error');
+	}
+
+	public function delete($data)
+	{
+		$id = decryp($data['id']);
+
+		$response = $this->db
+			->select('movie_cover')
+			->where('id_movie', $id)
+			->limit(1)
+			->get('cm_movies');
+
+		if ($response->num_rows() == 0) {
+			return 'not-found';
+		}
+
+		$movie = $response->row_array();
+
+		$fDelete = $this->db->where('id_movie', $id)->delete('cm_movies');
+		$sDelete = $this->db->where('id_movie', $id)->delete('cm_pro_mov');
+		$tDelete = $this->db->where('id_movie', $id)->delete('cm_gen_mov');
+		$lDelete = $this->db->where('id_movie', $id)->delete('cm_cat_mov');
+
+		if ($fDelete && $sDelete && $tDelete && $lDelete) {
+			if (strcmp($movie['movie_cover'], 'NO-IMAGE') != 0) {
+				unlink($movie['movie_cover']);
+			}
+			return 'success';
+		} else {
+			return 'error';
+		}
+	}
+
+	public function search_results(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'id_movie, cm_movies.id_status, cm_status.status_name, cm_movies.id_quality, cm_qualities.quality_name, cm_movies.movie_name, cm_movies.movie_slug, cm_movies.movie_description, cm_movies.movie_release_date, cm_movies.movie_duration, cm_movies.movie_country_origin, cm_movies.movie_cover, cm_movies.movie_reproductions, cm_movies.movie_play, cm_movies.is_premiere, cm_movies.ip_registered_mov, cm_movies.date_registered_mov, cm_movies.client_registered_mov, cm_movies.ip_modified_mov, cm_movies.date_modified_mov, cm_movies.client_modified_mov';
+		$builder['order_column'] = $builder['order_column'] ?? 'cm_movies.id_movie';
+		$builder['order_filter'] = $builder['order_filter'] ?? 'DESC';
+		$builder['start'] = $builder['start'] ?? 0;
+
+		$response = $this->db
+			->select($builder['columns'])
+			->from('cm_movies')
+			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
+			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality');
+
+		if (isset($builder['status'])) {
+			$response = $response->where('cm_movies.id_status', 1);
+		}
+
+		$response = $response
+			->like('LOWER(cm_movies.movie_name)', $builder['value'])
+			->or_like('LOWER(cm_movies.movie_description)', $builder['value'])
+			->order_by($builder['order_column'], $builder['order_filter']);
+
+		if (isset($builder['limit'])) {
+			$response = $response->limit($builder['limit'], $builder['start']);
+		}
+
+		$response = $response->get();
+
+		return $response;
+	}
+}

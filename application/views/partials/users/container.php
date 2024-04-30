@@ -1,5 +1,5 @@
 <h1 class="page-header">Catálogo de usuarios.</h1>
-<?php if ($get_all_users != FALSE) : ?>
+<?php if ($users->num_rows() > 0) : ?>
    <table class="table table-striped table-hover table-responsive table-bordered table-condensed" id="users-table">
       <thead>
          <tr>
@@ -13,24 +13,24 @@
          </tr>
       </thead>
       <tbody>
-         <?php foreach ($get_all_users->result() as $key => $value) : $id_user_encryp = cryp($value->id_user); ?>
-            <tr class="<?php echo $value->id_status == 1 ? 'success' : 'danger';  ?>">
+         <?php foreach ($users->result_array() as $key => $value) : $id_user_encryp = cryp($value['id_user']); ?>
+            <tr class="<?php echo $value['id_status'] == 1 ? 'success' : 'danger';  ?>">
                <td><a href='#modal-view-user-<?= $id_user_encryp; ?>' data-toggle="modal"><?= $id_user_encryp; ?></a></td>
-               <td><?= $value->rol_name; ?></td>
-               <td><?= $value->user_email; ?></td>
-               <td><a href='#modal-view-avatar-user-<?= $id_user_encryp; ?>' data-toggle="modal"><?= $value->id_user . '_avatar.jpg'; ?></a></td>
+               <td><?= $value['rol_name']; ?></td>
+               <td><?= $value['user_email']; ?></td>
+               <td><a href='#modal-view-avatar-user-<?= $id_user_encryp; ?>' data-toggle="modal"><?= $value['id_user'] . '_avatar.jpg'; ?></a></td>
                <td>
-                  <?php if ($value->id_status == 1) : ?>
+                  <?php if ($value['id_status'] == 1) : ?>
                      <span class="label label-success">Activo</span>
                   <?php else : ?>
                      <span class="label label-danger">Inactivo</span>
                   <?php endif ?>
                </td>
-               <td><?= get_antiquity($value->date_registered_usr); ?></td>
+               <td><?= get_antiquity($value['date_registered_usr']); ?></td>
                <td>
                   <a href="<?= site_url('users/view/') . $id_user_encryp . '/'; ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
                   <a href="<?= site_url('users/edit/') . $id_user_encryp . '/'; ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
-                  <?php if ($value->id_user != $this->session->userdata('id_user')) { ?>
+                  <?php if ($value['id_user'] != $this->session->userdata('id_user')) { ?>
                      <button class="btn btn-danger btn-sm btn-delete-user" id="<?= $id_user_encryp; ?>"><span class="glyphicon glyphicon-trash"></span></button>
                   <?php } ?>
                </td>
@@ -45,14 +45,14 @@
                         <h4 class="modal-title text-center text-white">Usuario #<?= $id_user_encryp; ?></h4>
                      </div>
                      <div class="modal-body">
-                        <?php if (strcmp($value->user_avatar, 'NO-IMAGE') == 0) : ?>
+                        <?php if (strcmp($value['user_avatar'], 'NO-IMAGE') == 0) : ?>
                            <img src="<?= encryp_image_base64(base_url() . 'storage/images/users/default.png'); ?>" class="img-rounded img-responsive center-block">
                         <?php else : ?>
-                           <img src="<?= encryp_image_base64(base_url() . $value->user_avatar); ?>" class="img-rounded img-responsive center-block">
+                           <img src="<?= encryp_image_base64(base_url() . $value['user_avatar']); ?>" class="img-rounded img-responsive center-block">
                         <?php endif ?>
                      </div>
                      <div class="modal-footer bg-black">
-                        <?php if ($value->id_user == $this->session->userdata('id_user')) : ?>
+                        <?php if ($value['id_user'] == $this->session->userdata('id_user')) : ?>
                            <a href="<?= site_url('users/edit_avatar/') . $id_user_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar avatar</a>
                         <?php endif ?>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
@@ -76,7 +76,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Nombre(s):</label>
-                                 <input type="text" class="form-control" value="<?= $value->contact_firstname; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['contact_firstname']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field FIRSTNAME -->
@@ -85,7 +85,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Apellido(s):</label>
-                                 <input type="text" class="form-control" value="<?= $value->contact_lastname; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['contact_lastname']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field LASTNAME -->
@@ -94,7 +94,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Sexo:</label>
-                                 <input type="text" class="form-control" value="<?= $value->contact_sex; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['contact_sex']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field SEX -->
@@ -104,7 +104,7 @@
                               <div class="form-group">
                                  <label>Fecha de nacimiento:</label>
                                  <div class="input-group date">
-                                    <input type="text" class="form-control" value="<?= $value->contact_date_birthday; ?>" disabled>
+                                    <input type="text" class="form-control" value="<?= $value['contact_date_birthday']; ?>" disabled>
                                     <span class="input-group-addon">
                                        <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -117,7 +117,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Edad exacta:</label>
-                                 <input type="text" class="form-control" value="<?= get_age_exactly($value->contact_date_birthday, 'ALL'); ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= get_age_exactly($value['contact_date_birthday'], 'ALL'); ?>" disabled>
                               </div>
                            </div>
                            <!-- END field AGE EXACTLY -->
@@ -126,7 +126,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Rol:</label>
-                                 <input type="text" class="form-control" value="<?= $value->rol_name; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['rol_name']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field ROL NAME -->
@@ -135,7 +135,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Estatus:</label>
-                                 <input type="text" class="form-control" value="<?= $value->status_name; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['status_name']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field STATUS NAME -->
@@ -144,7 +144,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Usuario:</label>
-                                 <input type="text" class="form-control" value="<?= $value->user_username; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['user_username']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field USERNAME -->
@@ -153,7 +153,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Contraseña:</label>
-                                 <input type="password" class="form-control" value="<?= $value->user_password; ?>" disabled>
+                                 <input type="password" class="form-control" value="<?= $value['user_password']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field PASSWORD -->
@@ -162,7 +162,7 @@
                            <div class="col-md-8">
                               <div class="form-group">
                                  <label>Correo electrónico:</label>
-                                 <input type="email" class="form-control" value="<?= $value->user_email; ?>" disabled>
+                                 <input type="email" class="form-control" value="<?= $value['user_email']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field EMAIL ADDRESS -->
@@ -171,7 +171,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Fecha de registro:</label>
-                                 <input type="text" class="form-control" value="<?= $value->date_registered_usr; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['date_registered_usr']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field DATE REGISTERED USER -->
@@ -180,7 +180,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>IP de registro:</label>
-                                 <input type="text" class="form-control" value="<?= $value->ip_registered_usr; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['ip_registered_usr']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field IP REGISTERED USER -->
@@ -189,7 +189,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Fecha de modificación:</label>
-                                 <input type="text" class="form-control" value="<?= $value->date_modified_usr; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['date_modified_usr']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field DATE MODIFIED USER -->
@@ -198,7 +198,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>IP de modificación:</label>
-                                 <input type="text" class="form-control" value="<?= $value->ip_modified_usr; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['ip_modified_usr']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field IP MODIFIED USER -->
@@ -207,7 +207,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>Dispositivo de registro:</label>
-                                 <textarea type="text" class="form-control " disabled><?= $value->client_registered_usr; ?></textarea>
+                                 <textarea type="text" class="form-control " disabled><?= $value['client_registered_usr']; ?></textarea>
                               </div>
                            </div>
                            <!-- END field CLIENT REGISTERED USER -->
@@ -216,7 +216,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>Dispositivo de modificación:</label>
-                                 <textarea type="text" class="form-control " disabled><?= $value->client_modified_usr; ?></textarea>
+                                 <textarea type="text" class="form-control " disabled><?= $value['client_modified_usr']; ?></textarea>
                               </div>
                            </div>
                            <!-- END field CLIENT MODIFIED USER -->

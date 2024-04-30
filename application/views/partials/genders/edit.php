@@ -5,8 +5,8 @@
       <div class="col-md-12">
          <div class="form-group">
             <label>ID:</label>
-            <input type="text" class="form-control" value="<?= $id_gender_encryp; ?>" disabled>
-            <input type="hidden" id="id_gender_update" name="id_gender_update" class="form-control" value="<?= $id_gender_encryp; ?>">
+            <input type="text" class="form-control" value="<?= $gender_id_encrypt; ?>" disabled>
+            <input type="hidden" id="id_gender_update" name="id_gender_update" class="form-control" value="<?= $gender_id_encrypt; ?>">
          </div>
       </div>
       <!-- field ID GENDER -->
@@ -15,7 +15,7 @@
       <div class="col-md-6">
          <div class="form-group">
             <label>Nombre:</label>
-            <input type="text" id="gender_name_update" name="gender_name_update" class="form-control" value="<?= $edit_gender->gender_name; ?>" required minlength="3" maxlength="50" autocomplete="off">
+            <input type="text" id="gender_name_update" name="gender_name_update" class="form-control" value="<?= $gender['gender_name']; ?>" required minlength="3" maxlength="50" autocomplete="off">
          </div>
       </div>
       <!-- END field GENDER NAME -->
@@ -24,7 +24,7 @@
       <div class="col-md-6">
          <div class="form-group">
             <label>Alias:</label>
-            <input type="text" id="gender_slug_update" name="gender_slug_update" class="form-control" value="<?= $edit_gender->gender_slug; ?>" required minlength="3" maxlength="50" readonly>
+            <input type="text" id="gender_slug_update" name="gender_slug_update" class="form-control" value="<?= $gender['gender_slug']; ?>" required minlength="3" maxlength="50" readonly>
          </div>
       </div>
       <!-- END field GENDER SLUG -->
@@ -34,10 +34,10 @@
          <div class="form-group">
             <label>Estatus:</label>
             <select id="gender_status_update" name="gender_status_update" class="form-control" required>
-               <option value="<?= $edit_gender->id_status; ?>"><?= $edit_gender->status_name; ?></option>
-               <?php foreach ($get_all_status->result() as $key => $value) : ?>
-                  <?php if ($value->id_status != $edit_gender->id_status) : ?>
-                     <option value="<?= $value->id_status; ?>"><?= $value->status_name; ?></option>
+               <option value="<?= $gender['id_status']; ?>"><?= $gender['status_name']; ?></option>
+               <?php foreach ($status->result_array() as $key => $value) : ?>
+                  <?php if ($value['id_status'] != $gender['id_status']) : ?>
+                     <option value="<?= $value['id_status']; ?>"><?= $value['status_name']; ?></option>
                   <?php endif ?>
                <?php endforeach ?>
             </select>

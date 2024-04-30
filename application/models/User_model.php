@@ -1,261 +1,194 @@
 <?php
-	defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-	class User_model extends CI_Model {
+class User_model extends CI_Model
+{
+    public function __construct()
+    {
+        parent::__construct();
 
-        /**
-        * [__construct description]
-        */
-		public function __construct(){
-			parent::__construct();
-		}
-		
-        /**
-        * [get_all_users description]
-        * @return [type] [description]
-        */
-        public function get_all_users(){
-            $resultSet = $this->db
-            ->select('*')
+        $this->load->model([
+            'Contact_model',
+            'Session_model'
+        ]);
+    }
+
+    public function index(array $builder = array())
+    {
+        $builder['columns'] = $builder['columns'] ?? 'id_user, cm_users.id_contact, cm_users.id_rol, rol_name, cm_users.id_status, status_name, user_username, user_email, user_password, user_avatar, ip_registered_usr, date_registered_usr, client_registered_usr, ip_modified_usr, date_modified_usr, client_modified_usr, contact_firstname, contact_lastname, contact_sex, contact_date_birthday';
+        $builder['order_column'] = $builder['order_column'] ?? 'cm_users.id_user';
+        $builder['order_filter'] = $builder['order_filter'] ?? 'DESC';
+        $builder['start'] = $builder['start'] ?? 0;
+
+        $response = $this->db
+            ->select($builder['columns'])
             ->from('cm_users')
             ->join('cm_contacts', 'cm_contacts.id_contact = cm_users.id_contact')
             ->join('cm_roles', 'cm_roles.id_rol = cm_users.id_rol')
             ->join('cm_status', 'cm_status.id_status = cm_users.id_status')
-            ->get();
-            if ($resultSet->num_rows() > 0) {
-                return $resultSet;
-            } else {
-                return FALSE;
-            }            
+            ->order_by($builder['order_column'], $builder['order_filter']);
+
+        if (isset($builder['limit'])) {
+            $response = $response->limit($builder['limit'], $builder['start']);
         }
 
-        /**
-        * [insert_model description]
-        * @param  [type] $insert [description]
-        * @return [type]         [description]
-        */
-        public function store($insert){
-            $this->db->where('user_username', $insert['user_username']);
-            $this->db->where('user_email', $insert['user_email']);
-            $resultSet = $this->db->get('cm_users');
+        $response = $response->get();
 
-            if ($resultSet->num_rows() > 0) { 
-                echo "Already"; 
-            } else {
-                $data_insert_contact = array( 
-                    'id_status' => $insert['user_status'],
-                    'contact_firstname' => $insert['contact_firstname'],
-                    'contact_lastname' => $insert['contact_lastname'],
-                    'contact_sex' => $insert['contact_sex'],
-                    'contact_date_birthday' => $insert['contact_date_birthday'],
-                    'ip_registered_cnt' => get_ip_current(),
-                    'date_registered_cnt' => get_date_current(),
-                    'client_registered_cnt' => get_agent_current()
-                );
-                $insert_contact = $this->db->insert('cm_contacts', $data_insert_contact);
+        return $response;
+    }
 
-                if ($insert_contact != FALSE) {
-                    $last_contact_inserted = $this->db->insert_id();
-                    $data_insert_user = array(
-                        'id_contact' => $last_contact_inserted,
-                        'id_rol' => $insert['user_rol'],
-                        'id_status' => $insert['user_status'],
-                        'user_username' => $insert['user_username'],
-                        'user_email' => $insert['user_email'],
-                        // 'user_password' => password_hash($insert['user_password'], PASSWORD_DEFAULT),
-                        'user_password' => password_hash('password', PASSWORD_DEFAULT),
-                        'user_avatar' => 'NO-IMAGE',
-                        'ip_registered_usr' => get_ip_current(),
-                        'date_registered_usr' => get_date_current(),
-                        'client_registered_usr' => get_agent_current()
-                    );
-                    $insert_user = $this->db->insert('cm_users', $data_insert_user);   
+    public function store($data)
+    {
+        $response = $this->db
+            ->select('id_user')
+            ->where('user_email', $data['user_email'])
+            ->limit(1)
+            ->get('cm_users');
 
-                    if ($insert_user != FALSE) {
-                        echo "Success";
-                    } else {
-                        echo "Error";
-                    }                    
-                } else { 
-                    echo "Error"; 
-                }                
-            }            
+        if ($response->num_rows() > 0) {
+            return 'existing';
         }
 
-        /**
-        * [get_user_by description]
-        * @param  [type] $data  [description]
-        * @param  [type] $value [description]
-        * @return [type]        [description]
-        */
-        public function get_user_by($data, $value){
-            $resultSet = $this->db
-            ->select('*')
+        $fStore = $this->Contact_model->store($data);
+        $sStore = $this->db->insert('cm_users', [
+            'id_contact' => $this->db->insert_id(),
+            'id_rol' => $data['user_rol'],
+            'id_status' => $data['user_status'],
+            'user_username' => ucwords($data['user_username']),
+            'user_email' => $data['user_email'],
+            'user_password' => password_hash($data['user_password'], PASSWORD_DEFAULT),
+            'user_avatar' => 'NO-IMAGE',
+            'ip_registered_usr' => get_ip_current(),
+            'date_registered_usr' => get_date_current(),
+            'client_registered_usr' => get_agent_current()
+        ]);
+
+        return (($fStore && $sStore) ? 'success' : 'error');
+    }
+
+    public function fetch(array $builder = array())
+    {
+        $builder['columns'] = $builder['columns'] ?? 'id_user, cm_users.id_contact, cm_users.id_rol, rol_name, cm_users.id_status, status_name, user_username, user_email, user_password, user_avatar, ip_registered_usr, date_registered_usr, client_registered_usr, ip_modified_usr, date_modified_usr, client_modified_usr, contact_firstname, contact_lastname, contact_sex, contact_date_birthday';
+        $builder['search'] = $builder['search'] ?? 'cm_users.id_user';
+
+        $response = $this->db
+            ->select($builder['columns'])
             ->from('cm_users')
             ->join('cm_contacts', 'cm_contacts.id_contact = cm_users.id_contact')
             ->join('cm_roles', 'cm_roles.id_rol = cm_users.id_rol')
             ->join('cm_status', 'cm_status.id_status = cm_users.id_status')
-            ->where($data, decryp($value))
+            ->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+            ->limit(1)
             ->get();
 
-            if ($resultSet->num_rows() > 0) {
-                return $resultSet->row();   
-            } else {
-                return FALSE;
-            }            
+        return $response;
+    }
+
+    public function update($data)
+    {
+        $response = $this->db
+            ->select('id_user')
+            ->where('id_rol', $data['user_rol'])
+            ->where('id_status', $data['user_status'])
+            ->where('user_username', ucwords($data['user_username']))
+            ->where('user_email', $data['user_email'])
+            ->limit(1)
+            ->get('cm_users');
+
+        if ($response->num_rows() > 0) {
+            return 'existing';
         }
 
-        /**
-        * [update_model description]
-        * @param  [type] $update [description]
-        * @return [type]         [description]
-        */
-        public function update($update){
-            $this->db->where('user_username', $update['user_username']);
-            $this->db->where('user_email', $update['user_email']);
-            $resultSet = $this->db->get('cm_users');
+        $fUpdate = $this->Contact_model->update($data);
+        $sUpdate = $this->db
+            ->where('id_user', decryp($data['id_user']))
+            ->update('cm_users', [
+                'id_contact' => decryp($data['user_contact']),
+                'id_rol' => $data['user_rol'],
+                'id_status' => $data['user_status'],
+                'user_username' => ucwords($data['user_username']),
+                'user_email' => $data['user_email'],
+                'user_password' => password_hash($data['user_password'], PASSWORD_DEFAULT),
+                'ip_modified_usr' => get_ip_current(),
+                'date_modified_usr' => get_date_current(),
+                'client_modified_usr' => get_agent_current()
+            ]);
 
-            if ($resultSet->num_rows() > 0) { 
-                echo "Already"; 
-            } else {
-                $data_update_contact = array(
-                    'id_status' => $update['user_status'],
-                    'contact_firstname' => $update['user_firstname'],
-                    'contact_lastname' => $update['user_lastname'],
-                    'contact_date_birthday' => $update['user_date_birthday'],
-                    'contact_sex' => $update['user_sex'],
-                    'ip_modified_cnt' => get_ip_current(),
-                    'date_modified_cnt' => get_date_current(),
-                    'client_modified_cnt' => get_agent_current()
-                );
-                $this->db->where('id_contact', decryp($update['user_contact']));            
-                $update_contact = $this->db->update('cm_contacts', $data_update_contact );
+        return (($fUpdate && $sUpdate) ? 'success' : 'error');
+    }
 
-                if ($update_contact != FALSE) {
-                    $data_update_user = array(
-                        'id_contact' => decryp($update['user_contact']),
-                        'id_rol' => $update['user_rol'],
-                        'id_status' => $update['user_status'],
-                        'user_username' => $update['user_username'],
-                        'user_email' => $update['user_email'],
-                        // 'user_password' => password_hash($update['user_password'], PASSWORD_DEFAULT),
-                        'user_password' => password_hash('password', PASSWORD_DEFAULT),
-                        'ip_modified_usr' => get_ip_current(),
-                        'date_modified_usr' => get_date_current(),
-                        'client_modified_usr' => get_agent_current()
-                    );
-                    $this->db->where('id_user', decryp($update['id_user']));
-                    $update_user = $this->db->update('cm_users', $data_update_user);   
+    public function get_avatar($user_id)
+    {
+        $response = $this->db
+            ->where('id_user', $user_id)
+            ->get('cm_users');
 
-                    if ($update_user != FALSE) {                        
-                        echo "Success";
-                    } else {
-                        echo "Error";
-                    }                    
-                } else { 
-                    echo "Error"; 
-                }
-            } 
+        $user = $response->row_array();
+
+        return ($response->num_rows() > 0 ? base_url(($user['user_avatar'] != 'NO-IMAGE' ? $user['user_avatar'] : FOLDER_AVATARS . '/default.png')) : 'NO-IMAGE');
+    }
+
+    public function update_avatar($data)
+    {
+        $id = decryp($data['id_user']);
+
+        $response = $this->db
+            ->where('id_user', $id)
+            ->get('cm_users');
+
+        $old_avatar = FOLDER_AVATARS . "/{$data['avatar']}";
+        $new_avatar = FOLDER_AVATARS . "/{$id}_avatar.png";
+
+        if ($response->num_rows() == 0) {
+            return 'not-found';
         }
 
-        /**
-        * [has_user_avatar description]
-        * @param  [type]  $id_user [description]
-        * @return boolean          [description]
-        */
-        public function has_user_avatar($id_user){
-            $image_avatar = '';
+        $user = $response->row_array();
 
-            $this->db->where('id_user', $id_user);
-            $resultSet = $this->db->get('cm_users');
-            
-            if ($resultSet->num_rows() > 0) {
-                $user_recovered = $resultSet->row();
+        if (strcmp($user['user_avatar'], 'NO-IMAGE') != 0) {
+            unlink($user['user_avatar']);
+        }
 
-                if (strcmp($user_recovered->user_avatar, 'NO-IMAGE') == 0){
-                   $image_avatar = encryp_image_base64(base_url() . 'storage/images/users/default.png');
-                } else{
-                   $image_avatar = encryp_image_base64(base_url() . $user_recovered->user_avatar);
-                }
-            } else {
-                $image_avatar = 'NO-IMAGE';
+        rename($old_avatar, $new_avatar);
+
+        $update = $this->db
+            ->where('id_user', $id)
+            ->update('cm_users', [
+                'user_avatar' => $new_avatar
+            ]);
+
+        return ($update ? 'success' : 'error');
+    }
+
+    public function delete($data)
+    {
+        $id = decryp($data['id']);
+
+        $response = $this->db
+            ->select('id_contact, user_avatar')
+            ->where('id_user', $id)
+            ->limit(1)
+            ->get('cm_users');
+
+        if ($response->num_rows() == 0) {
+            return 'not-found';
+        }
+
+        $user = $response->row_array();
+
+        $fDelete = $this->Contact_model->delete(['contact_id' => $user['id_contact']]);
+        $sDelete = $this->Session_model->delete(['user_id' => $id]);
+        $tDelete = $this->db
+            ->where('id_user', $id)
+            ->delete('cm_users');
+
+        if ($fDelete && $sDelete && $tDelete) {
+            if (strcmp($user['user_avatar'], 'NO-IMAGE') != 0) {
+                unlink($user['user_avatar']);
             }
-            
-            return $image_avatar;
+            return 'success';
+        } else {
+            return 'error';
         }
-
-        /**
-        * [update_avatar description]
-        * @param  [type] $update [description]
-        * @return [type]         [description]
-        */
-        public function update_avatar($update){
-            $this->db->where('id_user', decryp($update['id_user']));
-            $resultSet = $this->db->get('cm_users');  
-
-            if ($resultSet->num_rows() > 0) {
-                $user_recovered = $resultSet->row();
-                if (strcmp($user_recovered->user_avatar, 'NO-IMAGE') == 0) {
-                    rename(
-                        FOLDER_AVATARS . $update['user_avatar'], 
-                        FOLDER_AVATARS . decryp($update['id_user']) . '_avatar' . substr(strtolower($update['user_avatar']), -4) 
-                    );
-                } else { 
-                    unlink($user_recovered->user_avatar);
-                    rename(
-                        FOLDER_AVATARS . $update['user_avatar'], 
-                        FOLDER_AVATARS . decryp($update['id_user']) . '_avatar' . substr(strtolower($update['user_avatar']), -4) 
-                    );                    
-                }
-
-                $data_upload_avatar = array(
-                    'user_avatar' => FOLDER_AVATARS . decryp($update['id_user']) . '_avatar' . substr(strtolower($update['user_avatar']), -4) 
-                );
-                $this->db->where('id_user', decryp($update['id_user']));
-                $update_avatar = $this->db->update('cm_users', $data_upload_avatar);
-
-                if ($update_avatar != NULL) {
-                    echo "Success";
-                } else {
-                    echo "Error";
-                }
-            } else {
-                echo "Missing";
-            }
-        }
-
-        /**
-        * [delete_model description]
-        * @param  [type] $id_user [description]
-        * @return [type]          [description]
-        */
-        public function delete($id_user){
-            $this->db->where('id_user', decryp($id_user));
-            $resultSet = $this->db->get('cm_users');  
-
-            if ($resultSet->num_rows() > 0) {
-                $user_recovered = $resultSet->row();
-                
-                $this->db->where('id_contact', $user_recovered->id_contact);
-                $contact_deleted = $this->db->delete('cm_contacts');
-
-                $this->db->where('id_session', $user_recovered->id_user);
-                $sessions_deleted = $this->db->delete('cm_sessions');
-
-                $this->db->where('id_user', $user_recovered->id_user);
-                $user_deleted = $this->db->delete('cm_users');
-
-                if ($contact_deleted != FALSE && $user_deleted != FALSE && $sessions_deleted != FALSE) {
-                    if (strcmp($user_recovered->user_avatar, 'NO-IMAGE') != 0) {
-                        unlink($user_recovered->user_avatar);
-                    }
-                    echo "Success";
-                } else { 
-                    echo "Error"; 
-                }
-            } else {
-                echo "Missing";
-            }
-        }
-	}
-?>
+    }
+}

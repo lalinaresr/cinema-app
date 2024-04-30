@@ -12,11 +12,11 @@ class Genders extends CI_Controller
 		}
 
 		$this->load->model([
+			'User_model',
 			'Movie_model',
 			'Productor_model',
 			'Gender_model',
 			'Category_model',
-			'User_model',
 			'Status_model'
 		]);
 	}
@@ -41,8 +41,8 @@ class Genders extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				base_url('public/js/genders.js')
 			],
-			'get_all_genders' => $this->Gender_model->get_all_genders(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'genders' => $this->Gender_model->index(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -63,8 +63,8 @@ class Genders extends CI_Controller
 			'scripts' => [
 				base_url('public/js/genders.js')
 			],
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -77,7 +77,7 @@ class Genders extends CI_Controller
 
 	public function store()
 	{
-		$this->Gender_model->store([
+		echo $this->Gender_model->store([
 			'gender_name' => $this->input->post('gender_name_insert'),
 			'gender_slug' => $this->input->post('gender_slug_insert'),
 			'gender_status' => $this->input->post('gender_status_insert')
@@ -86,6 +86,8 @@ class Genders extends CI_Controller
 
 	public function view($id)
 	{
+		$gender = $this->Gender_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Géneros',
 			'styles' => [
@@ -94,8 +96,8 @@ class Genders extends CI_Controller
 			'scripts' => [
 				base_url('public/js/genders.js')
 			],
-			'view_gender' => $this->Gender_model->get_gender_by('id_gender', $id),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'gender' => $gender->row_array(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -108,6 +110,8 @@ class Genders extends CI_Controller
 
 	public function edit($id)
 	{
+		$gender = $this->Gender_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Géneros',
 			'styles' => [
@@ -116,10 +120,10 @@ class Genders extends CI_Controller
 			'scripts' => [
 				base_url('public/js/genders.js')
 			],
-			'id_gender_encryp' => $id,
-			'edit_gender' => $this->Gender_model->get_gender_by('id_gender', $id),
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'gender_id_encrypt' => $id,
+			'gender' => $gender->row_array(),
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -132,7 +136,7 @@ class Genders extends CI_Controller
 
 	public function update()
 	{
-		$this->Gender_model->update([
+		echo $this->Gender_model->update([
 			'id_gender' => $this->input->post('id_gender_update'),
 			'gender_name' => $this->input->post('gender_name_update'),
 			'gender_slug' => $this->input->post('gender_slug_update'),
@@ -142,8 +146,6 @@ class Genders extends CI_Controller
 
 	public function delete()
 	{
-		$id = $this->input->post('id_gender_delete');
-
-		$this->Gender_model->delete($id);
+		echo $this->Gender_model->delete(['id' => $this->input->post('id_gender_delete')]);
 	}
 }

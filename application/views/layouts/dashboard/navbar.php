@@ -12,7 +12,7 @@
       <div class="collapse navbar-collapse navbar-ex1-collapse">
          <ul class="nav navbar-nav visible-xs">
             <li class="active"><a href="<?= site_url('dashboard/'); ?>"><span class="glyphicon glyphicon-home"></span> Panel</a></li>
-            <?php if ($this->session->userdata('is_admin_logged_in')) { ?>
+            <?php if ($this->session->userdata('is_admin')) { ?>
                <li><a href="<?= site_url('sessions/'); ?>"><span class="glyphicon glyphicon-list-alt"></span> Sesiones</a></li>
                <li><a href="<?= site_url('users/'); ?>"><span class="glyphicon glyphicon-user"></span> Usuarios</a></li>
                <li><a href="<?= site_url('qualities/'); ?>"><span class="glyphicon glyphicon-flag"></span> Calidades</a></li>
@@ -22,7 +22,7 @@
                <li><a href="<?= site_url('movies/'); ?>"><span class="glyphicon glyphicon-cd"></span> Películas</a></li>
                <!--<li><a href="<?= site_url('suggestions/'); ?>"><span class="glyphicon glyphicon-envelope"></span> Sugerencias</a></li>-->
                <li><a href="<?= site_url('newsletters/'); ?>"><span class="glyphicon glyphicon-heart"></span> Seguidores</a></li>
-            <?php } else if ($this->session->userdata('is_guest_logged_in')) { ?>
+            <?php } else if ($this->session->userdata('is_guest')) { ?>
                <li><a href="<?= site_url('qualities/'); ?>"><span class="glyphicon glyphicon-flag"></span> Calidades</a></li>
                <li><a href="<?= site_url('categories/'); ?>"><span class="glyphicon glyphicon-tags"></span> Categorías</a></li>
                <li><a href="<?= site_url('genders/'); ?>"><span class="glyphicon glyphicon-globe"></span> Géneros</a></li>
@@ -36,7 +36,7 @@
             <li><a href="<?= site_url(); ?>" target="_blank"><span class="glyphicon glyphicon-globe"></span> Ver sitio</a></li>
             <li class="dropdown">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="<?= $user_avatar; ?>" class="profile-image img-circle" style="width: 20px; height: 20px;"> <?= $this->session->userdata('user_username'); ?> <b class="caret"></b>
+                  <img src="<?= $avatar; ?>" class="profile-image img-circle" style="width: 20px; height: 20px;"> <?= $this->session->userdata('user_username'); ?> <b class="caret"></b>
                </a>
                <ul class="dropdown-menu">
                   <li><a href="#"><span class="glyphicon glyphicon-user"></span> Mi perfil</a></li>

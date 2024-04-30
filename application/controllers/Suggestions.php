@@ -11,7 +11,10 @@ class Suggestions extends CI_Controller
 			redirect();
 		}
 
-		$this->load->model('User_model');
+		$this->load->model([
+			'Suggestion_model',
+			'User_model'
+		]);
 	}
 
 	public function index()
@@ -21,7 +24,8 @@ class Suggestions extends CI_Controller
 			'styles' => [
 				base_url('public/css/dashboard.css')
 			],
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'suggestions' => $this->Suggestion_model->index(['status' => 1]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);

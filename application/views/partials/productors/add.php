@@ -51,8 +51,8 @@
          <div class="form-group">
             <label>Estatus:</label>
             <select id="productor_status_insert" name="productor_status_insert" class="form-control" required>
-               <?php foreach ($get_all_status->result() as $key => $value) : ?>
-                  <option value="<?= $value->id_status; ?>"><?= $value->status_name; ?></option>
+               <?php foreach ($status->result_array() as $key => $value) : ?>
+                  <option value="<?= $value['id_status']; ?>"><?= $value['status_name']; ?></option>
                <?php endforeach ?>
             </select>
          </div>

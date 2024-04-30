@@ -165,19 +165,19 @@ jQuery(document).ready(function ($) {
 			$("#btn-insert-productor").removeAttr('disabled');
 			$("#btn-insert-productor").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
-			if (response == "Already") {
+			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
 					title: 'Duplicado',
 					text: 'Los datos del productor que intenta ingresar ya se encuentran en el sistema',
 					icon: 'warning'
 				});
-			} else if (response == "Error") {
+			} else if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'El productor ha sido insertado con éxito',
@@ -262,19 +262,19 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-productor").removeAttr('disabled');
 			$("#btn-update-productor").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
-			if (response == "Already") {
+			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
 					title: 'Duplicado',
 					text: 'Los datos del productor que intenta ingresar ya se encuentran en el sistema',
 					icon: 'warning'
 				});
-			} else if (response == "Error") {
+			} else if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'El productor ha sido actualizado con éxito',
@@ -361,13 +361,13 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-logo").removeAttr('disabled');
 			$("#btn-update-logo").html('<span class="glyphicon glyphicon-upload"></span> Cambiar');
 
-			if (response == "Error") {
+			if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'El logo fue actualizado con éxito',
@@ -409,19 +409,19 @@ jQuery(document).ready(function ($) {
 					url: 'delete/',
 					type: 'post',
 					success: function (response) {
-						if (response == "Missing") {
+						if (response == 'not-found') {
 							swalWithBootstrapButtons.fire({
 								title: 'No encontrado',
 								text: 'El productor ha eliminar no coincide con alguno de nuestros registros',
 								icon: 'warning'
 							});
-						} else if (response == "Error") {
+						} else if (response == 'error') {
 							swalWithBootstrapButtons.fire({
 								title: 'Oops',
 								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 								icon: 'error'
 							});
-						} else if (response == "Success") {
+						} else if (response == 'success') {
 							swalWithBootstrapButtons.fire({
 								title: 'Éxito',
 								text: 'El productor fue eliminado con éxito',

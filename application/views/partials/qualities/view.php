@@ -4,7 +4,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Nombre:</label>
-         <input type="text" class="form-control" value="<?= $view_quality->quality_name; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $quality['quality_name']; ?>" disabled>
       </div>
    </div>
    <!-- END field QUALITY NAME -->
@@ -13,7 +13,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Alias:</label>
-         <input type="text" class="form-control" value="<?= $view_quality->quality_slug; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $quality['quality_slug']; ?>" disabled>
       </div>
    </div>
    <!-- END field QUALITY SLUG -->
@@ -22,7 +22,7 @@
    <div class="col-md-8">
       <div class="form-group">
          <label>Estatus:</label>
-         <input type="text" class="form-control" value="<?= $view_quality->status_name; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $quality['status_name']; ?>" disabled>
       </div>
    </div>
    <!-- END field STATUS NAME -->
@@ -31,7 +31,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>Fecha de registro:</label>
-         <input type="text" class="form-control" value="<?= $view_quality->date_registered_qlt; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $quality['date_registered_qlt']; ?>" disabled>
       </div>
    </div>
    <!-- END field DATE REGISTERED QUALITY -->
@@ -40,7 +40,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>IP de registro:</label>
-         <input type="text" class="form-control" value="<?= $view_quality->ip_registered_qlt; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $quality['ip_registered_qlt']; ?>" disabled>
       </div>
    </div>
    <!-- END field IP REGISTERED QUALITY -->
@@ -49,7 +49,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>Fecha de modificación:</label>
-         <input type="text" class="form-control" value="<?= $view_quality->date_modified_qlt; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $quality['date_modified_qlt']; ?>" disabled>
       </div>
    </div>
    <!-- END field DATE MODIFIED QUALITY -->
@@ -58,7 +58,7 @@
    <div class="col-md-4">
       <div class="form-group">
          <label>IP de modificación:</label>
-         <input type="text" class="form-control" value="<?= $view_quality->ip_modified_qlt; ?>" disabled>
+         <input type="text" class="form-control" value="<?= $quality['ip_modified_qlt']; ?>" disabled>
       </div>
    </div>
    <!-- END field IP MODIFIED QUALITY -->
@@ -67,7 +67,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de registro:</label>
-         <textarea type="text" class="form-control " disabled><?= $view_quality->client_registered_qlt; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $quality['client_registered_qlt']; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT REGISTERED QUALITY -->
@@ -76,7 +76,7 @@
    <div class="col-md-6">
       <div class="form-group">
          <label>Dispositivo de modificación:</label>
-         <textarea type="text" class="form-control " disabled><?= $view_quality->client_modified_qlt; ?></textarea>
+         <textarea type="text" class="form-control " disabled><?= $quality['client_modified_qlt']; ?></textarea>
       </div>
    </div>
    <!-- END field CLIENT MODIFIED QUALITY -->

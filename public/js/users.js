@@ -186,19 +186,19 @@ jQuery(document).ready(function ($) {
 			$("#btn-insert-user").removeAttr('disabled');
 			$("#btn-insert-user").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
-			if (response == "Already") {
+			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
 					title: 'Duplicado',
 					text: 'Los datos del usuario que intenta ingresar ya se encuentran en el sistema',
 					icon: 'warning'
 				});
-			} else if (response == "Error") {
+			} else if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'El usuario ha sido insertado con éxito',
@@ -267,19 +267,19 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-user").removeAttr('disabled');
 			$("#btn-update-user").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
-			if (response == "Already") {
+			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
 					title: 'Duplicado',
 					text: 'Los datos del usuario que intenta ingresar ya se encuentran en el sistema',
 					icon: 'warning'
 				});
-			} else if (response == "Error") {
+			} else if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'El usuario ha sido actualizado con éxito',
@@ -368,13 +368,13 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-avatar").removeAttr('disabled');
 			$("#btn-update-avatar").html('<span class="glyphicon glyphicon-upload"></span> Cambiar');
 
-			if (response == "Error") {
+			if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'Su avatar ha sido actualizado con éxito',
@@ -416,19 +416,19 @@ jQuery(document).ready(function ($) {
 					url: 'delete/',
 					type: 'post',
 					success: function (response) {
-						if (response == "Missing") {
+						if (response == 'not-found') {
 							swalWithBootstrapButtons.fire({
 								title: 'No encontrado',
 								text: 'El usuario ha eliminar no coincide con alguno de nuestros registros',
 								icon: 'warning'
 							});
-						} else if (response == "Error") {
+						} else if (response == 'error') {
 							swalWithBootstrapButtons.fire({
 								title: 'Oops',
 								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 								icon: 'error'
 							});
-						} else if (response == "Success") {
+						} else if (response == 'success') {
 							swalWithBootstrapButtons.fire({
 								title: 'Éxito',
 								text: 'El usuario fue eliminado con éxito',

@@ -1,229 +1,160 @@
 <?php
-	defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-	class Category_model extends CI_Model {
+class Category_model extends CI_Model
+{
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-        /**
-        * [__construct description]
-        */
-		public function __construct(){
-			parent::__construct();
+	public function index(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'id_category, cm_categories.id_status, status_name, category_name, category_slug, ip_registered_cat, date_registered_cat, client_registered_cat, ip_modified_cat, date_modified_cat, client_modified_cat';
+		$builder['order_column'] = $builder['order_column'] ?? 'id_category';
+		$builder['order_filter'] = $builder['order_filter'] ?? 'DESC';
+		$builder['start'] = $builder['start'] ?? 0;
+
+		$response = $this->db
+			->select($builder['columns'])
+			->from('cm_categories')
+			->join('cm_status', 'cm_status.id_status = cm_categories.id_status');
+
+		if (isset($builder['status'])) {
+			$response = $response->where('cm_categories.id_status', $builder['status']);
 		}
 
-		/**
-		* [get_all_categories description]
-		* @return [type] [description]
-		*/
-		public function get_all_categories(){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_categories')
-			->join('cm_status', 'cm_status.id_status = cm_categories.id_status')
-			->order_by('category_name', 'DESC')
-			->get();
+		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
 
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}			
-		}    
-
-		/**
-		* [get_categories_activated description]
-		* @return [type] [description]
-		*/
-		public function get_all_categories_activated(){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_categories')
-			->join('cm_status', 'cm_status.id_status = cm_categories.id_status')
-			->where('cm_categories.id_status', 1)
-			->order_by('category_name', 'DESC')
-			->get();
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
+		if (isset($builder['limit'])) {
+			$response = $response->limit($builder['limit'], $builder['start']);
 		}
 
-		/**
-		* [get_categories_inactivated description]
-		* @return [type] [description]
-		*/
-		public function get_all_categories_inactivated(){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_categories')
-			->join('cm_status', 'cm_status.id_status = cm_categories.id_status')
-			->where('cm_categories.id_status', 2)
-			->order_by('category_name', 'DESC')
-			->get();
+		$response = $response->get();
 
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
+		return $response;
+	}
+
+	public function store($data)
+	{
+		$response = $this->db
+			->where('category_name', $data['category_name'])
+			->get('cm_categories');
+
+		if ($response->num_rows() > 0) {
+			return 'existing';
 		}
 
-		/**
-		* [get_movies_by_category description]
-		* @param  [type]  $limit [description]
-		* @param  integer $start [description]
-		* @param  [type]  $data  [description]
-		* @param  [type]  $value [description]
-		* @return [type]         [description]
-		*/
-		public function get_movies_by_category($limit = 0, $start = 0,  $data = '', $value = ''){
-			$resultSet = $this->db
-			->select('
-				cm_movies.id_movie,
-				cm_movies.id_status,
-				cm_movies.id_quality,
-				cm_movies.movie_name,
-				cm_movies.movie_slug,
-				cm_movies.movie_description,
-				cm_movies.movie_release_date,
-				cm_movies.movie_duration,
-				cm_movies.movie_country_origin,
-				cm_movies.movie_cover,
-				cm_movies.movie_reproductions,
-				cm_movies.movie_play,
-				cm_movies.is_premiere,				
-				cm_categories.category_name,
-				cm_categories.category_slug
-			')
+		$store = $this->db->insert('cm_categories', [
+			'id_status' => $data['category_status'],
+			'category_name' => $data['category_name'],
+			'category_slug' => url_title($data['category_name'], '-', true),
+			'ip_registered_cat' => get_ip_current(),
+			'date_registered_cat' => get_date_current(),
+			'client_registered_cat' => get_agent_current()
+		]);
+
+		return ($store ? 'success' : 'error');
+	}
+
+	public function fetch(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'id_category, cm_categories.id_status, status_name, category_name, category_slug, ip_registered_cat, date_registered_cat, client_registered_cat, ip_modified_cat, date_modified_cat, client_modified_cat';
+		$builder['search'] = $builder['search'] ?? 'id_category';
+
+		$response = $this->db
+			->select($builder['columns'])
+			->from('cm_categories')
+			->join('cm_status', 'cm_status.id_status = cm_categories.id_status')
+			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+			->limit(1)
+			->get();
+
+		return $response;
+	}
+
+	public function update($data)
+	{
+		$response = $this->db
+			->where('id_status', $data['category_status'])
+			->where('category_name', $data['category_name'])
+			->get('cm_categories');
+
+		if ($response->num_rows() > 0) {
+			return 'existing';
+		}
+
+		$update = $this->db
+			->where('id_category', decryp($data['id_category']))
+			->update('cm_categories', [
+				'id_status' => $data['category_status'],
+				'category_name' => $data['category_name'],
+				'category_slug' => url_title($data['category_name'], '-', true),
+				'ip_modified_cat' => get_ip_current(),
+				'date_modified_cat' => get_date_current(),
+				'client_modified_cat' => get_agent_current()
+			]);
+
+		return ($update ? 'success' : 'error');
+	}
+
+	public function delete($data)
+	{
+		$id = decryp($data['id']);
+
+		$response = $this->db
+			->select('id_category')
+			->where('id_category', $id)
+			->limit(1)
+			->get('cm_categories');
+
+		if ($response->num_rows() == 0) {
+			return 'not-found';
+		}
+
+		$fDelete = $this->db
+			->where('id_category', $id)
+			->delete('cm_categories');
+
+		$sDelete = $this->db
+			->where('id_category', $id)
+			->delete('cm_cat_mov');
+
+		return (($fDelete && $sDelete) ? 'success' : 'error');
+	}
+
+	public function movies_by_category(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'cm_movies.id_movie, cm_movies.id_status, cm_movies.id_quality, cm_categories.id_category, cm_categories.category_name, cm_categories.category_slug, cm_movies.movie_name, cm_movies.movie_slug, cm_movies.movie_description, cm_movies.movie_release_date, cm_movies.movie_duration, cm_movies.movie_country_origin, cm_movies.movie_cover, cm_movies.movie_reproductions, cm_movies.movie_play, cm_movies.is_premiere';
+		$builder['order_column'] = $builder['order_column'] ?? 'cm_movies.id_movie';
+		$builder['order_filter'] = $builder['order_filter'] ?? 'DESC';
+		$builder['start'] = $builder['start'] ?? 0;
+
+		$response = $this->db
+			->select($builder['columns'])
 			->from('cm_cat_mov')
 			->join('cm_categories', 'cm_categories.id_category = cm_cat_mov.id_category')
-			->join('cm_movies', 'cm_movies.id_movie = cm_cat_mov.id_movie')
-			->where('cm_categories.id_status', 1)
-			->where('cm_movies.id_status', 1)
-			->where($data, $value)
-			->order_by('cm_movies.movie_name', 'DESC')
-			->limit($limit, $start)
-			->get();
+			->join('cm_movies', 'cm_movies.id_movie = cm_cat_mov.id_movie');
 
-			$data = array();
-	        if ($resultSet->num_rows() > 0) {
-	            foreach ($resultSet->result() as $row) {
-	                $data[] = $row;
-	            }
-	            return $data;
-	        }
-		    return FALSE;
+		if (isset($builder['status'])) {
+			$response = $response
+				->where('cm_categories.id_status', $builder['status'])
+				->where('cm_movies.id_status', $builder['status']);
 		}
 
-		/**
-		* [insert_model description]
-		* @param  [type] $insert [description]
-		* @return [type]         [description]
-		*/
-		public function store($insert){
-			$this->db->where('category_name', $insert['category_name']);
-			$resultSet = $this->db->get('cm_categories');
-
-			if ($resultSet->num_rows() > 0) { 
-				echo "Already"; 
-			} else {
-				$data_insert_category = array(
-					'id_status' => $insert['category_status'],
-					'category_name' => $insert['category_name'],
-					'category_slug' => $insert['category_slug'],
-					'ip_registered_cat' => get_ip_current(),
-					'date_registered_cat' => get_date_current(),
-					'client_registered_cat' => get_agent_current()
-				);
-			    $insert_category = $this->db->insert('cm_categories', $data_insert_category);
-
-			    if ($insert_category != FALSE) { 
-			    	echo "Success";			                          
-			    } else { 
-			    	echo "Error"; 
-			    }                
-			}  
-		} 
-
-		/**
-		* [get_category_by description]
-		* @param  [type] $data  [description]
-		* @param  [type] $value [description]
-		* @return [type]        [description]
-		*/
-		public function get_category_by($data, $value){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_categories')
-			->join('cm_status', 'cm_status.id_status = cm_categories.id_status')
-			->where($data, decryp($value))
-			->get('');
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet->row();
-			} else {
-				return FALSE;
-			}	
-		}		
-
-		/**
-		* [update_model description]
-		* @param  [type] $update [description]
-		* @return [type]         [description]
-		*/
-		public function update($update){
-			$this->db->where('category_name', $update['category_name']);
-			$resultSet = $this->db->get('cm_categories');
-
-			if ($resultSet->num_rows() > 0) { 
-				echo "Already"; 
-			} else {
-				$data_update_category = array(
-					'id_status' => $update['category_status'],
-					'category_name' => $update['category_name'],
-					'category_slug' => $update['category_slug'],
-					'ip_modified_cat' => get_ip_current(),
-					'date_modified_cat' => get_date_current(),
-					'client_modified_cat' => get_agent_current()
-				);
-				$this->db->where('id_category', decryp($update['id_category']));
-			    $update_category = $this->db->update('cm_categories', $data_update_category);
-
-			    if ($update_category != FALSE) { 
-			    	echo "Success";			                          
-			    } else { 
-			    	echo "Error"; 
-			    }                
-			}
+		if (isset($builder['search']) && isset($builder['value'])) {
+			$response = $response
+				->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
 		}
 
-		/**
-		* [delete_model description]
-		* @param  [type] $id_category [description]
-		* @return [type]              [description]
-		*/
-		public function delete($id_category){
-			$this->db->where('id_category', decryp($id_category));
-		   	$resultSet = $this->db->get('cm_categories');
+		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
 
-		   	if ($resultSet->num_rows() > 0) {
-		   		$category_recovered = $resultSet->row();
-
-		   		$this->db->where('id_category', $category_recovered->id_category);
-		   		$category_deleted = $this->db->delete('cm_categories');		
-
-		   		$this->db->where('id_category', $category_recovered->id_category);
-		   		$categories_deleted = $this->db->delete('cm_cat_mov');
-
-		   		if ($category_deleted != FALSE && $categories_deleted != FALSE) { 
-		   			echo "Success";			                          		   			 
-		   		} else { 
-		   			echo "Error"; 
-		   		} 
-		   	} else {
-		   		echo "Missing";		   			   		
-		   	}
+		if (isset($builder['limit'])) {
+			$response = $response->limit($builder['limit'], $builder['start']);
 		}
+
+		$response = $response->get();
+
+		return $response;
 	}
-?>
+}

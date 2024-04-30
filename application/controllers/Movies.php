@@ -44,8 +44,8 @@ class Movies extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				base_url('public/js/movies.js')
 			],
-			'get_all_movies' => $this->Movie_model->get_all_movies(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'movies' => $this->Movie_model->index(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -73,12 +73,12 @@ class Movies extends CI_Controller
 				'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',
 				base_url('public/js/movies.js')
 			],
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'get_all_qualities_activated' => $this->Quality_model->get_all_qualities_activated(),
-			'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
-			'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
-			'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'qualities' => $this->Quality_model->index(['status' => 1]),
+			'categories' => $this->Category_model->index(['status' => 1]),
+			'genders' => $this->Gender_model->index(['status' => 1]),
+			'productors' => $this->Productor_model->index(['status' => 1]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -98,7 +98,7 @@ class Movies extends CI_Controller
 		$this->load->library('upload', $config);
 
 		if ($this->upload->do_upload('movie_cover_insert')) {
-			$this->Movie_model->store([
+			echo $this->Movie_model->store([
 				'ids_productors' => $this->input->post('ids_productors_insert'),
 				'ids_genders' => $this->input->post('ids_genders_insert'),
 				'ids_categories' => $this->input->post('ids_categories_insert'),
@@ -120,6 +120,8 @@ class Movies extends CI_Controller
 
 	public function view($id)
 	{
+		$movie = $this->Movie_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
 			'styles' => [
@@ -128,12 +130,12 @@ class Movies extends CI_Controller
 			'scripts' => [
 				base_url('public/js/movies.js')
 			],
-			'id_movie_encryp' => $id,
-			'view_movie' => $this->Movie_model->get_movie_by('id_movie', $id),
-			'productors_movie' => $this->Movie_model->get_productors_movie($id),
-			'genders_movie' => $this->Movie_model->get_genders_movie($id),
-			'categories_movie' => $this->Movie_model->get_categories_movie($id),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'movie_id_encrypt' => $id,
+			'movie' => $movie->row_array(),
+			'productors_by_movie' => $this->Movie_model->productors_by_movie(['value' => $id, 'decrypt' => true]),
+			'genders_by_movie' => $this->Movie_model->genders_by_movie(['value' => $id, 'decrypt' => true]),
+			'categories_by_movie' => $this->Movie_model->categories_by_movie(['value' => $id, 'decrypt' => true]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -146,6 +148,8 @@ class Movies extends CI_Controller
 
 	public function edit($id)
 	{
+		$movie = $this->Movie_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
 			'styles' => [
@@ -161,17 +165,17 @@ class Movies extends CI_Controller
 				'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',
 				base_url('public/js/movies.js')
 			],
-			'id_movie_encryp' => $id,
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'edit_movie' => $this->Movie_model->get_movie_by('id_movie', $id),
-			'productors_movie' => $this->Movie_model->get_productors_movie($id),
-			'genders_movie' => $this->Movie_model->get_genders_movie($id),
-			'categories_movie' => $this->Movie_model->get_categories_movie($id),
-			'get_all_qualities_activated' => $this->Quality_model->get_all_qualities_activated(),
-			'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
-			'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
-			'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'movie_id_encrypt' => $id,
+			'movie' => $movie->row_array(),
+			'productors_by_movie' => $this->Movie_model->productors_by_movie(['value' => $id, 'decrypt' => true]),
+			'genders_by_movie' => $this->Movie_model->genders_by_movie(['value' => $id, 'decrypt' => true]),
+			'categories_by_movie' => $this->Movie_model->categories_by_movie(['value' => $id, 'decrypt' => true]),
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'qualities' => $this->Quality_model->index(['status' => 1]),
+			'categories' => $this->Category_model->index(['status' => 1]),
+			'genders' => $this->Gender_model->index(['status' => 1]),
+			'productors' => $this->Productor_model->index(['status' => 1]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -206,23 +210,25 @@ class Movies extends CI_Controller
 
 		$this->load->library('upload', $config);
 
-		if (!$this->upload->do_upload('movie_cover_update')) {
-			$cover = [
-				'old_image_cover' => $this->input->post('image_cover_update_route'),
-				'new_image_cover' => NULL
-			];
-		} else {
+		if ($this->upload->do_upload('movie_cover_update')) {
 			$cover = [
 				'new_image_cover' => $this->upload->data()['file_name'],
 				'old_image_cover' => NULL,
 				'old_image_ext' => substr($this->input->post('image_cover_update_route'), -4)
 			];
+		} else {
+			$cover = [
+				'old_image_cover' => $this->input->post('image_cover_update_route'),
+				'new_image_cover' => NULL
+			];			
 		}
-		$this->Movie_model->update([...$data, ...$cover]);
+		echo $this->Movie_model->update([...$data, ...$cover]);
 	}
 
 	public function edit_cover($id)
 	{
+		$movie = $this->Movie_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
 			'styles' => [
@@ -231,9 +237,9 @@ class Movies extends CI_Controller
 			'scripts' => [
 				base_url('public/js/movies.js')
 			],
-			'id_movie_encryp' => $id,
-			'view_movie' => $this->Movie_model->get_movie_by('id_movie', $id),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'movie_id_encrypt' => $id,
+			'movie' => $movie->row_array(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -253,7 +259,7 @@ class Movies extends CI_Controller
 		$this->load->library('upload', $config);
 
 		if ($this->upload->do_upload('movie_cover_customize')) {
-			$this->Movie_model->update_cover([
+			echo $this->Movie_model->update_cover([
 				'id_movie' => $this->input->post('id_movie_customize_cover'),
 				'movie_cover' => $this->upload->data()['file_name'],
 				'old_image_ext' => substr(trim($this->input->post('cover_update_route')), -4)
@@ -265,8 +271,6 @@ class Movies extends CI_Controller
 
 	public function delete()
 	{
-		$id = $this->input->post('id_movie_delete');
-
-		$this->Movie_model->delete($id);
+		echo $this->Movie_model->delete(['id' => $this->input->post('id_movie_delete')]);
 	}
 }

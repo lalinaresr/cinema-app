@@ -5,8 +5,8 @@
       <div class="col-md-12">
          <div class="form-group">
             <label>ID:</label>
-            <input type="text" class="form-control" value="<?= $id_productor_encryp; ?>" disabled>
-            <input type="hidden" id="id_productor_update" name="id_productor_update" class="form-control" value="<?= $id_productor_encryp; ?>">
+            <input type="text" class="form-control" value="<?= $productor_id_encrypt; ?>" disabled>
+            <input type="hidden" id="id_productor_update" name="id_productor_update" class="form-control" value="<?= $productor_id_encrypt; ?>">
          </div>
       </div>
       <!-- field ID PRODUCTOR -->
@@ -15,7 +15,7 @@
       <div class="col-md-6">
          <div class="form-group">
             <label>Nombre:</label>
-            <input type="text" id="productor_name_update" name="productor_name_update" class="form-control" value="<?= $edit_productor->productor_name; ?>" required minlength="3" maxlength="60" autocomplete="off">
+            <input type="text" id="productor_name_update" name="productor_name_update" class="form-control" value="<?= $productor['productor_name']; ?>" required minlength="3" maxlength="60" autocomplete="off">
          </div>
       </div>
       <!-- END field PRODUCTOR NAME -->
@@ -24,7 +24,7 @@
       <div class="col-md-6">
          <div class="form-group">
             <label>Alias:</label>
-            <input type="text" id="productor_slug_update" name="productor_slug_update" class="form-control" value="<?= $edit_productor->productor_slug; ?>" readonly>
+            <input type="text" id="productor_slug_update" name="productor_slug_update" class="form-control" value="<?= $productor['productor_slug']; ?>" readonly>
          </div>
       </div>
       <!-- END field PRODUCTOR SLUG -->
@@ -34,7 +34,7 @@
          <div class="form-group">
             <label>Logo:</label>
             <input type="file" id="productor_image_logo_update" name="productor_image_logo_update" class="form-control">
-            <input type="hidden" id="image_logo_update_route" name="image_logo_update_route" class="form-control" value="<?= $edit_productor->productor_image_logo; ?>" readonly>
+            <input type="hidden" id="image_logo_update_route" name="image_logo_update_route" class="form-control" value="<?= $productor['productor_image_logo']; ?>" readonly>
          </div>
       </div>
 
@@ -62,10 +62,10 @@
          <div class="form-group">
             <label>Estatus:</label>
             <select id="productor_status_update" name="productor_status_update" class="form-control" required>
-               <option value="<?= $edit_productor->id_status; ?>"><?= $edit_productor->status_name; ?></option>
-               <?php foreach ($get_all_status->result() as $key => $value) : ?>
-                  <?php if ($value->id_status != $edit_productor->id_status) : ?>
-                     <option value="<?= $value->id_status; ?>"><?= $value->status_name; ?></option>
+               <option value="<?= $productor['id_status']; ?>"><?= $productor['status_name']; ?></option>
+               <?php foreach ($status->result_array() as $key => $value) : ?>
+                  <?php if ($value['id_status'] != $productor['id_status']) : ?>
+                     <option value="<?= $value['id_status']; ?>"><?= $value['status_name']; ?></option>
                   <?php endif ?>
                <?php endforeach ?>
             </select>

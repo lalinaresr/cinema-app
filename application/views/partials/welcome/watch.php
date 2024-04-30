@@ -1,17 +1,17 @@
 <div class="row">
 	<div class="col-md-12 col-xs-12">
 		<div class="bg-black">
-			<iframe src="<?= $watch_movie->movie_play; ?>" class="video-movie center-block"></iframe>
+			<iframe src="<?= $movie['movie_play']; ?>" class="video-movie center-block"></iframe>
 		</div>
-		<h3 class="text-info pull-left" style="word-wrap: break-word;"><span class="glyphicon glyphicon-play"></span> <?= $watch_movie->movie_name; ?></h3>
-		<h3 class="text-info pull-right"><span class="glyphicon glyphicon-stats"></span> <?= $watch_movie->movie_reproductions; ?> vistas</h3>
+		<h3 class="text-info pull-left" style="word-wrap: break-word;"><span class="glyphicon glyphicon-play"></span> <?= $movie['movie_name']; ?></h3>
+		<h3 class="text-info pull-right"><span class="glyphicon glyphicon-stats"></span> <?= $movie['movie_reproductions']; ?> vistas</h3>
 	</div>
 
 </div>
 
 <div class="row my-4">
 	<div class="col-md-9">
-		<div class="fb-comments" data-href="<?= site_url("welcome/watch/{$watch_movie->id_movie}"); ?>" data-numposts="100" data-colorscheme="dark" data-width="100%"></div>
+		<div class="fb-comments" data-href="<?= site_url("welcome/watch/{$movie['id_movie']}"); ?>" data-numposts="100" data-colorscheme="dark" data-width="100%"></div>
 		<div id="fb-root"></div>
 		<script>
 			(function(d, s, id) {

@@ -125,19 +125,19 @@ jQuery(document).ready(function ($) {
 			$("#btn-insert-quality").removeAttr('disabled');
 			$("#btn-insert-quality").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
-			if (response == "Already") {
+			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
 					title: 'Duplicado',
 					text: 'Los datos de la calidad que intenta ingresar ya se encuentran en el sistema',
 					icon: 'warning'
 				});
-			} else if (response == "Error") {
+			} else if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'La calidad ha sido insertada con éxito',
@@ -182,19 +182,19 @@ jQuery(document).ready(function ($) {
 			$("#btn-update-quality").removeAttr('disabled');
 			$("#btn-update-quality").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
-			if (response == "Already") {
+			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
 					title: 'Duplicado',
 					text: 'Los datos de la calidad que intenta ingresar ya se encuentran en el sistema',
 					icon: 'warning'
 				});
-			} else if (response == "Error") {
+			} else if (response == 'error') {
 				swalWithBootstrapButtons.fire({
 					title: 'Oops',
 					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 					icon: 'error'
 				});
-			} else if (response == "Success") {
+			} else if (response == 'success') {
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'La calidad ha sido actualizada con éxito',
@@ -236,19 +236,19 @@ jQuery(document).ready(function ($) {
 					url: 'delete/',
 					type: 'post',
 					success: function (response) {
-						if (response == "Missing") {
+						if (response == 'not-found') {
 							swalWithBootstrapButtons.fire({
 								title: 'No encontrado',
 								text: 'La calidad ha eliminar no coincide con alguno de nuestros registros',
 								icon: 'warning'
 							});
-						} else if (response == "Error") {
+						} else if (response == 'error') {
 							swalWithBootstrapButtons.fire({
 								title: 'Oops',
 								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
 								icon: 'error'
 							});
-						} else if (response == "Success") {
+						} else if (response == 'success') {
 							swalWithBootstrapButtons.fire({
 								title: 'Éxito',
 								text: 'La calidad fue eliminada con éxito',

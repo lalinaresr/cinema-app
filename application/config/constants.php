@@ -113,6 +113,6 @@ const GMAIL = [
     'PASSWORD' => null,	
 ];
 
-define('FOLDER_MOVIES', 'storage/images/movies/');
-define('FOLDER_AVATARS', 'storage/images/users/');
-define('FOLDER_PRODUCTORS', 'storage/images/productors/');
+define('FOLDER_MOVIES', 'storage/images/movies');
+define('FOLDER_AVATARS', 'storage/images/users');
+define('FOLDER_PRODUCTORS', 'storage/images/productors');

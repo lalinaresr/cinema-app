@@ -2,8 +2,8 @@
 <div class="row">
    <form action="<?= site_url('movies/update_cover/'); ?>" method="post" id="form-update-cover" enctype="multipart/form-data">
       <div class="col-md-12">
-         <input type="hidden" id="id_movie_customize_cover" name="id_movie_customize_cover" class="form-control" value="<?= $id_movie_encryp; ?>">
-         <input type="hidden" id="cover_update_route" name="cover_update_route" class="form-control" value="<?= $view_movie->movie_cover; ?>">
+         <input type="hidden" id="id_movie_customize_cover" name="id_movie_customize_cover" class="form-control" value="<?= $movie_id_encrypt; ?>">
+         <input type="hidden" id="cover_update_route" name="cover_update_route" class="form-control" value="<?= $movie['movie_cover']; ?>">
          <!-- field MOVIE COVER -->
          <div class="form-group">
             <label>Portada:</label>
@@ -11,10 +11,10 @@
          </div>
          <!-- END field MOVIE COVER -->
          <div class="form-group">
-            <?php if (strcmp($view_movie->movie_cover, 'NO-IMAGE') == 0) : ?>
-               <img src="<?= encryp_image_base64(base_url() . 'storage/images/movies/default.png'); ?>" class="img-rounded img-responsive" id="image-cover-current" style="width: 100%;">
+            <?php if (strcmp($movie['movie_cover'], 'NO-IMAGE') == 0) : ?>
+               <img src="<?= base_url(FOLDER_MOVIES . '/default.png'); ?>" class="img-rounded img-responsive" id="image-cover-current" style="width: 100%;">
             <?php else : ?>
-               <img src="<?= encryp_image_base64(base_url() . $view_movie->movie_cover); ?>" class="img-rounded img-responsive" id="image-cover-current" style="width: 100%;">
+               <img src="<?= base_url($movie['movie_cover']); ?>" class="img-rounded img-responsive" id="image-cover-current" style="width: 100%;">
             <?php endif ?>
             <img id="preview-img-cover" class="img-responsive img-rounded img-thumbnail" style="width: 100%;">
          </div>

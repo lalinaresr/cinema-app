@@ -5,8 +5,8 @@
       <div class="col-md-12">
          <div class="form-group">
             <label>ID:</label>
-            <input type="text" class="form-control" value="<?= $id_quality_encryp; ?>" disabled>
-            <input type="hidden" id="id_quality_update" name="id_quality_update" class="form-control" value="<?= $id_quality_encryp; ?>">
+            <input type="text" class="form-control" value="<?= $quality_id_encrypt; ?>" disabled>
+            <input type="hidden" id="id_quality_update" name="id_quality_update" class="form-control" value="<?= $quality_id_encrypt; ?>">
          </div>
       </div>
       <!-- field ID QUALITY -->
@@ -15,7 +15,7 @@
       <div class="col-md-6">
          <div class="form-group">
             <label>Nombre:</label>
-            <input type="text" id="quality_name_update" name="quality_name_update" class="form-control" value="<?= $edit_quality->quality_name; ?>" required minlength="3" maxlength="50" autocomplete="off">
+            <input type="text" id="quality_name_update" name="quality_name_update" class="form-control" value="<?= $quality['quality_name']; ?>" required minlength="3" maxlength="50" autocomplete="off">
          </div>
       </div>
       <!-- END field QUALITY NAME -->
@@ -24,7 +24,7 @@
       <div class="col-md-6">
          <div class="form-group">
             <label>Alias:</label>
-            <input type="text" id="quality_slug_update" name="quality_slug_update" class="form-control" value="<?= $edit_quality->quality_slug; ?>" required minlength="3" maxlength="50" readonly>
+            <input type="text" id="quality_slug_update" name="quality_slug_update" class="form-control" value="<?= $quality['quality_slug']; ?>" required minlength="3" maxlength="50" readonly>
          </div>
       </div>
       <!-- END field QUALITY SLUG -->
@@ -34,10 +34,10 @@
          <div class="form-group">
             <label>Estatus:</label>
             <select id="quality_status_update" name="quality_status_update" class="form-control" required>
-               <option value="<?= $edit_quality->id_status; ?>"><?= $edit_quality->status_name; ?></option>
-               <?php foreach ($get_all_status->result() as $key => $value) : ?>
-                  <?php if ($value->id_status != $edit_quality->id_status) : ?>
-                     <option value="<?= $value->id_status; ?>"><?= $value->status_name; ?></option>
+               <option value="<?= $quality['id_status']; ?>"><?= $quality['status_name']; ?></option>
+               <?php foreach ($status->result_array() as $key => $value) : ?>
+                  <?php if ($value['id_status'] != $quality['id_status']) : ?>
+                     <option value="<?= $value['id_status']; ?>"><?= $value['status_name']; ?></option>
                   <?php endif ?>
                <?php endforeach ?>
             </select>

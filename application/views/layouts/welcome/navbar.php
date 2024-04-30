@@ -11,13 +11,13 @@
 		</div>
 		<div class="collapse navbar-collapse navbar-nv1-collapse">
 			<?php if (
-				$this->session->userdata('is_admin_logged_in') ||
-				$this->session->userdata('is_user_logged_in') ||
-				$this->session->userdata('is_guest_logged_in')
+				$this->session->userdata('is_admin') ||
+				$this->session->userdata('is_user') ||
+				$this->session->userdata('is_guest')
 			) : ?>
 				<form action="<?= site_url('welcome/search'); ?>" method="post" class="navbar-form navbar-left" role="search">
 					<div class="input-group">
-						<input type="text" class="form-control" name="movie_name_search" id="movie_name_search" value="<?= $param_search ?? ''; ?>" placeholder="Buscar..." required autocomplete="off" style="width: 100%;">
+						<input type="text" class="form-control" name="search_parameter" id="search_parameter" value="<?= $search_parameter ?? ''; ?>" placeholder="Buscar..." required autocomplete="off" style="width: 100%;">
 						<span class="input-group-btn">
 							<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
 						</span>
@@ -27,31 +27,31 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span> Productores <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<?php foreach ($get_all_productors_activated->result() as $key => $value) : $id_productor_encryp = cryp($value->id_productor); ?>
-								<li><a href="<?= site_url('welcome/filter_by_productor/') . $id_productor_encryp . '/'; ?>"><?= $value->productor_name; ?></a></li>
+							<?php foreach ($productors->result_array() as $key => $value) : $id_productor_encryp = cryp($value['id_productor']); ?>
+								<li><a href="<?= site_url('welcome/filter_by_productor/') . $id_productor_encryp . '/'; ?>"><?= $value['productor_name']; ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span> Géneros <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<?php foreach ($get_all_genders_activated->result() as $key => $value) : $id_gender_encryp = cryp($value->id_gender); ?>
-								<li><a href="<?= site_url('welcome/filter_by_gender/') . $id_gender_encryp . '/'; ?>"><?= $value->gender_name; ?></a></li>
+							<?php foreach ($genders->result_array() as $key => $value) : $id_gender_encryp = cryp($value['id_gender']); ?>
+								<li><a href="<?= site_url('welcome/filter_by_gender/') . $id_gender_encryp . '/'; ?>"><?= $value['gender_name']; ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tags"></span> Categorías <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<?php foreach ($get_all_categories_activated->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
-								<li><a href="<?= site_url('welcome/filter_by_category/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
+							<?php foreach ($categories->result_array() as $key => $value) : $id_category_encryp = cryp($value['id_category']); ?>
+								<li><a href="<?= site_url('welcome/filter_by_category/') . $id_category_encryp . '/'; ?>"><?= $value['category_name'] ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
 					<li><a href="<?= site_url('dashboard/'); ?>" target="_blank"><span class="glyphicon glyphicon-dashboard"></span> Panel</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img src="<?= $user_avatar; ?>" class="profile-image img-circle" style="width: 20px; height: 20px;"> <?= $this->session->userdata('user_username'); ?> <b class="caret"></b>
+							<img src="<?= $avatar; ?>" class="profile-image img-circle" style="width: 20px; height: 20px;"> <?= $this->session->userdata('user_username'); ?> <b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">
 							<li><a href="#"><span class="glyphicon glyphicon-user"></span> Mi perfil</a></li>
@@ -64,7 +64,7 @@
 			<?php else : ?>
 				<form action="<?= site_url('welcome/search'); ?>" method="post" class="navbar-form navbar-right" role="search">
 					<div class="input-group">
-						<input type="text" class="form-control" name="movie_name_search" id="movie_name_search" value="<?= $param_search ?? ''; ?>" placeholder="Buscar..." required autocomplete="off" style="width: 100%;">
+						<input type="text" class="form-control" name="search_parameter" id="search_parameter" value="<?= $search_parameter ?? ''; ?>" placeholder="Buscar..." required autocomplete="off" style="width: 100%;">
 						<span class="input-group-btn">
 							<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
 						</span>
@@ -75,24 +75,24 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span> Productores <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<?php foreach ($get_all_productors_activated->result() as $key => $value) : $id_productor_encryp = cryp($value->id_productor); ?>
-								<li><a href="<?= site_url('welcome/filter_by_productor/') . $id_productor_encryp . '/'; ?>"><?= $value->productor_name; ?></a></li>
+							<?php foreach ($productors->result_array() as $key => $value) : $id_productor_encryp = cryp($value['id_productor']); ?>
+								<li><a href="<?= site_url('welcome/filter_by_productor/') . $id_productor_encryp . '/'; ?>"><?= $value['productor_name']; ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span> Géneros <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<?php foreach ($get_all_genders_activated->result() as $key => $value) : $id_gender_encryp = cryp($value->id_gender); ?>
-								<li><a href="<?= site_url('welcome/filter_by_gender/') . $id_gender_encryp . '/'; ?>"><?= $value->gender_name; ?></a></li>
+							<?php foreach ($genders->result_array() as $key => $value) : $id_gender_encryp = cryp($value['id_gender']); ?>
+								<li><a href="<?= site_url('welcome/filter_by_gender/') . $id_gender_encryp . '/'; ?>"><?= $value['gender_name']; ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tags"></span> Categorías <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<?php foreach ($get_all_categories_activated->result() as $key => $value) : $id_category_encryp = cryp($value->id_category); ?>
-								<li><a href="<?= site_url('welcome/filter_by_category/') . $id_category_encryp . '/'; ?>"><?= $value->category_name ?></a></li>
+							<?php foreach ($categories->result_array() as $key => $value) : $id_category_encryp = cryp($value['id_category']); ?>
+								<li><a href="<?= site_url('welcome/filter_by_category/') . $id_category_encryp . '/'; ?>"><?= $value['category_name'] ?></a></li>
 							<?php endforeach ?>
 						</ul>
 					</li>

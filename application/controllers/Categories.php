@@ -12,11 +12,11 @@ class Categories extends CI_Controller
 		}
 
 		$this->load->model([
+			'User_model',
 			'Movie_model',
 			'Productor_model',
 			'Gender_model',
 			'Category_model',
-			'User_model',
 			'Status_model',
 		]);
 	}
@@ -41,8 +41,8 @@ class Categories extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				base_url('public/js/categories.js')
 			],
-			'get_all_categories' => $this->Category_model->get_all_categories(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'categories' => $this->Category_model->index(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -63,8 +63,8 @@ class Categories extends CI_Controller
 			'scripts' => [
 				base_url('public/js/categories.js')
 			],
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -77,7 +77,7 @@ class Categories extends CI_Controller
 
 	public function store()
 	{
-		$this->Category_model->store([
+		echo $this->Category_model->store([
 			'category_name' => $this->input->post('category_name_insert'),
 			'category_slug' => $this->input->post('category_slug_insert'),
 			'category_status' => $this->input->post('category_status_insert')
@@ -86,6 +86,8 @@ class Categories extends CI_Controller
 
 	public function view($id)
 	{
+		$category = $this->Category_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Categorías',
 			'styles' => [
@@ -94,8 +96,8 @@ class Categories extends CI_Controller
 			'scripts' => [
 				base_url('public/js/categories.js')
 			],
-			'view_category' => $this->Category_model->get_category_by('id_category', $id),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'category' => $category->row_array(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -108,6 +110,8 @@ class Categories extends CI_Controller
 
 	public function edit($id)
 	{
+		$category = $this->Category_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Categorías',
 			'styles' => [
@@ -116,10 +120,10 @@ class Categories extends CI_Controller
 			'scripts' => [
 				base_url('public/js/categories.js')
 			],
-			'id_category_encryp' => $id,
-			'edit_category' => $this->Category_model->get_category_by('id_category', $id),
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'category_id_encrypt' => $id,
+			'category' => $category->row_array(),
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -132,7 +136,7 @@ class Categories extends CI_Controller
 
 	public function update()
 	{
-		$this->Category_model->update([
+		echo $this->Category_model->update([
 			'id_category' => $this->input->post('id_category_update'),
 			'category_name' => $this->input->post('category_name_update'),
 			'category_slug' => $this->input->post('category_slug_update'),
@@ -142,8 +146,6 @@ class Categories extends CI_Controller
 
 	public function delete()
 	{
-		$id = $this->input->post('id_category_delete');
-
-		$this->Category_model->delete($id);
+		echo $this->Category_model->delete(['id' => $this->input->post('id_category_delete')]);
 	}
 }

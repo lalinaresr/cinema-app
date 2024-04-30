@@ -2,8 +2,8 @@
 <div class="row">
    <form action="<?= site_url('productors/update_logo/'); ?>" method="post" id="form-update-logo" enctype="multipart/form-data">
       <div class="col-md-12">
-         <input type="hidden" id="id_productor_customize_logo" name="id_productor_customize_logo" class="form-control" value="<?= $id_productor_encryp; ?>">
-         <input type="hidden" id="image_logo_update_route" name="image_logo_update_route" class="form-control" value="<?= $view_productor->productor_image_logo; ?>">
+         <input type="hidden" id="id_productor_customize_logo" name="id_productor_customize_logo" class="form-control" value="<?= $productor_id_encrypt; ?>">
+         <input type="hidden" id="image_logo_update_route" name="image_logo_update_route" class="form-control" value="<?= $productor['productor_image_logo']; ?>">
          <!-- field PRODUCTOR IMAGE LOGO -->
          <div class="form-group">
             <label>Logo:</label>
@@ -11,10 +11,10 @@
          </div>
          <!-- END field PRODUCTOR IMAGE LOGO -->
          <div class="form-group">
-            <?php if (strcmp($view_productor->productor_image_logo, 'NO-IMAGE') == 0) : ?>
-               <img src="<?= encryp_image_base64(base_url() . 'storage/images/productors/default.png'); ?>" class="img-rounded img-responsive" id="image-logo-current" style="width: 100%;">
+            <?php if (strcmp($productor['productor_image_logo'], 'NO-IMAGE') == 0) : ?>
+               <img src="<?= base_url(FOLDER_PRODUCTORS . '/default.png'); ?>" class="img-rounded img-responsive" id="image-logo-current" style="width: 100%;">
             <?php else : ?>
-               <img src="<?= encryp_image_base64(base_url() . $view_productor->productor_image_logo); ?>" class="img-rounded img-responsive" id="image-logo-current" style="width: 100%;">
+               <img src="<?= base_url($productor['productor_image_logo']); ?>" class="img-rounded img-responsive" id="image-logo-current" style="width: 100%;">
             <?php endif ?>
             <img id="preview-img-logo" class="img-responsive img-rounded img-thumbnail" style="width: 100%;">
          </div>

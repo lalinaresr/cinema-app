@@ -1,5 +1,4 @@
-<!-- This panel content the last connections of everybody users -->
-<?php if ($get_some_sessions != FALSE) : ?>
+<?php if ($others_sessions->num_rows() > 0) : ?>
    <div class="panel panel-warning">
       <div class="panel-heading">
          <h3 class="panel-title">Últimas conexiones</h3>
@@ -15,13 +14,13 @@
                </tr>
             </thead>
             <tbody>
-               <?php foreach ($get_some_sessions->result() as $key => $value) : $id_session_fp_encryp = cryp($value->id_session); ?>
-                  <?php if ($value->id_user != $this->session->userdata('id_user')) { ?>
+               <?php foreach ($others_sessions->result_array() as $key => $value) : $id_session_fp_encryp = cryp($value['id_session']); ?>
+                  <?php if ($value['id_user'] != $this->session->userdata('id_user')) { ?>
                      <tr>
                         <td><a href='#modal-last-connections-<?= $id_session_fp_encryp; ?>' data-toggle="modal"><?= $id_session_fp_encryp; ?></a></td>
-                        <td><?= $value->rol_name; ?></td>
-                        <td><?= $value->user_username; ?></td>
-                        <td><?= get_antiquity($value->date_registered_ses); ?></td>
+                        <td><?= $value['rol_name']; ?></td>
+                        <td><?= $value['user_username']; ?></td>
+                        <td><?= get_antiquity($value['date_registered_ses']); ?></td>
                      </tr>
                      <div class="modal fade" id="modal-last-connections-<?= $id_session_fp_encryp; ?>">
                         <div class="modal-dialog modal-lg">
@@ -36,7 +35,7 @@
                                     <div class="col-md-6">
                                        <div class="form-group">
                                           <label>Navegador usado:</label>
-                                          <input type="text" class="form-control" value="<?= $value->session_browser_used; ?>" disabled>
+                                          <input type="text" class="form-control" value="<?= $value['session_browser_used']; ?>" disabled>
                                        </div>
                                     </div>
                                     <!-- END field BROWSER USED -->
@@ -44,7 +43,7 @@
                                     <div class="col-md-6">
                                        <div class="form-group">
                                           <label>Sis. Ope. usado:</label>
-                                          <input type="text" class="form-control" value="<?= $value->session_os_used; ?>" disabled>
+                                          <input type="text" class="form-control" value="<?= $value['session_os_used']; ?>" disabled>
                                        </div>
                                     </div>
                                     <!-- END field OPERATING SYSTEM USED -->
@@ -52,7 +51,7 @@
                                     <div class="col-md-12">
                                        <div class="form-group">
                                           <label>Versión del navegador:</label>
-                                          <input type="text" class="form-control" value="<?= $value->session_browser_version; ?>" disabled>
+                                          <input type="text" class="form-control" value="<?= $value['session_browser_version']; ?>" disabled>
                                        </div>
                                     </div>
                                     <!-- END field BROWSER VERSION USED -->
@@ -60,7 +59,7 @@
                                     <div class="col-md-6">
                                        <div class="form-group">
                                           <label>IP de registro:</label>
-                                          <input type="text" class="form-control" value="<?= $value->ip_registered_ses; ?>" disabled>
+                                          <input type="text" class="form-control" value="<?= $value['ip_registered_ses']; ?>" disabled>
                                        </div>
                                     </div>
                                     <!-- END field IP REGISTERED SESSION -->
@@ -68,7 +67,7 @@
                                     <div class="col-md-6">
                                        <div class="form-group">
                                           <label>Fecha de registro:</label>
-                                          <input type="text" class="form-control" value="<?= $value->date_registered_ses; ?>" disabled>
+                                          <input type="text" class="form-control" value="<?= $value['date_registered_ses']; ?>" disabled>
                                        </div>
                                     </div>
                                     <!-- END field DATE REGISTERED SESSION -->
@@ -76,7 +75,7 @@
                                     <div class="col-md-12">
                                        <div class="form-group">
                                           <label>Dispositivo de registro:</label>
-                                          <textarea type="text" class="form-control " disabled><?= $value->client_registered_ses; ?></textarea>
+                                          <textarea type="text" class="form-control " disabled><?= $value['client_registered_ses']; ?></textarea>
                                        </div>
                                     </div>
                                     <!-- END CLIENT REGISTERED SESSION -->

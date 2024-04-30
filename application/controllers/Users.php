@@ -7,7 +7,7 @@ class Users extends CI_Controller
 	{
 		parent::__construct();
 
-		if (!$this->session->userdata('is_authorized') && !$this->session->userdata('is_admin_logged_in')) {
+		if (!$this->session->userdata('is_authorized') && !$this->session->userdata('is_admin')) {
 			redirect();
 		}
 
@@ -38,8 +38,8 @@ class Users extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				base_url('public/js/users.js')
 			],
-			'get_all_users' => $this->User_model->get_all_users(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'users' => $this->User_model->index(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -64,9 +64,9 @@ class Users extends CI_Controller
 				base_url('public/js/libs/bootstrap-datetimepicker.min.js'),
 				base_url('public/js/users.js')
 			],
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'get_all_roles_activated' => $this->Role_model->get_all_roles_activated(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'roles' => $this->Role_model->index(['status' => 1]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -79,7 +79,7 @@ class Users extends CI_Controller
 
 	public function store()
 	{
-		$this->User_model->store([
+		echo $this->User_model->store([
 			'contact_firstname' => $this->input->post('user_firstname_insert'),
 			'contact_lastname' => $this->input->post('user_lastname_insert'),
 			'contact_sex' => $this->input->post('user_sex_insert'),
@@ -88,12 +88,14 @@ class Users extends CI_Controller
 			'user_status' => $this->input->post('user_status_insert'),
 			'user_username' => $this->input->post('user_username_insert'),
 			'user_email' => $this->input->post('user_email_insert'),
-			'user_password' => ''
+			'user_password' => 'password'
 		]);
 	}
 
 	public function view($id)
 	{
+		$user = $this->User_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
 			'styles' => [
@@ -102,9 +104,9 @@ class Users extends CI_Controller
 			'scripts' => [
 				base_url('public/js/users.js')
 			],
-			'id_user_encryp' => $id,
-			'view_user' => $this->User_model->get_user_by('id_user', $id),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'user_id_encrypt' => $id,
+			'user' => $user->row_array(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -117,6 +119,8 @@ class Users extends CI_Controller
 
 	public function edit($id)
 	{
+		$user = $this->User_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
 			'styles' => [
@@ -129,11 +133,11 @@ class Users extends CI_Controller
 				base_url('public/js/libs/bootstrap-datetimepicker.min.js'),
 				base_url('public/js/users.js')
 			],
-			'id_user_encryp' => $id,
-			'edit_user' => $this->User_model->get_user_by('id_user', $id),
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'get_all_roles_activated' => $this->Role_model->get_all_roles_activated(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'user_id_encrypt' => $id,
+			'user' => $user->row_array(),
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'roles' => $this->Role_model->index(['status' => 1]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -146,7 +150,7 @@ class Users extends CI_Controller
 
 	public function update()
 	{
-		$this->User_model->update([
+		echo $this->User_model->update([
 			'id_user' => $this->input->post('id_user_update'),
 			'user_contact' => $this->input->post('id_contact_update'),
 			'user_firstname' => $this->input->post('user_firstname_update'),
@@ -157,12 +161,14 @@ class Users extends CI_Controller
 			'user_status' => $this->input->post('user_status_update'),
 			'user_username' => $this->input->post('user_username_update'),
 			'user_email' => $this->input->post('user_email_update'),
-			'user_password' => ''
+			'user_password' => 'password'
 		]);
 	}
 
 	public function edit_avatar($id)
 	{
+		$user = $this->User_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
 			'styles' => [
@@ -171,9 +177,9 @@ class Users extends CI_Controller
 			'scripts' => [
 				base_url('public/js/users.js')
 			],
-			'id_user_encryp' => $id,
-			'view_user' => $this->User_model->get_user_by('id_user', $id),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'user_id_encrypt' => $id,
+			'user' => $user->row_array(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -193,9 +199,9 @@ class Users extends CI_Controller
 		$this->load->library('upload', $config);
 
 		if ($this->upload->do_upload('user_avatar_customize')) {
-			$this->User_model->update_avatar([
+			echo $this->User_model->update_avatar([
 				'id_user' => $this->input->post('id_user_customize_avatar'),
-				'user_avatar' => $this->upload->data()['file_name'],
+				'avatar' => $this->upload->data()['file_name'],
 				'old_image_ext' => substr($this->input->post('image_avatar_update_route'), -4)
 			]);
 		} else {
@@ -205,8 +211,6 @@ class Users extends CI_Controller
 
 	public function delete()
 	{
-		$id = $this->input->post('id_user_delete');
-
-		$this->User_model->delete($id);
+		echo $this->User_model->delete(['id' => $this->input->post('id_user_delete')]);
 	}
 }

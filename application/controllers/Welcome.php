@@ -3,34 +3,52 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Welcome extends CI_Controller
 {
-	private array $_styles;
-	private array $_scripts;
+	private array $_common;
 
 	public function __construct()
 	{
 		parent::__construct();
 
-		$this->_styles = [
-			base_url('public/css/libs/owl.carousel.css'),
-			base_url('public/css/libs/owl.theme.css'),
-			base_url('public/css/libs/owl.transitions.css'),
-			base_url('public/css/welcome.css')
-		];
-
-		$this->_scripts = [
-			base_url('public/js/libs/owl.carousel.min.js'),
-			base_url('public/js/welcome.js')
-		];
-
 		$this->load->model([
-			'Movie_model',
+			'User_model',
 			'Productor_model',
 			'Gender_model',
 			'Category_model',
-			'User_model'
+			'Movie_model'
 		]);
 
+		$this->_init_();
+
 		$this->load->library('pagination');
+	}
+
+	private function _init_()
+	{
+		$this->_common = [
+			'styles' => [
+				base_url('public/css/libs/owl.carousel.css'),
+				base_url('public/css/libs/owl.theme.css'),
+				base_url('public/css/libs/owl.transitions.css'),
+				base_url('public/css/welcome.css')
+			],
+			'scripts' => [
+				base_url('public/js/libs/owl.carousel.min.js'),
+				base_url('public/js/welcome.js')
+			],
+			'newest_movies' => $this->Movie_model->index([
+				'status' => 1,
+				'limit' => 8
+			]),
+			'viewed_movies' => $this->Movie_model->index([
+				'status' => 1,
+				'order_column' => 'movie_reproductions',
+				'order_filter' => 'DESC',
+				'limit' => 8
+			]),
+			'productors' => $this->Productor_model->index(['status' => 1]),
+			'genders' => $this->Gender_model->index(['status' => 1]),
+			'categories' => $this->Category_model->index(['status' => 1]),
+		];
 	}
 
 	private function _create_paginator_(&$config)
@@ -57,28 +75,23 @@ class Welcome extends CI_Controller
 
 	public function index()
 	{
+		$details = ['status' => 1];
+
+		$data = $this->Movie_model->index($details);
+
 		$config['base_url'] = site_url('welcome/index/');
-		$config['total_rows'] = $this->Movie_model->get_all_movies_activated()->num_rows();
+		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 8;
 		$config['uri_segment'] = 3;
 		$this->_create_paginator_($config);
 		$this->pagination->initialize($config);
 
-		$results_paginated = $this->Movie_model->fetch_movies($config['per_page'], $this->uri->segment(3));
-		$paginator = $this->pagination->create_links();
-
 		$params = [
 			'title' => '¡Bienvenido a ' . constant('APP_NAME') . '!',
-			'styles' => $this->_styles,
-			'scripts' => $this->_scripts,
-			'get_movies_most_viewed' => $this->Movie_model->get_movies_most_viewed(8),
-			'get_new_movies' => $this->Movie_model->get_new_movies(8),
-			'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
-			'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
-			'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
-			'results_paginated' => $results_paginated,
-			'paginator' => $paginator,
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'results' => $this->Movie_model->index(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
+			'paginator' => $this->pagination->create_links(),
+			...$this->_common,
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -92,41 +105,31 @@ class Welcome extends CI_Controller
 
 	public function search()
 	{
-		redirect('welcome/results/' . strtolower(trim($this->input->post('movie_name_search'))));
+		redirect('welcome/results/' . strtolower(trim($this->input->post('search_parameter'))));
 	}
 
-	public function results($movie_name_search)
+	public function results($search_parameter)
 	{
-		$movie_name_search = urldecode($movie_name_search);
+		$search_parameter = urldecode($search_parameter);
 
-		$total_rows = 0;
-		if ($this->Movie_model->get_count_movies_by_search($movie_name_search) != FALSE) {
-			$total_rows = $this->Movie_model->get_count_movies_by_search($movie_name_search)->num_rows();
-		}
+		$details = ['status' => 1, 'value' => $search_parameter];
 
-		$config['base_url'] = site_url("welcome/results/{$movie_name_search}/");
-		$config['total_rows'] = $total_rows;
+		$data = $this->Movie_model->search_results($details);
+
+		$config['base_url'] = site_url("welcome/results/{$search_parameter}/");
+		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;
 		$this->_create_paginator_($config);
 		$this->pagination->initialize($config);
 
-		$results_paginated = $this->Movie_model->get_movies_by_search($config['per_page'], $this->uri->segment(4), $movie_name_search);
-		$paginator = $this->pagination->create_links();
-
 		$params = [
 			'title' => constant('APP_NAME') . ' - Búsqueda',
-			'styles' => $this->_styles,
-			'scripts' => $this->_scripts,
-			'get_movies_most_viewed' => $this->Movie_model->get_movies_most_viewed(8),
-			'get_new_movies' => $this->Movie_model->get_new_movies(8),
-			'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
-			'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
-			'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
-			'results_paginated' => $results_paginated,
-			'paginator' => $paginator,
-			'param_search' => $movie_name_search,
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'results' => $this->Movie_model->search_results(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
+			'paginator' => $this->pagination->create_links(),
+			'search_parameter' => $search_parameter,
+			...$this->_common,
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -138,36 +141,31 @@ class Welcome extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function filter_by_productor($id_productor)
+	public function filter_by_productor($id)
 	{
-		$total_rows = 0;
-		if ($this->Movie_model->get_count_movies_by_productor($id_productor) != FALSE) {
-			$total_rows = $this->Movie_model->get_count_movies_by_productor($id_productor)->num_rows();
-		}
+		$details = [
+			'status' => 1,
+			'search' => 'cm_pro_mov.id_productor',
+			'value' => $id,
+			'decrypt' => true
+		];
 
-		$config['base_url'] = site_url("welcome/filter_by_productor/{$id_productor}/");
-		$config['total_rows'] = $total_rows;
+		$data = $this->Productor_model->movies_by_productor($details);
+
+		$config['base_url'] = site_url("welcome/filter_by_productor/{$id}/");
+		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;
 		$this->_create_paginator_($config);
 		$this->pagination->initialize($config);
 
-		$results_paginated = $this->Productor_model->get_movies_by_productor($config['per_page'], $this->uri->segment(4), 'cm_pro_mov.id_productor', decryp($id_productor));
-		$paginator = $this->pagination->create_links();
-
 		$params = [
 			'title' => constant('APP_NAME') . ' - Búsqueda por productor',
-			'styles' => $this->_styles,
-			'scripts' => $this->_scripts,
-			'view_productor' => $this->Productor_model->get_productor_by('id_productor', $id_productor),
-			'get_movies_most_viewed' => $this->Movie_model->get_movies_most_viewed(8),
-			'get_new_movies' => $this->Movie_model->get_new_movies(8),
-			'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
-			'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
-			'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
-			'results_paginated' => $results_paginated,
-			'paginator' => $paginator,
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'productor' => $this->Productor_model->fetch(['value' => $id, 'decrypt' => true])->row_array(),
+			'results' => $this->Productor_model->movies_by_productor(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
+			'paginator' => $this->pagination->create_links(),
+			...$this->_common,
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -179,36 +177,31 @@ class Welcome extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function filter_by_gender($id_gender)
+	public function filter_by_gender($id)
 	{
-		$total_rows = 0;
-		if ($this->Movie_model->get_count_movies_by_gender($id_gender) != FALSE) {
-			$total_rows = $this->Movie_model->get_count_movies_by_gender($id_gender)->num_rows();
-		}
+		$details = [
+			'status' => 1,
+			'search' => 'cm_gen_mov.id_gender',
+			'value' => $id,
+			'decrypt' => true
+		];
 
-		$config['base_url'] = site_url("welcome/filter_by_gender/{$id_gender}/");
-		$config['total_rows'] = $total_rows;
+		$data = $this->Gender_model->movies_by_gender($details);
+
+		$config['base_url'] = site_url("welcome/filter_by_gender/{$id}/");
+		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;
 		$this->_create_paginator_($config);
 		$this->pagination->initialize($config);
 
-		$results_paginated = $this->Gender_model->get_movies_by_gender($config['per_page'], $this->uri->segment(4), 'cm_gen_mov.id_gender', decryp($id_gender));
-		$paginator = $this->pagination->create_links();
-
 		$params = [
 			'title' => constant('APP_NAME') . ' - Búsqueda por género',
-			'styles' => $this->_styles,
-			'scripts' => $this->_scripts,
-			'view_gender' => $this->Gender_model->get_gender_by('id_gender', $id_gender),
-			'get_movies_most_viewed' => $this->Movie_model->get_movies_most_viewed(8),
-			'get_new_movies' => $this->Movie_model->get_new_movies(8),
-			'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
-			'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
-			'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
-			'results_paginated' => $results_paginated,
-			'paginator' => $paginator,
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'gender' => $this->Gender_model->fetch(['value' => $id, 'decrypt' => true])->row_array(),
+			'results' => $this->Gender_model->movies_by_gender(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
+			'paginator' => $this->pagination->create_links(),
+			...$this->_common,
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -220,36 +213,31 @@ class Welcome extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function filter_by_category($id_category)
+	public function filter_by_category($id)
 	{
-		$total_rows = 0;
-		if ($this->Movie_model->get_count_movies_by_category($id_category) != FALSE) {
-			$total_rows = $this->Movie_model->get_count_movies_by_category($id_category)->num_rows();
-		}
+		$details = [
+			'status' => 1,
+			'search' => 'cm_cat_mov.id_category',
+			'value' => $id,
+			'decrypt' => true
+		];
 
-		$config['base_url'] = site_url("welcome/filter_by_category/{$id_category}/");
-		$config['total_rows'] = $total_rows;
+		$data = $this->Category_model->movies_by_category($details);
+
+		$config['base_url'] = site_url("welcome/filter_by_category/{$id}/");
+		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;
 		$this->_create_paginator_($config);
 		$this->pagination->initialize($config);
 
-		$results_paginated = $this->Category_model->get_movies_by_category($config['per_page'], $this->uri->segment(4), 'cm_cat_mov.id_category', decryp($id_category));
-		$paginator = $this->pagination->create_links();
-
 		$params = [
 			'title' => constant('APP_NAME') . ' - Búsqueda por categoría',
-			'styles' => $this->_styles,
-			'scripts' => $this->_scripts,
-			'view_category' => $this->Category_model->get_category_by('id_category', $id_category),
-			'get_movies_most_viewed' => $this->Movie_model->get_movies_most_viewed(8),
-			'get_new_movies' => $this->Movie_model->get_new_movies(8),
-			'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
-			'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
-			'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
-			'results_paginated' => $results_paginated,
-			'paginator' => $paginator,
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'category' => $this->Category_model->fetch(['value' => $id, 'decrypt' => true])->row_array(),
+			'results' => $this->Category_model->movies_by_category(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
+			'paginator' => $this->pagination->create_links(),
+			...$this->_common,
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -261,21 +249,16 @@ class Welcome extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function watch($id_movie)
+	public function watch($id)
 	{
-		$fetch_movie = $this->Movie_model->get_movie_by('id_movie', $id_movie);
+		$movie = $this->Movie_model->fetch(['value' => $id, 'decrypt' => true])->row_array();
 
 		$params = [
-			'title' => constant('APP_NAME') . ' - ' . $fetch_movie->movie_name,
-			'styles' => $this->_styles,
-			'scripts' => $this->_scripts,
-			'watch_movie' => $fetch_movie,
-			'update_reproductions' => $this->Movie_model->update_reproductions($id_movie),
-			'get_new_movies' => $this->Movie_model->get_new_movies(8),
-			'get_all_productors_activated' => $this->Productor_model->get_all_productors_activated(),
-			'get_all_genders_activated' => $this->Gender_model->get_all_genders_activated(),
-			'get_all_categories_activated' => $this->Category_model->get_all_categories_activated(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'title' => constant('APP_NAME') . ' - ' . $movie['movie_name'],
+			'movie' => $movie,
+			'increase_views' => $this->Movie_model->increase_views($id),
+			...$this->_common,
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);

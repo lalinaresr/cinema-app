@@ -43,7 +43,7 @@ class Auth extends CI_Controller
 			redirect('dashboard');
 		}
 
-		$this->Auth_model->login([
+		echo $this->Auth_model->login([
 			'email' => $this->input->post('email'),
 			'password' => $this->input->post('password')
 		]);
@@ -52,8 +52,8 @@ class Auth extends CI_Controller
 	public function logout()
 	{
 		if ($this->session->userdata('is_authorized')) {
-			$this->session->sess_destroy();
-			echo site_url();
+			if ($this->Auth_model->logout())
+				echo site_url();
 		}
 	}
 }

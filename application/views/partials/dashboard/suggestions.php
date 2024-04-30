@@ -1,4 +1,4 @@
-<?php if ($get_some_suggestions != FALSE) : ?>
+<?php if ($suggestions->num_rows() > 0) : ?>
    <div class="panel panel-primary">
       <div class="panel-heading">
          <h3 class="panel-title">Últimas sugerencias</h3>
@@ -13,11 +13,11 @@
                </tr>
             </thead>
             <tbody>
-               <?php foreach ($get_some_suggestions->result() as $key => $value) : $id_suggestion_encryp = cryp($value->id_suggestion); ?>
+               <?php foreach ($suggestions->result_array() as $key => $value) : $id_suggestion_encryp = cryp($value['id_suggestion']); ?>
                   <tr>
                      <td><a href='#modal-view-suggestion-<?= $id_suggestion_encryp; ?>' data-toggle="modal"><?= $id_suggestion_encryp; ?></a></td>
-                     <td><?= $value->suggestion_email; ?></td>
-                     <td><?= get_antiquity($value->date_registered_sug); ?></td>
+                     <td><?= $value['suggestion_email']; ?></td>
+                     <td><?= get_antiquity($value['date_registered_sug']); ?></td>
                   </tr>
 
                   <div class="modal fade" id="modal-view-suggestion-<?= $id_suggestion_encryp; ?>">
@@ -33,7 +33,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Nombre: </label>
-                                       <input type="text" class="form-control" value="<?= $value->suggestion_name; ?>" disabled>
+                                       <input type="text" class="form-control" value="<?= $value['suggestion_name']; ?>" disabled>
                                     </div>
                                  </div>
                                  <!-- END field SUGGESTION NAME -->
@@ -42,7 +42,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Correo electrónico: </label>
-                                       <input type="text" class="form-control" value="<?= $value->suggestion_email; ?>" disabled>
+                                       <input type="text" class="form-control" value="<?= $value['suggestion_email']; ?>" disabled>
                                     </div>
                                  </div>
                                  <!-- END field SUGGESTION EMAIL -->
@@ -51,7 +51,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>UUID:</label>
-                                       <input type="text" class="form-control" value="<?= $value->suggestion_key; ?>" disabled>
+                                       <input type="text" class="form-control" value="<?= $value['suggestion_key']; ?>" disabled>
                                     </div>
                                  </div>
                                  <!-- END field SUGGESTION KEY -->
@@ -60,7 +60,7 @@
                                  <div class="col-md-12">
                                     <div class="form-group">
                                        <label>Descripción:</label>
-                                       <textarea type="text" class="form-control " disabled><?= $value->suggestion_description; ?></textarea>
+                                       <textarea type="text" class="form-control " disabled><?= $value['suggestion_description']; ?></textarea>
                                     </div>
                                  </div>
                                  <!-- END field SUGGESTION DESCRIPTION -->
@@ -69,7 +69,7 @@
                                  <div class="col-md-6">
                                     <div class="form-group">
                                        <label>IP de registro:</label>
-                                       <input type="text" class="form-control" value="<?= $value->ip_registered_sug; ?>" disabled>
+                                       <input type="text" class="form-control" value="<?= $value['ip_registered_sug']; ?>" disabled>
                                     </div>
                                  </div>
                                  <!-- END field IP REGISTERED SUGGESTION -->
@@ -78,7 +78,7 @@
                                  <div class="col-md-6">
                                     <div class="form-group">
                                        <label>Fecha de registro:</label>
-                                       <input type="text" class="form-control" value="<?= $value->date_registered_sug; ?>" disabled>
+                                       <input type="text" class="form-control" value="<?= $value['date_registered_sug']; ?>" disabled>
                                     </div>
                                  </div>
                                  <!-- END field DATE REGISTERED SUGGESTION -->
@@ -87,7 +87,7 @@
                                  <div class="col-md-12">
                                     <div class="form-group">
                                        <label>Dispositivo de registro:</label>
-                                       <textarea type="text" class="form-control " disabled><?= $value->client_registered_sug; ?></textarea>
+                                       <textarea type="text" class="form-control " disabled><?= $value['client_registered_sug']; ?></textarea>
                                     </div>
                                  </div>
                                  <!-- END CLIENT REGISTERED SUGGESTION -->

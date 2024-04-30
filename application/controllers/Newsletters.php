@@ -37,8 +37,8 @@ class Newsletters extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				base_url('public/js/newsletters.js')
 			],
-			'get_all_newsletters' => $this->Newsletter_model->get_all_newsletters(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'newsletters' => $this->Newsletter_model->index(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);

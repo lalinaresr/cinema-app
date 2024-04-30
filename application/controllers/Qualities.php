@@ -12,8 +12,8 @@ class Qualities extends CI_Controller
 		}
 
 		$this->load->model([
-			'Quality_model',
 			'User_model',
+			'Quality_model',
 			'Status_model'
 		]);
 	}
@@ -38,8 +38,8 @@ class Qualities extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				base_url('public/js/qualities.js')
 			],
-			'get_all_qualities' => $this->Quality_model->get_all_qualities(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'qualities' => $this->Quality_model->index(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -60,8 +60,8 @@ class Qualities extends CI_Controller
 			'scripts' => [
 				base_url('public/js/qualities.js')
 			],
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -74,7 +74,7 @@ class Qualities extends CI_Controller
 
 	public function store()
 	{
-		$this->Quality_model->store([
+		echo $this->Quality_model->store([
 			'quality_name' => $this->input->post('quality_name_insert'),
 			'quality_slug' => $this->input->post('quality_slug_insert'),
 			'quality_status' => $this->input->post('quality_status_insert')
@@ -83,6 +83,8 @@ class Qualities extends CI_Controller
 
 	public function view($id)
 	{
+		$quality = $this->Quality_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Calidades',
 			'styles' => [
@@ -91,8 +93,8 @@ class Qualities extends CI_Controller
 			'scripts' => [
 				base_url('public/js/qualities.js')
 			],
-			'view_quality' => $this->Quality_model->get_quality_by('id_quality', $id),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'quality' => $quality->row_array(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -105,6 +107,8 @@ class Qualities extends CI_Controller
 
 	public function edit($id)
 	{
+		$quality = $this->Quality_model->fetch(['value' => $id, 'decrypt' => true]);
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Calidades',
 			'styles' => [
@@ -113,10 +117,10 @@ class Qualities extends CI_Controller
 			'scripts' => [
 				base_url('public/js/qualities.js')
 			],
-			'id_quality_encryp' => $id,
-			'edit_quality' => $this->Quality_model->get_quality_by('id_quality', $id),
-			'get_all_status' => $this->Status_model->get_all_status(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'quality_id_encrypt' => $id,
+			'quality' => $quality->row_array(),
+			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
@@ -129,7 +133,7 @@ class Qualities extends CI_Controller
 
 	public function update()
 	{
-		$this->Quality_model->update([
+		echo $this->Quality_model->update([
 			'id_quality' => $this->input->post('id_quality_update'),
 			'quality_name' => $this->input->post('quality_name_update'),
 			'quality_slug' => $this->input->post('quality_slug_update'),
@@ -139,8 +143,6 @@ class Qualities extends CI_Controller
 
 	public function delete()
 	{
-		$id = $this->input->post('id_quality_delete');
-
-		$this->Quality_model->delete($id);
+		echo $this->Quality_model->delete(['id' => $this->input->post('id_quality_delete')]);
 	}
 }

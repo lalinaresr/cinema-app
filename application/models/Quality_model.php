@@ -1,179 +1,121 @@
 <?php
-	defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-	class Quality_model extends CI_Model {
-
-        /**
-        * [__construct description]
-        */
-		public function __construct(){
-			parent::__construct();
-		}
-
-		/**
-		* [get_all_qualitys description]
-		* @return [type] [description]
-		*/
-		public function get_all_qualities(){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_qualities')
-			->join('cm_status', 'cm_status.id_status = cm_qualities.id_status')
-			->order_by('quality_name', 'DESC')
-			->get();
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}			
-		}    
-
-		/**
-		* [get_all_qualities_activated description]
-		* @return [type] [description]
-		*/
-		public function get_all_qualities_activated(){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_qualities')
-			->join('cm_status', 'cm_status.id_status = cm_qualities.id_status')
-			->where('cm_qualities.id_status', 1)
-			->order_by('quality_name', 'DESC')
-			->get();
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
-		}
-
-		/**
-		* [get_all_qualities_inactivated description]
-		* @return [type] [description]
-		*/
-		public function get_all_qualities_inactivated(){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_qualities')
-			->join('cm_status', 'cm_status.id_status = cm_qualities.id_status')
-			->where('cm_qualities.id_status', 2)
-			->order_by('quality_name', 'DESC')
-			->get();
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet;
-			} else {
-				return FALSE;
-			}
-		}
-
-		/**
-		* [insert_model description]
-		* @param  [type] $insert [description]
-		* @return [type]         [description]
-		*/
-		public function store($insert){
-			$this->db->where('quality_name', $insert['quality_name']);
-			$resultSet = $this->db->get('cm_qualities');
-
-			if ($resultSet->num_rows() > 0) { 
-				echo "Already"; 
-			} else {
-				$data_insert_quality = array(
-					'id_status' => $insert['quality_status'],
-					'quality_name' => $insert['quality_name'],
-					'quality_slug' => $insert['quality_slug'],
-					'ip_registered_qlt' => get_ip_current(),
-					'date_registered_qlt' => get_date_current(),
-					'client_registered_qlt' => get_agent_current()
-				);
-			    $insert_quality = $this->db->insert('cm_qualities', $data_insert_quality);
-
-			    if ($insert_quality != FALSE) { 
-			    	echo "Success";			                          
-			    } else { 
-			    	echo "Error"; 
-			    }                
-			}  
-		}    
-
-		/**
-		* [get_quality_by description]
-		* @param  [type] $data  [description]
-		* @param  [type] $value [description]
-		* @return [type]        [description]
-		*/
-		public function get_quality_by($data, $value){
-			$resultSet = $this->db
-			->select('*')
-			->from('cm_qualities')
-			->join('cm_status', 'cm_status.id_status = cm_qualities.id_status')
-			->where($data, decryp($value))
-			->get('');
-
-			if ($resultSet->num_rows() > 0) {
-				return $resultSet->row();
-			} else {
-				return FALSE;
-			}	
-		}
-
-		/**
-		* [update_model description]
-		* @param  [type] $update [description]
-		* @return [type]         [description]
-		*/
-		public function update($update){
-			$this->db->where('quality_name', $update['quality_name']);
-			$resultSet = $this->db->get('cm_qualities');
-
-			if ($resultSet->num_rows() > 0) { 
-				echo "Already"; 
-			} else {
-				$data_update_quality = array(
-					'id_status' => $update['quality_status'],
-					'quality_name' => $update['quality_name'],
-					'quality_slug' => $update['quality_slug'],
-					'ip_modified_qlt' => get_ip_current(),
-					'date_modified_qlt' => get_date_current(),
-					'client_modified_qlt' => get_agent_current()
-				);
-				$this->db->where('id_quality', decryp($update['id_quality']));
-			    $update_quality = $this->db->update('cm_qualities', $data_update_quality);
-
-			    if ($update_quality != FALSE) { 
-			    	echo "Success";			                          
-			    } else { 
-			    	echo "Error"; 
-			    }                
-			}
-		}		
-
-		/**
-		* [delete_model description]
-		* @param  [type] $id_quality [description]
-		* @return [type]            [description]
-		*/
-		public function delete($id_quality){
-			$this->db->where('id_quality', decryp($id_quality));
-		   	$resultSet = $this->db->get('cm_qualities');
-
-		   	if ($resultSet->num_rows() > 0) {
-		   		$quality_recovered = $resultSet->row();
-		   		
-		   		$this->db->where('id_quality', $quality_recovered->id_quality);
-		   		$quality_deleted = $this->db->delete('cm_qualities');						
-
-		   		if ($quality_deleted != FALSE) { 		   			
-		   			echo "Success";			                          		   			 
-		   		} else { 
-		   			echo "Error"; 
-		   		} 
-		   	} else {
-		   		echo "Missing";		   			   		
-		   	}
-		}
+class Quality_model extends CI_Model
+{
+	public function __construct()
+	{
+		parent::__construct();
 	}
-?>
+
+	public function index(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'cm_qualities.*, cm_status.status_name';
+		$builder['order_column'] = $builder['order_column'] ?? 'id_quality';
+		$builder['order_filter'] = $builder['order_filter'] ?? 'DESC';
+		$builder['start'] = $builder['start'] ?? 0;
+
+		$response = $this->db
+			->select($builder['columns'])
+			->from('cm_qualities')
+			->join('cm_status', 'cm_status.id_status = cm_qualities.id_status');
+
+		if (isset($builder['status'])) {
+			$response = $response->where('cm_qualities.id_status', $builder['status']);
+		}
+
+		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
+
+		if (isset($builder['limit'])) {
+			$response = $response->limit($builder['limit'], $builder['start']);
+		}
+
+		$response = $response->get();
+
+		return $response;
+	}
+
+	public function store($data)
+	{
+		$response = $this->db
+			->where('quality_name', $data['quality_name'])
+			->get('cm_qualities');
+
+		if ($response->num_rows() > 0) {
+			return 'existing';
+		}
+
+		$store = $this->db->insert('cm_qualities', [
+			'id_status' => $data['quality_status'],
+			'quality_name' => $data['quality_name'],
+			'quality_slug' => url_title($data['quality_name'], '-', true),
+			'ip_registered_qlt' => get_ip_current(),
+			'date_registered_qlt' => get_date_current(),
+			'client_registered_qlt' => get_agent_current()
+		]);
+
+		return ($store ? 'success' : 'error');
+	}
+
+	public function fetch(array $builder = array())
+	{
+		$builder['columns'] = $builder['columns'] ?? 'cm_qualities.*, cm_status.status_name';
+		$builder['search'] = $builder['search'] ?? 'id_quality';
+
+		$response = $this->db
+			->select($builder['columns'])
+			->from('cm_qualities')
+			->join('cm_status', 'cm_status.id_status = cm_qualities.id_status')
+			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+			->limit(1)
+			->get();
+
+		return $response;
+	}
+
+	public function update($data)
+	{
+		$response = $this->db
+			->where('id_status', $data['quality_status'])
+			->where('quality_name', $data['quality_name'])
+			->get('cm_qualities');
+
+		if ($response->num_rows() > 0) {
+			return 'existing';
+		}
+
+		$update = $this->db
+			->where('id_quality', decryp($data['id_quality']))
+			->update('cm_qualities', [
+				'id_status' => $data['quality_status'],
+				'quality_name' => $data['quality_name'],
+				'quality_slug' => url_title($data['quality_name'], '-', true),
+				'ip_modified_qlt' => get_ip_current(),
+				'date_modified_qlt' => get_date_current(),
+				'client_modified_qlt' => get_agent_current()
+			]);
+
+		return ($update ? 'success' : 'error');
+	}
+
+	public function delete($data)
+	{
+		$id = decryp($data['id']);
+
+		$response = $this->db
+			->select('id_quality')
+			->where('id_quality', $id)
+			->limit(1)
+			->get('cm_qualities');
+
+		if ($response->num_rows() == 0) {
+			return 'not-found';
+		}
+
+		$delete = $this->db
+			->where('id_quality', $id)
+			->delete('cm_qualities');
+
+		return ($delete ? 'success' : 'error');
+	}
+}

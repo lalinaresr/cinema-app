@@ -1,4 +1,4 @@
-<?php if ($get_some_newsletters != FALSE) : ?>
+<?php if ($newsletters->num_rows() > 0) : ?>
    <div class="panel panel-success">
       <div class="panel-heading">
          <h3 class="panel-title">Últimos seguidores</h3>
@@ -13,11 +13,11 @@
                </tr>
             </thead>
             <tbody>
-               <?php foreach ($get_some_newsletters->result() as $key => $value) : $id_newsletter_encryp = cryp($value->id_newsletter); ?>
+               <?php foreach ($newsletters->result_array() as $key => $value) : $id_newsletter_encryp = cryp($value['id_newsletter']); ?>
                   <tr>
                      <td><a href='#modal-view-newsletter-<?= $id_newsletter_encryp; ?>' data-toggle="modal"><?= $id_newsletter_encryp; ?></a></td>
-                     <td><?= $value->newsletter_email; ?></td>
-                     <td><?= get_antiquity($value->date_registered_nlt); ?></td>
+                     <td><?= $value['newsletter_email']; ?></td>
+                     <td><?= get_antiquity($value['date_registered_nlt']); ?></td>
                   </tr>
 
                   <div class="modal fade" id="modal-view-newsletter-<?= $id_newsletter_encryp; ?>">
@@ -33,7 +33,7 @@
                                  <div class="col-md-6">
                                     <div class="form-group">
                                        <label>Nombre: </label>
-                                       <input type="text" class="form-control" value="<?= $value->newsletter_name; ?>" disabled>
+                                       <input type="text" class="form-control" value="<?= $value['newsletter_name']; ?>" disabled>
                                     </div>
                                  </div>
                                  <!-- END field NEWSLETTER NAME -->
@@ -42,7 +42,7 @@
                                  <div class="col-md-6">
                                     <div class="form-group">
                                        <label>Correo electrónico: </label>
-                                       <input type="text" class="form-control" value="<?= $value->newsletter_email; ?>" disabled>
+                                       <input type="text" class="form-control" value="<?= $value['newsletter_email']; ?>" disabled>
                                     </div>
                                  </div>
                                  <!-- END field NEWSLETTER EMAIL -->
@@ -51,7 +51,7 @@
                                  <div class="col-md-6">
                                     <div class="form-group">
                                        <label>IP de registro:</label>
-                                       <input type="text" class="form-control" value="<?= $value->ip_registered_nlt; ?>" disabled>
+                                       <input type="text" class="form-control" value="<?= $value['ip_registered_nlt']; ?>" disabled>
                                     </div>
                                  </div>
                                  <!-- END field IP REGISTERED NEWSLETTER -->
@@ -60,7 +60,7 @@
                                  <div class="col-md-6">
                                     <div class="form-group">
                                        <label>Fecha de registro:</label>
-                                       <input type="text" class="form-control" value="<?= $value->date_registered_nlt; ?>" disabled>
+                                       <input type="text" class="form-control" value="<?= $value['date_registered_nlt']; ?>" disabled>
                                     </div>
                                  </div>
                                  <!-- END field DATE REGISTERED NEWSLETTER -->
@@ -69,7 +69,7 @@
                                  <div class="col-md-12">
                                     <div class="form-group">
                                        <label>Dispositivo de registro:</label>
-                                       <textarea type="text" class="form-control " disabled><?= $value->client_registered_nlt; ?></textarea>
+                                       <textarea type="text" class="form-control " disabled><?= $value['client_registered_nlt']; ?></textarea>
                                     </div>
                                  </div>
                                  <!-- END CLIENT REGISTERED NEWSLETTER -->

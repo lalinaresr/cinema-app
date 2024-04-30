@@ -5,8 +5,8 @@
       <div class="col-md-4">
          <div class="form-group">
             <select id="ids_productors_insert" name="ids_productors_insert[]" multiple class="form-control" required>
-               <?php foreach ($get_all_productors_activated->result() as $key => $value) : ?>
-                  <option value="<?= $value->id_productor; ?>"><?= $value->productor_name; ?></option>
+               <?php foreach ($productors->result_array() as $value) : ?>
+                  <option value="<?= $value['id_productor']; ?>"><?= $value['productor_name']; ?></option>
                <?php endforeach ?>
             </select>
          </div>
@@ -17,8 +17,8 @@
       <div class="col-md-4">
          <div class="form-group">
             <select id="ids_genders_insert" name="ids_genders_insert[]" multiple class="form-control" required>
-               <?php foreach ($get_all_genders_activated->result() as $key => $value) : ?>
-                  <option value="<?= $value->id_gender; ?>"><?= $value->gender_name; ?></option>
+               <?php foreach ($genders->result_array() as $value) : ?>
+                  <option value="<?= $value['id_gender']; ?>"><?= $value['gender_name']; ?></option>
                <?php endforeach ?>
             </select>
          </div>
@@ -29,8 +29,8 @@
       <div class="col-md-4">
          <div class="form-group">
             <select id="ids_categories_insert" name="ids_categories_insert[]" multiple class="form-control" required>
-               <?php foreach ($get_all_categories_activated->result() as $key => $value) : ?>
-                  <option value="<?= $value->id_category; ?>"><?= $value->category_name; ?></option>
+               <?php foreach ($categories->result_array() as $value) : ?>
+                  <option value="<?= $value['id_category']; ?>"><?= $value['category_name']; ?></option>
                <?php endforeach ?>
             </select>
          </div>
@@ -42,8 +42,8 @@
          <div class="form-group">
             <label>Estatus:</label>
             <select id="movie_status_insert" name="movie_status_insert" class="form-control" required>
-               <?php foreach ($get_all_status->result() as $key => $value) : ?>
-                  <option value="<?= $value->id_status; ?>"><?= $value->status_name; ?></option>
+               <?php foreach ($status->result_array() as $value) : ?>
+                  <option value="<?= $value['id_status']; ?>"><?= $value['status_name']; ?></option>
                <?php endforeach ?>
             </select>
          </div>
@@ -73,8 +73,8 @@
          <div class="form-group">
             <label>Calidad:</label>
             <select id="movie_quality_insert" name="movie_quality_insert" class="form-control" required>
-               <?php foreach ($get_all_qualities_activated->result() as $key => $value) : ?>
-                  <option value="<?= $value->id_quality; ?>"><?= $value->quality_name; ?></option>
+               <?php foreach ($qualities->result_array() as $value) : ?>
+                  <option value="<?= $value['id_quality']; ?>"><?= $value['quality_name']; ?></option>
                <?php endforeach ?>
             </select>
          </div>
@@ -109,7 +109,7 @@
          <div class="form-group">
             <label>País de origen:</label>
             <select id="movie_country_origin_insert" name="movie_country_origin_insert" class="form-control" required>
-               <?php foreach (get_all_countries() as $key => $value) : ?>
+               <?php foreach (get_all_countries() as $value) : ?>
                   <option value="<?= $value; ?>"><?= $value; ?></option>
                <?php endforeach ?>
             </select>

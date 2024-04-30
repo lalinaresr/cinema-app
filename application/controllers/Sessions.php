@@ -7,13 +7,13 @@ class Sessions extends CI_Controller
 	{
 		parent::__construct();
 
-		if (!$this->session->userdata('is_authorized') && !$this->session->userdata('is_admin_logged_in')) {
+		if (!$this->session->userdata('is_authorized') && !$this->session->userdata('is_admin')) {
 			redirect();
 		}
 
 		$this->load->model([
-			'Session_model',
-			'User_model'
+			'User_model',
+			'Session_model'
 		]);
 	}
 
@@ -37,8 +37,8 @@ class Sessions extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				base_url('public/js/sessions.js')
 			],
-			'get_all_sessions' => $this->Session_model->get_all_sessions(),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'sessions' => $this->Session_model->index(),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);

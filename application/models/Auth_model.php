@@ -1,98 +1,85 @@
 <?php
-	defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-	class Auth_model extends CI_Model {
+class Auth_model extends CI_Model
+{
+    public function __construct()
+    {
+        parent::__construct();
 
-        /**
-        * [__construct description]
-        */
-		public function __construct(){
-			parent::__construct();
+        $this->load->model('Session_model');
+    }
 
-            $this->load->model('Session_model');
-		}
-		
-        /**
-        * [login_model description]
-        * @param  [type] $login [description]
-        * @return [type]        [description]
-        */
-		public function login($login){
-			$user_recovered = $this->db
-            ->select('*')
-            ->from('cm_users')
-            ->where('user_email', $login['email'])
-            ->where('id_status', 1) 
-            ->get();
+    private function _send_email_($to, $subject, $message)
+    {
+        $this->load->library('email');
 
-            $type_logged = '';
-            if ($user_recovered->num_rows() > 0) {
-                $user_actived = $user_recovered->row();
-                if (password_verify($login['password'], $user_actived->user_password)) {  
-                    switch ($user_actived->id_rol) {
-                        case 1:
-                            $type_logged = 'is_admin_logged_in';
-                            break;
-                        case 2:
-                            $type_logged = 'is_user_logged_in';
-                            break;
-                        case 3:
-                            $type_logged = 'is_guest_logged_in';
-                            break;
-                        default:
-                            break;
-                    }
+        $this->email->initialize([
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => GMAIL['EMAIL'],
+            'smtp_pass' => GMAIL['PASSWORD'],
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
+        ]);
 
-                    $user_current = array(
-                        'is_authorized' => true,
-                        $type_logged => true,
-                        'id_user' => $user_actived->id_user, 
-                        'id_contact' => $user_actived->id_contact, 
-                        'id_rol' => $user_actived->id_rol, 
-                        'id_status' => $user_actived->id_status, 
-                        'user_username' => $user_actived->user_username, 
-                        'user_email' => $user_actived->user_email, 
-                        'user_password' => $user_actived->user_password, 
-                        'user_avatar' => $user_actived->user_avatar
-                    );
+        $this->email->from(GMAIL['EMAIL']);
+        $this->email->to($to);
+        $this->email->subject($subject);
+        $this->email->message($message);
+        $this->email->send();
+    }
 
-                    $this->session->set_userdata($user_current); 
+    private function _get_role_(int $role_id): string | null
+    {
+        return match ($role_id) {
+            1 => 'is_admin',
+            2 => 'is_user',
+            3 => 'is_guest',
+            default => NULL
+        };
+    }
 
-                    $insert_session = $this->Session_model->insert($this->session->userdata('id_user'));
+    private function _set_userdata_(array $data = array()): void
+    {
+        $this->session->set_userdata($data);
+    }
 
-                    echo "Success";
-                }else{ echo "Error"; }
-            }else{ echo "Missing"; }
-		}       
+    public function login($data)
+    {
+        $response = $this->db->query(sprintf("SELECT id_user, id_contact, id_rol, id_status, user_username, user_email, user_password, user_avatar FROM cm_users WHERE user_email = '%s' AND id_status = 1 LIMIT 1", $data['email']));
 
-        /**
-        * [send_mailing description]
-        * @param  [type] $to      [description]
-        * @param  [type] $subject [description]
-        * @param  [type] $message [description]
-        * @return [type]          [description]
-        */
-		public function send_mailing($to, $subject, $message){
-			$this->load->library('email');
+        if ($response->num_rows() == 0) {
+            return 'not-found';
+        }
 
-			$details_mail = array(
-				'protocol' => 'smtp',
-				'smtp_host' => 'ssl://smtp.gmail.com',
-				'smtp_port' => 465,
-				'smtp_user' => GMAIL['EMAIL'],
-				'smtp_pass' => GMAIL['PASSWORD'],
-				'mailtype' => 'html',
-				'charset' => 'utf-8',
-				'newline' => "\r\n"
-			);    
-			
-			$this->email->initialize($details_mail);
-			
-			$this->email->from(GMAIL['EMAIL']);
-			$this->email->to($to);
-			$this->email->subject($subject);
-			$this->email->message($message);
-			$this->email->send();
-		}
-	}
-?>
+        $user = $response->row_array();
+
+        if (password_verify($data['password'], $user['user_password'])) {
+            $this->_set_userdata_([
+                'is_authorized' => true,
+                'id_user' => $user['id_user'],
+                'id_contact' => $user['id_contact'],
+                'id_rol' => $user['id_rol'],
+                $this->_get_role_($user['id_rol']) => true,
+                'id_status' => $user['id_status'],
+                'user_username' => $user['user_username']
+            ]);
+
+            $store = $this->Session_model->store($user['id_user']);
+            return 'success';
+        } else {
+            return 'not-match';
+        }
+    }
+
+    public function logout()
+    {
+        $this->_set_userdata_();
+        $this->session->sess_destroy();
+
+        return 'success';
+    }
+}

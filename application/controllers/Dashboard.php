@@ -26,11 +26,11 @@ class Dashboard extends CI_Controller
 			'styles' => [
 				base_url('public/css/dashboard.css')
 			],
-			'get_some_suggestions' => $this->Suggestion_model->get_some_suggestions(),
-			'get_some_newsletters' => $this->Newsletter_model->get_some_newsletters(),
-			'get_some_sessions' => $this->Session_model->get_some_sessions($this->session->userdata('id_user')),
-			'get_my_sessions' => $this->Session_model->get_my_sessions($this->session->userdata('id_user')),
-			'user_avatar' => $this->User_model->has_user_avatar($this->session->userdata('id_user'))
+			'suggestions' => $this->Suggestion_model->index(['status' => 1, 'limit' => 5]),
+			'newsletters' => $this->Newsletter_model->index(['limit' => 5]),
+			'others_sessions' => $this->Session_model->index(['not' => 'cm_sessions.id_user', 'value' => $this->session->userdata('id_user'), 'limit' => 5]),
+			'my_sessions' => $this->Session_model->index(['in' => 'cm_sessions.id_user', 'value' => $this->session->userdata('id_user'), 'limit' => 5]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);

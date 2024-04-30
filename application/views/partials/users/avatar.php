@@ -2,8 +2,8 @@
 <div class="row">
    <form action="<?= site_url('users/update_avatar/'); ?>" method="post" id="form-update-avatar" enctype="multipart/form-data">
       <div class="col-md-12">
-         <input type="hidden" id="id_user_customize_avatar" name="id_user_customize_avatar" class="form-control" value="<?= $id_user_encryp; ?>">
-         <input type="hidden" id="image_avatar_update_route" name="image_avatar_update_route" class="form-control" value="<?= $view_user->user_avatar; ?>">
+         <input type="hidden" id="id_user_customize_avatar" name="id_user_customize_avatar" class="form-control" value="<?= $user_id_encrypt; ?>">
+         <input type="hidden" id="image_avatar_update_route" name="image_avatar_update_route" class="form-control" value="<?= $user['user_avatar']; ?>">
          <!-- field USER AVATAR -->
          <div class="form-group">
             <label>Avatar:</label>
@@ -11,10 +11,10 @@
          </div>
          <!-- END field USER AVATAR -->
          <div class="form-group">
-            <?php if (strcmp($view_user->user_avatar, 'NO-IMAGE') == 0) : ?>
-               <img src="<?= encryp_image_base64(base_url() . 'storage/images/users/default.png'); ?>" class="img-rounded img-responsive" id="image-avatar-current">
+            <?php if (strcmp($user['user_avatar'], 'NO-IMAGE') == 0) : ?>
+               <img src="<?= base_url('storage/images/users/default.png'); ?>" class="img-rounded img-responsive" id="image-avatar-current">
             <?php else : ?>
-               <img src="<?= encryp_image_base64(base_url() . $view_user->user_avatar); ?>" class="img-rounded img-responsive" id="image-avatar-current">
+               <img src="<?= base_url($user['user_avatar']) ?>" class="img-rounded img-responsive" id="image-avatar-current">
             <?php endif ?>
             <img id="preview-img-avatar" class="img-responsive img-rounded img-thumbnail">
          </div>

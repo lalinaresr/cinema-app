@@ -1,6 +1,6 @@
 <h1 class="page-header">Catálogo de sesiones.</h1>
-<?php if ($get_all_sessions != FALSE) : ?>
-   <table class="table table-striped table-hover table-responsive table-bordered table-condensed" id="sessions-table">
+<?php if ($sessions->num_rows() > 0) : ?>
+   <table class="table table-striped table-hover table-condensed table-bordered table-condensed" id="sessions-table">
       <thead>
          <tr>
             <th>ID</th>
@@ -12,21 +12,21 @@
          </tr>
       </thead>
       <tbody>
-         <?php foreach ($get_all_sessions->result() as $key => $value) : $id_session_encryp = cryp($value->id_session);
-            $id_user_encryp = cryp($value->id_user); ?>
-            <tr class="<?php echo $value->id_status == 1 ? 'success' : 'danger';  ?>">
+         <?php foreach ($sessions->result_array() as $key => $value) : $id_session_encryp = cryp($value['id_session']);
+            $id_user_encryp = cryp($value['id_user']); ?>
+            <tr class="<?php echo $value['id_status'] == 1 ? 'success' : 'danger';  ?>">
                <td><a href='#modal-view-session-<?= $id_session_encryp; ?>' data-toggle="modal"><?= $id_session_encryp; ?></a></td>
-               <td><?= $value->rol_name; ?></td>
-               <td><a href='#modal-view-avatar-user-<?= $id_user_encryp; ?>' data-toggle="modal"><?= $value->user_username; ?></a></td>
+               <td><?= $value['rol_name']; ?></td>
+               <td><a href='#modal-view-avatar-user-<?= $id_user_encryp; ?>' data-toggle="modal"><?= $value['user_username']; ?></a></td>
                <td>
-                  <?php if ($value->id_status == 1) : ?>
+                  <?php if ($value['id_status'] == 1) : ?>
                      <span class="label label-success">Activo</span>
                   <?php else : ?>
                      <span class="label label-danger">Inactivo</span>
                   <?php endif ?>
                </td>
-               <td><?= what_day_is($value->date_registered_ses); ?></td>
-               <td><?= get_antiquity($value->date_registered_ses); ?></td>
+               <td><?= what_day_is($value['date_registered_ses']); ?></td>
+               <td><?= get_antiquity($value['date_registered_ses']); ?></td>
             </tr>
 
             <!-- This is the modal that shows the profile image of the user. -->
@@ -38,14 +38,14 @@
                         <h4 class="modal-title text-center text-white">Usuario #<?= $id_user_encryp; ?></h4>
                      </div>
                      <div class="modal-body">
-                        <?php if (strcmp($value->user_avatar, 'NO-IMAGE') == 0) : ?>
+                        <?php if (strcmp($value['user_avatar'], 'NO-IMAGE') == 0) : ?>
                            <img src="<?= encryp_image_base64(base_url() . 'storage/images/users/default.png'); ?>" class="img-rounded img-responsive center-block">
                         <?php else : ?>
-                           <img src="<?= encryp_image_base64(base_url() . $value->user_avatar); ?>" class="img-rounded img-responsive center-block">
+                           <img src="<?= encryp_image_base64(base_url() . $value['user_avatar']); ?>" class="img-rounded img-responsive center-block">
                         <?php endif ?>
                      </div>
                      <div class="modal-footer bg-black">
-                        <?php if ($value->id_user == $this->session->userdata('id_user')) : ?>
+                        <?php if ($value['id_user'] == $this->session->userdata('id_user')) : ?>
                            <a href="<?= site_url('users/edit_avatar/') . $id_user_encryp . '/'; ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar avatar</a>
                         <?php endif ?>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
@@ -68,7 +68,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>Navegador usado:</label>
-                                 <input type="text" class="form-control" value="<?= $value->session_browser_used; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['session_browser_used']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field BROWSER USED -->
@@ -77,7 +77,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>Sis. Ope. usado:</label>
-                                 <input type="text" class="form-control" value="<?= $value->session_os_used; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['session_os_used']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field OPERATING SYSTEM USED -->
@@ -86,7 +86,7 @@
                            <div class="col-md-12">
                               <div class="form-group">
                                  <label>Versión del navegador:</label>
-                                 <input type="text" class="form-control" value="<?= $value->session_browser_version; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['session_browser_version']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field BROWSER VERSION USED -->
@@ -95,7 +95,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>IP de registro:</label>
-                                 <input type="text" class="form-control" value="<?= $value->ip_registered_ses; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['ip_registered_ses']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field IP REGISTERED SESSION -->
@@ -104,7 +104,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>Fecha de registro:</label>
-                                 <input type="text" class="form-control" value="<?= $value->date_registered_ses; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['date_registered_ses']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field DATE REGISTERED SESSION -->
@@ -113,7 +113,7 @@
                            <div class="col-md-12">
                               <div class="form-group">
                                  <label>Dispositivo de registro:</label>
-                                 <textarea type="text" class="form-control " disabled><?= $value->client_registered_ses; ?></textarea>
+                                 <textarea type="text" class="form-control " disabled><?= $value['client_registered_ses']; ?></textarea>
                               </div>
                            </div>
                            <!-- END CLIENT REGISTERED SESSION -->

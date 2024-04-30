@@ -1,5 +1,5 @@
 <h1 class="page-header">Catálogo de calidades.</h1>
-<?php if ($get_all_qualities != FALSE) : ?>
+<?php if ($qualities->num_rows() > 0) : ?>
    <table class="table table-striped table-hover table-responsive table-bordered table-condensed" id="qualities-table">
       <thead>
          <tr>
@@ -11,18 +11,18 @@
          </tr>
       </thead>
       <tbody>
-         <?php foreach ($get_all_qualities->result() as $key => $value) : $id_quality_encryp = cryp($value->id_quality); ?>
-            <tr class="<?php echo $value->id_status == 1 ? 'success' : 'danger';  ?>">
+         <?php foreach ($qualities->result_array() as $key => $value) : $id_quality_encryp = cryp($value['id_quality']); ?>
+            <tr class="<?php echo $value['id_status'] == 1 ? 'success' : 'danger';  ?>">
                <td><a href='#modal-view-quality-<?= $id_quality_encryp; ?>' data-toggle="modal"><?= $id_quality_encryp; ?></a></td>
-               <td><?= $value->quality_name; ?></td>
+               <td><?= $value['quality_name']; ?></td>
                <td>
-                  <?php if ($value->id_status == 1) : ?>
+                  <?php if ($value['id_status'] == 1) : ?>
                      <span class="label label-success">Activo</span>
                   <?php else : ?>
                      <span class="label label-danger">Inactivo</span>
                   <?php endif ?>
                </td>
-               <td><?= get_antiquity($value->date_registered_qlt); ?></td>
+               <td><?= get_antiquity($value['date_registered_qlt']); ?></td>
                <td>
                   <a href="<?= site_url('qualities/view/') . $id_quality_encryp . '/'; ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
                   <a href="<?= site_url('qualities/edit/') . $id_quality_encryp . '/'; ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -44,7 +44,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>Nombre:</label>
-                                 <input type="text" class="form-control" value="<?= $value->quality_name; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['quality_name']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field quality NAME -->
@@ -53,7 +53,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>Alias:</label>
-                                 <input type="text" class="form-control" value="<?= $value->quality_slug; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['quality_slug']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field quality SLUG -->
@@ -62,7 +62,7 @@
                            <div class="col-md-8">
                               <div class="form-group">
                                  <label>Estatus:</label>
-                                 <input type="text" class="form-control" value="<?= $value->status_name; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['status_name']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field STATUS NAME -->
@@ -71,7 +71,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Fecha de registro:</label>
-                                 <input type="text" class="form-control" value="<?= $value->date_registered_qlt; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['date_registered_qlt']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field DATE REGISTERED QUALITY -->
@@ -80,7 +80,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>IP de registro:</label>
-                                 <input type="text" class="form-control" value="<?= $value->ip_registered_qlt; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['ip_registered_qlt']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field IP REGISTERED QUALITY -->
@@ -89,7 +89,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>Fecha de modificación:</label>
-                                 <input type="text" class="form-control" value="<?= $value->date_modified_qlt; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['date_modified_qlt']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field DATE MODIFIED QUALITY -->
@@ -98,7 +98,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
                                  <label>IP de modificación:</label>
-                                 <input type="text" class="form-control" value="<?= $value->ip_modified_qlt; ?>" disabled>
+                                 <input type="text" class="form-control" value="<?= $value['ip_modified_qlt']; ?>" disabled>
                               </div>
                            </div>
                            <!-- END field IP MODIFIED QUALITY -->
@@ -107,7 +107,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>Dispositivo de registro:</label>
-                                 <textarea type="text" class="form-control " disabled><?= $value->client_registered_qlt; ?></textarea>
+                                 <textarea type="text" class="form-control " disabled><?= $value['client_registered_qlt']; ?></textarea>
                               </div>
                            </div>
                            <!-- END field CLIENT REGISTERED QUALITY -->
@@ -116,7 +116,7 @@
                            <div class="col-md-6">
                               <div class="form-group">
                                  <label>Dispositivo de modificación:</label>
-                                 <textarea type="text" class="form-control " disabled><?= $value->client_modified_qlt; ?></textarea>
+                                 <textarea type="text" class="form-control " disabled><?= $value['client_modified_qlt']; ?></textarea>
                               </div>
                            </div>
                            <!-- END field CLIENT MODIFIED QUALITY -->
