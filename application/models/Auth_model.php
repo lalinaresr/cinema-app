@@ -57,22 +57,22 @@ class Auth_model extends CI_Model
 
         $user = $response->row_array();
 
-        if (password_verify($data['password'], $user['user_password'])) {
-            $this->_set_userdata_([
-                'is_authorized' => true,
-                'id_user' => $user['id_user'],
-                'id_contact' => $user['id_contact'],
-                'id_rol' => $user['id_rol'],
-                $this->_get_role_($user['id_rol']) => true,
-                'id_status' => $user['id_status'],
-                'user_username' => $user['user_username']
-            ]);
-
-            $store = $this->Session_model->store($user['id_user']);
-            return 'success';
-        } else {
+        if (!password_verify($data['password'], $user['user_password'])) {
             return 'not-match';
         }
+
+        $this->_set_userdata_([
+            'is_authorized' => true,
+            'id_user' => $user['id_user'],
+            'id_contact' => $user['id_contact'],
+            'id_rol' => $user['id_rol'],
+            $this->_get_role_($user['id_rol']) => true,
+            'id_status' => $user['id_status'],
+            'user_username' => $user['user_username']
+        ]);
+
+        $store = $this->Session_model->store($user['id_user']);
+        return 'success';
     }
 
     public function logout()

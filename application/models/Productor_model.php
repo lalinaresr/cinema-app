@@ -193,7 +193,7 @@ class Productor_model extends CI_Model
 			->where('id_productor', $id)
 			->delete('cm_pro_mov');
 
-		if ($fDelete != FALSE && $sDelete != FALSE) {
+		if ($fDelete && $sDelete) {
 			if (strcmp($productor['productor_image_logo'], 'NO-IMAGE') != 0) {
 				unlink($productor['productor_image_logo']);
 			}

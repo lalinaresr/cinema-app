@@ -198,15 +198,15 @@ class Users extends CI_Controller
 
 		$this->load->library('upload', $config);
 
-		if ($this->upload->do_upload('user_avatar_customize')) {
-			echo $this->User_model->update_avatar([
-				'id_user' => $this->input->post('id_user_customize_avatar'),
-				'avatar' => $this->upload->data()['file_name'],
-				'old_image_ext' => substr($this->input->post('image_avatar_update_route'), -4)
-			]);
-		} else {
+		if (!$this->upload->do_upload('user_avatar_customize')) {
 			echo 'not-upload';
 		}
+
+		echo $this->User_model->update_avatar([
+			'id_user' => $this->input->post('id_user_customize_avatar'),
+			'avatar' => $this->upload->data()['file_name'],
+			'old_image_ext' => substr($this->input->post('image_avatar_update_route'), -4)
+		]);
 	}
 
 	public function delete()

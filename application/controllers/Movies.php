@@ -97,25 +97,25 @@ class Movies extends CI_Controller
 
 		$this->load->library('upload', $config);
 
-		if ($this->upload->do_upload('movie_cover_insert')) {
-			echo $this->Movie_model->store([
-				'ids_productors' => $this->input->post('ids_productors_insert'),
-				'ids_genders' => $this->input->post('ids_genders_insert'),
-				'ids_categories' => $this->input->post('ids_categories_insert'),
-				'movie_status' => $this->input->post('movie_status_insert'),
-				'movie_quality' => $this->input->post('movie_quality_insert'),
-				'movie_name' => $this->input->post('movie_name_insert'),
-				'movie_slug' => $this->input->post('movie_slug_insert'),
-				'movie_release_date' => $this->input->post('movie_release_date_insert'),
-				'movie_duration' => $this->input->post('movie_duration_insert'),
-				'movie_country_origin' => $this->input->post('movie_country_origin_insert'),
-				'movie_cover' => $this->upload->data()['file_name'],
-				'movie_description' => $this->input->post('movie_description_insert'),
-				'movie_play' => $this->input->post('movie_play_insert')
-			]);
-		} else {
+		if (!$this->upload->do_upload('movie_cover_insert')) {
 			echo 'not-upload';
 		}
+
+		echo $this->Movie_model->store([
+			'ids_productors' => $this->input->post('ids_productors_insert'),
+			'ids_genders' => $this->input->post('ids_genders_insert'),
+			'ids_categories' => $this->input->post('ids_categories_insert'),
+			'movie_status' => $this->input->post('movie_status_insert'),
+			'movie_quality' => $this->input->post('movie_quality_insert'),
+			'movie_name' => $this->input->post('movie_name_insert'),
+			'movie_slug' => $this->input->post('movie_slug_insert'),
+			'movie_release_date' => $this->input->post('movie_release_date_insert'),
+			'movie_duration' => $this->input->post('movie_duration_insert'),
+			'movie_country_origin' => $this->input->post('movie_country_origin_insert'),
+			'movie_cover' => $this->upload->data()['file_name'],
+			'movie_description' => $this->input->post('movie_description_insert'),
+			'movie_play' => $this->input->post('movie_play_insert')
+		]);
 	}
 
 	public function view($id)
@@ -258,15 +258,15 @@ class Movies extends CI_Controller
 
 		$this->load->library('upload', $config);
 
-		if ($this->upload->do_upload('movie_cover_customize')) {
-			echo $this->Movie_model->update_cover([
-				'id_movie' => $this->input->post('id_movie_customize_cover'),
-				'movie_cover' => $this->upload->data()['file_name'],
-				'old_image_ext' => substr(trim($this->input->post('cover_update_route')), -4)
-			]);
-		} else {
+		if (!$this->upload->do_upload('movie_cover_customize')) {
 			echo 'not-upload';
 		}
+
+		echo $this->Movie_model->update_cover([
+			'id_movie' => $this->input->post('id_movie_customize_cover'),
+			'movie_cover' => $this->upload->data()['file_name'],
+			'old_image_ext' => substr(trim($this->input->post('cover_update_route')), -4)
+		]);
 	}
 
 	public function delete()

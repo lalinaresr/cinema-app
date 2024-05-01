@@ -42,7 +42,7 @@
                   <li><a href="#"><span class="glyphicon glyphicon-user"></span> Mi perfil</a></li>
                   <li><a href="<?= site_url('users/edit_avatar/') . cryp($this->session->userdata('id_user')) . '/'; ?>"><span class="glyphicon glyphicon-picture"></span> Editar avatar</a></li>
                   <li class="divider"></li>
-                  <li><a href="<?= site_url('auth/logout/'); ?>" class="btn-logout"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
+                  <li><a href="<?= site_url('auth/logout'); ?>" class="btn-logout"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
                </ul>
             </li>
          </ul>

@@ -83,16 +83,16 @@ class Productors extends CI_Controller
 
 		$this->load->library('upload', $config);
 
-		if ($this->upload->do_upload('productor_image_logo_insert')) {
-			echo $this->Productor_model->store([
-				'productor_name' => $this->input->post('productor_name_insert'),
-				'productor_slug' => $this->input->post('productor_slug_insert'),
-				'productor_status' => $this->input->post('productor_status_insert'),
-				'productor_image_logo' => $this->upload->data()['file_name']
-			]);
-		} else {
+		if (!$this->upload->do_upload('productor_image_logo_insert')) {
 			echo 'not-upload';
 		}
+
+		echo $this->Productor_model->store([
+			'productor_name' => $this->input->post('productor_name_insert'),
+			'productor_slug' => $this->input->post('productor_slug_insert'),
+			'productor_status' => $this->input->post('productor_status_insert'),
+			'productor_image_logo' => $this->upload->data()['file_name']
+		]);
 	}
 
 	public function view($id)
@@ -209,15 +209,15 @@ class Productors extends CI_Controller
 
 		$this->load->library('upload', $config);
 
-		if ($this->upload->do_upload('productor_image_logo_customize')) {
-			echo $this->Productor_model->update_logo([
-				'id_productor' => $this->input->post('id_productor_customize_logo'),
-				'productor_image_logo' => $this->upload->data()['file_name'],
-				'old_image_ext' => substr($this->input->post('image_logo_update_route'), -4)
-			]);
-		} else {
+		if (!$this->upload->do_upload('productor_image_logo_customize')) {
 			echo 'not-upload';
 		}
+
+		echo $this->Productor_model->update_logo([
+			'id_productor' => $this->input->post('id_productor_customize_logo'),
+			'productor_image_logo' => $this->upload->data()['file_name'],
+			'old_image_ext' => substr($this->input->post('image_logo_update_route'), -4)
+		]);
 	}
 
 	public function delete()
