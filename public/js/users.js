@@ -105,6 +105,7 @@ jQuery(document).ready(function ($) {
 			]
 		});
 		users_table.buttons().container().appendTo('.col-sm-6:eq(0)');
+		users_table.column('4').order('desc').draw();
 	}
 
 	let birthday = {
@@ -114,16 +115,13 @@ jQuery(document).ready(function ($) {
 		maxDate: 'now'
 	};
 
-	if ($('#user_date_birthday_insert').length > 0) {
-		$('#user_date_birthday_insert').datetimepicker(birthday);
-	}
-	if ($('#user_date_birthday_update').length > 0) {
-		$('#user_date_birthday_update').datetimepicker(birthday);
+	if ($('#birthday').length > 0) {
+		$('#birthday').datetimepicker(birthday);
 	}
 
 	const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
-			confirmButton: "btn btn-info",
+			confirmButton: "btn btn-custom",
 			cancelButton: "btn btn-default"
 		},
 		buttonsStyling: false
@@ -138,16 +136,14 @@ jQuery(document).ready(function ($) {
 	* @param  {[type]} event) {		event.preventDefault();		var firstname [description]
 	* @return {[type]}        [description]
 	*/
-	$("#user_firstname_insert").keyup(function (event) {
+	$("#firstname").keyup(function (event) {
 		event.preventDefault();
 
 		var firstname = $(this).val();
-		var lastname = $("#user_lastname_insert").val();
+		var lastname = $("#lastname").val();
 
 		if (firstname.length > 0 && lastname.length > 0) {
-			$("#user_username_insert").val(create_slug(firstname) + ' ' + create_slug(lastname));
-			$("#user_email_insert").val(create_slug(firstname.toLowerCase()) + '_' + create_slug(lastname.toLowerCase()) + '@yopmail.com');
-			$("#user_password_insert").val(generate_rand_code((firstname.length + lastname.length)));
+			$("#email").val(create_slug(firstname.toLowerCase()) + '_' + create_slug(lastname.toLowerCase()) + '@cinema.app');
 		}
 	});
 
@@ -156,35 +152,33 @@ jQuery(document).ready(function ($) {
 	* @param  {[type]} event) {		event.preventDefault();		var firstname [description]
 	* @return {[type]}        [description]
 	*/
-	$("#user_lastname_insert").keyup(function (event) {
+	$("#lastname").keyup(function (event) {
 		event.preventDefault();
 
-		var firstname = $("#user_firstname_insert").val();
+		var firstname = $("#firstname").val();
 		var lastname = $(this).val();
 
 		if (firstname.length > 0 && lastname.length > 0) {
-			$("#user_username_insert").val(create_slug(firstname) + ' ' + create_slug(lastname));
-			$("#user_email_insert").val(create_slug(firstname.toLowerCase()) + '_' + create_slug(lastname.toLowerCase()) + '@yopmail.com');
-			$("#user_password_insert").val(generate_rand_code((firstname.length + lastname.length)));
+			$("#email").val(create_slug(firstname.toLowerCase()) + '_' + create_slug(lastname.toLowerCase()) + '@cinema.app');
 		}
 	});
 
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-insert-user").attr('disabled', true);			$("#btn-insert-user").html('<i                                                                  class [description]
-	* @param  {String} success:                                     function(response){			$("#btn-insert-user").removeAttr('disabled');			$("#btn-insert-user").html('<span class [description]
+	* @param  {String} ){			$("#user-store-btn").attr('disabled', true);			$("#user-store-btn").html('<i                                                                  class [description]
+	* @param  {String} success:                                     function(response){			$("#user-store-btn").removeAttr('disabled');			$("#user-store-btn").html('<span class [description]
 	* @return {[type]}                                              [description]
 	*/
-	$("#form-insert-user").ajaxForm({
+	$("#user-store-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-insert-user").attr('disabled', true);
-			$("#btn-insert-user").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#user-store-btn").attr('disabled', true);
+			$("#user-store-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-insert-user").removeAttr('disabled');
-			$("#btn-insert-user").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
+			$("#user-store-btn").removeAttr('disabled');
+			$("#user-store-btn").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
 			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
@@ -215,57 +209,21 @@ jQuery(document).ready(function ($) {
 	========================================*/
 
 	/**
-	* [description]
-	* @param  {[type]} event) {		event.preventDefault();		var firstname [description]
-	* @return {[type]}        [description]
-	*/
-	$("#user_firstname_update").keyup(function (event) {
-		event.preventDefault();
-
-		var firstname = $(this).val();
-		var lastname = $("#user_lastname_update").val();
-
-		if (firstname.length > 0 && lastname.length > 0) {
-			$("#user_username_update").val(create_slug(firstname) + ' ' + create_slug(lastname));
-			$("#user_email_update").val(create_slug(firstname.toLowerCase()) + '_' + create_slug(lastname.toLowerCase()) + '@yopmail.com');
-			$("#user_password_update").val(generate_rand_code((firstname.length + lastname.length)));
-		}
-	});
-
-	/**
-	* [description]
-	* @param  {[type]} event) {		event.preventDefault();		var firstname [description]
-	* @return {[type]}        [description]
-	*/
-	$("#user_lastname_update").keyup(function (event) {
-		event.preventDefault();
-
-		var firstname = $("#user_firstname_update").val();
-		var lastname = $(this).val();
-
-		if (firstname.length > 0 && lastname.length > 0) {
-			$("#user_username_update").val(create_slug(firstname) + ' ' + create_slug(lastname));
-			$("#user_email_update").val(create_slug(firstname.toLowerCase()) + '_' + create_slug(lastname.toLowerCase()) + '@yopmail.com');
-			$("#user_password_update").val(generate_rand_code((firstname.length + lastname.length)));
-		}
-	});
-
-	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-update-user").attr('disabled', true);			$("#btn-update-user").html('<i                                                                  class [description]
-	* @param  {String} success:                                     function(response){			$("#btn-update-user").removeAttr('disabled');			$("#btn-update-user").html('<span class [description]
+	* @param  {String} ){			$("#user-update-btn").attr('disabled', true);			$("#user-update-btn").html('<i                                                                  class [description]
+	* @param  {String} success:                                     function(response){			$("#user-update-btn").removeAttr('disabled');			$("#user-update-btn").html('<span class [description]
 	* @return {[type]}                                              [description]
 	*/
-	$("#form-update-user").ajaxForm({
+	$("#user-update-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-update-user").attr('disabled', true);
-			$("#btn-update-user").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#user-update-btn").attr('disabled', true);
+			$("#user-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-update-user").removeAttr('disabled');
-			$("#btn-update-user").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
+			$("#user-update-btn").removeAttr('disabled');
+			$("#user-update-btn").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
 			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
@@ -300,33 +258,21 @@ jQuery(document).ready(function ($) {
 	* @param  {[type]} ) {	              var fileName [description]
 	* @return {[type]}   [description]
 	*/
-	$('#user_avatar_customize').change(function () {
-		var fileName = $('#user_avatar_customize').val();
+	$('#avatar').change(function () {
+		var fileName = $('#avatar').val();
 		var extension = fileName.split('.').pop();
 		var extensionLower = extension.toLowerCase();
 		var sizeKB = (this.files[0].size) / 1024;
 
 		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
-			if (sizeKB < 2048) {
-				$("#file_name_avatar_customize").val(fileName);
-				$("#file_size_avatar_customize").val('KB: ' + sizeKB);
-				$("#file_extension_avatar_customize").val(extensionLower);
-				$("#file_route_avatar_customize").val('storage/images/users/');
-				$('#image-avatar-current').addClass("hidden");
-				$('#preview-img-avatar').removeClass("hidden");
+			if (sizeKB < 2048) {				
 				var reader = new FileReader();
 				reader.onload = function (e) {
-					$('#preview-img-avatar').attr('src', e.target.result);
+					$('#avatar-preview-image').attr('src', e.target.result);
 				}
 				reader.readAsDataURL(this.files[0]);
 			} else {
-				$('#preview-img-avatar').addClass("hidden");
-				$('#image-avatar-current').removeClass("hidden");
-				$('#user_avatar_customize').val('');
-				$("#file_name_avatar_customize").val('');
-				$("#file_size_avatar_customize").val('');
-				$("#file_extension_avatar_customize").val('');
-				$("#file_route_avatar_customize").val('');
+				$('#avatar').val('');
 
 				swalWithBootstrapButtons.fire({
 					title: 'Aviso',
@@ -335,13 +281,7 @@ jQuery(document).ready(function ($) {
 				});
 			}
 		} else {
-			$('#preview-img-avatar').addClass("hidden");
-			$('#image-avatar-current').removeClass("hidden");
-			$('#user_avatar_customize').val('');
-			$("#file_name_avatar_customize").val('');
-			$("#file_size_avatar_customize").val('');
-			$("#file_extension_avatar_customize").val('');
-			$("#file_route_avatar_customize").val('');
+			$('#avatar').val('');
 
 			swalWithBootstrapButtons.fire({
 				title: 'Aviso',
@@ -353,20 +293,20 @@ jQuery(document).ready(function ($) {
 
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-update-avatar").attr('disabled', true);			$("#btn-update-avatar").html('<i                                                                    class [description]
-	* @param  {String} success:                                       function(response){			$("#btn-update-avatar").removeAttr('disabled');			$("#btn-update-avatar").html('<span class [description]
+	* @param  {String} ){			$("#avatar-update-btn").attr('disabled', true);			$("#avatar-update-btn").html('<i                                                                    class [description]
+	* @param  {String} success:                                       function(response){			$("#avatar-update-btn").removeAttr('disabled');			$("#avatar-update-btn").html('<span class [description]
 	* @return {[type]}                                                [description]
 	*/
-	$("#form-update-avatar").ajaxForm({
+	$("#avatar-update-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-update-avatar").attr('disabled', true);
-			$("#btn-update-avatar").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#avatar-update-btn").attr('disabled', true);
+			$("#avatar-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-update-avatar").removeAttr('disabled');
-			$("#btn-update-avatar").html('<span class="glyphicon glyphicon-upload"></span> Cambiar');
+			$("#avatar-update-btn").removeAttr('disabled');
+			$("#avatar-update-btn").html('<span class="glyphicon glyphicon-upload"></span> Subir');
 
 			if (response == 'error') {
 				swalWithBootstrapButtons.fire({
@@ -375,6 +315,7 @@ jQuery(document).ready(function ($) {
 					icon: 'error'
 				});
 			} else if (response == 'success') {
+				$('#avatar').val('');
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'Su avatar ha sido actualizado con éxito',
@@ -398,8 +339,9 @@ jQuery(document).ready(function ($) {
 	* @param  {[type]} success:                               function(response){					if (response     [description]
 	* @return {[type]}                                        [description]
 	*/
-	$(".btn-delete-user").click(function (event) {
-		var id_user = $(this).attr('id');
+	$(".user-delete-btn").click(function (event) {
+		let user = $(this).data('element');
+		let url = `${location.href}/delete`;
 
 		swalWithBootstrapButtons.fire({
 			title: '¿Estas segur@?',
@@ -412,9 +354,9 @@ jQuery(document).ready(function ($) {
 		}).then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { id_user_delete: id_user },
-					url: 'delete/',
-					type: 'post',
+					data: { user },
+					url,
+					type: 'POST',
 					success: function (response) {
 						if (response == 'not-found') {
 							swalWithBootstrapButtons.fire({

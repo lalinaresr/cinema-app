@@ -8,7 +8,7 @@ class Role_model extends CI_Model
         parent::__construct();
     }
 
-    public function index(array $builder = array())
+    public function index(array $builder = array()): object
     {
         $builder['select'] = $builder['select'] ?? 'id_rol, cm_roles.id_status, status_name, rol_name, rol_slug';
         $builder['order_column'] = $builder['order_column'] ?? 'id_rol';

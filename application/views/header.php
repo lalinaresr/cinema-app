@@ -18,9 +18,9 @@
 				<link rel="stylesheet" type="<?= $style['type']; ?>" href="<?= $style['href']; ?>">
 			<?php else : ?>
 				<link rel="stylesheet" type="text/css" href="<?= $style; ?>">
-			<?php endif ?>
-		<?php endforeach ?>
-	<?php endif ?>
+			<?php endif; ?>
+		<?php endforeach; ?>
+	<?php endif; ?>
 	<link rel="stylesheet" type="text/css" href="<?= base_url('public/css/styles.css'); ?>">
 </head>
 

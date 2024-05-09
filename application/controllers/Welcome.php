@@ -17,12 +17,13 @@ class Welcome extends CI_Controller
 			'Movie_model'
 		]);
 
-		$this->_init_();
-
+		$this->load->helper('text');
 		$this->load->library('pagination');
+
+		$this->_init_();
 	}
 
-	private function _init_()
+	private function _init_(): void
 	{
 		$this->_common = [
 			'styles' => [
@@ -35,6 +36,9 @@ class Welcome extends CI_Controller
 				base_url('public/js/libs/owl.carousel.min.js'),
 				base_url('public/js/welcome.js')
 			],
+			'productors' => $this->Productor_model->index(['status' => 1]),
+			'genders' => $this->Gender_model->index(['status' => 1]),
+			'categories' => $this->Category_model->index(['status' => 1]),
 			'newest_movies' => $this->Movie_model->index([
 				'status' => 1,
 				'limit' => 8
@@ -44,14 +48,11 @@ class Welcome extends CI_Controller
 				'order_column' => 'movie_reproductions',
 				'order_filter' => 'DESC',
 				'limit' => 8
-			]),
-			'productors' => $this->Productor_model->index(['status' => 1]),
-			'genders' => $this->Gender_model->index(['status' => 1]),
-			'categories' => $this->Category_model->index(['status' => 1]),
+			])
 		];
 	}
 
-	private function _create_paginator_(&$config)
+	private function _create_paginator_(array &$config): void
 	{
 		$config['full_tag_open']  = '<nav aria-label="Page navigation"><ul class="pagination">';
 		$config['full_tag_close'] = '</ul></nav>';
@@ -73,7 +74,7 @@ class Welcome extends CI_Controller
 		$config['num_tag_close'] = '</li>';
 	}
 
-	public function index()
+	public function index(): void
 	{
 		$details = ['status' => 1];
 
@@ -88,27 +89,27 @@ class Welcome extends CI_Controller
 
 		$params = [
 			'title' => '¡Bienvenido a ' . constant('APP_NAME') . '!',
+			...$this->_common,
 			'results' => $this->Movie_model->index(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
 			'paginator' => $this->pagination->create_links(),
-			...$this->_common,
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
 		$this->load->view('layouts/welcome/navbar');
-		$this->load->view('layouts/welcome/carousel-news');
-		$this->load->view('layouts/welcome/carousel-views');
-		$this->load->view('partials/welcome/container');
+		$this->load->view('layouts/welcome/newest-carousel');
+		$this->load->view('layouts/welcome/viewed-carousel');
+		$this->load->view('partials/welcome/index');
 		$this->load->view('layouts/welcome/footer');
 		$this->load->view('footer');
 	}
 
-	public function search()
+	public function search(): void
 	{
 		redirect('welcome/results/' . strtolower(trim($this->input->post('search_parameter'))));
 	}
 
-	public function results($search_parameter)
+	public function results(string $search_parameter): void
 	{
 		$search_parameter = urldecode($search_parameter);
 
@@ -125,34 +126,33 @@ class Welcome extends CI_Controller
 
 		$params = [
 			'title' => constant('APP_NAME') . ' - Búsqueda',
+			...$this->_common,
+			'search_parameter' => $search_parameter,
 			'results' => $this->Movie_model->search_results(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
 			'paginator' => $this->pagination->create_links(),
-			'search_parameter' => $search_parameter,
-			...$this->_common,
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
 		$this->load->view('layouts/welcome/navbar');
-		$this->load->view('layouts/welcome/carousel-news');
-		$this->load->view('layouts/welcome/carousel-views');
+		$this->load->view('layouts/welcome/newest-carousel');
+		$this->load->view('layouts/welcome/viewed-carousel');
 		$this->load->view('partials/welcome/results');
 		$this->load->view('layouts/welcome/footer');
 		$this->load->view('footer');
 	}
 
-	public function filter_by_productor($id)
+	public function filter_by_productor(string $slug): void
 	{
 		$details = [
 			'status' => 1,
-			'search' => 'cm_pro_mov.id_productor',
-			'value' => $id,
-			'decrypt' => true
+			'search' => 'productor_slug',
+			'value' => $slug
 		];
 
 		$data = $this->Productor_model->movies_by_productor($details);
 
-		$config['base_url'] = site_url("welcome/filter_by_productor/{$id}/");
+		$config['base_url'] = site_url("welcome/filter_by_productor/{$slug}/");
 		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;
@@ -161,34 +161,33 @@ class Welcome extends CI_Controller
 
 		$params = [
 			'title' => constant('APP_NAME') . ' - Búsqueda por productor',
-			'productor' => $this->Productor_model->fetch(['value' => $id, 'decrypt' => true])->row_array(),
+			...$this->_common,
+			'productor' => $this->Productor_model->fetch(['search' => 'productor_slug', 'value' => $slug])->row_array(),
 			'results' => $this->Productor_model->movies_by_productor(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
 			'paginator' => $this->pagination->create_links(),
-			...$this->_common,
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
 		$this->load->view('layouts/welcome/navbar');
-		$this->load->view('layouts/welcome/carousel-news');
-		$this->load->view('layouts/welcome/carousel-views');
-		$this->load->view('partials/welcome/filter_by_productors');
+		$this->load->view('layouts/welcome/newest-carousel');
+		$this->load->view('layouts/welcome/viewed-carousel');
+		$this->load->view('partials/welcome/filter_by_productor');
 		$this->load->view('layouts/welcome/footer');
 		$this->load->view('footer');
 	}
 
-	public function filter_by_gender($id)
+	public function filter_by_gender(string $slug): void
 	{
 		$details = [
 			'status' => 1,
-			'search' => 'cm_gen_mov.id_gender',
-			'value' => $id,
-			'decrypt' => true
+			'search' => 'gender_slug',
+			'value' => $slug
 		];
 
 		$data = $this->Gender_model->movies_by_gender($details);
 
-		$config['base_url'] = site_url("welcome/filter_by_gender/{$id}/");
+		$config['base_url'] = site_url("welcome/filter_by_gender/{$slug}/");
 		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;
@@ -197,34 +196,33 @@ class Welcome extends CI_Controller
 
 		$params = [
 			'title' => constant('APP_NAME') . ' - Búsqueda por género',
-			'gender' => $this->Gender_model->fetch(['value' => $id, 'decrypt' => true])->row_array(),
+			...$this->_common,
+			'gender' => $this->Gender_model->fetch(['search' => 'gender_slug', 'value' => $slug])->row_array(),
 			'results' => $this->Gender_model->movies_by_gender(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
 			'paginator' => $this->pagination->create_links(),
-			...$this->_common,
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
 		$this->load->view('layouts/welcome/navbar');
-		$this->load->view('layouts/welcome/carousel-news');
-		$this->load->view('layouts/welcome/carousel-views');
-		$this->load->view('partials/welcome/filter_by_genders');
+		$this->load->view('layouts/welcome/newest-carousel');
+		$this->load->view('layouts/welcome/viewed-carousel');
+		$this->load->view('partials/welcome/filter_by_gender');
 		$this->load->view('layouts/welcome/footer');
 		$this->load->view('footer');
 	}
 
-	public function filter_by_category($id)
+	public function filter_by_category(string $slug): void
 	{
 		$details = [
 			'status' => 1,
-			'search' => 'cm_cat_mov.id_category',
-			'value' => $id,
-			'decrypt' => true
+			'search' => 'category_slug',
+			'value' => $slug
 		];
 
 		$data = $this->Category_model->movies_by_category($details);
 
-		$config['base_url'] = site_url("welcome/filter_by_category/{$id}/");
+		$config['base_url'] = site_url("welcome/filter_by_category/{$slug}/");
 		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;
@@ -233,38 +231,38 @@ class Welcome extends CI_Controller
 
 		$params = [
 			'title' => constant('APP_NAME') . ' - Búsqueda por categoría',
-			'category' => $this->Category_model->fetch(['value' => $id, 'decrypt' => true])->row_array(),
+			...$this->_common,
+			'category' => $this->Category_model->fetch(['search' => 'category_slug', 'value' => $slug])->row_array(),
 			'results' => $this->Category_model->movies_by_category(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
 			'paginator' => $this->pagination->create_links(),
-			...$this->_common,
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
 		$this->load->view('layouts/welcome/navbar');
-		$this->load->view('layouts/welcome/carousel-news');
-		$this->load->view('layouts/welcome/carousel-views');
-		$this->load->view('partials/welcome/filter_by_categories');
+		$this->load->view('layouts/welcome/newest-carousel');
+		$this->load->view('layouts/welcome/viewed-carousel');
+		$this->load->view('partials/welcome/filter_by_category');
 		$this->load->view('layouts/welcome/footer');
 		$this->load->view('footer');
 	}
 
-	public function watch($id)
+	public function watch(string $slug): void
 	{
-		$movie = $this->Movie_model->fetch(['value' => $id, 'decrypt' => true])->row_array();
+		$movie = $this->Movie_model->fetch(['search' => 'movie_slug', 'value' => $slug])->row_array();
 
 		$params = [
 			'title' => constant('APP_NAME') . ' - ' . $movie['movie_name'],
-			'movie' => $movie,
-			'increase_views' => $this->Movie_model->increase_views($id),
 			...$this->_common,
+			'movie' => $movie,
+			'increase_views' => $this->Movie_model->increase_views($slug),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
 		$this->load->view('layouts/welcome/navbar');
 		$this->load->view('partials/welcome/watch');
-		$this->load->view('layouts/welcome/carousel-news');
+		$this->load->view('layouts/welcome/newest-carousel');
 		$this->load->view('layouts/welcome/footer');
 		$this->load->view('footer');
 	}

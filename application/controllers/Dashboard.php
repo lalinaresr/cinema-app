@@ -19,7 +19,7 @@ class Dashboard extends CI_Controller
 		]);
 	}
 
-	public function index()
+	public function index(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME'),
@@ -36,7 +36,7 @@ class Dashboard extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/dashboard/container');
+		$this->load->view('partials/dashboard/index');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}

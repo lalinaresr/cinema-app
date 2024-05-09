@@ -13,7 +13,7 @@ class User_model extends CI_Model
         ]);
     }
 
-    public function index(array $builder = array())
+    public function index(array $builder = array()): object
     {
         $builder['columns'] = $builder['columns'] ?? 'id_user, cm_users.id_contact, cm_users.id_rol, rol_name, cm_users.id_status, status_name, user_username, user_email, user_password, user_avatar, ip_registered_usr, date_registered_usr, client_registered_usr, ip_modified_usr, date_modified_usr, client_modified_usr, contact_firstname, contact_lastname, contact_sex, contact_date_birthday';
         $builder['order_column'] = $builder['order_column'] ?? 'cm_users.id_user';
@@ -37,11 +37,11 @@ class User_model extends CI_Model
         return $response;
     }
 
-    public function store($data)
+    public function store(array $data): string
     {
         $response = $this->db
             ->select('id_user')
-            ->where('user_email', $data['user_email'])
+            ->where('user_email', $data['email'])
             ->limit(1)
             ->get('cm_users');
 
@@ -52,11 +52,11 @@ class User_model extends CI_Model
         $fStore = $this->Contact_model->store($data);
         $sStore = $this->db->insert('cm_users', [
             'id_contact' => $this->db->insert_id(),
-            'id_rol' => $data['user_rol'],
-            'id_status' => $data['user_status'],
-            'user_username' => ucwords($data['user_username']),
-            'user_email' => $data['user_email'],
-            'user_password' => password_hash($data['user_password'], PASSWORD_DEFAULT),
+            'id_rol' => $data['role_id'],
+            'id_status' => $data['status_id'],
+            'user_username' => ucwords($data['username']),
+            'user_email' => $data['email'],
+            'user_password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'user_avatar' => 'NO-IMAGE',
             'ip_registered_usr' => get_ip_current(),
             'date_registered_usr' => get_date_current(),
@@ -66,7 +66,7 @@ class User_model extends CI_Model
         return (($fStore && $sStore) ? 'success' : 'error');
     }
 
-    public function fetch(array $builder = array())
+    public function fetch(array $builder = array()): object
     {
         $builder['columns'] = $builder['columns'] ?? 'id_user, cm_users.id_contact, cm_users.id_rol, rol_name, cm_users.id_status, status_name, user_username, user_email, user_password, user_avatar, ip_registered_usr, date_registered_usr, client_registered_usr, ip_modified_usr, date_modified_usr, client_modified_usr, contact_firstname, contact_lastname, contact_sex, contact_date_birthday';
         $builder['search'] = $builder['search'] ?? 'cm_users.id_user';
@@ -84,14 +84,14 @@ class User_model extends CI_Model
         return $response;
     }
 
-    public function update($data)
+    public function update(array $data): string
     {
         $response = $this->db
-            ->select('id_user')
-            ->where('id_rol', $data['user_rol'])
-            ->where('id_status', $data['user_status'])
-            ->where('user_username', ucwords($data['user_username']))
-            ->where('user_email', $data['user_email'])
+            ->select('id_user, user_password')
+            ->where('id_rol', $data['role_id'])
+            ->where('id_status', $data['status_id'])
+            ->where('user_username', ucwords($data['username']))
+            ->where('user_email', $data['email'])
             ->limit(1)
             ->get('cm_users');
 
@@ -99,16 +99,20 @@ class User_model extends CI_Model
             return 'existing';
         }
 
+        $user = $response->row_array();
+
+        $password = $data['password'] !== NULL ? password_hash($data['password'], PASSWORD_DEFAULT) : $user['user_password'];
+
         $fUpdate = $this->Contact_model->update($data);
         $sUpdate = $this->db
-            ->where('id_user', decryp($data['id_user']))
+            ->where('id_user', $data['id'])
             ->update('cm_users', [
-                'id_contact' => decryp($data['user_contact']),
-                'id_rol' => $data['user_rol'],
-                'id_status' => $data['user_status'],
-                'user_username' => ucwords($data['user_username']),
-                'user_email' => $data['user_email'],
-                'user_password' => password_hash($data['user_password'], PASSWORD_DEFAULT),
+                'id_contact' => $data['contact_id'],
+                'id_rol' => $data['role_id'],
+                'id_status' => $data['status_id'],
+                'user_username' => ucwords($data['username']),
+                'user_email' => $data['email'],
+                'user_password' => $password,
                 'ip_modified_usr' => get_ip_current(),
                 'date_modified_usr' => get_date_current(),
                 'client_modified_usr' => get_agent_current()
@@ -130,14 +134,13 @@ class User_model extends CI_Model
 
     public function update_avatar($data)
     {
-        $id = decryp($data['id_user']);
+        $id = $data['id'];
 
         $response = $this->db
+            ->select('user_avatar')
             ->where('id_user', $id)
+            ->limit(1)
             ->get('cm_users');
-
-        $old_avatar = FOLDER_AVATARS . "/{$data['avatar']}";
-        $new_avatar = FOLDER_AVATARS . "/{$id}_avatar.png";
 
         if ($response->num_rows() == 0) {
             return 'not-found';
@@ -149,20 +152,23 @@ class User_model extends CI_Model
             unlink($user['user_avatar']);
         }
 
-        rename($old_avatar, $new_avatar);
+        $new_avatar = FOLDER_AVATARS . "/{$data['avatar']}";
+        $end_avatar = FOLDER_AVATARS . "/{$id}_avatar.png";
+
+        rename($new_avatar, $end_avatar);
 
         $update = $this->db
             ->where('id_user', $id)
             ->update('cm_users', [
-                'user_avatar' => $new_avatar
+                'user_avatar' => $end_avatar
             ]);
 
         return ($update ? 'success' : 'error');
     }
 
-    public function delete($data)
+    public function delete(array $data): string
     {
-        $id = decryp($data['id']);
+        $id = $data['id'];
 
         $response = $this->db
             ->select('id_contact, user_avatar')
@@ -182,13 +188,13 @@ class User_model extends CI_Model
             ->where('id_user', $id)
             ->delete('cm_users');
 
-        if ($fDelete && $sDelete && $tDelete) {
-            if (strcmp($user['user_avatar'], 'NO-IMAGE') != 0) {
-                unlink($user['user_avatar']);
-            }
-            return 'success';
-        } else {
+        if (!$fDelete || !$sDelete || !$tDelete) {
             return 'error';
         }
+
+        if (strcmp($user['user_avatar'], 'NO-IMAGE') != 0) {
+            unlink($user['user_avatar']);
+        }
+        return 'success';
     }
 }

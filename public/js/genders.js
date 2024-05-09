@@ -82,11 +82,12 @@ jQuery(document).ready(function ($) {
 			]
 		});
 		genders_table.buttons().container().appendTo('.col-sm-6:eq(0)');
+		genders_table.column('3').order('desc').draw();
 	}
 
 	const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
-			confirmButton: "btn btn-info",
+			confirmButton: "btn btn-custom",
 			cancelButton: "btn btn-default"
 		},
 		buttonsStyling: false
@@ -101,29 +102,29 @@ jQuery(document).ready(function ($) {
 	* @param  {String} event) {		var       string [description]
 	* @return {[type]}        [description]
 	*/
-	$("#gender_name_insert").keyup(function (event) {
+	$("#name").keyup(function (event) {
 		var string = '';
-		string = string + $("#gender_name_insert").val();
+		string = string + $("#name").val();
 
-		$("#gender_slug_insert").val(create_slug(string));
+		$("#slug").val(create_slug(string));
 	});
 
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-insert-gender").attr('disabled', true);			$("#btn-insert-gender").html('<i                                                                    class [description]
-	* @param  {String} success:                                       function(response){			$("#btn-insert-gender").removeAttr('disabled');			$("#btn-insert-gender").html('<span class [description]
+	* @param  {String} ){			$("#gender-store-btn").attr('disabled', true);			$("#gender-store-btn").html('<i                                                                    class [description]
+	* @param  {String} success:                                       function(response){			$("#gender-store-btn").removeAttr('disabled');			$("#gender-store-btn").html('<span class [description]
 	* @return {[type]}                                                [description]
 	*/
-	$("#form-insert-gender").ajaxForm({
+	$("#gender-store-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-insert-gender").attr('disabled', true);
-			$("#btn-insert-gender").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#gender-store-btn").attr('disabled', true);
+			$("#gender-store-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-insert-gender").removeAttr('disabled');
-			$("#btn-insert-gender").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
+			$("#gender-store-btn").removeAttr('disabled');
+			$("#gender-store-btn").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
 			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
@@ -158,29 +159,29 @@ jQuery(document).ready(function ($) {
 	* @param  {String} event) {		var       string [description]
 	* @return {[type]}        [description]
 	*/
-	$("#gender_name_update").keyup(function (event) {
+	$("#name").keyup(function (event) {
 		var string = '';
-		string = string + $("#gender_name_update").val();
+		string = string + $("#name").val();
 
-		$("#gender_slug_update").val(create_slug(string));
+		$("#slug").val(create_slug(string));
 	});
 
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-update-gender").attr('disabled', true);			$("#btn-update-gender").html('<i                                                                    class [description]
-	* @param  {String} success:                                       function(response){			$("#btn-update-gender").removeAttr('disabled');			$("#btn-update-gender").html('<span class [description]
+	* @param  {String} ){			$("#gender-update-btn").attr('disabled', true);			$("#gender-update-btn").html('<i                                                                    class [description]
+	* @param  {String} success:                                       function(response){			$("#gender-update-btn").removeAttr('disabled');			$("#gender-update-btn").html('<span class [description]
 	* @return {[type]}                                                [description]
 	*/
-	$("#form-update-gender").ajaxForm({
+	$("#gender-update-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-update-gender").attr('disabled', true);
-			$("#btn-update-gender").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#gender-update-btn").attr('disabled', true);
+			$("#gender-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-update-gender").removeAttr('disabled');
-			$("#btn-update-gender").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
+			$("#gender-update-btn").removeAttr('disabled');
+			$("#gender-update-btn").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
 			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
@@ -218,8 +219,9 @@ jQuery(document).ready(function ($) {
 	* @param  {[type]} success:      function(response){					if (response     [description]
 	* @return {[type]}               [description]
 	*/
-	$(".btn-delete-gender").click(function (event) {
-		var id_gender = $(this).attr('id');
+	$(".gender-delete-btn").click(function (event) {
+		let gender = $(this).data('element');
+		let url = `${location.href}/delete`;
 
 		swalWithBootstrapButtons.fire({
 			title: '¿Estas segur@?',
@@ -232,9 +234,9 @@ jQuery(document).ready(function ($) {
 		}).then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { id_gender_delete: id_gender },
-					url: 'delete/',
-					type: 'post',
+					data: { gender },
+					url,
+					type: 'POST',
 					success: function (response) {
 						if (response == 'not-found') {
 							swalWithBootstrapButtons.fire({

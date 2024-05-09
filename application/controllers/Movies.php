@@ -24,7 +24,7 @@ class Movies extends CI_Controller
 		$this->load->helper('countrys');
 	}
 
-	public function index()
+	public function index(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
@@ -51,12 +51,12 @@ class Movies extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/movies/container');
+		$this->load->view('partials/movies/index');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
 
-	public function create()
+	public function create(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
@@ -73,55 +73,41 @@ class Movies extends CI_Controller
 				'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',
 				base_url('public/js/movies.js')
 			],
+			'productors' => $this->Productor_model->index(['status' => 1]),
+			'genders' => $this->Gender_model->index(['status' => 1]),
+			'categories' => $this->Category_model->index(['status' => 1]),
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
 			'qualities' => $this->Quality_model->index(['status' => 1]),
-			'categories' => $this->Category_model->index(['status' => 1]),
-			'genders' => $this->Gender_model->index(['status' => 1]),
-			'productors' => $this->Productor_model->index(['status' => 1]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/movies/add');
+		$this->load->view('partials/movies/create');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
 
-	public function store()
+	public function store(): void
 	{
-		$config['upload_path'] = FOLDER_MOVIES;
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = 2048;
-
-		$this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload('movie_cover_insert')) {
-			echo 'not-upload';
-		}
-
 		echo $this->Movie_model->store([
-			'ids_productors' => $this->input->post('ids_productors_insert'),
-			'ids_genders' => $this->input->post('ids_genders_insert'),
-			'ids_categories' => $this->input->post('ids_categories_insert'),
-			'movie_status' => $this->input->post('movie_status_insert'),
-			'movie_quality' => $this->input->post('movie_quality_insert'),
-			'movie_name' => $this->input->post('movie_name_insert'),
-			'movie_slug' => $this->input->post('movie_slug_insert'),
-			'movie_release_date' => $this->input->post('movie_release_date_insert'),
-			'movie_duration' => $this->input->post('movie_duration_insert'),
-			'movie_country_origin' => $this->input->post('movie_country_origin_insert'),
-			'movie_cover' => $this->upload->data()['file_name'],
-			'movie_description' => $this->input->post('movie_description_insert'),
-			'movie_play' => $this->input->post('movie_play_insert')
+			'productors' => $this->input->post('productors'),
+			'genders' => $this->input->post('genders'),
+			'categories' => $this->input->post('categories'),
+			'status_id' => $this->input->post('status'),
+			'quality_id' => $this->input->post('quality'),
+			'title' => $this->input->post('title'),
+			'description' => $this->input->post('description'),
+			'release_date' => $this->input->post('release_date'),
+			'duration' => $this->input->post('duration'),
+			'country_origin' => $this->input->post('country_origin'),
+			'link' => $this->input->post('link')
 		]);
 	}
 
-	public function view($id)
+	public function view(int $id): void
 	{
-		$movie = $this->Movie_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
 			'styles' => [
@@ -130,11 +116,10 @@ class Movies extends CI_Controller
 			'scripts' => [
 				base_url('public/js/movies.js')
 			],
-			'movie_id_encrypt' => $id,
-			'movie' => $movie->row_array(),
-			'productors_by_movie' => $this->Movie_model->productors_by_movie(['value' => $id, 'decrypt' => true]),
-			'genders_by_movie' => $this->Movie_model->genders_by_movie(['value' => $id, 'decrypt' => true]),
-			'categories_by_movie' => $this->Movie_model->categories_by_movie(['value' => $id, 'decrypt' => true]),
+			'productors_by_movie' => $this->Movie_model->productors_by_movie(['value' => $id]),
+			'genders_by_movie' => $this->Movie_model->genders_by_movie(['value' => $id]),
+			'categories_by_movie' => $this->Movie_model->categories_by_movie(['value' => $id]),
+			'movie' => $this->Movie_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
@@ -146,10 +131,8 @@ class Movies extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function edit($id)
+	public function edit(int $id): void
 	{
-		$movie = $this->Movie_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
 			'styles' => [
@@ -165,16 +148,15 @@ class Movies extends CI_Controller
 				'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',
 				base_url('public/js/movies.js')
 			],
-			'movie_id_encrypt' => $id,
-			'movie' => $movie->row_array(),
-			'productors_by_movie' => $this->Movie_model->productors_by_movie(['value' => $id, 'decrypt' => true]),
-			'genders_by_movie' => $this->Movie_model->genders_by_movie(['value' => $id, 'decrypt' => true]),
-			'categories_by_movie' => $this->Movie_model->categories_by_movie(['value' => $id, 'decrypt' => true]),
+			'productors' => $this->Productor_model->index(['status' => 1]),
+			'productors_by_movie' => $this->Movie_model->productors_by_movie(['value' => $id]),
+			'genders' => $this->Gender_model->index(['status' => 1]),
+			'genders_by_movie' => $this->Movie_model->genders_by_movie(['value' => $id]),
+			'categories' => $this->Category_model->index(['status' => 1]),
+			'categories_by_movie' => $this->Movie_model->categories_by_movie(['value' => $id]),
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
 			'qualities' => $this->Quality_model->index(['status' => 1]),
-			'categories' => $this->Category_model->index(['status' => 1]),
-			'genders' => $this->Gender_model->index(['status' => 1]),
-			'productors' => $this->Productor_model->index(['status' => 1]),
+			'movie' => $this->Movie_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
@@ -186,49 +168,26 @@ class Movies extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update()
+	public function update(): void
 	{
-		$data = [
-			'id_movie' => $this->input->post('id_movie_update'),
-			'ids_productors' => $this->input->post('ids_productors_update'),
-			'ids_genders' => $this->input->post('ids_genders_update'),
-			'ids_categories' => $this->input->post('ids_categories_update'),
-			'movie_status' => $this->input->post('movie_status_update'),
-			'movie_quality' => $this->input->post('movie_quality_update'),
-			'movie_name' => $this->input->post('movie_name_update'),
-			'movie_slug' => $this->input->post('movie_slug_update'),
-			'movie_release_date' => $this->input->post('movie_release_date_update'),
-			'movie_duration' => $this->input->post('movie_duration_update'),
-			'movie_country_origin' => $this->input->post('movie_country_origin_update'),
-			'movie_description' => $this->input->post('movie_description_update'),
-			'movie_play' => $this->input->post('movie_play_update')
-		];
-
-		$config['upload_path'] = FOLDER_MOVIES;
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = 2048;
-
-		$this->load->library('upload', $config);
-
-		if ($this->upload->do_upload('movie_cover_update')) {
-			$cover = [
-				'new_image_cover' => $this->upload->data()['file_name'],
-				'old_image_cover' => NULL,
-				'old_image_ext' => substr($this->input->post('image_cover_update_route'), -4)
-			];
-		} else {
-			$cover = [
-				'old_image_cover' => $this->input->post('image_cover_update_route'),
-				'new_image_cover' => NULL
-			];			
-		}
-		echo $this->Movie_model->update([...$data, ...$cover]);
+		echo $this->Movie_model->update([
+			'id' => $this->input->post('movie'),
+			'productors' => $this->input->post('productors'),
+			'genders' => $this->input->post('genders'),
+			'categories' => $this->input->post('categories'),
+			'status_id' => $this->input->post('status'),
+			'quality_id' => $this->input->post('quality'),
+			'title' => $this->input->post('title'),
+			'description' => $this->input->post('description'),
+			'release_date' => $this->input->post('release_date'),
+			'duration' => $this->input->post('duration'),
+			'country_origin' => $this->input->post('country_origin'),
+			'link' => $this->input->post('link')
+		]);
 	}
 
-	public function edit_cover($id)
+	public function edit_cover(int $id): void
 	{
-		$movie = $this->Movie_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
 			'styles' => [
@@ -237,8 +196,7 @@ class Movies extends CI_Controller
 			'scripts' => [
 				base_url('public/js/movies.js')
 			],
-			'movie_id_encrypt' => $id,
-			'movie' => $movie->row_array(),
+			'movie' => $this->Movie_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
@@ -255,22 +213,22 @@ class Movies extends CI_Controller
 		$config['upload_path'] = FOLDER_MOVIES;
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size'] = 2048;
-
 		$this->load->library('upload', $config);
 
-		if (!$this->upload->do_upload('movie_cover_customize')) {
+		if (!$this->upload->do_upload('cover')) {
 			echo 'not-upload';
 		}
 
+		$data = $this->upload->data();
+
 		echo $this->Movie_model->update_cover([
-			'id_movie' => $this->input->post('id_movie_customize_cover'),
-			'movie_cover' => $this->upload->data()['file_name'],
-			'old_image_ext' => substr(trim($this->input->post('cover_update_route')), -4)
+			'id' => $this->input->post('movie'),
+			'cover' => $data['file_name']
 		]);
 	}
 
-	public function delete()
+	public function delete(): void
 	{
-		echo $this->Movie_model->delete(['id' => $this->input->post('id_movie_delete')]);
+		echo $this->Movie_model->delete(['id' => $this->input->post('movie')]);
 	}
 }

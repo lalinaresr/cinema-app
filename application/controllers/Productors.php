@@ -21,7 +21,7 @@ class Productors extends CI_Controller
 		]);
 	}
 
-	public function index()
+	public function index(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Productores',
@@ -48,12 +48,12 @@ class Productors extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/productors/container');
+		$this->load->view('partials/productors/index');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
 
-	public function create()
+	public function create(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Productores',
@@ -70,35 +70,21 @@ class Productors extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/productors/add');
+		$this->load->view('partials/productors/create');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
 
-	public function store()
+	public function store(): void
 	{
-		$config['upload_path'] = FOLDER_PRODUCTORS;
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = 2048;
-
-		$this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload('productor_image_logo_insert')) {
-			echo 'not-upload';
-		}
-
 		echo $this->Productor_model->store([
-			'productor_name' => $this->input->post('productor_name_insert'),
-			'productor_slug' => $this->input->post('productor_slug_insert'),
-			'productor_status' => $this->input->post('productor_status_insert'),
-			'productor_image_logo' => $this->upload->data()['file_name']
+			'status_id' => $this->input->post('status'),
+			'name' => $this->input->post('name')
 		]);
 	}
 
-	public function view($id)
+	public function view(int $id): void
 	{
-		$productor = $this->Productor_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Productores',
 			'styles' => [
@@ -107,8 +93,7 @@ class Productors extends CI_Controller
 			'scripts' => [
 				base_url('public/js/productors.js')
 			],
-			'productor_id_encrypt' => $id,
-			'productor' => $productor->row_array(),
+			'productor' => $this->Productor_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
@@ -120,10 +105,8 @@ class Productors extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function edit($id)
+	public function edit(int $id): void
 	{
-		$productor = $this->Productor_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Productores',
 			'styles' => [
@@ -132,8 +115,7 @@ class Productors extends CI_Controller
 			'scripts' => [
 				base_url('public/js/productors.js')
 			],
-			'productor_id_encrypt' => $id,
-			'productor' => $productor->row_array(),
+			'productor' => $this->Productor_model->fetch(['value' => $id]),
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
@@ -146,40 +128,17 @@ class Productors extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update()
+	public function update(): void
 	{
-		$data = [
-			'id_productor' => $this->input->post('id_productor_update'),
-			'productor_name' => $this->input->post('productor_name_update'),
-			'productor_slug' => $this->input->post('productor_slug_update'),
-			'productor_status' => $this->input->post('productor_status_update')
-		];
-
-		$config['upload_path'] = FOLDER_PRODUCTORS;
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = 2048;
-
-		$this->load->library('upload', $config);
-
-		if ($this->upload->do_upload('productor_image_logo_update')) {
-			$logo = [
-				'old_image_logo' => NULL,
-				'old_image_ext' => substr($this->input->post('image_logo_update_route'), -4),
-				'new_image_logo' => $this->upload->data()['file_name']
-			];
-		} else {
-			$logo = [
-				'old_image_logo' => $this->input->post('image_logo_update_route'),
-				'new_image_logo' => NULL
-			];
-		}
-		echo $this->Productor_model->update([...$data, ...$logo]);
+		echo $this->Productor_model->update([
+			'id' => $this->input->post('productor'),
+			'status_id' => $this->input->post('status'),
+			'name' => $this->input->post('name')
+		]);
 	}
 
-	public function edit_logo($id)
+	public function edit_logo(int $id): void
 	{
-		$productor = $this->Productor_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Productores',
 			'styles' => [
@@ -188,8 +147,7 @@ class Productors extends CI_Controller
 			'scripts' => [
 				base_url('public/js/productors.js')
 			],
-			'productor_id_encrypt' => $id,
-			'productor' => $productor->row_array(),
+			'productor' => $this->Productor_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
@@ -206,22 +164,22 @@ class Productors extends CI_Controller
 		$config['upload_path'] = FOLDER_PRODUCTORS;
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size'] = 2048;
-
 		$this->load->library('upload', $config);
 
-		if (!$this->upload->do_upload('productor_image_logo_customize')) {
+		if (!$this->upload->do_upload('logo')) {
 			echo 'not-upload';
 		}
 
+		$data = $this->upload->data();
+
 		echo $this->Productor_model->update_logo([
-			'id_productor' => $this->input->post('id_productor_customize_logo'),
-			'productor_image_logo' => $this->upload->data()['file_name'],
-			'old_image_ext' => substr($this->input->post('image_logo_update_route'), -4)
+			'id' => $this->input->post('productor'),
+			'logo' => $data['file_name']
 		]);
 	}
 
-	public function delete()
+	public function delete(): void
 	{
-		echo $this->Productor_model->delete(['id' => $this->input->post('id_productor_delete')]);
+		echo $this->Productor_model->delete(['id' => $this->input->post('productor')]);
 	}
 }

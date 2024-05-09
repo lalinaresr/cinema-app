@@ -10,12 +10,12 @@ class Auth extends CI_Controller
 		$this->load->model('Auth_model');
 	}
 
-	public function index()
+	public function index(): void
 	{
 		redirect(($this->session->userdata('is_authorized') ? 'dashboard' : 'auth/login'));
 	}
 
-	public function login()
+	public function login(): void
 	{
 		if ($this->session->userdata('is_authorized')) {
 			redirect('dashboard');
@@ -29,11 +29,11 @@ class Auth extends CI_Controller
 		];
 
 		$this->load->view('header', $params);
-		$this->load->view('partials/login/container');
+		$this->load->view('partials/auth/login');
 		$this->load->view('footer');
 	}
 
-	public function verify()
+	public function verify(): void
 	{
 		if ($this->session->userdata('is_authorized')) {
 			redirect('dashboard');
@@ -45,7 +45,7 @@ class Auth extends CI_Controller
 		]);
 	}
 
-	public function logout()
+	public function logout(): void
 	{
 		if ($this->session->userdata('is_authorized')) {
 			if ($this->Auth_model->logout())

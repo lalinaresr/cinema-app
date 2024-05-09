@@ -8,7 +8,7 @@ class Suggestion_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function index(array $builder = array())
+	public function index(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'id_suggestion, cm_suggestions.id_status, status_name, suggestion_name, suggestion_email, suggestion_description, suggestion_key, ip_registered_sug, date_registered_sug, client_registered_sug';
 		$builder['order_column'] = $builder['order_column'] ?? 'id_suggestion';

@@ -82,11 +82,12 @@ jQuery(document).ready(function ($) {
 			]
 		});
 		productors_table.buttons().container().appendTo('.col-sm-6:eq(0)');
+		productors_table.column('3').order('desc').draw();
 	}
 
 	const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
-			confirmButton: "btn btn-info",
+			confirmButton: "btn btn-custom",
 			cancelButton: "btn btn-default"
 		},
 		buttonsStyling: false
@@ -101,69 +102,29 @@ jQuery(document).ready(function ($) {
 	* @param  {String} event) {		var       string [description]
 	* @return {[type]}        [description]
 	*/
-	$("#productor_name_insert").keyup(function (event) {
+	$("#name").keyup(function (event) {
 		var string = '';
-		string = string + $("#productor_name_insert").val();
+		string = string + $("#name").val();
 
-		$("#productor_slug_insert").val(create_slug(string));
+		$("#slug").val(create_slug(string));
 	});
-
-	/**
-	* [description]
-	* @param  {[type]} ) {	              var fileName [description]
-	* @return {[type]}   [description]
-	*/
-	$('#productor_image_logo_insert').change(function () {
-		var fileName = $('#productor_image_logo_insert').val();
-		var extension = fileName.split('.').pop();
-		var extensionLower = extension.toLowerCase();
-		var sizeKB = (this.files[0].size) / 1024;
-
-		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
-			if (sizeKB < 2048) {
-				$("#modal-productor-image-logo").modal('show');
-				$('#preview-img-logo').removeClass("hidden");
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#preview-img-logo').attr('src', e.target.result);
-				}
-				reader.readAsDataURL(this.files[0]);
-			} else {
-				$('#preview-img-logo').addClass("hidden");
-				$('#productor_image_logo_insert').val('');
-				swalWithBootstrapButtons.fire({
-					title: 'Aviso',
-					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-					icon: 'error'
-				});
-			}
-		} else {
-			$('#preview-img-logo').addClass("hidden");
-			$('#productor_image_logo_insert').val('');
-			swalWithBootstrapButtons.fire({
-				title: 'Aviso',
-				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-				icon: 'error'
-			});
-		}
-	});
-
+	
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-insert-productor").attr('disabled', true);			$("#btn-insert-productor").html('<i                                                                       class [description]
-	* @param  {String} success:                                          function(response){			$("#btn-insert-productor").removeAttr('disabled');			$("#btn-insert-productor").html('<span class [description]
+	* @param  {String} ){			$("#productor-store-btn").attr('disabled', true);			$("#productor-store-btn").html('<i                                                                       class [description]
+	* @param  {String} success:                                          function(response){			$("#productor-store-btn").removeAttr('disabled');			$("#productor-store-btn").html('<span class [description]
 	* @return {[type]}                                                   [description]
 	*/
-	$("#form-insert-productor").ajaxForm({
+	$("#productor-store-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-insert-productor").attr('disabled', true);
-			$("#btn-insert-productor").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#productor-store-btn").attr('disabled', true);
+			$("#productor-store-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-insert-productor").removeAttr('disabled');
-			$("#btn-insert-productor").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
+			$("#productor-store-btn").removeAttr('disabled');
+			$("#productor-store-btn").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
 			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
@@ -198,69 +159,29 @@ jQuery(document).ready(function ($) {
 	* @param  {String} event) {		var       string [description]
 	* @return {[type]}        [description]
 	*/
-	$("#productor_name_update").keyup(function (event) {
+	$("#name").keyup(function (event) {
 		var string = '';
-		string = string + $("#productor_name_update").val();
+		string = string + $("#name").val();
 
-		$("#productor_slug_update").val(create_slug(string));
-	});
-
-	/**
-	* [description]
-	* @param  {[type]} ) {	              var fileName [description]
-	* @return {[type]}   [description]
-	*/
-	$('#productor_image_logo_update').change(function () {
-		var fileName = $('#productor_image_logo_update').val();
-		var extension = fileName.split('.').pop();
-		var extensionLower = extension.toLowerCase();
-		var sizeKB = (this.files[0].size) / 1024;
-
-		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
-			if (sizeKB < 2048) {
-				$("#modal-productor-image-logo").modal('show');
-				$('#preview-img-logo').removeClass("hidden");
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#preview-img-logo').attr('src', e.target.result);
-				}
-				reader.readAsDataURL(this.files[0]);
-			} else {
-				$('#preview-img-logo').addClass("hidden");
-				$('#productor_image_logo_update').val('');
-				swalWithBootstrapButtons.fire({
-					title: 'Aviso',
-					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-					icon: 'error'
-				});
-			}
-		} else {
-			$('#preview-img-logo').addClass("hidden");
-			$('#productor_image_logo_update').val('');
-			swalWithBootstrapButtons.fire({
-				title: 'Aviso',
-				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-				icon: 'error'
-			});
-		}
+		$("#slug").val(create_slug(string));
 	});
 
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-update-productor").attr('disabled', true);			$("#btn-update-productor").html('<i                                                                       class [description]
-	* @param  {String} success:                                          function(response){			$("#btn-update-productor").removeAttr('disabled');			$("#btn-update-productor").html('<span class [description]
+	* @param  {String} ){			$("#productor-update-btn").attr('disabled', true);			$("#productor-update-btn").html('<i                                                                       class [description]
+	* @param  {String} success:                                          function(response){			$("#productor-update-btn").removeAttr('disabled');			$("#productor-update-btn").html('<span class [description]
 	* @return {[type]}                                                   [description]
 	*/
-	$("#form-update-productor").ajaxForm({
+	$("#productor-update-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-update-productor").attr('disabled', true);
-			$("#btn-update-productor").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#productor-update-btn").attr('disabled', true);
+			$("#productor-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-update-productor").removeAttr('disabled');
-			$("#btn-update-productor").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
+			$("#productor-update-btn").removeAttr('disabled');
+			$("#productor-update-btn").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
 			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
@@ -295,33 +216,22 @@ jQuery(document).ready(function ($) {
 	* @param  {[type]} ) {	              var fileName [description]
 	* @return {[type]}   [description]
 	*/
-	$('#productor_image_logo_customize').change(function () {
-		var fileName = $('#productor_image_logo_customize').val();
+	$('#logo').change(function () {
+		var fileName = $('#logo').val();
 		var extension = fileName.split('.').pop();
 		var extensionLower = extension.toLowerCase();
 		var sizeKB = (this.files[0].size) / 1024;
 
 		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
 			if (sizeKB < 2048) {
-				$("#file_name_logo_customize").val(fileName);
-				$("#file_size_logo_customize").val('KB: ' + sizeKB);
-				$("#file_extension_logo_customize").val(extensionLower);
-				$("#file_route_logo_customize").val('storage/images/productors/');
-				$('#image-logo-current').addClass("hidden");
-				$('#preview-img-logo').removeClass("hidden");
+				
 				var reader = new FileReader();
 				reader.onload = function (e) {
-					$('#preview-img-logo').attr('src', e.target.result);
+					$('#logo-preview-image').attr('src', e.target.result);
 				}
 				reader.readAsDataURL(this.files[0]);
 			} else {
-				$('#preview-img-logo').addClass("hidden");
-				$('#image-logo-current').removeClass("hidden");
-				$("#productor_image_logo_customize").val('');
-				$("#file_name_logo_customize").val('');
-				$("#file_size_logo_customize").val('');
-				$("#file_extension_logo_customize").val('');
-				$("#file_route_logo_customize").val('');
+				$('#logo').val('');
 				swalWithBootstrapButtons.fire({
 					title: 'Aviso',
 					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
@@ -329,13 +239,7 @@ jQuery(document).ready(function ($) {
 				});
 			}
 		} else {
-			$('#preview-img-logo').addClass("hidden");
-			$('#image-logo-current').removeClass("hidden");
-			$('#productor_image_logo_customize').val('');
-			$("#file_name_logo_customize").val('');
-			$("#file_size_logo_customize").val('');
-			$("#file_extension_logo_customize").val('');
-			$("#file_route_logo_customize").val('');
+			$('#logo').val('');
 			swalWithBootstrapButtons.fire({
 				title: 'Aviso',
 				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
@@ -346,20 +250,20 @@ jQuery(document).ready(function ($) {
 
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-update-logo").attr('disabled', true);			$("#btn-update-logo").html('<i                                                                  class [description]
-	* @param  {String} success:                                     function(response){			$("#btn-update-logo").removeAttr('disabled');			$("#btn-update-logo").html('<span class [description]
+	* @param  {String} ){			$("#logo-update-btn").attr('disabled', true);			$("#logo-update-btn").html('<i                                                                  class [description]
+	* @param  {String} success:                                     function(response){			$("#logo-update-btn").removeAttr('disabled');			$("#logo-update-btn").html('<span class [description]
 	* @return {[type]}                                              [description]
 	*/
-	$("#form-update-logo").ajaxForm({
+	$("#logo-update-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-update-logo").attr('disabled', true);
-			$("#btn-update-logo").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#logo-update-btn").attr('disabled', true);
+			$("#logo-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-update-logo").removeAttr('disabled');
-			$("#btn-update-logo").html('<span class="glyphicon glyphicon-upload"></span> Cambiar');
+			$("#logo-update-btn").removeAttr('disabled');
+			$("#logo-update-btn").html('<span class="glyphicon glyphicon-upload"></span> Subir');
 
 			if (response == 'error') {
 				swalWithBootstrapButtons.fire({
@@ -368,6 +272,7 @@ jQuery(document).ready(function ($) {
 					icon: 'error'
 				});
 			} else if (response == 'success') {
+				$('#logo').val('');
 				swalWithBootstrapButtons.fire({
 					title: 'Éxito',
 					text: 'El logo fue actualizado con éxito',
@@ -391,8 +296,9 @@ jQuery(document).ready(function ($) {
 	* @param  {[type]} success:      function(response){					if (response     [description]
 	* @return {[type]}               [description]
 	*/
-	$(".btn-delete-productor").click(function (event) {
-		var id_productor = $(this).attr('id');
+	$(".productor-delete-btn").click(function (event) {
+		let productor = $(this).data('element');
+		let url = `${location.href}/delete`;
 
 		swalWithBootstrapButtons.fire({
 			title: '¿Estas segur@?',
@@ -405,9 +311,9 @@ jQuery(document).ready(function ($) {
 		}).then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { id_productor_delete: id_productor },
-					url: 'delete/',
-					type: 'post',
+					data: { productor },
+					url,
+					type: 'POST',
 					success: function (response) {
 						if (response == 'not-found') {
 							swalWithBootstrapButtons.fire({

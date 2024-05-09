@@ -8,7 +8,7 @@ class Category_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function index(array $builder = array())
+	public function index(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'id_category, cm_categories.id_status, status_name, category_name, category_slug, ip_registered_cat, date_registered_cat, client_registered_cat, ip_modified_cat, date_modified_cat, client_modified_cat';
 		$builder['order_column'] = $builder['order_column'] ?? 'id_category';
@@ -35,10 +35,12 @@ class Category_model extends CI_Model
 		return $response;
 	}
 
-	public function store($data)
+	public function store(array $data): string
 	{
 		$response = $this->db
-			->where('category_name', $data['category_name'])
+			->select('id_category')
+			->where('category_name', $data['name'])
+			->limit(1)
 			->get('cm_categories');
 
 		if ($response->num_rows() > 0) {
@@ -46,9 +48,9 @@ class Category_model extends CI_Model
 		}
 
 		$store = $this->db->insert('cm_categories', [
-			'id_status' => $data['category_status'],
-			'category_name' => $data['category_name'],
-			'category_slug' => url_title($data['category_name'], '-', true),
+			'id_status' => $data['status_id'],
+			'category_name' => $data['name'],
+			'category_slug' => url_title(remove_accents($data['name']), '-', true),
 			'ip_registered_cat' => get_ip_current(),
 			'date_registered_cat' => get_date_current(),
 			'client_registered_cat' => get_agent_current()
@@ -57,7 +59,7 @@ class Category_model extends CI_Model
 		return ($store ? 'success' : 'error');
 	}
 
-	public function fetch(array $builder = array())
+	public function fetch(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'id_category, cm_categories.id_status, status_name, category_name, category_slug, ip_registered_cat, date_registered_cat, client_registered_cat, ip_modified_cat, date_modified_cat, client_modified_cat';
 		$builder['search'] = $builder['search'] ?? 'id_category';
@@ -73,11 +75,13 @@ class Category_model extends CI_Model
 		return $response;
 	}
 
-	public function update($data)
+	public function update(array $data): string
 	{
 		$response = $this->db
-			->where('id_status', $data['category_status'])
-			->where('category_name', $data['category_name'])
+			->select('id_category')
+			->where('id_status', $data['status_id'])
+			->where('category_name', $data['name'])
+			->limit(1)
 			->get('cm_categories');
 
 		if ($response->num_rows() > 0) {
@@ -85,11 +89,11 @@ class Category_model extends CI_Model
 		}
 
 		$update = $this->db
-			->where('id_category', decryp($data['id_category']))
+			->where('id_category', $data['id'])
 			->update('cm_categories', [
-				'id_status' => $data['category_status'],
-				'category_name' => $data['category_name'],
-				'category_slug' => url_title($data['category_name'], '-', true),
+				'id_status' => $data['status_id'],
+				'category_name' => $data['name'],
+				'category_slug' => url_title(remove_accents($data['name']), '-', true),
 				'ip_modified_cat' => get_ip_current(),
 				'date_modified_cat' => get_date_current(),
 				'client_modified_cat' => get_agent_current()
@@ -98,9 +102,9 @@ class Category_model extends CI_Model
 		return ($update ? 'success' : 'error');
 	}
 
-	public function delete($data)
+	public function delete(array $data): string
 	{
-		$id = decryp($data['id']);
+		$id = $data['id'];
 
 		$response = $this->db
 			->select('id_category')
@@ -123,7 +127,7 @@ class Category_model extends CI_Model
 		return (($fDelete && $sDelete) ? 'success' : 'error');
 	}
 
-	public function movies_by_category(array $builder = array())
+	public function movies_by_category(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'cm_movies.id_movie, cm_movies.id_status, cm_movies.id_quality, cm_categories.id_category, cm_categories.category_name, cm_categories.category_slug, cm_movies.movie_name, cm_movies.movie_slug, cm_movies.movie_description, cm_movies.movie_release_date, cm_movies.movie_duration, cm_movies.movie_country_origin, cm_movies.movie_cover, cm_movies.movie_reproductions, cm_movies.movie_play, cm_movies.is_premiere';
 		$builder['order_column'] = $builder['order_column'] ?? 'cm_movies.id_movie';

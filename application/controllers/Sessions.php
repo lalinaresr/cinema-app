@@ -7,7 +7,7 @@ class Sessions extends CI_Controller
 	{
 		parent::__construct();
 
-		if (!$this->session->userdata('is_authorized') && !$this->session->userdata('is_admin')) {
+		if (!$this->session->userdata('is_authorized') || !$this->session->userdata('is_admin')) {
 			redirect();
 		}
 
@@ -17,7 +17,7 @@ class Sessions extends CI_Controller
 		]);
 	}
 
-	public function index()
+	public function index(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Sesiones',
@@ -44,7 +44,29 @@ class Sessions extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/sessions/container');
+		$this->load->view('partials/sessions/index');
+		$this->load->view('layouts/dashboard/footer');
+		$this->load->view('footer');
+	}
+
+	public function view(int $id): void
+	{
+		$params = [
+			'title' => constant('APP_NAME') . ' | Sesiones',
+			'styles' => [
+				base_url('public/css/dashboard.css')
+			],
+			'scripts' => [
+				base_url('public/js/sessions.js')
+			],
+			'session' => $this->Session_model->fetch(['value' => $id]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+		];
+
+		$this->load->view('header', $params);
+		$this->load->view('layouts/dashboard/navbar');
+		$this->load->view('layouts/dashboard/sidebar');
+		$this->load->view('partials/sessions/view');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}

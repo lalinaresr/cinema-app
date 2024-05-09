@@ -11,9 +11,9 @@
 			<script type="<?= $script['type']; ?>" src="<?= $script['src']; ?>"></script>
 		<?php else : ?>
 			<script type="text/javascript" src="<?= $script; ?>"></script>
-		<?php endif ?>
-	<?php endforeach ?>
-<?php endif ?>
+		<?php endif; ?>
+	<?php endforeach; ?>
+<?php endif; ?>
 <script type="text/javascript" src="<?= base_url('public/js/auth.js'); ?>"></script>
 </body>
 

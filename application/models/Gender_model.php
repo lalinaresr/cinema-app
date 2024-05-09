@@ -8,7 +8,7 @@ class Gender_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function index(array $builder = array())
+	public function index(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'id_gender, cm_genders.id_status, status_name, gender_name, gender_slug, ip_registered_gds, date_registered_gds, client_registered_gds, ip_modified_gds, date_modified_gds, client_modified_gds';
 		$builder['order_column'] = $builder['order_column'] ?? 'id_gender';
@@ -35,10 +35,10 @@ class Gender_model extends CI_Model
 		return $response;
 	}
 
-	public function store($data)
+	public function store(array $data): string
 	{
 		$response = $this->db
-			->where('gender_name', $data['gender_name'])
+			->where('gender_name', $data['name'])
 			->get('cm_genders');
 
 		if ($response->num_rows() > 0) {
@@ -46,9 +46,9 @@ class Gender_model extends CI_Model
 		}
 
 		$store = $this->db->insert('cm_genders', [
-			'id_status' => $data['gender_status'],
-			'gender_name' => $data['gender_name'],
-			'gender_slug' => url_title($data['gender_name'], '-', true),
+			'id_status' => $data['status_id'],
+			'gender_name' => $data['name'],
+			'gender_slug' => url_title(remove_accents($data['name']), '-', true),
 			'ip_registered_gds' => get_ip_current(),
 			'date_registered_gds' => get_date_current(),
 			'client_registered_gds' => get_agent_current()
@@ -57,7 +57,7 @@ class Gender_model extends CI_Model
 		return ($store ? 'success' : 'error');
 	}
 
-	public function fetch(array $builder = array())
+	public function fetch(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'id_gender, cm_genders.id_status, status_name, gender_name, gender_slug, ip_registered_gds, date_registered_gds, client_registered_gds, ip_modified_gds, date_modified_gds, client_modified_gds';
 		$builder['search'] = $builder['search'] ?? 'id_gender';
@@ -73,11 +73,13 @@ class Gender_model extends CI_Model
 		return $response;
 	}
 
-	public function update($data)
+	public function update(array $data): string
 	{
 		$response = $this->db
-			->where('id_status', $data['gender_status'])
-			->where('gender_name', $data['gender_name'])
+			->select('id_gender')
+			->where('id_status', $data['status_id'])
+			->where('gender_name', $data['name'])
+			->limit(1)
 			->get('cm_genders');
 
 		if ($response->num_rows() > 0) {
@@ -85,11 +87,11 @@ class Gender_model extends CI_Model
 		}
 
 		$update = $this->db
-			->where('id_gender', decryp($data['id_gender']))
+			->where('id_gender', $data['id'])
 			->update('cm_genders', [
-				'id_status' => $data['gender_status'],
-				'gender_name' => $data['gender_name'],
-				'gender_slug' => url_title($data['gender_name'], '-', true),
+				'id_status' => $data['status_id'],
+				'gender_name' => $data['name'],
+				'gender_slug' => url_title(remove_accents($data['name']), '-', true),
 				'ip_modified_gds' => get_ip_current(),
 				'date_modified_gds' => get_date_current(),
 				'client_modified_gds' => get_agent_current()
@@ -98,9 +100,9 @@ class Gender_model extends CI_Model
 		return ($update ? 'success' : 'error');
 	}
 
-	public function delete($data)
+	public function delete(array $data): string
 	{
-		$id = decryp($data['id']);
+		$id = $data['id'];
 
 		$response = $this->db
 			->select('id_gender')

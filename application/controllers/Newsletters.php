@@ -17,7 +17,7 @@ class Newsletters extends CI_Controller
 		]);
 	}
 
-	public function index()
+	public function index(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Seguidores',
@@ -44,8 +44,35 @@ class Newsletters extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/newsletters/container');
+		$this->load->view('partials/newsletters/index');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
+	}
+
+	public function view(int $id): void
+	{
+		$params = [
+			'title' => constant('APP_NAME') . ' | Seguidores',
+			'styles' => [
+				base_url('public/css/dashboard.css')
+			],
+			'scripts' => [
+				base_url('public/js/newsletters.js')
+			],
+			'newsletter' => $this->Newsletter_model->fetch(['value' => $id]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+		];
+
+		$this->load->view('header', $params);
+		$this->load->view('layouts/dashboard/navbar');
+		$this->load->view('layouts/dashboard/sidebar');
+		$this->load->view('partials/newsletters/view');
+		$this->load->view('layouts/dashboard/footer');
+		$this->load->view('footer');
+	}
+
+	public function delete(): void
+	{
+		echo $this->Newsletter_model->delete(['id' => $this->input->post('newsletter')]);
 	}
 }

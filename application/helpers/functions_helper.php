@@ -164,4 +164,12 @@
 		return $extract;
 	}
 
+	if (!function_exists('is_active')) {
+		function is_active($route)
+		{
+			$CI =& get_instance();
+			return $CI->router->fetch_class() == $route ? 'class="active"' : '';
+		}
+	}
+
 ?>

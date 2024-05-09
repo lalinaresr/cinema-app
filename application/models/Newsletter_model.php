@@ -8,7 +8,7 @@ class Newsletter_model extends CI_Model
         parent::__construct();
     }
 
-    public function index(array $builder = array())
+    public function index(array $builder = array()): object
     {
         $builder['columns'] = $builder['columns'] ?? '*';
         $builder['order_column'] = $builder['order_column'] ?? 'id_newsletter';
@@ -27,5 +27,41 @@ class Newsletter_model extends CI_Model
         $response = $response->get();
 
         return $response;
+    }
+
+    public function fetch(array $builder = array()): object
+    {
+        $builder['columns'] = $builder['columns'] ?? '*';
+        $builder['search'] = $builder['search'] ?? 'id_newsletter';
+
+        $response = $this->db
+            ->select($builder['columns'])
+            ->from('cm_newsletters')
+            ->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+            ->limit(1)
+            ->get();
+
+        return $response;
+    }
+
+    public function delete(array $data): string
+    {
+        $id = $data['id'];
+
+        $response = $this->db
+            ->select('id_newsletter')
+            ->where('id_newsletter', $id)
+            ->limit(1)
+            ->get('cm_newsletters');
+
+        if ($response->num_rows() == 0) {
+            return 'not-found';
+        }
+
+        $delete = $this->db
+            ->where('id_newsletter', $id)
+            ->delete('cm_newsletters');
+
+        return ($delete ? 'success' : 'error');
     }
 }

@@ -21,7 +21,7 @@ class Categories extends CI_Controller
 		]);
 	}
 
-	public function index()
+	public function index(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Categorías',
@@ -48,12 +48,12 @@ class Categories extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/categories/container');
+		$this->load->view('partials/categories/index');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
 
-	public function create()
+	public function create(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Categorías',
@@ -70,24 +70,21 @@ class Categories extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/categories/add');
+		$this->load->view('partials/categories/create');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
 
-	public function store()
+	public function store(): void
 	{
 		echo $this->Category_model->store([
-			'category_name' => $this->input->post('category_name_insert'),
-			'category_slug' => $this->input->post('category_slug_insert'),
-			'category_status' => $this->input->post('category_status_insert')
+			'status_id' => $this->input->post('status'),
+			'name' => $this->input->post('name')
 		]);
 	}
 
-	public function view($id)
+	public function view(int $id): void
 	{
-		$category = $this->Category_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Categorías',
 			'styles' => [
@@ -96,7 +93,7 @@ class Categories extends CI_Controller
 			'scripts' => [
 				base_url('public/js/categories.js')
 			],
-			'category' => $category->row_array(),
+			'category' => $this->Category_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
@@ -108,10 +105,8 @@ class Categories extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function edit($id)
+	public function edit(int $id): void
 	{
-		$category = $this->Category_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Categorías',
 			'styles' => [
@@ -120,8 +115,7 @@ class Categories extends CI_Controller
 			'scripts' => [
 				base_url('public/js/categories.js')
 			],
-			'category_id_encrypt' => $id,
-			'category' => $category->row_array(),
+			'category' => $this->Category_model->fetch(['value' => $id]),
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
@@ -134,18 +128,17 @@ class Categories extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update()
+	public function update(): void
 	{
 		echo $this->Category_model->update([
-			'id_category' => $this->input->post('id_category_update'),
-			'category_name' => $this->input->post('category_name_update'),
-			'category_slug' => $this->input->post('category_slug_update'),
-			'category_status' => $this->input->post('category_status_update')
+			'id' => $this->input->post('category'),
+			'status_id' => $this->input->post('status'),
+			'name' => $this->input->post('name')
 		]);
 	}
 
-	public function delete()
+	public function delete(): void
 	{
-		echo $this->Category_model->delete(['id' => $this->input->post('id_category_delete')]);
+		echo $this->Category_model->delete(['id' => $this->input->post('category')]);
 	}
 }

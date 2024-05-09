@@ -8,7 +8,7 @@ class Quality_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function index(array $builder = array())
+	public function index(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'cm_qualities.*, cm_status.status_name';
 		$builder['order_column'] = $builder['order_column'] ?? 'id_quality';
@@ -35,10 +35,12 @@ class Quality_model extends CI_Model
 		return $response;
 	}
 
-	public function store($data)
+	public function store(array $data): string
 	{
 		$response = $this->db
-			->where('quality_name', $data['quality_name'])
+			->select('id_quality')
+			->where('quality_name', $data['name'])
+			->limit(1)
 			->get('cm_qualities');
 
 		if ($response->num_rows() > 0) {
@@ -46,9 +48,9 @@ class Quality_model extends CI_Model
 		}
 
 		$store = $this->db->insert('cm_qualities', [
-			'id_status' => $data['quality_status'],
-			'quality_name' => $data['quality_name'],
-			'quality_slug' => url_title($data['quality_name'], '-', true),
+			'id_status' => $data['status_id'],
+			'quality_name' => $data['name'],
+			'quality_slug' => url_title(remove_accents($data['name']), '-', true),
 			'ip_registered_qlt' => get_ip_current(),
 			'date_registered_qlt' => get_date_current(),
 			'client_registered_qlt' => get_agent_current()
@@ -57,7 +59,7 @@ class Quality_model extends CI_Model
 		return ($store ? 'success' : 'error');
 	}
 
-	public function fetch(array $builder = array())
+	public function fetch(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'cm_qualities.*, cm_status.status_name';
 		$builder['search'] = $builder['search'] ?? 'id_quality';
@@ -73,11 +75,13 @@ class Quality_model extends CI_Model
 		return $response;
 	}
 
-	public function update($data)
+	public function update(array $data): string
 	{
 		$response = $this->db
-			->where('id_status', $data['quality_status'])
-			->where('quality_name', $data['quality_name'])
+			->select('id_quality')
+			->where('id_status', $data['status_id'])
+			->where('quality_name', $data['name'])
+			->limit(1)
 			->get('cm_qualities');
 
 		if ($response->num_rows() > 0) {
@@ -85,11 +89,11 @@ class Quality_model extends CI_Model
 		}
 
 		$update = $this->db
-			->where('id_quality', decryp($data['id_quality']))
+			->where('id_quality', $data['id'])
 			->update('cm_qualities', [
-				'id_status' => $data['quality_status'],
-				'quality_name' => $data['quality_name'],
-				'quality_slug' => url_title($data['quality_name'], '-', true),
+				'id_status' => $data['status_id'],
+				'quality_name' => $data['name'],
+				'quality_slug' => url_title(remove_accents($data['name']), '-', true),
 				'ip_modified_qlt' => get_ip_current(),
 				'date_modified_qlt' => get_date_current(),
 				'client_modified_qlt' => get_agent_current()
@@ -98,9 +102,9 @@ class Quality_model extends CI_Model
 		return ($update ? 'success' : 'error');
 	}
 
-	public function delete($data)
+	public function delete(array $data): string
 	{
-		$id = decryp($data['id']);
+		$id = $data['id'];
 
 		$response = $this->db
 			->select('id_quality')

@@ -2,7 +2,7 @@ jQuery(document).ready(function ($) {
 
 	const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
-			confirmButton: "btn btn-info",
+			confirmButton: "btn btn-custom",
 			cancelButton: "btn btn-default"
 		},
 		buttonsStyling: false
@@ -14,22 +14,22 @@ jQuery(document).ready(function ($) {
 
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#icon-user-login").html('<i class                                                 [description]
-	* @param  {String} success:                             function(response){			$("#icon-user-login").html('<i class         [description]
+	* @param  {String} ){			$("#login-icon").html('<i class                                                 [description]
+	* @param  {String} success:                             function(response){			$("#login-icon").html('<i class         [description]
 	* @return {[type]}                                      [description]
 	*/
-	$("#form-login").ajaxForm({
+	$("#login-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'POST',
 		beforeSend: function () {
-			$("#icon-user-login").html('<i style="font-size: 10em;" class="fa fa-spinner fa-spin fa-fw"></i>');
-			$("#btn-login").attr('disabled', true);
-			$("#btn-login").html('Procesando');
+			$("#login-icon").html('<i style="font-size: 10em;" class="fa fa-spinner fa-spin fa-fw"></i>');
+			$("#login-btn").attr('disabled', true);
+			$("#login-btn").html('Procesando');
 		},
 		success: function (response) {
-			$("#icon-user-login").html('<i style="font-size: 10em;" class="fa fa-user-circle"></i>');
-			$("#btn-login").removeAttr('disabled');
-			$("#btn-login").html('<span class="glyphicon glyphicon-log-in"></span> Entrar');
+			$("#login-icon").html('<i style="font-size: 10em;" class="fa fa-user-circle"></i>');
+			$("#login-btn").removeAttr('disabled');
+			$("#login-btn").html('<span class="glyphicon glyphicon-log-in"></span> Entrar');
 
 			if (response == 'not-found' || response == 'not-match') {
 				swalWithBootstrapButtons.fire({
@@ -54,7 +54,7 @@ jQuery(document).ready(function ($) {
 	* @param  {[type]} event){		event.preventDefault();		$.ajax({			url: $(this).attr('href'),			type: 'post',			success: function(response){				location.href [description]
 	* @return {[type]}                                                     [description]
 	*/
-	$(".btn-logout").on('click', function (event) {
+	$(".logout-btn").on('click', function (event) {
 		event.preventDefault();
 
 		swalWithBootstrapButtons.fire({

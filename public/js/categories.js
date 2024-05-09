@@ -28,7 +28,7 @@ jQuery(document).ready(function ($) {
 	*/
 	function cleaned_string(stringEnd) {
 		/* We define the characters that we want to remove */
-		var charsToRemove = "!@#$^&%*()+=[]\/{}|:<>?,.";
+		var charsToRemove = "¡!@#$^&%*()+=[]\/{}|:<>?,.";
 
 		/* I'll delete the characters */
 		for (var i = 0; i < charsToRemove.length; i++) {
@@ -82,11 +82,12 @@ jQuery(document).ready(function ($) {
 			]
 		});
 		categories_table.buttons().container().appendTo('.col-sm-6:eq(0)');
+		categories_table.column('3').order('desc').draw();
 	}
 
 	const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
-			confirmButton: "btn btn-info",
+			confirmButton: "btn btn-custom",
 			cancelButton: "btn btn-default"
 		},
 		buttonsStyling: false
@@ -101,29 +102,29 @@ jQuery(document).ready(function ($) {
 	* @param  {String} event) {		var       string [description]
 	* @return {[type]}        [description]
 	*/
-	$("#category_name_insert").keyup(function (event) {
+	$("#name").keyup(function (event) {
 		var string = '';
-		string = string + $("#category_name_insert").val();
+		string = string + $("#name").val();
 
-		$("#category_slug_insert").val(create_slug(string));
+		$("#slug").val(create_slug(string));
 	});
 
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-insert-category").attr('disabled', true);			$("#btn-insert-category").html('<i                                                                    class [description]
-	* @param  {String} success:                                       function(response){			$("#btn-insert-category").removeAttr('disabled');			$("#btn-insert-category").html('<span class [description]
+	* @param  {String} ){			$("#category-store-btn").attr('disabled', true);			$("#category-store-btn").html('<i                                                                    class [description]
+	* @param  {String} success:                                       function(response){			$("#category-store-btn").removeAttr('disabled');			$("#category-store-btn").html('<span class [description]
 	* @return {[type]}                                                [description]
 	*/
-	$("#form-insert-category").ajaxForm({
+	$("#category-store-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-insert-category").attr('disabled', true);
-			$("#btn-insert-category").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#category-store-btn").attr('disabled', true);
+			$("#category-store-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-insert-category").removeAttr('disabled');
-			$("#btn-insert-category").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
+			$("#category-store-btn").removeAttr('disabled');
+			$("#category-store-btn").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
 			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
@@ -158,29 +159,29 @@ jQuery(document).ready(function ($) {
 	* @param  {String} event) {		var       string [description]
 	* @return {[type]}        [description]
 	*/
-	$("#category_name_update").keyup(function (event) {
+	$("#name").keyup(function (event) {
 		var string = '';
-		string = string + $("#category_name_update").val();
+		string = string + $("#name").val();
 
-		$("#category_slug_update").val(create_slug(string));
+		$("#slug").val(create_slug(string));
 	});
 
 	/**
 	* [beforeSend description]
-	* @param  {String} ){			$("#btn-update-category").attr('disabled', true);			$("#btn-update-category").html('<i                                                                    class [description]
-	* @param  {String} success:                                       function(response){			$("#btn-update-category").removeAttr('disabled');			$("#btn-update-category").html('<span class [description]
+	* @param  {String} ){			$("#category-update-btn").attr('disabled', true);			$("#category-update-btn").html('<i                                                                    class [description]
+	* @param  {String} success:                                       function(response){			$("#category-update-btn").removeAttr('disabled');			$("#category-update-btn").html('<span class [description]
 	* @return {[type]}                                                [description]
 	*/
-	$("#form-update-category").ajaxForm({
+	$("#category-update-form").ajaxForm({
 		url: $(this).attr('action'),
 		type: 'post',
 		beforeSend: function () {
-			$("#btn-update-category").attr('disabled', true);
-			$("#btn-update-category").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			$("#category-update-btn").attr('disabled', true);
+			$("#category-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
 		},
 		success: function (response) {
-			$("#btn-update-category").removeAttr('disabled');
-			$("#btn-update-category").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
+			$("#category-update-btn").removeAttr('disabled');
+			$("#category-update-btn").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
 			if (response == 'existing') {
 				swalWithBootstrapButtons.fire({
@@ -218,8 +219,9 @@ jQuery(document).ready(function ($) {
 	* @param  {[type]} success:      function(response){					if (response     [description]
 	* @return {[type]}               [description]
 	*/
-	$(".btn-delete-category").click(function (event) {
-		var id_category = $(this).attr('id');
+	$(".category-delete-btn").click(function (event) {
+		let category = $(this).data('element');
+		let url = `${location.href}/delete`;
 
 		swalWithBootstrapButtons.fire({
 			title: '¿Estas segur@?',
@@ -232,9 +234,9 @@ jQuery(document).ready(function ($) {
 		}).then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { id_category_delete: id_category },
-					url: 'delete/',
-					type: 'post',
+					data: { category },
+					url,
+					type: 'POST',
 					success: function (response) {
 						if (response == 'not-found') {
 							swalWithBootstrapButtons.fire({

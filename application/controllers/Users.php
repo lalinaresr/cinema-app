@@ -18,7 +18,7 @@ class Users extends CI_Controller
 		]);
 	}
 
-	public function index()
+	public function index(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
@@ -45,12 +45,12 @@ class Users extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/users/container');
+		$this->load->view('partials/users/index');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
 
-	public function create()
+	public function create(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
@@ -72,30 +72,28 @@ class Users extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/users/add');
+		$this->load->view('partials/users/create');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
 
-	public function store()
+	public function store(): void
 	{
 		echo $this->User_model->store([
-			'contact_firstname' => $this->input->post('user_firstname_insert'),
-			'contact_lastname' => $this->input->post('user_lastname_insert'),
-			'contact_sex' => $this->input->post('user_sex_insert'),
-			'contact_date_birthday' => $this->input->post('user_date_birthday_insert'),
-			'user_rol' => $this->input->post('user_rol_insert'),
-			'user_status' => $this->input->post('user_status_insert'),
-			'user_username' => $this->input->post('user_username_insert'),
-			'user_email' => $this->input->post('user_email_insert'),
-			'user_password' => 'password'
+			'role_id' => $this->input->post('role'),
+			'status_id' => $this->input->post('status'),
+			'firstname' => $this->input->post('firstname'),
+			'lastname' => $this->input->post('lastname'),
+			'username' => $this->input->post('username'),
+			'email' => $this->input->post('email'),
+			'password' => $this->input->post('password'),
+			'sex' => $this->input->post('sex'),
+			'birthday' => $this->input->post('birthday')
 		]);
 	}
 
-	public function view($id)
+	public function view(int $id): void
 	{
-		$user = $this->User_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
 			'styles' => [
@@ -104,8 +102,7 @@ class Users extends CI_Controller
 			'scripts' => [
 				base_url('public/js/users.js')
 			],
-			'user_id_encrypt' => $id,
-			'user' => $user->row_array(),
+			'user' => $this->User_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
@@ -117,10 +114,8 @@ class Users extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function edit($id)
+	public function edit(int $id): void
 	{
-		$user = $this->User_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
 			'styles' => [
@@ -133,8 +128,7 @@ class Users extends CI_Controller
 				base_url('public/js/libs/bootstrap-datetimepicker.min.js'),
 				base_url('public/js/users.js')
 			],
-			'user_id_encrypt' => $id,
-			'user' => $user->row_array(),
+			'user' => $this->User_model->fetch(['value' => $id]),
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
 			'roles' => $this->Role_model->index(['status' => 1]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
@@ -148,27 +142,25 @@ class Users extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update()
+	public function update(): void
 	{
 		echo $this->User_model->update([
-			'id_user' => $this->input->post('id_user_update'),
-			'user_contact' => $this->input->post('id_contact_update'),
-			'user_firstname' => $this->input->post('user_firstname_update'),
-			'user_lastname' => $this->input->post('user_lastname_update'),
-			'user_sex' => $this->input->post('user_sex_update'),
-			'user_date_birthday' => $this->input->post('user_date_birthday_update'),
-			'user_rol' => $this->input->post('user_rol_update'),
-			'user_status' => $this->input->post('user_status_update'),
-			'user_username' => $this->input->post('user_username_update'),
-			'user_email' => $this->input->post('user_email_update'),
-			'user_password' => 'password'
+			'id' => $this->input->post('user'),
+			'contact_id' => $this->input->post('contact'),
+			'role_id' => $this->input->post('role'),
+			'status_id' => $this->input->post('status'),
+			'firstname' => $this->input->post('firstname'),
+			'lastname' => $this->input->post('lastname'),
+			'username' => $this->input->post('username'),
+			'email' => $this->input->post('email'),
+			'password' => $this->input->post('password'),
+			'sex' => $this->input->post('sex'),
+			'birthday' => $this->input->post('birthday')
 		]);
 	}
 
 	public function edit_avatar($id)
 	{
-		$user = $this->User_model->fetch(['value' => $id, 'decrypt' => true]);
-
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
 			'styles' => [
@@ -177,8 +169,7 @@ class Users extends CI_Controller
 			'scripts' => [
 				base_url('public/js/users.js')
 			],
-			'user_id_encrypt' => $id,
-			'user' => $user->row_array(),
+			'user' => $this->User_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
 		];
 
@@ -195,22 +186,22 @@ class Users extends CI_Controller
 		$config['upload_path'] = FOLDER_AVATARS;
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size'] = 2048;
-
 		$this->load->library('upload', $config);
 
-		if (!$this->upload->do_upload('user_avatar_customize')) {
+		if (!$this->upload->do_upload('avatar')) {
 			echo 'not-upload';
 		}
 
+		$data = $this->upload->data();
+
 		echo $this->User_model->update_avatar([
-			'id_user' => $this->input->post('id_user_customize_avatar'),
-			'avatar' => $this->upload->data()['file_name'],
-			'old_image_ext' => substr($this->input->post('image_avatar_update_route'), -4)
+			'id' => $this->input->post('user'),
+			'avatar' => $data['file_name']
 		]);
 	}
 
-	public function delete()
+	public function delete(): void
 	{
-		echo $this->User_model->delete(['id' => $this->input->post('id_user_delete')]);
+		echo $this->User_model->delete(['id' => $this->input->post('user')]);
 	}
 }

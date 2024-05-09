@@ -23,10 +23,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			Line: <?php echo $error['line']; ?><br />
 			Function: <?php echo $error['function']; ?>
 			</p>
-		<?php endif ?>
+		<?php endif; ?>
 
-	<?php endforeach ?>
+	<?php endforeach; ?>
 
-<?php endif ?>
+<?php endif; ?>
 
 </div>

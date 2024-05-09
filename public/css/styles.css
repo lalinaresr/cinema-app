@@ -441,6 +441,10 @@ a:active {
     color: var(--white) !important;
 }
 
+.text-info {
+    color: var(--info-blue) !important;
+}
+
 .text-truncate {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -469,4 +473,24 @@ a:active {
 
 .fs-6 {
     font-size: 1rem !important;
+}
+
+.btn-custom {
+    color: var(--white) !important;
+    background-color: var(--dark) !important;
+    border-color: var(--dark) !important;
+}
+
+.btn-custom.active.focus,
+.btn-custom.active:focus,
+.btn-custom.active:hover,
+.btn-custom:active.focus,
+.btn-custom:active:focus,
+.btn-custom:active:hover,
+.open>.dropdown-toggle.btn-custom.focus,
+.open>.dropdown-toggle.btn-custom:focus,
+.open>.dropdown-toggle.btn-custom:hover {
+    color: var(--white) !important;
+    background-color: var(--dark) !important;
+    border-color: var(--dark) !important;
 }

@@ -34,5 +34,6 @@ jQuery(document).ready(function ($) {
 			]
 		});
 		sessions_table.buttons().container().appendTo('.col-sm-6:eq(0)');
+		sessions_table.column('3').order('desc').draw();
 	}
 });

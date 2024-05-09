@@ -8,7 +8,7 @@ class Productor_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function index(array $builder = array())
+	public function index(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'id_productor, cm_productors.id_status, status_name, productor_name, productor_slug, productor_image_logo, ip_registered_pro, date_registered_pro, client_registered_pro, ip_modified_pro, date_modified_pro, client_modified_pro';
 		$builder['order_column'] = $builder['order_column'] ?? 'id_productor';
@@ -35,45 +35,32 @@ class Productor_model extends CI_Model
 		return $response;
 	}
 
-	public function store($data)
+	public function store(array $data): string
 	{
-		$original_logo = FOLDER_PRODUCTORS . "/{$data['productor_image_logo']}";
-
 		$response = $this->db
-			->where('productor_name', $data['productor_name'])
+			->select('id_productor')
+			->where('productor_name', $data['name'])
+			->limit(1)
 			->get('cm_productors');
 
 		if ($response->num_rows() > 0) {
-			unlink($original_logo);
 			return 'existing';
 		}
 
 		$store = $this->db->insert('cm_productors', [
-			'id_status' => $data['productor_status'],
-			'productor_name' => $data['productor_name'],
-			'productor_slug' => url_title($data['productor_name'], '-', true),
-			'productor_image_logo' => $original_logo,
+			'id_status' => $data['status_id'],
+			'productor_name' => $data['name'],
+			'productor_slug' => url_title(remove_accents($data['name']), '-', true),
+			'productor_image_logo' => 'NO-IMAGE',
 			'ip_registered_pro' => get_ip_current(),
 			'date_registered_pro' => get_date_current(),
 			'client_registered_pro' => get_agent_current()
 		]);
 
-		$last_id = $this->db->insert_id();
-
-		$new_logo = FOLDER_PRODUCTORS . "/{$last_id}_logo" . substr($data['productor_image_logo'], -4);
-
-		rename($original_logo, $new_logo);
-
-		$update = $this->db
-			->where('id_productor', $last_id)
-			->update('cm_productors', [
-				'productor_image_logo' => $new_logo
-			]);
-
-		return ($store && $update ? 'success' : 'error');
+		return ($store ? 'success' : 'error');
 	}
 
-	public function fetch(array $builder = array())
+	public function fetch(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'id_productor, cm_productors.id_status, status_name, productor_name, productor_slug, productor_image_logo, ip_registered_pro, date_registered_pro, client_registered_pro, ip_modified_pro, date_modified_pro, client_modified_pro';
 		$builder['search'] = $builder['search'] ?? 'id_productor';
@@ -89,44 +76,28 @@ class Productor_model extends CI_Model
 		return $response;
 	}
 
-	public function update($data)
+	public function update(array $data): string
 	{
-		$id = decryp($data['id_productor']);
-
-		$end_logo = '';
-		$new_logo = FOLDER_PRODUCTORS . "/{$data['new_image_logo']}";
+		$id = $data['id'];
 
 		$response = $this->db
 			->select('id_productor')
-			->where('id_status', $data['productor_status'])
-			->where('productor_name', $data['productor_name'])
+			->where('id_status', $data['status_id'])
+			->where('productor_name', $data['name'])
 			->limit(1)
 			->get('cm_productors');
 
+
 		if ($response->num_rows() > 0) {
-			if ($data['new_image_logo'] != NULL && $data['old_image_logo'] == NULL) {
-				unlink($new_logo);
-			}
 			return 'existing';
-		}
-
-		if ($data['old_image_logo'] != NULL && $data['new_image_logo'] == NULL) {
-			$end_logo = $data['old_image_logo'];
-		}
-
-		if ($data['new_image_logo'] != NULL && $data['old_image_logo'] == NULL) {
-			unlink(FOLDER_PRODUCTORS . "/{$id}_logo" . substr(strtolower($data['old_image_ext']), -4));
-			$end_logo = FOLDER_PRODUCTORS . "/{$id}_logo" . substr(strtolower($data['new_image_logo']), -4);
-			rename($new_logo, $end_logo);
 		}
 
 		$update = $this->db
 			->where('id_productor', $id)
 			->update('cm_productors', [
-				'productor_name' => $data['productor_name'],
-				'productor_slug' => url_title($data['productor_name'], '-', true),
-				'productor_image_logo' => $end_logo,
-				'id_status' => $data['productor_status'],
+				'id_status' => $data['status_id'],
+				'productor_name' => $data['name'],
+				'productor_slug' => url_title(remove_accents($data['name']), '-', true),
 				'ip_modified_pro' => get_ip_current(),
 				'date_modified_pro' => get_date_current(),
 				'client_modified_pro' => get_agent_current()
@@ -137,7 +108,7 @@ class Productor_model extends CI_Model
 
 	public function update_logo($data)
 	{
-		$id = decryp($data['id_productor']);
+		$id = $data['id'];
 
 		$response = $this->db
 			->select('id_productor, productor_image_logo')
@@ -151,27 +122,27 @@ class Productor_model extends CI_Model
 
 		$productor = $response->row_array();
 
-		$old = FOLDER_PRODUCTORS . "/{$data['productor_image_logo']}";
-		$new = FOLDER_PRODUCTORS . "/{$id}_logo" . substr(strtolower($data['productor_image_logo']), -4);
+		$new_logo = FOLDER_PRODUCTORS . "/{$data['logo']}";
+		$end_logo = FOLDER_PRODUCTORS . "/{$id}_logo.png";
 
 		if (strcmp($productor['productor_image_logo'], 'NO-IMAGE') != 0) {
 			unlink($productor['productor_image_logo']);
 		}
 
-		rename($old, $new);
+		rename($new_logo, $end_logo);
 
 		$update = $this->db
 			->where('id_productor', $id)
 			->update('cm_productors', [
-				'productor_image_logo' => $new
+				'productor_image_logo' => $end_logo
 			]);
 
 		return ($update ? 'success' : 'error');
 	}
 
-	public function delete($data)
+	public function delete(array $data): string
 	{
-		$id = decryp($data['id']);
+		$id = $data['id'];
 
 		$response = $this->db
 			->select('id_productor, productor_image_logo')
@@ -193,14 +164,14 @@ class Productor_model extends CI_Model
 			->where('id_productor', $id)
 			->delete('cm_pro_mov');
 
-		if ($fDelete && $sDelete) {
-			if (strcmp($productor['productor_image_logo'], 'NO-IMAGE') != 0) {
-				unlink($productor['productor_image_logo']);
-			}
-			return 'success';
-		} else {
+		if (!$fDelete || !$sDelete) {
 			return 'error';
 		}
+
+		if (strcmp($productor['productor_image_logo'], 'NO-IMAGE') != 0) {
+			unlink($productor['productor_image_logo']);
+		}
+		return 'success';
 	}
 
 	public function movies_by_productor(array $builder = array())

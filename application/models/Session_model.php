@@ -8,7 +8,7 @@ class Session_model extends CI_Model
         parent::__construct();
     }
 
-    public function index(array $builder = array())
+    public function index(array $builder = array()): object
     {
         $builder['columns'] = $builder['columns'] ?? 'id_session, cm_sessions.id_user, id_contact, cm_users.id_rol, rol_name, cm_users.id_status, status_name, user_username, user_avatar, session_browser_used, session_os_used, session_browser_version, ip_registered_ses, date_registered_ses, client_registered_ses';
         $builder['order_column'] = $builder['order_column'] ?? 'id_session';
@@ -59,7 +59,25 @@ class Session_model extends CI_Model
         return $response;
     }
 
-    public function delete($data)
+    public function fetch(array $builder = array()): object
+	{
+		$builder['columns'] = $builder['columns'] ?? 'id_session, cm_sessions.id_user, id_contact, cm_users.id_rol, rol_name, cm_users.id_status, status_name, user_username, user_avatar, session_browser_used, session_os_used, session_browser_version, ip_registered_ses, date_registered_ses, client_registered_ses';
+		$builder['search'] = $builder['search'] ?? 'id_session';
+
+		$response = $this->db
+			->select($builder['columns'])
+			->from('cm_sessions')
+            ->join('cm_users', 'cm_users.id_user = cm_sessions.id_user')
+            ->join('cm_roles', 'cm_roles.id_rol = cm_users.id_rol')
+            ->join('cm_status', 'cm_status.id_status = cm_users.id_status')
+			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+			->limit(1)
+			->get();
+
+		return $response;
+	}
+
+    public function delete(array $data): string
     {
         $response = $this->db
             ->where('id_user', $data['user_id'])

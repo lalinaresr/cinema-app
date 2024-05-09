@@ -17,7 +17,7 @@ class Suggestions extends CI_Controller
 		]);
 	}
 
-	public function index()
+	public function index(): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Sugerencias',
@@ -31,7 +31,7 @@ class Suggestions extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/suggestions/container');
+		$this->load->view('partials/suggestions/index');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
