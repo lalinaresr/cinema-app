@@ -24,12 +24,12 @@ class Session_model extends CI_Model
 
         if (isset($builder['not']) && isset($builder['value'])) {
             $response = $response
-                ->where_not_in($builder['not'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
+                ->where_not_in($builder['not'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']));
         }
 
         if (isset($builder['in']) && isset($builder['value'])) {
             $response = $response
-                ->where($builder['in'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
+                ->where($builder['in'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']));
         }
 
         $response = $response
@@ -45,15 +45,15 @@ class Session_model extends CI_Model
     }
 
     public function store($user_id)
-    {
+    {		
         $response = $this->db->insert('cm_sessions', [
             'id_user' => $user_id,
-            'session_browser_used' => ucfirst(strtolower(detect_client()['browsers'])),
-            'session_os_used' => ucfirst(strtolower(detect_client()['os'])),
-            'session_browser_version' => detect_client()['version'],
-            'ip_registered_ses' => get_ip_current(),
-            'date_registered_ses' => get_date_current(),
-            'client_registered_ses' => get_agent_current()
+            'session_browser_used' => $this->agent->browser(),
+            'session_os_used' => $this->agent->platform(),
+            'session_browser_version' => $this->agent->version(),
+            'ip_registered_ses' => get_current_ip(),
+            'date_registered_ses' => get_current_date(),
+            'client_registered_ses' => get_current_agent()
         ]);
 
         return $response;
@@ -70,7 +70,7 @@ class Session_model extends CI_Model
             ->join('cm_users', 'cm_users.id_user = cm_sessions.id_user')
             ->join('cm_roles', 'cm_roles.id_rol = cm_users.id_rol')
             ->join('cm_status', 'cm_status.id_status = cm_users.id_status')
-			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']))
 			->limit(1)
 			->get();
 

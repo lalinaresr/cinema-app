@@ -66,9 +66,9 @@ class Movie_model extends CI_Model
 			'movie_reproductions' => 0,
 			'movie_play' => $data['link'],
 			'is_premiere' => 0,
-			'ip_registered_mov' => get_ip_current(),
-			'date_registered_mov' => get_date_current(),
-			'client_registered_mov' => get_agent_current()
+			'ip_registered_mov' => get_current_ip(),
+			'date_registered_mov' => get_current_date(),
+			'client_registered_mov' => get_current_agent()
 		]);
 
 		$last_id = $this->db->insert_id();
@@ -98,7 +98,7 @@ class Movie_model extends CI_Model
 			->from('cm_movies')
 			->join('cm_status', 'cm_status.id_status = cm_movies.id_status')
 			->join('cm_qualities', 'cm_qualities.id_quality = cm_movies.id_quality')
-			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']))
 			->limit(1)
 			->get();
 
@@ -120,7 +120,7 @@ class Movie_model extends CI_Model
 			->join('cm_movies', 'cm_movies.id_movie = cm_pro_mov.id_movie');
 
 		if (isset($builder['search']) && isset($builder['value'])) {
-			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
+			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']));
 		}
 
 		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
@@ -149,7 +149,7 @@ class Movie_model extends CI_Model
 			->join('cm_movies', 'cm_movies.id_movie = cm_gen_mov.id_movie');
 
 		if (isset($builder['search']) && isset($builder['value'])) {
-			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
+			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']));
 		}
 
 		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
@@ -178,7 +178,7 @@ class Movie_model extends CI_Model
 			->join('cm_movies', 'cm_movies.id_movie = cm_cat_mov.id_movie');
 
 		if (isset($builder['search']) && isset($builder['value'])) {
-			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
+			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']));
 		}
 
 		$response = $response->order_by($builder['order_column'], $builder['order_filter']);
@@ -222,9 +222,9 @@ class Movie_model extends CI_Model
 				'movie_country_origin' => $data['country_origin'],
 				'movie_description' => $data['description'],
 				'movie_play' => $data['link'],
-				'ip_modified_mov' => get_ip_current(),
-				'date_modified_mov' => get_date_current(),
-				'client_modified_mov' => get_agent_current()
+				'ip_modified_mov' => get_current_ip(),
+				'date_modified_mov' => get_current_date(),
+				'client_modified_mov' => get_current_agent()
 			]);
 
 		$this->db->where('id_movie', $id)->delete('cm_gen_mov');

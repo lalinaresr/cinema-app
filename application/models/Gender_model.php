@@ -49,9 +49,9 @@ class Gender_model extends CI_Model
 			'id_status' => $data['status_id'],
 			'gender_name' => $data['name'],
 			'gender_slug' => url_title(remove_accents($data['name']), '-', true),
-			'ip_registered_gds' => get_ip_current(),
-			'date_registered_gds' => get_date_current(),
-			'client_registered_gds' => get_agent_current()
+			'ip_registered_gds' => get_current_ip(),
+			'date_registered_gds' => get_current_date(),
+			'client_registered_gds' => get_current_agent()
 		]);
 
 		return ($store ? 'success' : 'error');
@@ -66,7 +66,7 @@ class Gender_model extends CI_Model
 			->select($builder['columns'])
 			->from('cm_genders')
 			->join('cm_status', 'cm_status.id_status = cm_genders.id_status')
-			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']))
 			->limit(1)
 			->get();
 
@@ -92,9 +92,9 @@ class Gender_model extends CI_Model
 				'id_status' => $data['status_id'],
 				'gender_name' => $data['name'],
 				'gender_slug' => url_title(remove_accents($data['name']), '-', true),
-				'ip_modified_gds' => get_ip_current(),
-				'date_modified_gds' => get_date_current(),
-				'client_modified_gds' => get_agent_current()
+				'ip_modified_gds' => get_current_ip(),
+				'date_modified_gds' => get_current_date(),
+				'client_modified_gds' => get_current_agent()
 			]);
 
 		return ($update ? 'success' : 'error');
@@ -146,7 +146,7 @@ class Gender_model extends CI_Model
 
 		if (isset($builder['search']) && isset($builder['value'])) {
 			$response = $response
-				->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
+				->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']));
 		}
 
 		$response = $response->order_by($builder['order_column'], $builder['order_filter']);

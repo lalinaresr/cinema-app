@@ -51,9 +51,9 @@ class Quality_model extends CI_Model
 			'id_status' => $data['status_id'],
 			'quality_name' => $data['name'],
 			'quality_slug' => url_title(remove_accents($data['name']), '-', true),
-			'ip_registered_qlt' => get_ip_current(),
-			'date_registered_qlt' => get_date_current(),
-			'client_registered_qlt' => get_agent_current()
+			'ip_registered_qlt' => get_current_ip(),
+			'date_registered_qlt' => get_current_date(),
+			'client_registered_qlt' => get_current_agent()
 		]);
 
 		return ($store ? 'success' : 'error');
@@ -68,7 +68,7 @@ class Quality_model extends CI_Model
 			->select($builder['columns'])
 			->from('cm_qualities')
 			->join('cm_status', 'cm_status.id_status = cm_qualities.id_status')
-			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+			->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']))
 			->limit(1)
 			->get();
 
@@ -94,9 +94,9 @@ class Quality_model extends CI_Model
 				'id_status' => $data['status_id'],
 				'quality_name' => $data['name'],
 				'quality_slug' => url_title(remove_accents($data['name']), '-', true),
-				'ip_modified_qlt' => get_ip_current(),
-				'date_modified_qlt' => get_date_current(),
-				'client_modified_qlt' => get_agent_current()
+				'ip_modified_qlt' => get_current_ip(),
+				'date_modified_qlt' => get_current_date(),
+				'client_modified_qlt' => get_current_agent()
 			]);
 
 		return ($update ? 'success' : 'error');

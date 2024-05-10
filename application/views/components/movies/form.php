@@ -79,8 +79,8 @@
             <label for="country_origin">País de origen:</label>
             <select id="country_origin" name="country_origin" class="form-control" required>
                 <option disabled value selected>Seleccione un país para la película</option>
-                <?php foreach (get_all_countries() as $country) : ?>
-                    <option value="<?= $country; ?>" <?= isset($movie) ? ($movie['movie_country_origin'] == $country ? 'selected' : '') : ''; ?>><?= $country; ?></option>
+                <?php foreach (_countries_api_() as $country) : ?>
+                    <option value="<?= "{$country->es_name} ({$country->name})"; ?>" <?= isset($movie) ? ($movie['movie_country_origin'] == "{$country->es_name} ({$country->name})" ? 'selected' : '') : ''; ?>><?= "{$country->es_name} ({$country->name})"; ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

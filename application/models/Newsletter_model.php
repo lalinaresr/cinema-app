@@ -37,7 +37,7 @@ class Newsletter_model extends CI_Model
         $response = $this->db
             ->select($builder['columns'])
             ->from('cm_newsletters')
-            ->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+            ->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']))
             ->limit(1)
             ->get();
 

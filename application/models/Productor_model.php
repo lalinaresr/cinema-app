@@ -52,9 +52,9 @@ class Productor_model extends CI_Model
 			'productor_name' => $data['name'],
 			'productor_slug' => url_title(remove_accents($data['name']), '-', true),
 			'productor_image_logo' => 'NO-IMAGE',
-			'ip_registered_pro' => get_ip_current(),
-			'date_registered_pro' => get_date_current(),
-			'client_registered_pro' => get_agent_current()
+			'ip_registered_pro' => get_current_ip(),
+			'date_registered_pro' => get_current_date(),
+			'client_registered_pro' => get_current_agent()
 		]);
 
 		return ($store ? 'success' : 'error');
@@ -69,7 +69,7 @@ class Productor_model extends CI_Model
 			->select($builder['columns'])
 			->from('cm_productors')
 			->join('cm_status', 'cm_status.id_status = cm_productors.id_status')
-			->where($builder['search'], ((isset($builder['decrypt']) && $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+			->where($builder['search'], ((isset($builder['decrypt']) && $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']))
 			->limit(1)
 			->get();
 
@@ -98,9 +98,9 @@ class Productor_model extends CI_Model
 				'id_status' => $data['status_id'],
 				'productor_name' => $data['name'],
 				'productor_slug' => url_title(remove_accents($data['name']), '-', true),
-				'ip_modified_pro' => get_ip_current(),
-				'date_modified_pro' => get_date_current(),
-				'client_modified_pro' => get_agent_current()
+				'ip_modified_pro' => get_current_ip(),
+				'date_modified_pro' => get_current_date(),
+				'client_modified_pro' => get_current_agent()
 			]);
 
 		return ($update ? 'success' : 'error');
@@ -194,7 +194,7 @@ class Productor_model extends CI_Model
 		}
 
 		if (isset($builder['search']) && isset($builder['value'])) {
-			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']));
+			$response = $response->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']));
 		}
 
 		$response = $response->order_by($builder['order_column'], $builder['order_filter']);

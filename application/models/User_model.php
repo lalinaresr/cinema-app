@@ -58,9 +58,9 @@ class User_model extends CI_Model
             'user_email' => $data['email'],
             'user_password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'user_avatar' => 'NO-IMAGE',
-            'ip_registered_usr' => get_ip_current(),
-            'date_registered_usr' => get_date_current(),
-            'client_registered_usr' => get_agent_current()
+            'ip_registered_usr' => get_current_ip(),
+            'date_registered_usr' => get_current_date(),
+            'client_registered_usr' => get_current_agent()
         ]);
 
         return (($fStore && $sStore) ? 'success' : 'error');
@@ -77,7 +77,7 @@ class User_model extends CI_Model
             ->join('cm_contacts', 'cm_contacts.id_contact = cm_users.id_contact')
             ->join('cm_roles', 'cm_roles.id_rol = cm_users.id_rol')
             ->join('cm_status', 'cm_status.id_status = cm_users.id_status')
-            ->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decryp($builder['value']) : $builder['value']))
+            ->where($builder['search'], ((isset($builder['decrypt']) and $builder['decrypt'] == true) ? decrypt($builder['value']) : $builder['value']))
             ->limit(1)
             ->get();
 
@@ -113,9 +113,9 @@ class User_model extends CI_Model
                 'user_username' => ucwords($data['username']),
                 'user_email' => $data['email'],
                 'user_password' => $password,
-                'ip_modified_usr' => get_ip_current(),
-                'date_modified_usr' => get_date_current(),
-                'client_modified_usr' => get_agent_current()
+                'ip_modified_usr' => get_current_ip(),
+                'date_modified_usr' => get_current_date(),
+                'client_modified_usr' => get_current_agent()
             ]);
 
         return (($fUpdate && $sUpdate) ? 'success' : 'error');

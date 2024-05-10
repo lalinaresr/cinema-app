@@ -21,7 +21,7 @@ class Movies extends CI_Controller
 			'Status_model'
 		]);
 
-		$this->load->helper('countrys');
+		$this->load->helper('countries');
 	}
 
 	public function index(): void

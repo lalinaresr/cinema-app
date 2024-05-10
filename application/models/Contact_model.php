@@ -16,9 +16,9 @@ class Contact_model extends CI_Model
             'contact_lastname' => ucwords($data['lastname']),
             'contact_sex' => $data['sex'],
             'contact_date_birthday' => $data['birthday'],
-            'ip_registered_cnt' => get_ip_current(),
-            'date_registered_cnt' => get_date_current(),
-            'client_registered_cnt' => get_agent_current()
+            'ip_registered_cnt' => get_current_ip(),
+            'date_registered_cnt' => get_current_date(),
+            'client_registered_cnt' => get_current_agent()
         ]);
 
         return $response;
@@ -34,9 +34,9 @@ class Contact_model extends CI_Model
                 'contact_lastname' => ucwords($data['lastname']),
                 'contact_date_birthday' => $data['birthday'],
                 'contact_sex' => $data['sex'],
-                'ip_modified_cnt' => get_ip_current(),
-                'date_modified_cnt' => get_date_current(),
-                'client_modified_cnt' => get_agent_current()
+                'ip_modified_cnt' => get_current_ip(),
+                'date_modified_cnt' => get_current_date(),
+                'client_modified_cnt' => get_current_agent()
             ]);
 
         return $response;
