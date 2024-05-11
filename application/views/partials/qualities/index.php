@@ -12,8 +12,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($qualities->result_array() as $quality) : ?>
-                    <tr class="<?= $quality['id_status'] == 1 ? 'success' : 'danger';  ?>">
+                <?php foreach ($qualities->result_array() as $key => $quality) : ?>
+                    <tr data-key="<?= $key; ?>" class="<?= $quality['id_status'] == 1 ? 'success' : 'danger';  ?>">
                         <td><span class="label label-<?= $quality['id_status'] == 1 ? 'success' : 'danger';  ?>"><?= $quality['status_name']; ?></span></td>
                         <td><?= $quality['quality_name']; ?></td>
                         <td><?= $quality['quality_slug']; ?></td>

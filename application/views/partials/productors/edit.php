@@ -4,7 +4,6 @@
         if ($productor->num_rows() > 0) {
             $this->load->view('components/productors/form', [
                 'productor' => $productor->row_array(),
-                'form_action' => site_url('productors/update'),
                 'form_id' => 'productor-update-form',
                 'btn_id' => 'productor-update-btn',
                 'btn_text' => '<span class="glyphicon glyphicon-refresh"></span> Actualizar'

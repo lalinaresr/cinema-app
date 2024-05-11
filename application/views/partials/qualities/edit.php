@@ -4,7 +4,6 @@
         if ($quality->num_rows() > 0) {
             $this->load->view('components/qualities/form', [
                 'quality' => $quality->row_array(),
-                'form_action' => site_url('qualities/update'),
                 'form_id' => 'quality-update-form',
                 'btn_id' => 'quality-update-btn',
                 'btn_text' => '<span class="glyphicon glyphicon-refresh"></span> Actualizar'

@@ -1,276 +1,148 @@
+import { CATEGORIES } from "./globals/constants.js";
+import { message, question } from "./globals/messages.js";
+
 jQuery(document).ready(function ($) {
 
-	/*==========================================
-	=            Functions Specials            =
-	==========================================*/
+	let categories_table = null;
 
-	/**
-	* [create_slug description]
-	* @param  {[type]} data [description]
-	* @return {[type]}      [description]
-	*/
-	function create_slug(data) {
-		var string = '';
-		for (var i = 0; i < data.length; i++) {
-			if (data.charAt(i) == ' ') {
-				string = string + data.charAt(i).replace(' ', '-');
-			} else {
-				string = string + data.charAt(i);
-			}
-		}
-		return cleaned_string(string.toLowerCase());
-	}
-
-	/**
-	* [cleaned_string description]
-	* @param  {[type]} stringEnd [description]
-	* @return {[type]}           [description]
-	*/
-	function cleaned_string(stringEnd) {
-		/* We define the characters that we want to remove */
-		var charsToRemove = "¡!@#$^&%*()+=[]\/{}|:<>?,.";
-
-		/* I'll delete the characters */
-		for (var i = 0; i < charsToRemove.length; i++) {
-			stringEnd = stringEnd.replace(new RegExp("\\" + charsToRemove[i], 'gi'), '');
-		}
-
-		/* We removed accents and "ñ". Note that the first parameter is without quotes */
-		stringEnd = stringEnd.replace(/á/gi, "a");
-		stringEnd = stringEnd.replace(/é/gi, "e");
-		stringEnd = stringEnd.replace(/í/gi, "i");
-		stringEnd = stringEnd.replace(/ó/gi, "o");
-		stringEnd = stringEnd.replace(/ú/gi, "u");
-		stringEnd = stringEnd.replace(/ñ/gi, "n");
-
-		return stringEnd;
-	}
-
-	/*=====  End of Functions Specials  ======*/
-
-	if ($('#categories-table').length > 0) {
-		let categories_table = $('#categories-table').DataTable({
+	if ($("#categories-table").length > 0) {
+		categories_table = $("#categories-table").DataTable({
 			language: {
-				"sProcessing": "Procesando...",
-				"sLengthMenu": "Mostrar _MENU_ registros",
-				"sZeroRecords": "No se encontraron resultados",
-				"sEmptyTable": "Ningún dato disponible en esta tabla",
-				"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-				"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-				"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-				"sInfoPostFix": "",
-				"sSearch": "Buscar:",
-				"sUrl": "",
-				"sInfoThousands": ",",
-				"sLoadingRecords": "Cargando...",
-				"oPaginate": {
-					"sFirst": "Primero",
-					"sLast": "Último",
-					"sNext": "Siguiente",
-					"sPrevious": "Anterior"
-				},
-				"oAria": {
-					"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				},
+				url: "https://cdn.datatables.net/plug-ins/2.0.5/i18n/es-ES.json",
 			},
 			lengthChange: false,
-			buttons: [
-				{ "extend": 'excel', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> XLSX', "className": 'btn btn-success' },
-				{ "extend": 'pdf', "text": '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF', "className": 'btn btn-danger' },
-				{ "extend": 'csv', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV', "className": 'btn btn-success' }
-			]
+			layout: {
+				topStart: {
+					buttons: [
+						{
+							extend: "excelHtml5",
+							className: "btn btn-success",
+							text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> XLSX',
+							exportOptions: {
+								columns: [0, 1, 2, 3]
+							}
+						},
+						{
+							extend: "pdfHtml5",
+							className: "btn btn-danger",
+							text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF',
+							exportOptions: {
+								columns: [0, 1, 2, 3]
+							},
+							orientation: "portrait",
+							pageSize: "LEGAL",
+							download: "open"
+						},
+						{
+							extend: "csvHtml5",
+							className: "btn btn-success",
+							text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV',
+							exportOptions: {
+								columns: [0, 1, 2, 3]
+							}
+						}
+					]
+				}
+			}
 		});
-		categories_table.buttons().container().appendTo('.col-sm-6:eq(0)');
-		categories_table.column('3').order('desc').draw();
+		categories_table.column("3").order("desc").draw();
 	}
 
-	const swalWithBootstrapButtons = Swal.mixin({
-		customClass: {
-			confirmButton: "btn btn-custom",
-			cancelButton: "btn btn-default"
-		},
-		buttonsStyling: false
-	});
+	$("#category-store-form").on("submit", function (e) {
+		e.preventDefault();
 
-	/*========================================
-	=            Functions Insert            =
-	========================================*/
+		let data = $(this).serialize();
 
-	/**
-	* [description]
-	* @param  {String} event) {		var       string [description]
-	* @return {[type]}        [description]
-	*/
-	$("#name").keyup(function (event) {
-		var string = '';
-		string = string + $("#name").val();
+		$.ajax({
+			data,
+			url: `${CATEGORIES}/store`,
+			type: "POST",
+			beforeSend: () => {
+				$("#category-store-btn").attr("disabled", true);
+				$("#category-store-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			},
+			success: response => {
+				$("#category-store-btn").removeAttr("disabled");
+				$("#category-store-btn").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
-		$("#slug").val(create_slug(string));
-	});
-
-	/**
-	* [beforeSend description]
-	* @param  {String} ){			$("#category-store-btn").attr('disabled', true);			$("#category-store-btn").html('<i                                                                    class [description]
-	* @param  {String} success:                                       function(response){			$("#category-store-btn").removeAttr('disabled');			$("#category-store-btn").html('<span class [description]
-	* @return {[type]}                                                [description]
-	*/
-	$("#category-store-form").ajaxForm({
-		url: $(this).attr('action'),
-		type: 'post',
-		beforeSend: function () {
-			$("#category-store-btn").attr('disabled', true);
-			$("#category-store-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
-		},
-		success: function (response) {
-			$("#category-store-btn").removeAttr('disabled');
-			$("#category-store-btn").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
-
-			if (response == 'existing') {
-				swalWithBootstrapButtons.fire({
-					title: 'Duplicado',
-					text: 'Los datos de la categoría que intenta ingresar ya se encuentran en el sistema',
-					icon: 'warning'
-				});
-			} else if (response == 'error') {
-				swalWithBootstrapButtons.fire({
-					title: 'Oops',
-					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					icon: 'error'
-				});
-			} else if (response == 'success') {
-				swalWithBootstrapButtons.fire({
-					title: 'Éxito',
-					text: 'La categoría ha sido insertada con éxito',
-					icon: 'success'
-				});
+				switch (response) {
+					case "success":
+						message("Éxito", "La categoría ha sido insertada con éxito", "success");
+						break;
+					case "existing":
+						message("Duplicado", "Los datos de la categoría que intenta ingresar ya se encuentran en el sistema", "warning");
+						break;
+					default:
+						message("Oops", "Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo más tarde", "error");
+						break;
+				}
 			}
-		}
+		});
 	});
 
-	/*=====  End of Functions Insert  ======*/
+	$("#category-update-form").on("submit", function (e) {
+		e.preventDefault();
 
-	/*========================================
-	=            Functions Update            =
-	========================================*/
+		let data = $(this).serialize();
 
-	/**
-	* [description]
-	* @param  {String} event) {		var       string [description]
-	* @return {[type]}        [description]
-	*/
-	$("#name").keyup(function (event) {
-		var string = '';
-		string = string + $("#name").val();
+		$.ajax({
+			data,
+			url: `${CATEGORIES}/update`,
+			type: "POST",
+			beforeSend: () => {
+				$("#category-update-btn").attr("disabled", true);
+				$("#category-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			},
+			success: response => {
+				$("#category-update-btn").removeAttr("disabled");
+				$("#category-update-btn").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
-		$("#slug").val(create_slug(string));
-	});
-
-	/**
-	* [beforeSend description]
-	* @param  {String} ){			$("#category-update-btn").attr('disabled', true);			$("#category-update-btn").html('<i                                                                    class [description]
-	* @param  {String} success:                                       function(response){			$("#category-update-btn").removeAttr('disabled');			$("#category-update-btn").html('<span class [description]
-	* @return {[type]}                                                [description]
-	*/
-	$("#category-update-form").ajaxForm({
-		url: $(this).attr('action'),
-		type: 'post',
-		beforeSend: function () {
-			$("#category-update-btn").attr('disabled', true);
-			$("#category-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
-		},
-		success: function (response) {
-			$("#category-update-btn").removeAttr('disabled');
-			$("#category-update-btn").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
-
-			if (response == 'existing') {
-				swalWithBootstrapButtons.fire({
-					title: 'Duplicado',
-					text: 'Los datos de la categoría que intenta ingresar ya se encuentran en el sistema',
-					icon: 'warning'
-				});
-			} else if (response == 'error') {
-				swalWithBootstrapButtons.fire({
-					title: 'Oops',
-					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					icon: 'error'
-				});
-			} else if (response == 'success') {
-				swalWithBootstrapButtons.fire({
-					title: 'Éxito',
-					text: 'La categoría ha sido actualizada con éxito',
-					icon: 'success'
-				});
+				switch (response) {
+					case "success":
+						message("Éxito", "La categoría ha sido actualizada con éxito", "success");
+						break;
+					case "existing":
+						message("Duplicado", "Los datos de la categoría que intenta actualizar ya se encuentran en el sistema", "warning");
+						break;
+					default:
+						message("Oops", "Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo más tarde", "error");
+						break;
+				}
 			}
-		}
+		});
 	});
 
-	/*=====  End of Functions Update  ======*/
+	$(".category-delete-btn").on("click", function (e) {
+		e.preventDefault();
 
-	/*========================================
-	=            Functions Delete            =
-	========================================*/
+		let key = $(this).closest("tr").data("key");
+		let category = $(this).data("element");
 
-	/**
-	* [description]
-	* @param  {[type]} event){		var id_user                     [description]
-	* @param  {[type]} url:          'delete/'                   [description]
-	* @param  {[type]} type:         'post'                      [description]
-	* @param  {[type]} success:      function(response){					if (response     [description]
-	* @return {[type]}               [description]
-	*/
-	$(".category-delete-btn").click(function (event) {
-		let category = $(this).data('element');
-		let url = `${location.href}/delete`;
-
-		swalWithBootstrapButtons.fire({
-			title: '¿Estas segur@?',
-			text: '¡No podrás revertir esto!',
-			icon: 'question',
-			showCancelButton: true,
-			confirmButtonText: '<span class="glyphicon glyphicon-trash"></span> Si, eliminar',
-			cancelButtonText: '<span class="glyphicon glyphicon-remove-circle"></span> Cancelar',
-			reverseButtons: true
-		}).then(result => {
+		question("¿Estas segur@?", "¡No podrás revertir esto!")
+		.then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
 					data: { category },
-					url,
-					type: 'POST',
-					success: function (response) {
-						if (response == 'not-found') {
-							swalWithBootstrapButtons.fire({
-								title: 'No encontrado',
-								text: 'La categoría ha eliminar no coincide con alguno de nuestros registros',
-								icon: 'warning'
-							});
-						} else if (response == 'error') {
-							swalWithBootstrapButtons.fire({
-								title: 'Oops',
-								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-								icon: 'error'
-							});
-						} else if (response == 'success') {
-							swalWithBootstrapButtons.fire({
-								title: 'Éxito',
-								text: 'La categoría fue eliminada con éxito',
-								icon: 'success'
-							});
+					url: `${CATEGORIES}/delete`,
+					type: "POST",
+					success: response => {
+						switch (response) {
+							case "success":
+								message("Éxito", "La categoría fue eliminada con éxito", "success");
+								$("#categories-table").length > 0 ? categories_table.row(key).remove().draw() : setTimeout(() => location.href = CATEGORIES, 1000);
+								break;
+							case "not-found":
+								message("No encontrado", "La categoría ha eliminar no coincide con alguno de nuestros registros", "warning");
+								break;
+							default:
+								message("Oops", "Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo más tarde", "error");
+								break;
 						}
 					}
 				});
-			} else if (
-				/* Read more about handling dismissals below */
-				result.dismiss === Swal.DismissReason.cancel
-			) {
-				swalWithBootstrapButtons.fire({
-					title: 'Recordatorio',
-					text: 'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
-					icon: 'info'
-				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				message("Recordatorio", "Recuerda que eliminar un registro es una acción que no podrá deshacerse", "info");
 			}
 		});
 	});
-
-	/*=====  End of Functions Delete  ======*/
 });

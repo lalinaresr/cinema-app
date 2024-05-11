@@ -1,4 +1,4 @@
-<form action="<?= site_url('movies/update_cover'); ?>" method="POST" id="cover-update-form" enctype="multipart/form-data">
+<form id="cover-update-form" enctype="multipart/form-data">
     <input type="hidden" name="movie" value="<?= $movie['id_movie']; ?>">
     <div class="col-md-12">
         <div class="form-group">

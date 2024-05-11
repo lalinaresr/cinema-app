@@ -87,7 +87,7 @@ class User_model extends CI_Model
     public function update(array $data): string
     {
         $response = $this->db
-            ->select('id_user, user_password')
+            ->select('id_user')
             ->where('id_rol', $data['role_id'])
             ->where('id_status', $data['status_id'])
             ->where('user_username', ucwords($data['username']))
@@ -99,9 +99,10 @@ class User_model extends CI_Model
             return 'existing';
         }
 
-        $user = $response->row_array();
-
-        $password = $data['password'] !== NULL ? password_hash($data['password'], PASSWORD_DEFAULT) : $user['user_password'];
+        $column = null;
+        if (strlen($data['password']) > 0) {
+            $column = ['user_password' => password_hash($data['password'], PASSWORD_DEFAULT)];
+        }
 
         $fUpdate = $this->Contact_model->update($data);
         $sUpdate = $this->db
@@ -112,7 +113,7 @@ class User_model extends CI_Model
                 'id_status' => $data['status_id'],
                 'user_username' => ucwords($data['username']),
                 'user_email' => $data['email'],
-                'user_password' => $password,
+                ...($column ? $column : []),
                 'ip_modified_usr' => get_current_ip(),
                 'date_modified_usr' => get_current_date(),
                 'client_modified_usr' => get_current_agent()

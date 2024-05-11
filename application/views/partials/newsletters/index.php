@@ -11,8 +11,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($newsletters->result_array() as $newsletter) : ?>
-                    <tr class="success">
+                <?php foreach ($newsletters->result_array() as $key => $newsletter) : ?>
+                    <tr data-key="<?= $key; ?>" class="success">
                         <td><?= $newsletter['newsletter_name']; ?></td>
                         <td><a href="mailto:<?= $newsletter['newsletter_email']; ?>"><?= $newsletter['newsletter_email']; ?></a></td>
                         <td><?= $newsletter['date_registered_nlt']; ?></td>

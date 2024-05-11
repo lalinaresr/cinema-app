@@ -13,8 +13,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($movies->result_array() as $movie) : ?>
-                    <tr class="<?= $movie['id_status'] == 1 ? 'success' : 'danger';  ?>">
+                <?php foreach ($movies->result_array() as $key => $movie) : ?>
+                    <tr data-key="<?= $key; ?>" class="<?= $movie['id_status'] == 1 ? 'success' : 'danger';  ?>">
                         <td><span class="label label-<?= $movie['id_status'] == 1 ? 'success' : 'danger';  ?>"><?= $movie['status_name']; ?></span></td>
                         <td><a href="#cover-<?= $movie['id_movie']; ?>-view" data-toggle="modal"><?= $movie['movie_name']; ?></a></td>
                         <td><?= $movie['movie_slug']; ?></td>

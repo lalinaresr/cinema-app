@@ -1,4 +1,4 @@
-<form action="<?= $form_action; ?>" method="<?= $form_method ?? 'POST'; ?>" id="<?= $form_id; ?>" enctype="multipart/form-data">
+<form id="<?= $form_id; ?>">
     <?php if (isset($productor)) : ?>
         <input type="hidden" name="productor" value="<?= $productor['id_productor']; ?>">
     <?php endif; ?>

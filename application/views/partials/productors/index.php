@@ -12,8 +12,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($productors->result_array() as $productor) : ?>
-                    <tr class="<?= $productor['id_status'] == 1 ? 'success' : 'danger';  ?>">
+                <?php foreach ($productors->result_array() as $key => $productor) : ?>
+                    <tr data-key="<?= $key; ?>" class="<?= $productor['id_status'] == 1 ? 'success' : 'danger';  ?>">
                         <td><span class="label label-<?= $productor['id_status'] == 1 ? 'success' : 'danger';  ?>"><?= $productor['status_name']; ?></span></td>
                         <td><a href="#logo-<?= $productor['id_productor']; ?>-view" data-toggle="modal"><?= $productor['productor_name']; ?></a></td>
                         <td><?= $productor['productor_slug']; ?></td>

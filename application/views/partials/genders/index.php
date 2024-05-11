@@ -12,8 +12,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($genders->result_array() as $gender) : ?>
-                    <tr class="<?= $gender['id_status'] == 1 ? 'success' : 'danger';  ?>">
+                <?php foreach ($genders->result_array() as $key => $gender) : ?>
+                    <tr data-key="<?= $key; ?>" class="<?= $gender['id_status'] == 1 ? 'success' : 'danger';  ?>">
                         <td><span class="label label-<?= $gender['id_status'] == 1 ? 'success' : 'danger';  ?>"><?= $gender['status_name']; ?></span></td>
                         <td><?= $gender['gender_name']; ?></td>
                         <td><?= $gender['gender_slug']; ?></td>

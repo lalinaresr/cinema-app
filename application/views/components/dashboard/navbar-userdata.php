@@ -11,6 +11,6 @@
             <li><a href="<?= site_url("users/edit_avatar/{$this->session->userdata('id_user')}"); ?>"><span class="glyphicon glyphicon-picture"></span> Editar avatar</a></li>
             <li class="divider"></li>
         <?php endif; ?>
-        <li><a href="<?= site_url('auth/logout'); ?>" class="logout-btn"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
+        <li><a href="#" class="logout-btn"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
     </ul>
 </li>

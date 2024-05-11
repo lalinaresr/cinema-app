@@ -1,4 +1,4 @@
-<form action="<?= $form_action; ?>" method="<?= $form_method ?? 'POST'; ?>" id="<?= $form_id; ?>">
+<form id="<?= $form_id; ?>">
     <?php if (isset($movie)) : ?>
         <input type="hidden" name="movie" value="<?= $movie['id_movie']; ?>">
     <?php endif; ?>

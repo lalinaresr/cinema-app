@@ -1,4 +1,4 @@
-<form action="<?= $form_action; ?>" method="<?= $form_method ?? 'POST'; ?>" id="<?= $form_id; ?>">
+<form id="<?= $form_id; ?>">
     <?php if (isset($user)) : ?>
         <input type="hidden" name="user" value="<?= $user['id_user']; ?>">
         <input type="hidden" name="contact" value="<?= $user['id_contact']; ?>">
@@ -52,7 +52,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" value="<?= !isset($user) ? 'password' : ''; ?>" class="form-control" <?= !isset($user) ? 'required' : ''; ?> minlength="8" maxlength="12">
+            <input type="password" id="password" name="password" class="form-control" <?= !isset($user) ? 'required' : ''; ?> minlength="8" maxlength="12">
         </div>
     </div>
     <div class="col-md-6">

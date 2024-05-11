@@ -14,7 +14,7 @@
 		<?php endif; ?>
 	<?php endforeach; ?>
 <?php endif; ?>
-<script type="text/javascript" src="<?= base_url('public/js/auth.js'); ?>"></script>
+<script type="module" src="<?= base_url('public/js/auth.js'); ?>"></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-<form action="<?= site_url('productors/update_logo'); ?>" method="POST" id="logo-update-form" enctype="multipart/form-data">
+<form id="logo-update-form" enctype="multipart/form-data">
     <input type="hidden" name="productor" value="<?= $productor['id_productor']; ?>">
     <div class="col-md-12">
         <div class="form-group">

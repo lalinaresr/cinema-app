@@ -35,7 +35,7 @@ class Newsletters extends CI_Controller
 				base_url('public/js/libs/dataTables.buttons.min.js'),
 				base_url('public/js/libs/buttons.bootstrap.min.js'),
 				base_url('public/js/libs/buttons.html5.min.js'),
-				base_url('public/js/newsletters.js')
+				['type' => 'module', 'src' => base_url('public/js/newsletters.js')]
 			],
 			'newsletters' => $this->Newsletter_model->index(),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
@@ -57,7 +57,7 @@ class Newsletters extends CI_Controller
 				base_url('public/css/dashboard.css')
 			],
 			'scripts' => [
-				base_url('public/js/newsletters.js')
+				['type' => 'module', 'src' => base_url('public/js/newsletters.js')]
 			],
 			'newsletter' => $this->Newsletter_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))

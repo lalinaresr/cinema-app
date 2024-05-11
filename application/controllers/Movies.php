@@ -40,7 +40,7 @@ class Movies extends CI_Controller
 				base_url('public/js/libs/dataTables.buttons.min.js'),
 				base_url('public/js/libs/buttons.bootstrap.min.js'),
 				base_url('public/js/libs/buttons.html5.min.js'),
-				base_url('public/js/movies.js')
+				['type' => 'module', 'src' => base_url('public/js/movies.js')]
 			],
 			'movies' => $this->Movie_model->index(),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
@@ -71,7 +71,7 @@ class Movies extends CI_Controller
 				base_url('public/js/libs/bootstrap-datetimepicker.min.js'),
 				'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js',
 				'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',
-				base_url('public/js/movies.js')
+				['type' => 'module', 'src' => base_url('public/js/movies.js')]
 			],
 			'productors' => $this->Productor_model->index(['status' => 1]),
 			'genders' => $this->Gender_model->index(['status' => 1]),
@@ -114,7 +114,7 @@ class Movies extends CI_Controller
 				base_url('public/css/dashboard.css')
 			],
 			'scripts' => [
-				base_url('public/js/movies.js')
+				['type' => 'module', 'src' => base_url('public/js/movies.js')]
 			],
 			'productors_by_movie' => $this->Movie_model->productors_by_movie(['value' => $id]),
 			'genders_by_movie' => $this->Movie_model->genders_by_movie(['value' => $id]),
@@ -148,7 +148,7 @@ class Movies extends CI_Controller
 				base_url('public/js/libs/bootstrap-datetimepicker.min.js'),
 				'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js',
 				'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js',
-				base_url('public/js/movies.js')
+				['type' => 'module', 'src' => base_url('public/js/movies.js')]
 			],
 			'productors' => $this->Productor_model->index(['status' => 1]),
 			'productors_by_movie' => $this->Movie_model->productors_by_movie(['value' => $id]),
@@ -196,7 +196,7 @@ class Movies extends CI_Controller
 				base_url('public/css/dashboard.css')
 			],
 			'scripts' => [
-				base_url('public/js/movies.js')
+				['type' => 'module', 'src' => base_url('public/js/movies.js')]
 			],
 			'movie' => $this->Movie_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))

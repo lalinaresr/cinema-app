@@ -4,7 +4,6 @@
         if ($movie->num_rows() > 0) {
             $this->load->view('components/movies/form', [
                 'movie' => $movie->row_array(),
-                'form_action' => site_url('movies/update'),
                 'form_id' => 'movie-update-form',
                 'btn_id' => 'movie-update-btn',
                 'btn_text' => '<span class="glyphicon glyphicon-refresh"></span> Actualizar'

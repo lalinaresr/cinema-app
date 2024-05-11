@@ -1,508 +1,225 @@
+import { MOVIES } from "./globals/constants.js";
+import { message, question } from "./globals/messages.js";
+import { _show_image_ } from "./globals/utils.js";
+
 jQuery(document).ready(function ($) {
 
-	/*==========================================
-	=            Functions Specials            =
-	==========================================*/
+	let movies_table = null;
 
-	/**
-	* [create_slug description]
-	* @param  {[type]} data [description]
-	* @return {[type]}      [description]
-	*/
-	function create_slug(data) {
-		var string = '';
-		for (var i = 0; i < data.length; i++) {
-			if (data.charAt(i) == ' ') {
-				string = string + data.charAt(i).replace(' ', '-');
-			} else {
-				string = string + data.charAt(i);
-			}
-		}
-		return cleaned_string(string.toLowerCase());
-	}
-
-	/**
-	* [cleaned_string description]
-	* @param  {[type]} stringEnd [description]
-	* @return {[type]}           [description]
-	*/
-	function cleaned_string(stringEnd) {
-		/* We define the characters that we want to remove */
-		var charsToRemove = "!@#$^&%*()+=[]\/{}|:<>?,.";
-
-		/* I'll delete the characters */
-		for (var i = 0; i < charsToRemove.length; i++) {
-			stringEnd = stringEnd.replace(new RegExp("\\" + charsToRemove[i], 'gi'), '');
-		}
-
-		/* We removed accents and "ñ". Note that the first parameter is without quotes */
-		stringEnd = stringEnd.replace(/á/gi, "a");
-		stringEnd = stringEnd.replace(/é/gi, "e");
-		stringEnd = stringEnd.replace(/í/gi, "i");
-		stringEnd = stringEnd.replace(/ó/gi, "o");
-		stringEnd = stringEnd.replace(/ú/gi, "u");
-		stringEnd = stringEnd.replace(/ñ/gi, "n");
-
-		return stringEnd;
-	}
-
-	/*=====  End of Functions Specials  ======*/
-
-	if ($('#movies-table').length > 0) {
-		let movies_table = $('#movies-table').DataTable({
+	if ($("#movies-table").length > 0) {
+		movies_table = $("#movies-table").DataTable({
 			language: {
-				"sProcessing": "Procesando...",
-				"sLengthMenu": "Mostrar _MENU_ registros",
-				"sZeroRecords": "No se encontraron resultados",
-				"sEmptyTable": "Ningún dato disponible en esta tabla",
-				"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-				"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-				"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-				"sInfoPostFix": "",
-				"sSearch": "Buscar:",
-				"sUrl": "",
-				"sInfoThousands": ",",
-				"sLoadingRecords": "Cargando...",
-				"oPaginate": {
-					"sFirst": "Primero",
-					"sLast": "Último",
-					"sNext": "Siguiente",
-					"sPrevious": "Anterior"
-				},
-				"oAria": {
-					"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				},
+				url: "https://cdn.datatables.net/plug-ins/2.0.5/i18n/es-ES.json",
 			},
 			lengthChange: false,
-			buttons: [
-				{ "extend": 'excel', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> XLSX', "className": 'btn btn-success' },
-				{ "extend": 'pdf', "text": '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF', "className": 'btn btn-danger' },
-				{ "extend": 'csv', "text": '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV', "className": 'btn btn-success' }
-			]
+			layout: {
+				topStart: {
+					buttons: [
+						{
+							extend: "excelHtml5",
+							className: "btn btn-success",
+							text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> XLSX',
+							exportOptions: {
+								columns: [0, 1, 2, 3, 4]
+							}
+						},
+						{
+							extend: "pdfHtml5",
+							className: "btn btn-danger",
+							text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF',
+							exportOptions: {
+								columns: [0, 1, 2, 3, 4]
+							},
+							orientation: "portrait",
+							pageSize: "LEGAL",
+							download: "open"
+						},
+						{
+							extend: "csvHtml5",
+							className: "btn btn-success",
+							text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV',
+							exportOptions: {
+								columns: [0, 1, 2, 3, 4]
+							}
+						}
+					]
+				}
+			}
 		});
-		movies_table.buttons().container().appendTo('.col-sm-6:eq(0)');
-		movies_table.column('4').order('desc').draw();
+		movies_table.column("4").order("desc").draw();
 	}
 
-	let productors = {
-		nonSelectedText: 'Seleccione productores',
+	const MS_CONFIG = {
 		enableFiltering: true,
 		enableCaseInsensitiveFiltering: true,
-		buttonWidth: '100%',
-		filterPlaceholder: 'Buscar...',
+		buttonWidth: "100%",
+		filterPlaceholder: "Buscar...",
+		nonSelectedText: "No se selecciono alguna",
+		allSelectedText: "Se seleccionaron todas"
 	};
 
-	let genders = {
-		nonSelectedText: 'Seleccione géneros',
-		enableFiltering: true,
-		enableCaseInsensitiveFiltering: true,
-		buttonWidth: '100%',
-		filterPlaceholder: 'Buscar...',
-	};
-
-	let categories = {
-		nonSelectedText: 'Seleccione categorías',
-		enableFiltering: true,
-		enableCaseInsensitiveFiltering: true,
-		buttonWidth: '100%',
-		filterPlaceholder: 'Buscar...',
-	};
-
-	if ($('#productors').length > 0) {
-		$('#productors').multiselect(productors);
+	if ($("#productors").length > 0) {
+		$("#productors").multiselect({ ...MS_CONFIG, nonSelectedText: "Seleccione productores" });
 	}
-	if ($('#genders').length > 0) {
-		$('#genders').multiselect(genders);
+	if ($("#genders").length > 0) {
+		$("#genders").multiselect({ ...MS_CONFIG, nonSelectedText: "Seleccione géneros" });
 	}
-	if ($('#categories').length > 0) {
-		$('#categories').multiselect(categories);
-	}
-	if ($('#productors').length > 0) {
-		$('#productors').multiselect(productors);
-	}
-	if ($('#genders').length > 0) {
-		$('#genders').multiselect(genders);
-	}
-	if ($('#categories').length > 0) {
-		$('#categories').multiselect(categories);
+	if ($("#categories").length > 0) {
+		$("#categories").multiselect({ ...MS_CONFIG, nonSelectedText: "Seleccione categorías" });
 	}
 
-	let release = {
-		locale: 'es',
-		viewMode: 'years',
-		format: 'YYYY',
-		maxDate: 'now'
-	};
-
-	let duration = {
-		locale: 'es',
-		format: 'HH:mm'
-	};
-
-	if ($('#release_date').length > 0) {
-		$('#release_date').datetimepicker(release);
-	}
-	if ($('#release_date').length > 0) {
-		$('#release_date').datetimepicker(release);
-	}
-	if ($('#duration').length > 0) {
-		$('#duration').datetimepicker(duration);
-	}
-	if ($('#duration').length > 0) {
-		$('#duration').datetimepicker(duration);
+	if ($("#release_date").length > 0) {
+		$("#release_date").datetimepicker({
+			locale: "es",
+			viewMode: "years",
+			format: "YYYY",
+			maxDate: "now"
+		});
 	}
 
-	const swalWithBootstrapButtons = Swal.mixin({
-		customClass: {
-			confirmButton: "btn btn-custom",
-			cancelButton: "btn btn-default"
-		},
-		buttonsStyling: false
-	});
+	if ($("#duration").length > 0) {
+		$("#duration").datetimepicker({
+			locale: "es",
+			format: "HH:mm"
+		});
+	}
 
-	/*========================================
-	=            Functions Insert            =
-	========================================*/
+	$("#movie-store-form").on("submit", function (e) {
+		e.preventDefault();
 
-	/**
-	* [description]
-	* @param  {String} event) {		var       string [description]
-	* @return {[type]}        [description]
-	*/
-	$("#title").keyup(function (event) {
-		var string = '';
-		string = string + $("#title").val();
+		let data = $(this).serialize();
 
-		$("#slug").val(create_slug(string));
-	});
+		$.ajax({
+			data,
+			url: `${MOVIES}/store`,
+			type: "POST",
+			beforeSend: () => {
+				$("#movie-store-btn").attr("disabled", true);
+				$("#movie-store-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			},
+			success: response => {
+				$("#movie-store-btn").removeAttr("disabled");
+				$("#movie-store-btn").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
 
-	/**
-	* [description]
-	* @param  {[type]} ) {	              var fileName [description]
-	* @return {[type]}   [description]
-	*/
-	$('#movie_cover_insert').change(function () {
-		var fileName = $('#movie_cover_insert').val();
-		var extension = fileName.split('.').pop();
-		var extensionLower = extension.toLowerCase();
-		var sizeKB = (this.files[0].size) / 1024;
-
-		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
-			if (sizeKB < 2048) {
-				$("#modal-movie-cover").modal('show');
-				$('#cover-preview-image').removeClass("hidden");
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#cover-preview-image').attr('src', e.target.result);
+				switch (response) {
+					case "success":
+						message("Éxito", "La película ha sido insertada con éxito", "success");
+						break;
+					case "existing":
+						message("Duplicado", "Los datos de la película que intenta ingresar ya se encuentran en el sistema", "warning");
+						break;
+					default:
+						message("Oops", "Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo más tarde", "error");
+						break;
 				}
-				reader.readAsDataURL(this.files[0]);
-			} else {
-				$('#cover-preview-image').addClass("hidden");
-				$('#movie_cover_insert').val('');
-
-				swalWithBootstrapButtons.fire({
-					title: 'Aviso',
-					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-					icon: 'error'
-				});
 			}
-		} else {
-			$('#cover-preview-image').addClass("hidden");
-			$('#movie_cover_insert').val('');
-
-			swalWithBootstrapButtons.fire({
-				title: 'Aviso',
-				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-				icon: 'error'
-			});
-		}
+		});
 	});
 
-	/**
-	* [beforeSend description]
-	* @param  {String} ){			$("#movie-store-btn").attr('disabled', true);			$("#movie-store-btn").html('<i                                                                   class [description]
-	* @param  {String} success:                                      function(response){			$("#movie-store-btn").removeAttr('disabled');			$("#movie-store-btn").html('<span class [description]
-	* @return {[type]}                                               [description]
-	*/
-	$("#movie-store-form").ajaxForm({
-		url: $(this).attr('action'),
-		type: 'post',
-		beforeSend: function () {
-			$("#movie-store-btn").attr('disabled', true);
-			$("#movie-store-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
-		},
-		success: function (response) {
-			$("#movie-store-btn").removeAttr('disabled');
-			$("#movie-store-btn").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar');
+	$("#movie-update-form").on("submit", function (e) {
+		e.preventDefault();
 
-			if (response == 'existing') {
-				swalWithBootstrapButtons.fire({
-					title: 'Duplicado',
-					text: 'Los datos de la película que intenta ingresar ya se encuentran en el sistema',
-					icon: 'warning'
-				});
-			} else if (response == 'error') {
-				swalWithBootstrapButtons.fire({
-					title: 'Oops',
-					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					icon: 'error'
-				});
-			} else if (response == 'success') {
-				swalWithBootstrapButtons.fire({
-					title: 'Éxito',
-					text: 'La película ha sido insertada con éxito',
-					icon: 'success'
-				});
-			}
-		}
-	});
+		let data = $(this).serialize();
 
-	/*=====  End of Functions Insert  ======*/
+		$.ajax({
+			data,
+			url: `${MOVIES}/update`,
+			type: "POST",
+			beforeSend: () => {
+				$("#movie-update-btn").attr("disabled", true);
+				$("#movie-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			},
+			success: response => {
+				$("#movie-update-btn").removeAttr("disabled");
+				$("#movie-update-btn").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
 
-	/*========================================
-	=            Functions Update            =
-	========================================*/
-
-	/**
-	* [description]
-	* @param  {String} event) {		var       string [description]
-	* @return {[type]}        [description]
-	*/
-	$("#title").keyup(function (event) {
-		var string = '';
-		string = string + $("#title").val();
-
-		$("#slug").val(create_slug(string));
-	});
-
-	/**
-	* [description]
-	* @param  {[type]} ) {	              var fileName [description]
-	* @return {[type]}   [description]
-	*/
-	$('#movie_cover_update').change(function () {
-		var fileName = $('#movie_cover_update').val();
-		var extension = fileName.split('.').pop();
-		var extensionLower = extension.toLowerCase();
-		var sizeKB = (this.files[0].size) / 1024;
-
-		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
-			if (sizeKB < 2048) {
-				$("#modal-movie-cover").modal('show');
-				$('#cover-preview-image').removeClass("hidden");
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#cover-preview-image').attr('src', e.target.result);
+				switch (response) {
+					case "success":
+						message("Éxito", "La película ha sido actualizada con éxito", "success");
+						break;
+					case "existing":
+						message("Duplicado", "Los datos de la película que intenta actualizar ya se encuentran en el sistema", "warning");
+						break;
+					default:
+						message("Oops", "Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo más tarde", "error");
+						break;
 				}
-				reader.readAsDataURL(this.files[0]);
-			} else {
-				$('#cover-preview-image').addClass("hidden");
-				$('#movie_cover_update').val('');
-
-				swalWithBootstrapButtons.fire({
-					title: 'Aviso',
-					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-					icon: 'error'
-				});
 			}
-		} else {
-			$('#cover-preview-image').addClass("hidden");
-			$('#movie_cover_update').val('');
-
-			swalWithBootstrapButtons.fire({
-				title: 'Aviso',
-				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-				icon: 'error'
-			});
-		}
+		});
 	});
 
-	/**
-	* [beforeSend description]
-	* @param  {String} ){			$("#movie-update-btn").attr('disabled', true);			$("#movie-update-btn").html('<i                                                                   class [description]
-	* @param  {String} success:                                      function(response){			$("#movie-update-btn").removeAttr('disabled');			$("#movie-update-btn").html('<span class [description]
-	* @return {[type]}                                               [description]
-	*/
-	$("#movie-update-form").ajaxForm({
-		url: $(this).attr('action'),
-		type: 'post',
-		beforeSend: function () {
-			$("#movie-update-btn").attr('disabled', true);
-			$("#movie-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
-		},
-		success: function (response) {
-			$("#movie-update-btn").removeAttr('disabled');
-			$("#movie-update-btn").html('<span class="glyphicon glyphicon-refresh"></span> Actualizar');
-
-			if (response == 'existing') {
-				swalWithBootstrapButtons.fire({
-					title: 'Duplicado',
-					text: 'Los datos de la película que intenta ingresar ya se encuentran en el sistema',
-					icon: 'warning'
-				});
-			} else if (response == 'error') {
-				swalWithBootstrapButtons.fire({
-					title: 'Oops',
-					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					icon: 'error'
-				});
-			} else if (response == 'success') {
-				swalWithBootstrapButtons.fire({
-					title: 'Éxito',
-					text: 'La película ha sido actualizada con éxito',
-					icon: 'success'
-				});
-			}
-		}
+	$("#cover").on("change", function () {
+		_show_image_({ input: $(this), image: "#cover-preview-image" });
 	});
 
-	/*=====  End of Functions Update  ======*/
+	$("#cover-update-form").on("submit", function (e) {
+		e.preventDefault();
 
-	/*=============================================
-	=            Functions Update Cover            =
-	=============================================*/
+		let data = new FormData(this);
 
-	/**
-	* [description]
-	* @param  {[type]} ) {	              var fileName [description]
-	* @return {[type]}   [description]
-	*/
-	$('#cover').change(function () {
-		var fileName = $('#cover').val();
-		var extension = fileName.split('.').pop();
-		var extensionLower = extension.toLowerCase();
-		var sizeKB = (this.files[0].size) / 1024;
+		$.ajax({
+			data,
+			url: `${MOVIES}/update_cover`,
+			type: "POST",
+			processData: false,
+			contentType: false,
+			beforeSend: () => {
+				$("#cover").attr("disabled", true);
+				$("#cover-update-btn").attr("disabled", true);
+				$("#cover-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
+			},
+			success: response => {
+				$("#cover").removeAttr("disabled");
+				$("#cover-update-btn").removeAttr("disabled");
+				$("#cover-update-btn").html('<span class="glyphicon glyphicon-upload"></span> Subir');
 
-		if (extensionLower == 'jpg' || extensionLower == 'jpeg' || extensionLower == 'png') {
-			if (sizeKB < 2048) {
-				
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#cover-preview-image').attr('src', e.target.result);
+				switch (response) {
+					case "success":
+						message("Éxito", "La portada fue actualizada con éxito", "success");
+						$("#cover").val("");
+						break;
+					case "not-upload":
+						message("Aviso", "Ocurrió un problema al subir la nueva portada, inténtelo más tarde", "warning");
+						break;
+					default:
+						message("Oops", "Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo más tarde", "error");
+						break;
 				}
-				reader.readAsDataURL(this.files[0]);
-			} else {
-				$('#cover').val('');
-
-				swalWithBootstrapButtons.fire({
-					title: 'Aviso',
-					text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-					icon: 'error'
-				});
 			}
-		} else {
-			$('#cover').val('');
-
-			swalWithBootstrapButtons.fire({
-				title: 'Aviso',
-				text: 'Ha habido un problema con la imagen recuerda que debe pesar menos de 2MB y ser PNG | JPG | JPEG',
-				icon: 'error'
-			});
-		}
+		});
 	});
 
-	/**
-	* [beforeSend description]
-	* @param  {String} ){			$("#cover-update-btn").attr('disabled', true);			$("#cover-update-btn").html('<i                                                                   class [description]
-	* @param  {String} success:                                      function(response){			$("#cover-update-btn").removeAttr('disabled');			$("#cover-update-btn").html('<span class [description]
-	* @return {[type]}                                               [description]
-	*/
-	$("#cover-update-form").ajaxForm({
-		url: $(this).attr('action'),
-		type: 'post',
-		beforeSend: function () {
-			$("#cover-update-btn").attr('disabled', true);
-			$("#cover-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
-		},
-		success: function (response) {
-			$("#cover-update-btn").removeAttr('disabled');
-			$("#cover-update-btn").html('<span class="glyphicon glyphicon-upload"></span> Subir');
+	$(".movie-delete-btn").on("click", function (e) {
+		e.preventDefault();
 
-			if (response == 'error') {
-				swalWithBootstrapButtons.fire({
-					title: 'Oops',
-					text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-					icon: 'error'
-				});
-			} else if (response == 'success') {
-				$('#cover').val('');
-				
-				swalWithBootstrapButtons.fire({
-					title: 'Éxito',
-					text: 'La portada fue actualizada con éxito',
-					icon: 'success'
-				});
-			}
-		}
-	});
+		let key = $(this).closest("tr").data("key");
+		let movie = $(this).data("element");
 
-	/*=====  End of Functions Update Cover  ======*/
-
-	/*========================================
-	=            Functions Delete            =
-	========================================*/
-
-	/**
-	* [description]
-	* @param  {[type]} event){		var id_movie                    [description]
-	* @param  {[type]} url:          'delete/'                   [description]
-	* @param  {[type]} type:         'post'                      [description]
-	* @param  {[type]} success:      function(response){					if (response     [description]
-	* @return {[type]}               [description]
-	*/
-	$(".movie-delete-btn").click(function (event) {
-		let movie = $(this).data('element');
-		let url = `${location.href}/delete`;
-
-		swalWithBootstrapButtons.fire({
-			title: '¿Estas segur@?',
-			text: '¡No podrás revertir esto!',
-			icon: 'question',
-			showCancelButton: true,
-			confirmButtonText: '<span class="glyphicon glyphicon-trash"></span> Si, eliminar',
-			cancelButtonText: '<span class="glyphicon glyphicon-remove-circle"></span> Cancelar',
-			reverseButtons: true
-		}).then(result => {
+		question("¿Estas segur@?", "¡No podrás revertir esto!")
+		.then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
 					data: { movie },
-					url,
-					type: 'POST',
-					success: function (response) {
-						if (response == 'not-found') {
-							swalWithBootstrapButtons.fire({
-								title: 'No encontrado',
-								text: 'La película ha eliminar no coincide con alguno de nuestros registros',
-								icon: 'warning'
-							});
-						} else if (response == 'error') {
-							swalWithBootstrapButtons.fire({
-								title: 'Oops',
-								text: 'Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo nuevamente',
-								icon: 'error'
-							});
-						} else if (response == 'success') {
-							swalWithBootstrapButtons.fire({
-								title: 'Éxito',
-								text: 'La película fue eliminada con éxito',
-								icon: 'success'
-							});
+					url: `${MOVIES}/delete`,
+					type: "POST",
+					success: response => {
+						switch (response) {
+							case "success":
+								message("Éxito", "La película fue eliminada con éxito", "success");
+								$("#movies-table").length > 0 ? movies_table.row(key).remove().draw() : setTimeout(() => location.href = MOVIES, 1000);
+								break;
+							case "not-found":
+								message("No encontrado", "La película ha eliminar no coincide con alguno de nuestros registros", "warning");
+								break;
+							default:
+								message("Oops", "Lamentamos informarle que ha ocurrido un error interno en el sistema, inténtelo más tarde", "error");
+								break;
 						}
 					}
 				});
-			} else if (
-				/* Read more about handling dismissals below */
-				result.dismiss === Swal.DismissReason.cancel
-			) {
-				swalWithBootstrapButtons.fire({
-					title: 'Recordatorio',
-					text: 'Recuerda que eliminar un registro es una acción que no podrá deshacerse',
-					icon: 'info'
-				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				message("Recordatorio", "Recuerda que eliminar un registro es una acción que no podrá deshacerse", "info");
 			}
 		});
 	});
-
-	/*=====  End of Functions Delete  ======*/
 });

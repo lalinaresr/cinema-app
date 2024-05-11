@@ -39,7 +39,7 @@ class Genders extends CI_Controller
 				base_url('public/js/libs/dataTables.buttons.min.js'),
 				base_url('public/js/libs/buttons.bootstrap.min.js'),
 				base_url('public/js/libs/buttons.html5.min.js'),
-				base_url('public/js/genders.js')
+				['type' => 'module', 'src' => base_url('public/js/genders.js')]
 			],
 			'genders' => $this->Gender_model->index(),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
@@ -61,7 +61,7 @@ class Genders extends CI_Controller
 				base_url('public/css/dashboard.css')
 			],
 			'scripts' => [
-				base_url('public/js/genders.js')
+				['type' => 'module', 'src' => base_url('public/js/genders.js')]
 			],
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
@@ -91,7 +91,7 @@ class Genders extends CI_Controller
 				base_url('public/css/dashboard.css')
 			],
 			'scripts' => [
-				base_url('public/js/genders.js')
+				['type' => 'module', 'src' => base_url('public/js/genders.js')]
 			],
 			'gender' => $this->Gender_model->fetch(['value' => $id]),
 			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
@@ -113,7 +113,7 @@ class Genders extends CI_Controller
 				base_url('public/css/dashboard.css')
 			],
 			'scripts' => [
-				base_url('public/js/genders.js')
+				['type' => 'module', 'src' => base_url('public/js/genders.js')]
 			],
 			'gender' => $this->Gender_model->fetch(['value' => $id]),
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),

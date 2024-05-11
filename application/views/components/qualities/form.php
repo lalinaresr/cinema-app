@@ -1,4 +1,4 @@
-<form action="<?= $form_action; ?>" method="<?= $form_method ?? 'POST'; ?>" id="<?= $form_id; ?>">
+<form id="<?= $form_id; ?>">
     <?php if (isset($quality)) : ?>
         <input type="hidden" name="quality" value="<?= $quality['id_quality']; ?>">
     <?php endif; ?>

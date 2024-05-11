@@ -1,4 +1,4 @@
-<form action="<?= site_url('users/update_avatar'); ?>" method="POST" id="avatar-update-form" enctype="multipart/form-data">
+<form id="avatar-update-form" enctype="multipart/form-data">
     <input type="hidden" name="user" value="<?= $user['id_user']; ?>">
     <div class="col-md-12">
         <div class="form-group">

@@ -13,8 +13,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users->result_array() as $user) : ?>
-                    <tr class="<?= $user['id_status'] == 1 ? 'success' : 'danger';  ?>">
+                <?php foreach ($users->result_array() as $key => $user) : ?>
+                    <tr data-key="<?= $key; ?>" class="<?= $user['id_status'] == 1 ? 'success' : 'danger';  ?>">
                         <td><span class="label label-<?= $user['id_status'] == 1 ? 'success' : 'danger'; ?>"><?= $user['status_name']; ?></span></td>
                         <td><?= $user['rol_name']; ?></td>
                         <td><a href="#avatar-<?= $user['id_user']; ?>-view" data-toggle="modal"><?= $user['user_username']; ?></a></td>

@@ -12,8 +12,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($categories->result_array() as $category) : ?>
-                    <tr class="<?= $category['id_status'] == 1 ? 'success' : 'danger';  ?>">
+                <?php foreach ($categories->result_array() as $key => $category) : ?>
+                    <tr data-key="<?= $key; ?>" class="<?= $category['id_status'] == 1 ? 'success' : 'danger';  ?>">
                         <td><span class="label label-<?= $category['id_status'] == 1 ? 'success' : 'danger';  ?>"><?= $category['status_name']; ?></span></td>
                         <td><?= $category['category_name']; ?></td>
                         <td><?= $category['category_slug']; ?></td>

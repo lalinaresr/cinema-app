@@ -3,7 +3,7 @@
         <div id="login-icon" class="text-center mt-2 mb-4">
             <i style="font-size: 10em;" class="fa fa-user-circle"></i>
         </div>
-        <form action="<?= site_url('auth/verify'); ?>" id="login-form">
+        <form id="login-form">
             <input type="email" id="email" name="email" class="form-control" value="luis_linarez@cinema.app" placeholder="Correo electrónico" required autofocus>
             <input type="password" id="password" name="password" class="form-control" value="12345678" placeholder="Contraseña" required>
             <div id="remember" class="checkbox">

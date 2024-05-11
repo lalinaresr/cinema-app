@@ -1,4 +1,4 @@
-<form action="<?= $form_action; ?>" method="<?= $form_method ?? 'POST'; ?>" id="<?= $form_id; ?>">
+<form id="<?= $form_id; ?>">
     <?php if (isset($category)) : ?>
         <input type="hidden" name="category" value="<?= $category['id_category']; ?>">
     <?php endif; ?>

@@ -48,8 +48,7 @@ class Auth extends CI_Controller
 	public function logout(): void
 	{
 		if ($this->session->userdata('is_authorized')) {
-			if ($this->Auth_model->logout())
-				echo site_url();
+			echo $this->Auth_model->logout();
 		}
 	}
 }
