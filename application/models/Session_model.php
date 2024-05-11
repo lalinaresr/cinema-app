@@ -44,7 +44,7 @@ class Session_model extends CI_Model
         return $response;
     }
 
-    public function store(int $user_id): object
+    public function store(int $user_id): bool | null
     {		
         $response = $this->db->insert('cm_sessions', [
             'id_user' => $user_id,
@@ -77,7 +77,7 @@ class Session_model extends CI_Model
 		return $response;
 	}
 
-    public function delete(array $data): string
+    public function delete(array $data): bool | null
     {
         $response = $this->db
             ->where('id_user', $data['user_id'])
