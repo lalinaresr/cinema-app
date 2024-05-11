@@ -106,7 +106,7 @@ class Productor_model extends CI_Model
 		return ($update ? 'success' : 'error');
 	}
 
-	public function update_logo($data)
+	public function update_logo(array $data): string
 	{
 		$id = $data['id'];
 
@@ -174,7 +174,7 @@ class Productor_model extends CI_Model
 		return 'success';
 	}
 
-	public function movies_by_productor(array $builder = array())
+	public function movies_by_productor(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'cm_movies.id_movie, cm_movies.id_status, id_quality, productor_name, productor_slug, productor_image_logo, movie_name, movie_slug, movie_description, movie_release_date, movie_duration, movie_country_origin, movie_cover, movie_reproductions, movie_play, is_premiere';
 		$builder['order_column'] = $builder['order_column'] ?? 'cm_movies.id_movie';

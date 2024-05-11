@@ -125,7 +125,7 @@ class Gender_model extends CI_Model
 		return (($fDelete && $sDelete) ? 'success' : 'error');
 	}
 
-	public function movies_by_gender(array $builder = array())
+	public function movies_by_gender(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'cm_movies.id_movie, cm_movies.id_status, cm_movies.id_quality, cm_genders.gender_name, cm_genders.gender_slug, cm_movies.movie_name, cm_movies.movie_slug, cm_movies.movie_description, cm_movies.movie_release_date, cm_movies.movie_duration, cm_movies.movie_country_origin, cm_movies.movie_cover, cm_movies.movie_reproductions, cm_movies.movie_play, cm_movies.is_premiere';
 		$builder['order_column'] = $builder['order_column'] ?? 'cm_movies.id_movie';

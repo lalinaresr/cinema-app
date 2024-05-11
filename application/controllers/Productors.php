@@ -159,7 +159,7 @@ class Productors extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update_logo()
+	public function update_logo(): void
 	{
 		$config['upload_path'] = FOLDER_PRODUCTORS;
 		$config['allowed_types'] = 'gif|jpg|png';

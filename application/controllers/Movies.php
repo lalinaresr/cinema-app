@@ -20,8 +20,6 @@ class Movies extends CI_Controller
 			'User_model',
 			'Status_model'
 		]);
-
-		$this->load->helper('countries');
 	}
 
 	public function index(): void
@@ -58,6 +56,8 @@ class Movies extends CI_Controller
 
 	public function create(): void
 	{
+		$this->load->helper('countries');
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
 			'styles' => [
@@ -133,6 +133,8 @@ class Movies extends CI_Controller
 
 	public function edit(int $id): void
 	{
+		$this->load->helper('countries');
+
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
 			'styles' => [
@@ -208,7 +210,7 @@ class Movies extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update_cover()
+	public function update_cover(): void
 	{
 		$config['upload_path'] = FOLDER_MOVIES;
 		$config['allowed_types'] = 'gif|jpg|png';

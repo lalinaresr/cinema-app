@@ -44,7 +44,7 @@ class Session_model extends CI_Model
         return $response;
     }
 
-    public function store($user_id)
+    public function store(int $user_id): object
     {		
         $response = $this->db->insert('cm_sessions', [
             'id_user' => $user_id,

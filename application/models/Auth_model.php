@@ -10,7 +10,7 @@ class Auth_model extends CI_Model
         $this->load->model('Session_model');
     }
 
-    private function _send_email_($to, $subject, $message)
+    private function _send_email_(array $builder): void
     {
         $this->load->library('email');
 
@@ -23,13 +23,17 @@ class Auth_model extends CI_Model
             'mailtype' => 'html',
             'charset' => 'utf-8',
             'newline' => "\r\n"
-        ]);
+        ])
+            ->from(GMAIL['EMAIL'])
+            ->to($builder['to'])
+            ->subject($builder['subject'])
+            ->message($builder['message'])
+            ->send();
+    }
 
-        $this->email->from(GMAIL['EMAIL']);
-        $this->email->to($to);
-        $this->email->subject($subject);
-        $this->email->message($message);
-        $this->email->send();
+    private function _set_userdata_(array $data = array()): void
+    {
+        $this->session->set_userdata($data);
     }
 
     private function _get_role_(int $role_id): string | null
@@ -42,12 +46,7 @@ class Auth_model extends CI_Model
         };
     }
 
-    private function _set_userdata_(array $data = array()): void
-    {
-        $this->session->set_userdata($data);
-    }
-
-    public function login($data)
+    public function login(array $data): string
     {
         $response = $this->db->query(sprintf("SELECT id_user, id_contact, id_rol, id_status, user_username, user_email, user_password, user_avatar FROM cm_users WHERE user_email = '%s' AND id_status = 1 LIMIT 1", $data['email']));
 
@@ -72,10 +71,11 @@ class Auth_model extends CI_Model
         ]);
 
         $store = $this->Session_model->store($user['id_user']);
+
         return 'success';
     }
 
-    public function logout()
+    public function logout(): string
     {
         $this->_set_userdata_();
         $this->session->sess_destroy();

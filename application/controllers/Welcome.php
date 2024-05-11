@@ -18,6 +18,7 @@ class Welcome extends CI_Controller
 		]);
 
 		$this->load->helper('text');
+
 		$this->load->library('pagination');
 
 		$this->_init_();
@@ -39,6 +40,7 @@ class Welcome extends CI_Controller
 			'productors' => $this->Productor_model->index(['status' => 1]),
 			'genders' => $this->Gender_model->index(['status' => 1]),
 			'categories' => $this->Category_model->index(['status' => 1]),
+			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user')),
 			'newest_movies' => $this->Movie_model->index([
 				'status' => 1,
 				'limit' => 8
@@ -91,8 +93,7 @@ class Welcome extends CI_Controller
 			'title' => '¡Bienvenido a ' . constant('APP_NAME') . '!',
 			...$this->_common,
 			'results' => $this->Movie_model->index(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
-			'paginator' => $this->pagination->create_links(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'paginator' => $this->pagination->create_links()
 		];
 
 		$this->load->view('header', $params);
@@ -129,8 +130,7 @@ class Welcome extends CI_Controller
 			...$this->_common,
 			'search_parameter' => $search_parameter,
 			'results' => $this->Movie_model->search_results(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
-			'paginator' => $this->pagination->create_links(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'paginator' => $this->pagination->create_links()
 		];
 
 		$this->load->view('header', $params);
@@ -164,8 +164,7 @@ class Welcome extends CI_Controller
 			...$this->_common,
 			'productor' => $this->Productor_model->fetch(['search' => 'productor_slug', 'value' => $slug])->row_array(),
 			'results' => $this->Productor_model->movies_by_productor(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
-			'paginator' => $this->pagination->create_links(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'paginator' => $this->pagination->create_links()
 		];
 
 		$this->load->view('header', $params);
@@ -199,8 +198,7 @@ class Welcome extends CI_Controller
 			...$this->_common,
 			'gender' => $this->Gender_model->fetch(['search' => 'gender_slug', 'value' => $slug])->row_array(),
 			'results' => $this->Gender_model->movies_by_gender(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
-			'paginator' => $this->pagination->create_links(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'paginator' => $this->pagination->create_links()
 		];
 
 		$this->load->view('header', $params);
@@ -234,8 +232,7 @@ class Welcome extends CI_Controller
 			...$this->_common,
 			'category' => $this->Category_model->fetch(['search' => 'category_slug', 'value' => $slug])->row_array(),
 			'results' => $this->Category_model->movies_by_category(['limit' => $config['per_page'], 'start' => $this->uri->segment($config['uri_segment']), ...$details]),
-			'paginator' => $this->pagination->create_links(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'paginator' => $this->pagination->create_links()
 		];
 
 		$this->load->view('header', $params);
@@ -251,12 +248,15 @@ class Welcome extends CI_Controller
 	{
 		$movie = $this->Movie_model->fetch(['search' => 'movie_slug', 'value' => $slug])->row_array();
 
+		if (!is_null($movie)) {
+			$title = constant('APP_NAME') . ' - ' . $movie['movie_name'];
+			$this->Movie_model->increase_views($movie['movie_slug']);
+		}
+
 		$params = [
-			'title' => constant('APP_NAME') . ' - ' . $movie['movie_name'],
+			'title' => $title ?? constant('APP_NAME'),
 			...$this->_common,
-			'movie' => $movie,
-			'increase_views' => $this->Movie_model->increase_views($slug),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'movie' => $movie
 		];
 
 		$this->load->view('header', $params);

@@ -8,7 +8,7 @@ class Contact_model extends CI_Model
         parent::__construct();
     }
 
-    public function store(array $data): string
+    public function store(array $data): object
     {
         $response = $this->db->insert('cm_contacts', [
             'id_status' => $data['status_id'],
@@ -24,7 +24,7 @@ class Contact_model extends CI_Model
         return $response;
     }
 
-    public function update(array $data): string
+    public function update(array $data): object
     {
         $response = $this->db
             ->where('id_contact', $data['contact_id'])
@@ -42,7 +42,7 @@ class Contact_model extends CI_Model
         return $response;
     }
 
-    public function delete(array $data): string
+    public function delete(array $data): object
     {
         $response = $this->db
             ->where('id_contact', $data['contact_id'])

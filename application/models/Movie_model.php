@@ -105,7 +105,7 @@ class Movie_model extends CI_Model
 		return $response;
 	}
 
-	public function productors_by_movie(array $builder = array())
+	public function productors_by_movie(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'cm_pro_mov.id_productor, cm_productors.id_status, productor_name, productor_slug, productor_image_logo, cm_pro_mov.id_movie, cm_movies.id_status, id_quality, movie_name, movie_slug, movie_description, movie_release_date, movie_duration, movie_country_origin, movie_cover, movie_reproductions, movie_play, is_premiere';
 		$builder['order_column'] = $builder['order_column'] ?? 'cm_pro_mov.id_productor';
@@ -134,7 +134,7 @@ class Movie_model extends CI_Model
 		return $response;
 	}
 
-	public function genders_by_movie(array $builder = array())
+	public function genders_by_movie(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'cm_gen_mov.id_gender, cm_genders.id_status, gender_name, gender_slug, cm_gen_mov.id_movie, cm_movies.id_status, id_quality	, movie_name, movie_slug, movie_description, movie_release_date, movie_duration, movie_country_origin, movie_cover, movie_reproductions, movie_play, is_premiere';
 		$builder['order_column'] = $builder['order_column'] ?? 'cm_gen_mov.id_gender';
@@ -163,7 +163,7 @@ class Movie_model extends CI_Model
 		return $response;
 	}
 
-	public function categories_by_movie(array $builder = array())
+	public function categories_by_movie(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'cm_cat_mov.id_category, cm_categories.id_status, category_name, category_slug, cm_cat_mov.id_movie, cm_movies.id_status, id_quality, movie_name, movie_slug, movie_description, movie_release_date, movie_duration, movie_country_origin, movie_cover, movie_reproductions, movie_play, is_premiere';
 		$builder['order_column'] = $builder['order_column'] ?? 'cm_cat_mov.id_category';
@@ -246,7 +246,7 @@ class Movie_model extends CI_Model
 		return ($update ? 'success' : 'error');
 	}
 
-	public function increase_views($slug)
+	public function increase_views(string $slug): void
 	{
 		$response = $this->db
 			->select('movie_reproductions')
@@ -263,7 +263,7 @@ class Movie_model extends CI_Model
 		}
 	}
 
-	public function update_cover($data)
+	public function update_cover(array $data): string
 	{
 		$id = $data['id'];
 
@@ -328,7 +328,7 @@ class Movie_model extends CI_Model
 		return 'success';
 	}
 
-	public function search_results(array $builder = array())
+	public function search_results(array $builder = array()): object
 	{
 		$builder['columns'] = $builder['columns'] ?? 'id_movie, cm_movies.id_status, cm_status.status_name, cm_movies.id_quality, cm_qualities.quality_name, cm_movies.movie_name, cm_movies.movie_slug, cm_movies.movie_description, cm_movies.movie_release_date, cm_movies.movie_duration, cm_movies.movie_country_origin, cm_movies.movie_cover, cm_movies.movie_reproductions, cm_movies.movie_play, cm_movies.is_premiere, cm_movies.ip_registered_mov, cm_movies.date_registered_mov, cm_movies.client_registered_mov, cm_movies.ip_modified_mov, cm_movies.date_modified_mov, cm_movies.client_modified_mov';
 		$builder['order_column'] = $builder['order_column'] ?? 'cm_movies.id_movie';

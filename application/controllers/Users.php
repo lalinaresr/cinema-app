@@ -159,7 +159,7 @@ class Users extends CI_Controller
 		]);
 	}
 
-	public function edit_avatar($id)
+	public function edit_avatar(int $id): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
@@ -181,7 +181,7 @@ class Users extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update_avatar()
+	public function update_avatar(): void
 	{
 		$config['upload_path'] = FOLDER_AVATARS;
 		$config['allowed_types'] = 'gif|jpg|png';
