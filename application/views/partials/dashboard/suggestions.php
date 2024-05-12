@@ -18,7 +18,7 @@
                             <tr>
                                 <td><a href="mailto:<?= $suggestion['suggestion_email']; ?>"><?= $suggestion['suggestion_email']; ?></a></td>
                                 <td><?= $suggestion['date_registered_sug']; ?></td>
-                                <td><a href='#suggestion-<?= $suggestion['id_suggestion']; ?>-view' data-toggle="modal">Ver</a></td>
+                                <td><a href='#suggestion-<?= $suggestion['id_suggestion']; ?>' data-toggle="modal">Ver</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -30,7 +30,7 @@
 
     <?php
         foreach ($suggestions->result_array() as $suggestion) :
-            $this->load->view('components/suggestions/view-modal', compact('suggestion'));
+            $this->load->view('components/suggestions/show-modal', compact('suggestion'));
         endforeach;
     ?>
 

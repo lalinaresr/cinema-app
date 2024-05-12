@@ -42,7 +42,7 @@ class Contact_model extends CI_Model
         return $response;
     }
 
-    public function delete(array $data): bool | null
+    public function destroy(array $data): bool | null
     {
         $response = $this->db
             ->where('id_contact', $data['contact_id'])

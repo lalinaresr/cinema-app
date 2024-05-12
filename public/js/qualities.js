@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
 
 		$.ajax({
 			data,
-			url: `${QUALITIES}/store`,
+			url: QUALITIES,
 			type: "POST",
 			beforeSend: () => {
 				$("#quality-store-btn").attr("disabled", true);
@@ -83,12 +83,13 @@ jQuery(document).ready(function ($) {
 	$("#quality-update-form").on("submit", function (e) {
 		e.preventDefault();
 
+		let id = $('input[name="quality"]').val();
 		let data = $(this).serialize();
 
 		$.ajax({
 			data,
-			url: `${QUALITIES}/update`,
-			type: "POST",
+			url: `${QUALITIES}/${id}`,
+			type: "PATCH",
 			beforeSend: () => {
 				$("#quality-update-btn").attr("disabled", true);
 				$("#quality-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
@@ -116,15 +117,14 @@ jQuery(document).ready(function ($) {
 		e.preventDefault();
 
 		let key = $(this).closest("tr").data("key");
-		let quality = $(this).data("element");
+		let id = $(this).data("element");
 
 		question("¿Estas segur@?", "¡No podrás revertir esto!")
 		.then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { quality },
-					url: `${QUALITIES}/delete`,
-					type: "POST",
+					url: `${QUALITIES}/${id}`,
+					type: "DELETE",
 					success: response => {
 						switch (response) {
 							case "success":

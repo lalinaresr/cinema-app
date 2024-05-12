@@ -83,7 +83,7 @@ class Genders extends CI_Controller
 		]);
 	}
 
-	public function view(int $id): void
+	public function show(int $id): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Géneros',
@@ -100,7 +100,7 @@ class Genders extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/genders/view');
+		$this->load->view('partials/genders/show');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
@@ -128,17 +128,17 @@ class Genders extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update(): void
+	public function update(int $id): void
 	{
 		echo $this->Gender_model->update([
-			'id' => $this->input->post('gender'),
-			'status_id' => $this->input->post('status'),
-			'name' => $this->input->post('name')
+			'id' => $id,
+			'status_id' => $this->input->input_stream('status'),
+			'name' => $this->input->input_stream('name')
 		]);
 	}
 
-	public function delete(): void
+	public function destroy(int $id): void
 	{
-		echo $this->Gender_model->delete(['id' => $this->input->post('gender')]);
+		echo $this->Gender_model->destroy(compact('id'));
 	}
 }

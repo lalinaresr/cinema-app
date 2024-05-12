@@ -17,7 +17,7 @@
                         <td><a href="mailto:<?= $newsletter['newsletter_email']; ?>"><?= $newsletter['newsletter_email']; ?></a></td>
                         <td><?= $newsletter['date_registered_nlt']; ?></td>
                         <td>
-                            <a href="<?= site_url("newsletters/view/{$newsletter['id_newsletter']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="<?= site_url("newsletters/{$newsletter['id_newsletter']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
                             <button class="btn btn-danger btn-sm newsletter-delete-btn" data-element="<?= $newsletter['id_newsletter']; ?>"><span class="glyphicon glyphicon-trash"></span></button>
                         </td>
                     </tr>

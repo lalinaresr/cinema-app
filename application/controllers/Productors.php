@@ -83,7 +83,7 @@ class Productors extends CI_Controller
 		]);
 	}
 
-	public function view(int $id): void
+	public function show(int $id): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Productores',
@@ -100,7 +100,7 @@ class Productors extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/productors/view');
+		$this->load->view('partials/productors/show');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
@@ -128,12 +128,12 @@ class Productors extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update(): void
+	public function update(int $id): void
 	{
 		echo $this->Productor_model->update([
-			'id' => $this->input->post('productor'),
-			'status_id' => $this->input->post('status'),
-			'name' => $this->input->post('name')
+			'id' => $id,
+			'status_id' => $this->input->input_stream('status'),
+			'name' => $this->input->input_stream('name')
 		]);
 	}
 
@@ -159,7 +159,7 @@ class Productors extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update_logo(): void
+	public function update_logo(int $id): void
 	{
 		$config['upload_path'] = FOLDER_PRODUCTORS;
 		$config['allowed_types'] = 'gif|jpg|png';
@@ -173,13 +173,13 @@ class Productors extends CI_Controller
 		$data = $this->upload->data();
 
 		echo $this->Productor_model->update_logo([
-			'id' => $this->input->post('productor'),
+			'id' => $id,
 			'logo' => $data['file_name']
 		]);
 	}
 
-	public function delete(): void
+	public function destroy(int $id): void
 	{
-		echo $this->Productor_model->delete(['id' => $this->input->post('productor')]);
+		echo $this->Productor_model->destroy(compact('id'));
 	}
 }

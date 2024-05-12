@@ -54,6 +54,6 @@
 </div>
 <div class="col-md-4">
     <a href="<?= site_url('categories'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
-    <a href="<?= site_url("categories/edit/{$category['id_category']}"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+    <a href="<?= site_url("categories/{$category['id_category']}/edit"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
     <button class="btn btn-danger category-delete-btn" data-element="<?= $category['id_category']; ?>"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
 </div>

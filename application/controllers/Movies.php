@@ -106,7 +106,7 @@ class Movies extends CI_Controller
 		]);
 	}
 
-	public function view(int $id): void
+	public function show(int $id): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Películas',
@@ -126,7 +126,7 @@ class Movies extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/movies/view');
+		$this->load->view('partials/movies/show');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
@@ -170,21 +170,21 @@ class Movies extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update(): void
+	public function update(int $id): void
 	{
 		echo $this->Movie_model->update([
-			'id' => $this->input->post('movie'),
-			'productors' => $this->input->post('productors'),
-			'genders' => $this->input->post('genders'),
-			'categories' => $this->input->post('categories'),
-			'status_id' => $this->input->post('status'),
-			'quality_id' => $this->input->post('quality'),
-			'title' => $this->input->post('title'),
-			'description' => $this->input->post('description'),
-			'release_date' => $this->input->post('release_date'),
-			'duration' => $this->input->post('duration'),
-			'country_origin' => $this->input->post('country_origin'),
-			'link' => $this->input->post('link')
+			'id' => $id,
+			'productors' => $this->input->input_stream('productors'),
+			'genders' => $this->input->input_stream('genders'),
+			'categories' => $this->input->input_stream('categories'),
+			'status_id' => $this->input->input_stream('status'),
+			'quality_id' => $this->input->input_stream('quality'),
+			'title' => $this->input->input_stream('title'),
+			'description' => $this->input->input_stream('description'),
+			'release_date' => $this->input->input_stream('release_date'),
+			'duration' => $this->input->input_stream('duration'),
+			'country_origin' => $this->input->input_stream('country_origin'),
+			'link' => $this->input->input_stream('link')
 		]);
 	}
 
@@ -210,7 +210,7 @@ class Movies extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update_cover(): void
+	public function update_cover(int $id): void
 	{
 		$config['upload_path'] = FOLDER_MOVIES;
 		$config['allowed_types'] = 'gif|jpg|png';
@@ -224,13 +224,13 @@ class Movies extends CI_Controller
 		$data = $this->upload->data();
 
 		echo $this->Movie_model->update_cover([
-			'id' => $this->input->post('movie'),
+			'id' => $id,
 			'cover' => $data['file_name']
 		]);
 	}
 
-	public function delete(): void
+	public function destroy(int $id): void
 	{
-		echo $this->Movie_model->delete(['id' => $this->input->post('movie')]);
+		echo $this->Movie_model->destroy(compact('id'));
 	}
 }

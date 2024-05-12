@@ -8,7 +8,7 @@
     </a>
     <ul class="dropdown-menu">
         <?php if ($this->session->userdata('is_admin')) : ?>
-            <li><a href="<?= site_url("users/edit_avatar/{$this->session->userdata('id_user')}"); ?>"><span class="glyphicon glyphicon-picture"></span> Editar avatar</a></li>
+            <li><a href="<?= site_url("users/{$this->session->userdata('id_user')}/edit-avatar"); ?>"><span class="glyphicon glyphicon-picture"></span> Editar avatar</a></li>
             <li class="divider"></li>
         <?php endif; ?>
         <li><a href="#" class="logout-btn"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>

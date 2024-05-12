@@ -2,7 +2,7 @@
 <div class="row">
     <?php
         if ($movie->num_rows() > 0) {
-            $this->load->view('components/movies/view', ['movie' => $movie->row_array()]);
+            $this->load->view('components/movies/show', ['movie' => $movie->row_array()]);
         } else {
             $this->load->view('components/common/not-found');
         }

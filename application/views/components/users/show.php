@@ -49,7 +49,7 @@
 <!-- <div class="col-md-4">
     <div class="form-group">
         <label>Avatar:</label>
-        <p><a href='#avatar-<?= $user['id_user']; ?>-view' data-toggle="modal"><span class="glyphicon glyphicon-picture"></span> Ver avatar</a></p>
+        <p><a href='#avatar-<?= $user['id_user']; ?>' data-toggle="modal"><span class="glyphicon glyphicon-picture"></span> Ver avatar</a></p>
     </div>
 </div> -->
 <div class="col-md-3">
@@ -90,8 +90,8 @@
 </div>
 <div class="col-md-12">
     <a href="<?= site_url('users'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
-    <a href="<?= site_url("users/edit_avatar/{$user['id_user']}"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar avatar</a>
-    <a href="<?= site_url("users/edit/{$user['id_user']}"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+    <a href="<?= site_url("users/{$user['id_user']}/edit-avatar"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar avatar</a>
+    <a href="<?= site_url("users/{$user['id_user']}/edit"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
     <?php if ($user['id_user'] != $this->session->userdata('id_user')) : ?>
         <button class="btn btn-danger user-delete-btn" data-element="<?= $user['id_user']; ?>"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
     <?php endif; ?>

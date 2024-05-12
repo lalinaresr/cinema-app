@@ -11,7 +11,7 @@
 
     <div class="row my-3">
         <div class="col-md-9">
-            <div class="fb-comments" data-href="<?= site_url("welcome/watch/{$movie['movie_slug']}"); ?>" data-numposts="100" data-colorscheme="dark" data-width="100%"></div>
+            <div class="fb-comments" data-href="<?= site_url("watch/{$movie['movie_slug']}"); ?>" data-numposts="100" data-colorscheme="dark" data-width="100%"></div>
             <div id="fb-root"></div>
             <script>
                 (function(d, s, id) {

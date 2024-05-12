@@ -82,10 +82,10 @@ class Welcome extends CI_Controller
 
 		$data = $this->Movie_model->index($details);
 
-		$config['base_url'] = site_url('welcome/index/');
+		$config['base_url'] = site_url();
 		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 8;
-		$config['uri_segment'] = 3;
+		$config['uri_segment'] = 1;
 		$this->_create_paginator_($config);
 		$this->pagination->initialize($config);
 
@@ -107,7 +107,9 @@ class Welcome extends CI_Controller
 
 	public function search(): void
 	{
-		redirect('welcome/results/' . strtolower(trim($this->input->post('search_parameter'))));
+		$search_parameter = url_title($this->input->post('search_parameter'), ' ', true);
+		
+		redirect("results/{$search_parameter}");
 	}
 
 	public function results(string $search_parameter): void
@@ -118,10 +120,10 @@ class Welcome extends CI_Controller
 
 		$data = $this->Movie_model->search_results($details);
 
-		$config['base_url'] = site_url("welcome/results/{$search_parameter}/");
+		$config['base_url'] = site_url("results/{$search_parameter}");
 		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
-		$config['uri_segment'] = 4;
+		$config['uri_segment'] = 3;
 		$this->_create_paginator_($config);
 		$this->pagination->initialize($config);
 
@@ -152,7 +154,7 @@ class Welcome extends CI_Controller
 
 		$data = $this->Productor_model->movies_by_productor($details);
 
-		$config['base_url'] = site_url("welcome/filter_by_productor/{$slug}/");
+		$config['base_url'] = site_url("productor/{$slug}/filter");
 		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;
@@ -186,7 +188,7 @@ class Welcome extends CI_Controller
 
 		$data = $this->Gender_model->movies_by_gender($details);
 
-		$config['base_url'] = site_url("welcome/filter_by_gender/{$slug}/");
+		$config['base_url'] = site_url("gender/{$slug}/filter");
 		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;
@@ -220,7 +222,7 @@ class Welcome extends CI_Controller
 
 		$data = $this->Category_model->movies_by_category($details);
 
-		$config['base_url'] = site_url("welcome/filter_by_category/{$slug}/");
+		$config['base_url'] = site_url("category/{$slug}/filter");
 		$config['total_rows'] = ($data ? $data->num_rows() : 0);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 4;

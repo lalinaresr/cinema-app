@@ -19,8 +19,8 @@
                         <td><?= $gender['gender_slug']; ?></td>
                         <td><?= $gender['date_registered_gds']; ?></td>
                         <td>
-                            <a href="<?= site_url("genders/view/{$gender['id_gender']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
-                            <a href="<?= site_url("genders/edit/{$gender['id_gender']}"); ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="<?= site_url("genders/{$gender['id_gender']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="<?= site_url("genders/{$gender['id_gender']}/edit"); ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
                             <button class="btn btn-danger btn-sm gender-delete-btn" data-element="<?= $gender['id_gender']; ?>"><span class="glyphicon glyphicon-trash"></span></button>
                         </td>
                     </tr>

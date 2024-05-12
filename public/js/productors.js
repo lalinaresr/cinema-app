@@ -56,7 +56,7 @@ jQuery(document).ready(function ($) {
 
 		$.ajax({
 			data,
-			url: `${PRODUCTORS}/store`,
+			url: PRODUCTORS,
 			type: "POST",
 			beforeSend: () => {
 				$("#productor-store-btn").attr("disabled", true);
@@ -84,12 +84,13 @@ jQuery(document).ready(function ($) {
 	$("#productor-update-form").on("submit", function (e) {
 		e.preventDefault();
 
+		let id = $('input[name="productor"]').val();
 		let data = $(this).serialize();
 
 		$.ajax({
 			data,
-			url: `${PRODUCTORS}/update`,
-			type: "POST",
+			url: `${PRODUCTORS}/${id}`,
+			type: "PATCH",
 			beforeSend: () => {
 				$("#productor-update-btn").attr("disabled", true);
 				$("#productor-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
@@ -120,11 +121,12 @@ jQuery(document).ready(function ($) {
 	$("#logo-update-form").on("submit", function (e) {
 		e.preventDefault();
 
+		let id = $('input[name="productor"]').val();
 		let data = new FormData(this);
 
 		$.ajax({
 			data,
-			url: `${PRODUCTORS}/update_logo`,
+			url: `${PRODUCTORS}/${id}`,
 			type: "POST",
 			processData: false,
 			contentType: false,
@@ -158,15 +160,14 @@ jQuery(document).ready(function ($) {
 		e.preventDefault();
 
 		let key = $(this).closest("tr").data("key");
-		let productor = $(this).data("element");
+		let id = $(this).data("element");
 
 		question("¿Estas segur@?", "¡No podrás revertir esto!")
 		.then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { productor },
-					url: `${PRODUCTORS}/delete`,
-					type: "POST",
+					url: `${PRODUCTORS}/${id}`,
+					type: "DELETE",
 					success: response => {
 						switch (response) {
 							case "success":

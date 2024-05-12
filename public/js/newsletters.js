@@ -52,15 +52,14 @@ jQuery(document).ready(function ($) {
 		e.preventDefault();
 
 		let key = $(this).closest("tr").data("key");
-		let newsletter = $(this).data("element");
+		let id = $(this).data("element");
 
 		question("¿Estas segur@?", "¡No podrás revertir esto!")
 		.then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { newsletter },
-					url: `${NEWSLETTERS}/delete`,
-					type: "POST",
+					url: `${NEWSLETTERS}/${id}`,
+					type: "DELETE",
 					success: response => {
 						switch (response) {
 							case "success":

@@ -18,7 +18,7 @@
                         <td><?= $session['user_username']; ?></td>
                         <td><?= $session['rol_name']; ?></td>
                         <td><?= $session['date_registered_ses']; ?></td>
-                        <td><a href="<?= site_url("sessions/view/{$session['id_session']}"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+                        <td><a href="<?= site_url("sessions/{$session['id_session']}"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

@@ -5,10 +5,11 @@
             <h4 class="text-white"><?= $movie['movie_name']; ?></h4>
             <p class="text-white"><?= character_limiter($movie['movie_description'], 100); ?></p>
             <p>
-                <a href="<?= site_url("welcome/watch/{$movie['movie_slug']}"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-play"></span> Reproducir</a>
+                <a href="<?= site_url("watch/{$movie['movie_slug']}"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-play"></span> Reproducir</a>
                 <?php if ($this->session->userdata('is_admin') || $this->session->userdata('is_guest')) : ?>
-                    <a href="<?= site_url("movies/view/{$movie['id_movie']}"); ?>" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
-                    <a href="<?= site_url("movies/edit/{$movie['id_movie']}"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="<?= site_url("movies/{$movie['id_movie']}"); ?>" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    <a href="<?= site_url("movies/{$movie['id_movie']}/edit-cover"); ?>" class="btn btn-success"><span class="glyphicon glyphicon-picture"></span></a>
+                    <a href="<?= site_url("movies/{$movie['id_movie']}/edit"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
                 <?php endif; ?>
             </p>
         </div>

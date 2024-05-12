@@ -92,7 +92,7 @@ class Users extends CI_Controller
 		]);
 	}
 
-	public function view(int $id): void
+	public function show(int $id): void
 	{
 		$params = [
 			'title' => constant('APP_NAME') . ' | Usuarios',
@@ -109,7 +109,7 @@ class Users extends CI_Controller
 		$this->load->view('header', $params);
 		$this->load->view('layouts/dashboard/navbar');
 		$this->load->view('layouts/dashboard/sidebar');
-		$this->load->view('partials/users/view');
+		$this->load->view('partials/users/show');
 		$this->load->view('layouts/dashboard/footer');
 		$this->load->view('footer');
 	}
@@ -142,20 +142,20 @@ class Users extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update(): void
+	public function update(int $id): void
 	{
 		echo $this->User_model->update([
-			'id' => $this->input->post('user'),
-			'contact_id' => $this->input->post('contact'),
-			'role_id' => $this->input->post('role'),
-			'status_id' => $this->input->post('status'),
-			'firstname' => $this->input->post('firstname'),
-			'lastname' => $this->input->post('lastname'),
-			'username' => $this->input->post('username'),
-			'email' => $this->input->post('email'),
-			'password' => $this->input->post('password'),
-			'sex' => $this->input->post('sex'),
-			'birthday' => $this->input->post('birthday')
+			'id' => $id,
+			'contact_id' => $this->input->input_stream('contact'),
+			'role_id' => $this->input->input_stream('role'),
+			'status_id' => $this->input->input_stream('status'),
+			'firstname' => $this->input->input_stream('firstname'),
+			'lastname' => $this->input->input_stream('lastname'),
+			'username' => $this->input->input_stream('username'),
+			'email' => $this->input->input_stream('email'),
+			'password' => $this->input->input_stream('password'),
+			'sex' => $this->input->input_stream('sex'),
+			'birthday' => $this->input->input_stream('birthday')
 		]);
 	}
 
@@ -181,7 +181,7 @@ class Users extends CI_Controller
 		$this->load->view('footer');
 	}
 
-	public function update_avatar(): void
+	public function update_avatar(int $id): void
 	{
 		$config['upload_path'] = FOLDER_AVATARS;
 		$config['allowed_types'] = 'gif|jpg|png';
@@ -195,13 +195,13 @@ class Users extends CI_Controller
 		$data = $this->upload->data();
 
 		echo $this->User_model->update_avatar([
-			'id' => $this->input->post('user'),
+			'id' => $id,
 			'avatar' => $data['file_name']
 		]);
 	}
 
-	public function delete(): void
+	public function destroy(int $id): void
 	{
-		echo $this->User_model->delete(['id' => $this->input->post('user')]);
+		echo $this->User_model->destroy(compact('id'));
 	}
 }

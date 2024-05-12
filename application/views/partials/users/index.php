@@ -17,12 +17,12 @@
                     <tr data-key="<?= $key; ?>" class="<?= $user['id_status'] == 1 ? 'success' : 'danger';  ?>">
                         <td><span class="label label-<?= $user['id_status'] == 1 ? 'success' : 'danger'; ?>"><?= $user['status_name']; ?></span></td>
                         <td><?= $user['rol_name']; ?></td>
-                        <td><a href="#avatar-<?= $user['id_user']; ?>-view" data-toggle="modal"><?= $user['user_username']; ?></a></td>
+                        <td><a href="#avatar-<?= $user['id_user']; ?>" data-toggle="modal"><?= $user['user_username']; ?></a></td>
                         <td><a href="mailto:<?= $user['user_email']; ?>"><?= $user['user_email']; ?></a></td>
                         <td><?= $user['date_registered_usr']; ?></td>
                         <td>
-                            <a href="<?= site_url("users/view/{$user['id_user']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
-                            <a href="<?= site_url("users/edit/{$user['id_user']}"); ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="<?= site_url("users/{$user['id_user']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="<?= site_url("users/{$user['id_user']}/edit"); ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
                             <?php if ($user['id_user'] != $this->session->userdata('id_user')) : ?>
                                 <button class="btn btn-danger btn-sm user-delete-btn" data-element="<?= $user['id_user']; ?>"><span class="glyphicon glyphicon-trash"></span></button>
                             <?php endif; ?>
@@ -35,7 +35,7 @@
 
     <?php
         foreach ($users->result_array() as $user) :
-            $this->load->view('components/users/view-avatar-modal', compact('user'));
+            $this->load->view('components/users/show-avatar-modal', compact('user'));
         endforeach;
     ?>
 

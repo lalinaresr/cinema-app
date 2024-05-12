@@ -140,7 +140,7 @@ class Productor_model extends CI_Model
 		return ($update ? 'success' : 'error');
 	}
 
-	public function delete(array $data): string
+	public function destroy(array $data): string
 	{
 		$id = $data['id'];
 

@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
 
 		$.ajax({
 			data,
-			url: `${GENDERS}/store`,
+			url: GENDERS,
 			type: "POST",
 			beforeSend: () => {
 				$("#gender-store-btn").attr("disabled", true);
@@ -83,12 +83,13 @@ jQuery(document).ready(function ($) {
 	$("#gender-update-form").on("submit", function (e) {
 		e.preventDefault();
 
+		let id = $('input[name="gender"]').val();
 		let data = $(this).serialize();
 
 		$.ajax({
 			data,
-			url: `${GENDERS}/update`,
-			type: "POST",
+			url: `${GENDERS}/${id}`,
+			type: "PATCH",
 			beforeSend: () => {
 				$("#gender-update-btn").attr("disabled", true);
 				$("#gender-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
@@ -116,15 +117,14 @@ jQuery(document).ready(function ($) {
 		e.preventDefault();
 
 		let key = $(this).closest("tr").data("key");
-		let gender = $(this).data("element");
+		let id = $(this).data("element");
 
 		question("¿Estas segur@?", "¡No podrás revertir esto!")
 		.then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { gender },
-					url: `${GENDERS}/delete`,
-					type: "POST",
+					url: `${GENDERS}/${id}`,
+					type: "DELETE",
 					success: response => {
 						switch (response) {
 							case "success":

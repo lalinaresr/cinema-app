@@ -54,6 +54,6 @@
 </div>
 <div class="col-md-4">
     <a href="<?= site_url('genders'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
-    <a href="<?= site_url("genders/edit/{$gender['id_gender']}"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+    <a href="<?= site_url("genders/{$gender['id_gender']}/edit"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
     <button class="btn btn-danger gender-delete-btn" data-element="<?= $gender['id_gender']; ?>"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
 </div>

@@ -1,4 +1,4 @@
-<div class="modal fade" id="avatar-<?= $user['id_user']; ?>-view">
+<div class="modal fade" id="avatar-<?= $user['id_user']; ?>">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header bg-black">
@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer bg-black">
                 <?php if ($this->session->userdata('is_admin')) : ?>
-                    <a href="<?= site_url("users/edit_avatar/{$user['id_user']}"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar avatar</a>
+                    <a href="<?= site_url("users/{$user['id_user']}/edit-avatar"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar avatar</a>
                 <?php endif; ?>
                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
             </div>

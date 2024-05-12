@@ -2,7 +2,7 @@
 <div class="row">
     <?php
         if ($quality->num_rows() > 0) {
-            $this->load->view('components/qualities/view', ['quality' => $quality->row_array()]);
+            $this->load->view('components/qualities/show', ['quality' => $quality->row_array()]);
         } else {
             $this->load->view('components/common/not-found');
         }

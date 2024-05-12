@@ -167,7 +167,7 @@ class User_model extends CI_Model
         return ($update ? 'success' : 'error');
     }
 
-    public function delete(array $data): string
+    public function destroy(array $data): string
     {
         $id = $data['id'];
 
@@ -183,8 +183,8 @@ class User_model extends CI_Model
 
         $user = $response->row_array();
 
-        $fDelete = $this->Contact_model->delete(['contact_id' => $user['id_contact']]);
-        $sDelete = $this->Session_model->delete(['user_id' => $id]);
+        $fDelete = $this->Contact_model->destroy(['contact_id' => $user['id_contact']]);
+        $sDelete = $this->Session_model->destroy(['user_id' => $id]);
         $tDelete = $this->db
             ->where('id_user', $id)
             ->delete('cm_users');

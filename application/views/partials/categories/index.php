@@ -19,8 +19,8 @@
                         <td><?= $category['category_slug']; ?></td>
                         <td><?= $category['date_registered_cat']; ?></td>
                         <td>
-                            <a href="<?= site_url("categories/view/{$category['id_category']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
-                            <a href="<?= site_url("categories/edit/{$category['id_category']}"); ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="<?= site_url("categories/{$category['id_category']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="<?= site_url("categories/{$category['id_category']}/edit"); ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
                             <button class="btn btn-danger btn-sm category-delete-btn" data-element="<?= $category['id_category']; ?>"><span class="glyphicon glyphicon-trash"></span></button>
                         </td>
                     </tr>

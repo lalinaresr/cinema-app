@@ -54,6 +54,6 @@
 </div>
 <div class="col-md-4">
     <a href="<?= site_url('qualities'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
-    <a href="<?= site_url("qualities/edit/{$quality['id_quality']}"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+    <a href="<?= site_url("qualities/{$quality['id_quality']}/edit"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
     <button class="btn btn-danger quality-delete-btn" data-element="<?= $quality['id_quality']; ?>"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
 </div>

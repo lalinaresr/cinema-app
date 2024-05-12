@@ -2,7 +2,7 @@
 <div class="row">
     <?php
         if ($gender->num_rows() > 0) {
-            $this->load->view('components/genders/view', ['gender' => $gender->row_array()]);
+            $this->load->view('components/genders/show', ['gender' => $gender->row_array()]);
         } else {
             $this->load->view('components/common/not-found');
         }

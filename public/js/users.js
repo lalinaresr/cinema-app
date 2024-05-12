@@ -65,7 +65,7 @@ jQuery(document).ready(function ($) {
 
 		$.ajax({
 			data,
-			url: `${USERS}/store`,
+			url: USERS,
 			type: "POST",
 			beforeSend: () => {
 				$("#user-store-btn").attr("disabled", true);
@@ -93,12 +93,13 @@ jQuery(document).ready(function ($) {
 	$("#user-update-form").on("submit", function (e) {
 		e.preventDefault();
 
+		let id = $('input[name="user"]').val();
 		let data = $(this).serialize();
 
 		$.ajax({
 			data,
-			url: `${USERS}/update`,
-			type: "POST",
+			url: `${USERS}/${id}`,
+			type: "PATCH",
 			beforeSend: () => {
 				$("#user-update-btn").attr("disabled", true);
 				$("#user-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
@@ -129,11 +130,12 @@ jQuery(document).ready(function ($) {
 	$("#avatar-update-form").on("submit", function (e) {
 		e.preventDefault();
 		
+		let id = $('input[name="user"]').val();
 		let data = new FormData(this);
 
 		$.ajax({
 			data,
-			url: `${USERS}/update_avatar`,
+			url: `${USERS}/${id}`,
 			type: "POST",
 			processData: false,
             contentType: false,
@@ -167,15 +169,14 @@ jQuery(document).ready(function ($) {
 		e.preventDefault();
 
 		let key = $(this).closest("tr").data("key");
-		let user = $(this).data("element");
+		let id = $(this).data("element");
 
 		question("¿Estas segur@?", "¡No podrás revertir esto!")
 		.then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { user },
-					url: `${USERS}/delete`,
-					type: "POST",
+					url: `${USERS}/${id}`,
+					type: "DELETE",
 					success: response => {
 						switch (response) {
 							case "success":

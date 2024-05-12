@@ -91,7 +91,7 @@ jQuery(document).ready(function ($) {
 
 		$.ajax({
 			data,
-			url: `${MOVIES}/store`,
+			url: MOVIES,
 			type: "POST",
 			beforeSend: () => {
 				$("#movie-store-btn").attr("disabled", true);
@@ -119,12 +119,13 @@ jQuery(document).ready(function ($) {
 	$("#movie-update-form").on("submit", function (e) {
 		e.preventDefault();
 
+		let id = $('input[name="movie"]').val();
 		let data = $(this).serialize();
 
 		$.ajax({
 			data,
-			url: `${MOVIES}/update`,
-			type: "POST",
+			url: `${MOVIES}/${id}`,
+			type: "PATCH",
 			beforeSend: () => {
 				$("#movie-update-btn").attr("disabled", true);
 				$("#movie-update-btn").html('<i class="fa fa-spinner fa-spin fa-fw"></i> Procesando');
@@ -155,11 +156,12 @@ jQuery(document).ready(function ($) {
 	$("#cover-update-form").on("submit", function (e) {
 		e.preventDefault();
 
+		let id = $('input[name="movie"]').val();
 		let data = new FormData(this);
 
 		$.ajax({
 			data,
-			url: `${MOVIES}/update_cover`,
+			url: `${MOVIES}/${id}`,
 			type: "POST",
 			processData: false,
 			contentType: false,
@@ -193,15 +195,14 @@ jQuery(document).ready(function ($) {
 		e.preventDefault();
 
 		let key = $(this).closest("tr").data("key");
-		let movie = $(this).data("element");
+		let id = $(this).data("element");
 
 		question("¿Estas segur@?", "¡No podrás revertir esto!")
 		.then(result => {
 			if (result.isConfirmed) {
 				$.ajax({
-					data: { movie },
-					url: `${MOVIES}/delete`,
-					type: "POST",
+					url: `${MOVIES}/${id}`,
+					type: "DELETE",
 					success: response => {
 						switch (response) {
 							case "success":

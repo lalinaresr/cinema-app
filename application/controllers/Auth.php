@@ -10,11 +10,6 @@ class Auth extends CI_Controller
 		$this->load->model('Auth_model');
 	}
 
-	public function index(): void
-	{
-		redirect(($this->session->userdata('is_authorized') ? 'dashboard' : 'auth/login'));
-	}
-
 	public function login(): void
 	{
 		if ($this->session->userdata('is_authorized')) {

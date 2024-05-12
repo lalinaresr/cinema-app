@@ -18,7 +18,7 @@
                             <tr>
                                 <td><a href="mailto:<?= $newsletter['newsletter_email']; ?>"><?= $newsletter['newsletter_email']; ?></a></td>
                                 <td><?= $newsletter['date_registered_nlt']; ?></td>
-                                <td><a href='#newsletter-<?= $newsletter['id_newsletter']; ?>-view' data-toggle="modal">Ver</a></td>
+                                <td><a href='#newsletter-<?= $newsletter['id_newsletter']; ?>' data-toggle="modal">Ver</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -30,7 +30,7 @@
 
     <?php
         foreach ($newsletters->result_array() as $newsletter) :
-            $this->load->view('components/newsletters/view-modal', compact('newsletter'));
+            $this->load->view('components/newsletters/show-modal', compact('newsletter'));
         endforeach;
     ?>
 

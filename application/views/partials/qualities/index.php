@@ -19,8 +19,8 @@
                         <td><?= $quality['quality_slug']; ?></td>
                         <td><?= $quality['date_registered_qlt']; ?></td>
                         <td>
-                            <a href="<?= site_url("qualities/view/{$quality['id_quality']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
-                            <a href="<?= site_url("qualities/edit/{$quality['id_quality']}"); ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="<?= site_url("qualities/{$quality['id_quality']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="<?= site_url("qualities/{$quality['id_quality']}/edit"); ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
                             <button class="btn btn-danger btn-sm quality-delete-btn" data-element="<?= $quality['id_quality']; ?>"><span class="glyphicon glyphicon-trash"></span></button>
                         </td>
                     </tr>

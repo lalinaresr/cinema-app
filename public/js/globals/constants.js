@@ -1,7 +1,7 @@
 export const WELCOME = 'http://127.0.0.1:8000';
-export const LOGIN = `${WELCOME}/auth/verify`;
+export const LOGIN = `${WELCOME}/verify`;
 export const DASHBOARD = `${WELCOME}/dashboard`;
-export const LOGOUT = `${WELCOME}/auth/logout`;
+export const LOGOUT = `${WELCOME}/logout`;
 export const USERS = `${WELCOME}/users`;
 export const QUALITIES = `${WELCOME}/qualities`;
 export const CATEGORIES = `${WELCOME}/categories`;

@@ -1,46 +1,46 @@
-<div class="modal fade" id="session-<?= $session['id_session']; ?>-view">
+<div class="modal fade" id="suggestion-<?= $suggestion['id_suggestion']; ?>">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-black">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-center text-white">Detalle de la sesión</h4>
+                <h4 class="modal-title text-center text-white">Detalle de la sugerencia</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label>Sis. Ope. usado:</label>
-                            <p class="form-control-static"><?= $session['session_os_used']; ?></p>
+                            <label>Nombre: </label>
+                            <p class="form-control-static"><?= $suggestion['suggestion_name']; ?></p>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label>Navegador usado:</label>
-                            <p class="form-control-static"><?= $session['session_browser_used']; ?></p>
+                            <label>Correo electrónico: </label>
+                            <p class="form-control-static"><?= $suggestion['suggestion_email']; ?></p>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label>Versión del navegador:</label>
-                            <p class="form-control-static"><?= $session['session_browser_version']; ?></p>
+                            <label>Descripción:</label>
+                            <p class="form-control-static"><?= $suggestion['suggestion_description']; ?></p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>IP de registro:</label>
-                            <p class="form-control-static"><?= $session['ip_registered_ses']; ?></p>
+                            <p class="form-control-static"><?= $suggestion['ip_registered_sug']; ?></p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Fecha de registro:</label>
-                            <p class="form-control-static"><?= $session['date_registered_ses']; ?></p>
+                            <p class="form-control-static"><?= $suggestion['date_registered_sug']; ?></p>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Dispositivo de registro:</label>
-                            <p class="form-control-static"><?= $session['client_registered_ses']; ?></p>
+                            <p class="form-control-static"><?= $suggestion['client_registered_sug']; ?></p>
                         </div>
                     </div>
                 </div>

@@ -1,40 +1,46 @@
-<div class="modal fade" id="newsletter-<?= $newsletter['id_newsletter']; ?>-view">
+<div class="modal fade" id="session-<?= $session['id_session']; ?>">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-black">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-center text-white">Detalle del seguidor</h4>
+                <h4 class="modal-title text-center text-white">Detalle de la sesión</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label>Nombre: </label>
-                            <p class="form-control-static"><?= $newsletter['newsletter_name']; ?></p>
+                            <label>Sis. Ope. usado:</label>
+                            <p class="form-control-static"><?= $session['session_os_used']; ?></p>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label>Correo electrónico: </label>
-                            <p class="form-control-static"><?= $newsletter['newsletter_email']; ?></p>
+                            <label>Navegador usado:</label>
+                            <p class="form-control-static"><?= $session['session_browser_used']; ?></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Versión del navegador:</label>
+                            <p class="form-control-static"><?= $session['session_browser_version']; ?></p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>IP de registro:</label>
-                            <p class="form-control-static"><?= $newsletter['ip_registered_nlt']; ?></p>
+                            <p class="form-control-static"><?= $session['ip_registered_ses']; ?></p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Fecha de registro:</label>
-                            <p class="form-control-static"><?= $newsletter['date_registered_nlt']; ?></p>
+                            <p class="form-control-static"><?= $session['date_registered_ses']; ?></p>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Dispositivo de registro:</label>
-                            <p class="form-control-static"><?= $newsletter['client_registered_nlt']; ?></p>
+                            <p class="form-control-static"><?= $session['client_registered_ses']; ?></p>
                         </div>
                     </div>
                 </div>

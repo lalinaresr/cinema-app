@@ -20,7 +20,7 @@
                                 <td><?= $session['rol_name']; ?></td>
                                 <td><?= $session['user_username']; ?></td>
                                 <td><?= $session['date_registered_ses']; ?></td>
-                                <td><a href='#session-<?= $session['id_session']; ?>-view' data-toggle="modal">Ver</a></td>
+                                <td><a href='#session-<?= $session['id_session']; ?>' data-toggle="modal">Ver</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -32,7 +32,7 @@
 
     <?php
         foreach ($others_sessions->result_array() as $session) :
-            $this->load->view('components/sessions/view-modal', compact('session'));
+            $this->load->view('components/sessions/show-modal', compact('session'));
         endforeach;
     ?>
 

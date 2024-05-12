@@ -1,4 +1,4 @@
-<div class="modal fade" id="cover-<?= $movie['id_movie']; ?>-view">
+<div class="modal fade" id="cover-<?= $movie['id_movie']; ?>">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header bg-black">
@@ -9,7 +9,7 @@
                 <img src="<?= base_url(($movie['movie_cover'] == 'NO-IMAGE' ? FOLDER_MOVIES . '/default.png' : $movie['movie_cover'])); ?>" class="img-rounded img-responsive center-block">
             </div>
             <div class="modal-footer bg-black">
-                <a href="<?= site_url("movies/edit_cover/{$movie['id_movie']}"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar portada</a>
+                <a href="<?= site_url("movies/{$movie['id_movie']}/edit-cover"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar portada</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Cerrar</button>
             </div>
         </div>

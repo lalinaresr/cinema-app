@@ -126,8 +126,8 @@
 </div>
 <div class="col-md-12">
     <a href="<?= site_url('movies'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
-    <a href="<?= site_url("welcome/watch/{$movie['movie_slug']}"); ?>" class="btn btn-primary" target="_blank"><span class="glyphicon glyphicon-play"></span> Reproducir</a>
-    <a href="<?= site_url("movies/edit_cover/{$movie['id_movie']}"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar portada</a>
-    <a href="<?= site_url("movies/edit/{$movie['id_movie']}"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+    <a href="<?= site_url("watch/{$movie['movie_slug']}"); ?>" class="btn btn-primary" target="_blank"><span class="glyphicon glyphicon-play"></span> Reproducir</a>
+    <a href="<?= site_url("movies/{$movie['id_movie']}/edit-cover"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar portada</a>
+    <a href="<?= site_url("movies/{$movie['id_movie']}/edit"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
     <button class="btn btn-danger movie-delete-btn" data-element="<?= $movie['id_movie']; ?>"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
 </div>

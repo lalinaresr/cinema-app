@@ -54,7 +54,7 @@
 </div>
 <div class="col-md-12">
     <a href="<?= site_url('productors'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
-    <a href="<?= site_url("productors/edit_logo/{$productor['id_productor']}"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar logo</a>
-    <a href="<?= site_url("productors/edit/{$productor['id_productor']}"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+    <a href="<?= site_url("productors/{$productor['id_productor']}/edit-logo"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar logo</a>
+    <a href="<?= site_url("productors/{$productor['id_productor']}/edit"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
     <button class="btn btn-danger productor-delete-btn" data-element="<?= $productor['id_productor']; ?>"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
 </div>
