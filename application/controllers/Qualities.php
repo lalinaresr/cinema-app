@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Qualities extends CI_Controller
+class Qualities extends My_Controller
 {
 	public function __construct()
 	{
@@ -12,7 +12,6 @@ class Qualities extends CI_Controller
 		}
 
 		$this->load->model([
-			'User_model',
 			'Quality_model',
 			'Status_model'
 		]);
@@ -38,8 +37,7 @@ class Qualities extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				['type' => 'module', 'src' => base_url('public/js/qualities.js')]
 			],
-			'qualities' => $this->Quality_model->index(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'qualities' => $this->Quality_model->index()
 		];
 
 		$this->load->view('header', $params);
@@ -60,8 +58,7 @@ class Qualities extends CI_Controller
 			'scripts' => [
 				['type' => 'module', 'src' => base_url('public/js/qualities.js')]
 			],
-			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC'])
 		];
 
 		$this->load->view('header', $params);
@@ -90,8 +87,7 @@ class Qualities extends CI_Controller
 			'scripts' => [
 				['type' => 'module', 'src' => base_url('public/js/qualities.js')]
 			],
-			'quality' => $this->Quality_model->fetch(['value' => $id]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'quality' => $this->Quality_model->fetch(['value' => $id])
 		];
 
 		$this->load->view('header', $params);
@@ -113,8 +109,7 @@ class Qualities extends CI_Controller
 				['type' => 'module', 'src' => base_url('public/js/qualities.js')]
 			],
 			'quality' => $this->Quality_model->fetch(['value' => $id]),
-			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC'])
 		];
 
 		$this->load->view('header', $params);

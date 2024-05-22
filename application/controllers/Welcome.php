@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Welcome extends CI_Controller
+class Welcome extends My_Controller
 {
 	private array $_common;
 
@@ -10,7 +10,6 @@ class Welcome extends CI_Controller
 		parent::__construct();
 
 		$this->load->model([
-			'User_model',
 			'Productor_model',
 			'Gender_model',
 			'Category_model',
@@ -18,9 +17,7 @@ class Welcome extends CI_Controller
 		]);
 
 		$this->load->helper('text');
-
 		$this->load->library('pagination');
-
 		$this->_init_();
 	}
 
@@ -40,7 +37,6 @@ class Welcome extends CI_Controller
 			'productors' => $this->Productor_model->index(['status' => 1]),
 			'genders' => $this->Gender_model->index(['status' => 1]),
 			'categories' => $this->Category_model->index(['status' => 1]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user')),
 			'newest_movies' => $this->Movie_model->index([
 				'status' => 1,
 				'limit' => 8
@@ -108,7 +104,7 @@ class Welcome extends CI_Controller
 	public function search(): void
 	{
 		$search_parameter = url_title($this->input->post('search_parameter'), ' ', true);
-		
+
 		redirect("results/{$search_parameter}");
 	}
 

@@ -14,16 +14,17 @@ class Auth_model extends CI_Model
     {
         $this->load->library('email');
 
-        $this->email->initialize([
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.gmail.com',
-            'smtp_port' => 465,
-            'smtp_user' => GMAIL['EMAIL'],
-            'smtp_pass' => GMAIL['PASSWORD'],
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n"
-        ])
+        $this->email
+            ->initialize([
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.gmail.com',
+                'smtp_port' => 465,
+                'smtp_user' => GMAIL['EMAIL'],
+                'smtp_pass' => GMAIL['PASSWORD'],
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'newline' => "\r\n"
+            ])
             ->from(GMAIL['EMAIL'])
             ->to($builder['to'])
             ->subject($builder['subject'])
@@ -62,12 +63,8 @@ class Auth_model extends CI_Model
 
         $this->_set_userdata_([
             'is_authorized' => true,
-            'id_user' => $user['id_user'],
-            'id_contact' => $user['id_contact'],
-            'id_rol' => $user['id_rol'],
-            $this->_get_role_($user['id_rol']) => true,
-            'id_status' => $user['id_status'],
-            'user_username' => $user['user_username']
+            'id' => $user['id_user'],
+            $this->_get_role_($user['id_rol']) => true
         ]);
 
         $store = $this->Session_model->store($user['id_user']);

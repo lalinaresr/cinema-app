@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Categories extends CI_Controller
+class Categories extends My_Controller
 {
 	public function __construct()
 	{
@@ -12,7 +12,6 @@ class Categories extends CI_Controller
 		}
 
 		$this->load->model([
-			'User_model',
 			'Movie_model',
 			'Productor_model',
 			'Gender_model',
@@ -41,8 +40,7 @@ class Categories extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				['type' => 'module', 'src' => base_url('public/js/categories.js')]
 			],
-			'categories' => $this->Category_model->index(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'categories' => $this->Category_model->index()
 		];
 
 		$this->load->view('header', $params);
@@ -63,8 +61,7 @@ class Categories extends CI_Controller
 			'scripts' => [
 				['type' => 'module', 'src' => base_url('public/js/categories.js')]
 			],
-			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC'])
 		];
 
 		$this->load->view('header', $params);
@@ -93,8 +90,7 @@ class Categories extends CI_Controller
 			'scripts' => [
 				['type' => 'module', 'src' => base_url('public/js/categories.js')]
 			],
-			'category' => $this->Category_model->fetch(['value' => $id]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'category' => $this->Category_model->fetch(['value' => $id])
 		];
 
 		$this->load->view('header', $params);
@@ -116,8 +112,7 @@ class Categories extends CI_Controller
 				['type' => 'module', 'src' => base_url('public/js/categories.js')]
 			],
 			'category' => $this->Category_model->fetch(['value' => $id]),
-			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'status' => $this->Status_model->index(['order_filter' => 'ASC'])
 		];
 
 		$this->load->view('header', $params);

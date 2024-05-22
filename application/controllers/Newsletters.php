@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Newsletters extends CI_Controller
+class Newsletters extends My_Controller
 {
 	public function __construct()
 	{
@@ -11,10 +11,7 @@ class Newsletters extends CI_Controller
 			redirect();
 		}
 
-		$this->load->model([
-			'Newsletter_model',
-			'User_model'
-		]);
+		$this->load->model('Newsletter_model');
 	}
 
 	public function index(): void
@@ -37,8 +34,7 @@ class Newsletters extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				['type' => 'module', 'src' => base_url('public/js/newsletters.js')]
 			],
-			'newsletters' => $this->Newsletter_model->index(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'newsletters' => $this->Newsletter_model->index()
 		];
 
 		$this->load->view('header', $params);
@@ -59,8 +55,7 @@ class Newsletters extends CI_Controller
 			'scripts' => [
 				['type' => 'module', 'src' => base_url('public/js/newsletters.js')]
 			],
-			'newsletter' => $this->Newsletter_model->fetch(['value' => $id]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'newsletter' => $this->Newsletter_model->fetch(['value' => $id])
 		];
 
 		$this->load->view('header', $params);

@@ -92,7 +92,7 @@
     <a href="<?= site_url('users'); ?>" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
     <a href="<?= site_url("users/{$user['id_user']}/edit-avatar"); ?>" class="btn btn-info"><span class="glyphicon glyphicon-new-window"></span> Editar avatar</a>
     <a href="<?= site_url("users/{$user['id_user']}/edit"); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
-    <?php if ($user['id_user'] != $this->session->userdata('id_user')) : ?>
+    <?php if ($user['id_user'] != $this->session->userdata('id')) : ?>
         <button class="btn btn-danger user-delete-btn" data-element="<?= $user['id_user']; ?>"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
     <?php endif; ?>
 </div>

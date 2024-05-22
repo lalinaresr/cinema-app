@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller
+class Dashboard extends My_Controller
 {
 	public function __construct()
 	{
@@ -12,7 +12,6 @@ class Dashboard extends CI_Controller
 		}
 
 		$this->load->model([
-			'User_model',
 			'Suggestion_model',
 			'Newsletter_model',
 			'Session_model'
@@ -28,9 +27,8 @@ class Dashboard extends CI_Controller
 			],
 			'suggestions' => $this->Suggestion_model->index(['status' => 1, 'limit' => 5]),
 			'newsletters' => $this->Newsletter_model->index(['limit' => 5]),
-			'others_sessions' => $this->Session_model->index(['not' => 'cm_sessions.id_user', 'value' => $this->session->userdata('id_user'), 'limit' => 5]),
-			'my_sessions' => $this->Session_model->index(['in' => 'cm_sessions.id_user', 'value' => $this->session->userdata('id_user'), 'limit' => 5]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'others_sessions' => $this->Session_model->index(['not' => 'cm_sessions.id_user', 'value' => $this->session->userdata('id'), 'limit' => 5]),
+			'my_sessions' => $this->Session_model->index(['in' => 'cm_sessions.id_user', 'value' => $this->session->userdata('id'), 'limit' => 5])
 		];
 
 		$this->load->view('header', $params);

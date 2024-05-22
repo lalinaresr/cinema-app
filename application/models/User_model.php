@@ -122,17 +122,6 @@ class User_model extends CI_Model
         return (($fUpdate && $sUpdate) ? 'success' : 'error');
     }
 
-    public function get_avatar(int|null $user_id): string
-    {
-        $response = $this->db
-            ->where('id_user', $user_id)
-            ->get('cm_users');
-
-        $user = $response->row_array();
-
-        return ($response->num_rows() > 0 ? base_url(($user['user_avatar'] != 'NO-IMAGE' ? $user['user_avatar'] : FOLDER_AVATARS . '/default.png')) : 'NO-IMAGE');
-    }
-
     public function update_avatar(array $data): string
     {
         $id = $data['id'];

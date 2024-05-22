@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Sessions extends CI_Controller
+class Sessions extends My_Controller
 {
 	public function __construct()
 	{
@@ -11,10 +11,7 @@ class Sessions extends CI_Controller
 			redirect();
 		}
 
-		$this->load->model([
-			'User_model',
-			'Session_model'
-		]);
+		$this->load->model('Session_model');
 	}
 
 	public function index(): void
@@ -37,8 +34,7 @@ class Sessions extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				base_url('public/js/sessions.js')
 			],
-			'sessions' => $this->Session_model->index(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'sessions' => $this->Session_model->index()
 		];
 
 		$this->load->view('header', $params);
@@ -59,8 +55,7 @@ class Sessions extends CI_Controller
 			'scripts' => [
 				base_url('public/js/sessions.js')
 			],
-			'session' => $this->Session_model->fetch(['value' => $id]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'session' => $this->Session_model->fetch(['value' => $id])
 		];
 
 		$this->load->view('header', $params);

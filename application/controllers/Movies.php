@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Movies extends CI_Controller
+class Movies extends My_Controller
 {
 	public function __construct()
 	{
@@ -17,7 +17,6 @@ class Movies extends CI_Controller
 			'Gender_model',
 			'Category_model',
 			'Quality_model',
-			'User_model',
 			'Status_model'
 		]);
 	}
@@ -42,8 +41,7 @@ class Movies extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				['type' => 'module', 'src' => base_url('public/js/movies.js')]
 			],
-			'movies' => $this->Movie_model->index(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'movies' => $this->Movie_model->index()
 		];
 
 		$this->load->view('header', $params);
@@ -77,8 +75,7 @@ class Movies extends CI_Controller
 			'genders' => $this->Gender_model->index(['status' => 1]),
 			'categories' => $this->Category_model->index(['status' => 1]),
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
-			'qualities' => $this->Quality_model->index(['status' => 1]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'qualities' => $this->Quality_model->index(['status' => 1])
 		];
 
 		$this->load->view('header', $params);
@@ -119,8 +116,7 @@ class Movies extends CI_Controller
 			'productors_by_movie' => $this->Movie_model->productors_by_movie(['value' => $id]),
 			'genders_by_movie' => $this->Movie_model->genders_by_movie(['value' => $id]),
 			'categories_by_movie' => $this->Movie_model->categories_by_movie(['value' => $id]),
-			'movie' => $this->Movie_model->fetch(['value' => $id]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'movie' => $this->Movie_model->fetch(['value' => $id])
 		];
 
 		$this->load->view('header', $params);
@@ -158,8 +154,7 @@ class Movies extends CI_Controller
 			'categories_by_movie' => $this->Movie_model->categories_by_movie(['value' => $id]),
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
 			'qualities' => $this->Quality_model->index(['status' => 1]),
-			'movie' => $this->Movie_model->fetch(['value' => $id]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'movie' => $this->Movie_model->fetch(['value' => $id])
 		];
 
 		$this->load->view('header', $params);
@@ -198,8 +193,7 @@ class Movies extends CI_Controller
 			'scripts' => [
 				['type' => 'module', 'src' => base_url('public/js/movies.js')]
 			],
-			'movie' => $this->Movie_model->fetch(['value' => $id]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'movie' => $this->Movie_model->fetch(['value' => $id])
 		];
 
 		$this->load->view('header', $params);

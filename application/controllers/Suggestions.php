@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Suggestions extends CI_Controller
+class Suggestions extends My_Controller
 {
 	public function __construct()
 	{
@@ -11,10 +11,7 @@ class Suggestions extends CI_Controller
 			redirect();
 		}
 
-		$this->load->model([
-			'Suggestion_model',
-			'User_model'
-		]);
+		$this->load->model('Suggestion_model');
 	}
 
 	public function index(): void
@@ -24,8 +21,7 @@ class Suggestions extends CI_Controller
 			'styles' => [
 				base_url('public/css/dashboard.css')
 			],
-			'suggestions' => $this->Suggestion_model->index(['status' => 1]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'suggestions' => $this->Suggestion_model->index(['status' => 1])
 		];
 
 		$this->load->view('header', $params);

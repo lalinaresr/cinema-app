@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Users extends CI_Controller
+class Users extends My_Controller
 {
 	public function __construct()
 	{
@@ -38,8 +38,7 @@ class Users extends CI_Controller
 				base_url('public/js/libs/buttons.html5.min.js'),
 				['type' => 'module', 'src' => base_url('public/js/users.js')]
 			],
-			'users' => $this->User_model->index(),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'users' => $this->User_model->index()
 		];
 
 		$this->load->view('header', $params);
@@ -65,8 +64,7 @@ class Users extends CI_Controller
 				['type' => 'module', 'src' => base_url('public/js/users.js')]
 			],
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
-			'roles' => $this->Role_model->index(['status' => 1]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'roles' => $this->Role_model->index(['status' => 1])
 		];
 
 		$this->load->view('header', $params);
@@ -102,8 +100,7 @@ class Users extends CI_Controller
 			'scripts' => [
 				['type' => 'module', 'src' => base_url('public/js/users.js')]
 			],
-			'user' => $this->User_model->fetch(['value' => $id]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'user' => $this->User_model->fetch(['value' => $id])
 		];
 
 		$this->load->view('header', $params);
@@ -130,8 +127,7 @@ class Users extends CI_Controller
 			],
 			'user' => $this->User_model->fetch(['value' => $id]),
 			'status' => $this->Status_model->index(['order_filter' => 'ASC']),
-			'roles' => $this->Role_model->index(['status' => 1]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'roles' => $this->Role_model->index(['status' => 1])
 		];
 
 		$this->load->view('header', $params);
@@ -169,8 +165,7 @@ class Users extends CI_Controller
 			'scripts' => [
 				['type' => 'module', 'src' => base_url('public/js/users.js')]
 			],
-			'user' => $this->User_model->fetch(['value' => $id]),
-			'avatar' => $this->User_model->get_avatar($this->session->userdata('id_user'))
+			'user' => $this->User_model->fetch(['value' => $id])
 		];
 
 		$this->load->view('header', $params);

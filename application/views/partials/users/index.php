@@ -23,7 +23,7 @@
                         <td>
                             <a href="<?= site_url("users/{$user['id_user']}"); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a>
                             <a href="<?= site_url("users/{$user['id_user']}/edit"); ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <?php if ($user['id_user'] != $this->session->userdata('id_user')) : ?>
+                            <?php if ($user['id_user'] != $this->session->userdata('id')) : ?>
                                 <button class="btn btn-danger btn-sm user-delete-btn" data-element="<?= $user['id_user']; ?>"><span class="glyphicon glyphicon-trash"></span></button>
                             <?php endif; ?>
                         </td>
